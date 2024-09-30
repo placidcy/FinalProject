@@ -22,7 +22,7 @@
         <main> 
          <div id="contentBox">
             <div id="attBox">
-            <div id="allAtt" class="unselectedAtt">출석 현황</div> <div id="setAtt" class="selectedAtt"><div id="setAttText">온라인 출석부 설정</div></div><button id="setAttScore">출석 점수 설정</button>
+            <a href="/currentAttendance"><div id="allAtt" class="unselectedAtt">출석 현황</div></a> <a href="/setAttendace"><div id="setAtt" class="selectedAtt"><div id="setAttText">온라인 출석부 설정</div></div></a><button id="setAttScore">출석 점수 설정</button>
             </div>
             <hr />
             
