@@ -1,0 +1,71 @@
+@media screen and (max-width: 768px) {
+    .course .item {
+        display: grid !important;
+    }
+
+    .course .name {
+        width: auto !important;
+    }
+}
+
+.tab,
+.tab .item {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tab .item:hover {
+    cursor: pointer;
+}
+
+.tab.notice {
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: #FFF5DD;
+    font-size: 20px;
+}
+
+.tab.course,
+.tab.course .item {
+    border: 1px solid #d9d9d9;
+    border-collapse: collapse;
+}
+
+.course .item {
+    position: relative;
+    display: flex;
+    padding: 40px 50px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+}
+
+.course .item .deco {
+    position: absolute;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #87C791;
+}
+
+.course .item .category {
+    width: 120px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #D9D9D9;
+    margin-right: 30px;
+}
+
+.course .item .name {
+    width: 360px;
+    text-align: start;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#seemore {
+    font-weight: bold;
+}
