@@ -7,7 +7,6 @@ public class MemberDO {
 	private String m_acctid;
 	private String m_acctpwd;
 	private String m_email;
-
 	private String m_tel;
 	private String m_dept;
 	private String m_pfp;
