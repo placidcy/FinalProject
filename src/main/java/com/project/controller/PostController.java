@@ -14,4 +14,10 @@ public class PostController {
 	public String postFormHandler() {
 		return "postForm";
 	}
+	
+	@GetMapping("/home")
+	public String course_homeHandler() {
+		return "course_home";
+	}
+	
 }
