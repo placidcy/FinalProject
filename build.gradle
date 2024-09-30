@@ -24,7 +24,7 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
@@ -35,11 +35,11 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	
-	implementation fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: '*.jar')
-	compileOnly group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.5.27'
+	// implementation group: 'com.oracle.database.jdbc', name: 'ojdbc6', version: '11.2.0.4'
+	implementation fileTree(dir: '/src/main/webapp/WEB-INF/lib', include: '*.jar')
+	implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.0.52'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	 
-}
+}	
 
 tasks.named('test') {
 	useJUnitPlatform()
