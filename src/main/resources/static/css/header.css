@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Pretendard-Regular' !important;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    height: 1080px;
+}
+
+#header1 {
+    padding: 5% 10% 2% 10%;
+}
+
+#header2, #header3 {
+    padding: 0 10%;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    color: #87C791;
+    font-weight: bold;
+    font-size: 55px;
+}
+
+#header2 p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#header3 p {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#header3 span {
+    color: red;
+}
+
+hr {
+    margin-top:16px;
+    margin-bottom:16px;
+    height: 1px;
+    color: #d9d9d9;
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    border: none;
+}
+
+#header2 img {
+    object-fit: contain;
+    margin-right: 1%;
+}
+
+#header2 img, #header2 span {
+    vertical-align: middle;
+}
+
+main {
+    padding: 0 10%;
+}
+
+@media screen and (max-width: 768px) {
+    #container {
+        width: 100vw;
+        height: 100%;
+    }
+    
+    #header1 {
+        padding: 3rem 0;
+
+        display: flex;
+        justify-content: center;
+    }
+    
+    #header2, #header3 {
+        padding: 0 10vw;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    #header2 p {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    
+    #header3 p {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    
+    #header3 span {
+        color: red;
+    }
+    
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #header2msg {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 1px;
+    }
+
+    #header2 img {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    main {
+        padding: 0 10vw;
+    }
+}

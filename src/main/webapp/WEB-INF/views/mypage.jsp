@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +30,7 @@
                         <th>프로필 이미지</th>
                         <td>
                             <div id="profileBox">
-                                <img class="emptyImg" src="recources/img/emptyimg.png" alt="" /><br>
+                                <img class="emptyImg" src="recources/img/emptyimg.png" alt="프로필 사진" /><br>
                                 <label for="uploadImg">이미지 변경</label>
                                 <input type="file" name="uploadImg" id="uploadImg" accept="image/*" />
                             </div>
