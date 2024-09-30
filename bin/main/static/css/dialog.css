@@ -1,0 +1,156 @@
+* {
+    font-family: "Pretendard", sans-serif;
+    font-style: normal;
+}
+
+.modal-top {
+    position: relative;
+    padding: 10px;
+    background-color: #87C791;
+}
+
+.exit {
+    position: absolute;
+    right: 20px;
+}
+
+.exit:hover {
+    cursor: pointer;
+}
+
+.modal-bottom {
+    background-color: white;
+    padding: 10px 20px;
+}
+
+.modal-bottom.post {
+    padding: 20px 40px;
+}
+
+.modal-bottom>hr,
+.req hr,
+.hr {
+    background: gainsboro;
+    height: 1px;
+    border: 0;
+}
+
+.modal-bottom>table td {
+    padding: 10px 30px;
+}
+.modal-text{
+    width:30%;
+}
+.modal-bottom>form {
+    padding: 10px 20px;
+}
+.modal-bottom>form>div {
+    margin-top:5px;
+}
+.modal-bottom>form [type="radio"] {
+    vertical-align: middle;
+    appearance: none;
+    margin: 0;
+    border: 1px solid gainsboro;
+    background-color: gainsboro;
+    width: 20px;
+    height: 20px;
+    transition: 0.3s;
+}
+
+.modal-bottom>form [type="radio"]:checked {
+    box-shadow: 0 0 0 5px #5b8662 inset;
+}
+
+.modal-bottom>form [type="radio"]:focus-visible {
+    outline: max(2px, 0.1em) dotted gray;
+    outline-offset: max(2px, 0.1em);
+}
+
+.modal-bottom>form [type="radio"]:hover {
+    box-shadow: 0 0 0 max(4px, 0.2em) gray;
+    cursor: pointer;
+}
+
+.modal-bottom>form>*:first-child {
+    margin: 0;
+}
+
+.modal-bottom>form label {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.grid.g5 {
+    gap: 5px;
+}
+
+.flex.g20 {
+    gap: 20px;
+}
+
+.btn {
+    width: 90%;
+    background-color: #87C791;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    justify-self: center;
+    padding: 10px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+
+.mr20 {
+    margin-right: 20px;
+}
+
+.file {
+    color: #2493C2;
+}
+
+.textarea {
+    width: 100%;
+    margin: 0;
+    height: 250px;
+}
+
+.report {
+    margin-top: 40px;
+    margin-left:20px;
+}
+
+
+@media (min-width: 550px){
+dialog {
+    position:fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 550px;
+    height: 550px;
+    padding: 0;
+    border: 1px solid gainsboro;
+    overflow: hidden;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+}
+
+@media (max-width: 550px){
+    dialog {
+        position:fixed;
+        width: 100%;
+        height:550px;
+        padding: 0;
+        border: 1px solid gainsboro;
+        overflow: hidden;
+        border-radius: 20px;
+        z-index: 1;
+
+    }
+    
+}

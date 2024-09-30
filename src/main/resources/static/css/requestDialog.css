@@ -1,0 +1,29 @@
+.textarea {
+    width: 100%;
+    height: 150px;
+    padding: 20px;
+    resize: none;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.modal-bottom.req .message {
+    font-size: 14px;
+    color: darkred;
+}
+
+.requestForm [type="date"] {
+    padding: 5px;
+}
+
+.requestForm table {
+    border-collapse: separate;
+    border-spacing: 10px 10px;
+}
+
+.hidden {
+    display: none;
+}
