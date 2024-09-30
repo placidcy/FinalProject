@@ -7,6 +7,7 @@ public class MemberDO {
 	private String m_acctid;
 	private String m_acctpwd;
 	private String m_email;
+
 	private String m_tel;
 	private String m_dept;
 	private String m_pfp;
@@ -14,6 +15,7 @@ public class MemberDO {
 	private int m_role;
 	
 	public MemberDO() {		
+
 	}
 	
 	public int getMember_id() {
@@ -45,7 +47,7 @@ public class MemberDO {
 	}
 	public void setM_email(String m_email) {
 		this.m_email = m_email;
-	}
+
 	public String getM_tel() {
 		return m_tel;
 	}
@@ -76,5 +78,5 @@ public class MemberDO {
 	public void setM_role(int m_role) {
 		this.m_role = m_role;
 	}
-	
+
 }
