@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/mobile.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="script/mobile.js"></script>
+<script src="js/mobile.js"></script>
 <body>
 	<div class="container flex">
 		<!-- 메인 사이드바 -->

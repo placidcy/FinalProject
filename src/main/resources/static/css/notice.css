@@ -1,8 +1,21 @@
 @charset "UTF-8";
 
-.tab.notice, .tab.notice .item {
+@media screen and (max-width: 768px) {
+	.title {
+		font-size: 16px !important;
+		text-align: start;
+		max-width: 250px;
+	}
+}
+
+.tab.notice .item {
 	border: 1px solid #d9d9d9;
+	border-bottom: none;
 	border-collapse: collapse;
+}
+
+.tab.notice .item:last-child {
+	border-bottom: 1px solid #d9d9d9;
 }
 
 .tab.notice .item {
@@ -17,7 +30,7 @@
 
 .prefix {
 	font-weight: bold;
-	padding-right: 50px;
+	padding-right: 20px;
 }
 
 .title {

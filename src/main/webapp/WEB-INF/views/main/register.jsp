@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/mobile.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="script/mobile.js"></script>
+<script src="js/mobile.js"></script>
 </head>
 <body>
 	<div class="container flex">
@@ -37,7 +37,7 @@
 						<td class="deco"></td>
 						<td class="category">웹 개발</td>
 						<td class="name">HTML의 기초</td>
-						<td class="flex g20">
+						<td class="flex g20 cen v">
 							<div class="grid" style="text-align: start;">
 								<p>
 									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
@@ -55,7 +55,7 @@
 						<td class="deco"></td>
 						<td class="category">데이터 과학</td>
 						<td class="name">빅데이터와 비즈니스의 미래</td>
-						<td class="flex g20">
+						<td class="flex g20 cen v">
 							<div class="grid" style="text-align: start;">
 								<p>
 									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
@@ -73,7 +73,7 @@
 						<td class="deco"></td>
 						<td class="category">데이터베이스</td>
 						<td class="name">데이터베이스 기초 및 설계</td>
-						<td class="flex g20">
+						<td class="flex g20 cen v">
 							<div class="grid" style="text-align: start;">
 								<p>
 									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
@@ -91,7 +91,7 @@
 						<td class="deco"></td>
 						<td class="category">프로그래밍 언어</td>
 						<td class="name">프로그래밍 언어의 기초</td>
-						<td class="flex g20">
+						<td class="flex g20 cen v">
 							<div class="grid" style="text-align: start;">
 								<p>
 									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
@@ -109,7 +109,7 @@
 						<td class="deco"></td>
 						<td class="category">소프트웨어 개발 도구</td>
 						<td class="name">소프트웨어 개발 도구의 이해와 응용</td>
-						<td class="flex g20">
+						<td class="flex g20 cen v">
 							<div class="grid" style="text-align: start;">
 								<p>
 									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
