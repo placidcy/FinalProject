@@ -1,0 +1,285 @@
+* {
+  box-sizing: border-box;
+}
+
+main{
+  padding:10px;
+}
+
+#dateBox{
+  width:100%;
+  text-align: center;
+  margin-bottom:10px;
+}
+
+button:hover{
+  background-color:#d8d8d8;
+}
+
+#notice{
+  font-size:16px;
+  font-weight: bold;
+}
+
+
+table{
+  border-collapse:collapse;
+}
+
+#calendarBox{
+  width:100%;
+  font-size:16px;
+  
+}
+
+.preMonthDate{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#888;
+}
+
+.preMonthDate-w{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#7ACDF1;
+}
+
+.preMonthDate-ww{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#d86c6c;
+}
+
+.monthDate-nc{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
+}
+
+.monthDate-c{
+  border:1px solid #979A9D;
+  background-color: #FFF5DD;
+}
+
+.monthDate-a{
+  border:1px solid #979A9D;
+  background-color: #4DAF9E;
+  color:white;
+}
+
+.monthDate-l{
+  border:1px solid #979A9D;
+  background-color: #F2B516;
+}
+
+.monthDate-ab{
+  border:1px solid #979A9D;
+  background-color: #C12D36;
+}
+
+.monthDate-w{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
+  color:#149ad3;
+}
+
+.monthDate-ww{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
+  color:rgb(204, 35, 35);
+}
+
+
+@media (min-width: 769px){
+main{
+  width:1022px;
+  height:100vh;
+}
+
+.switchBox{
+  width:34px;
+  height:31px;
+  border:1px solid #d9d9d9;
+  font-size:20px;
+}
+
+#yearMonth{
+  font-size:24px;
+  margin:7px;
+}
+
+#todayBox{
+  width:60px;
+  height:30px;
+  border:1px solid #d9d9d9;
+  font-size:20px;
+  margin:10px
+}
+
+#fontBox{
+  margin-left:420px;
+}
+
+#attendFont{
+  font-size:20px;
+  color:#4DAF9E;
+}
+
+#lateFont{
+  font-size:20px;
+  margin-left:5px;
+  color:#f2b516;
+}
+
+#absenceFont{
+  margin-left:5px;
+  font-size:20px;
+  color:#C12D36;
+}
+
+#dayBox{
+  display: flex;
+  width:100%;
+  height:50px;
+  margin-top:10px;
+  background-color: #1e1e1e;
+  color:white;
+  font-size:24px;
+}
+.day{
+  width:146px;
+  border-right: 1px solid white;
+  padding-left:56px;
+  padding-top:10px;
+}
+
+#saturday{
+  width:146px;
+  padding-top:10px;
+  padding-left:56px;
+}
+
+td{
+  width:146px;
+  height:128px;
+  margin:0;
+  padding-left:10px;
+  padding-top:5px;
+  vertical-align: text-top;
+}
+
+#calendarExplain{
+  padding-top:15px;
+  margin-top:20px;
+  margin-left:30px;
+  width:900px;
+  height:56px;
+  border:1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  font-size:20px;
+  font-weight:bold;
+  text-align: center;
+}
+
+.attReq{
+margin-top:22%;
+vertical-align: center;
+font-weight:bold;
+}
+
+}
+
+@media (max-width: 768px) {
+  .switchBox{
+    width:30px;
+    height:25px;
+    border:1px solid #d9d9d9;
+    font-size:20px;
+  }
+  #dateBox{
+    margin-left:10px;
+  }
+
+  #yearMonth{
+    font-size:20px;
+    margin:10px;
+  }
+  
+  #todayBox{
+    width:50px;
+    height:25px;
+    border:1px solid #d9d9d9;
+    font-size:20px;
+    margin:10px
+  }
+
+  #fontBox{
+    display: block;
+  }
+
+  #attendFont{
+    font-size:16px;
+    color:#4DAF9E;
+  }
+  
+  #lateFont{
+    font-size:16px;
+    margin:2px;
+    color:#f2b516;
+  }
+  
+  #absenceFont{
+    font-size:16px;
+    color:#C12D36;
+  }
+
+  #dayBox{
+    display: flex;
+    width:100%;
+    height:20px;
+    align-items: center;
+    text-align: center;
+    background-color: #1e1e1e;
+    color:white;
+    font-size:20px;
+  }
+  .day{
+    width:calc(100%/7);
+    border-right: 1px solid white;
+  }
+  
+  #saturday{
+    width:calc(100%/7);
+  }
+
+  td{
+    width:calc(100%/7);
+    height:105px;
+    padding-left:10px;
+    padding-right:5px;
+    padding-top:5px;
+    vertical-align: text-top;
+  }
+  
+  .attReq{
+    vertical-align: center;
+    font-weight:bold;
+    font-size:16px;
+    margin-right:2px;
+    margin-top:10px;
+  }
+
+  #calendarExplain{
+    padding:15px;
+    margin-top:20px;
+    margin-left:30px;
+    width:90%;
+    border:1px solid #d9d9d9;
+    border-radius: 5px;
+    background-color: white;
+    font-size:16px;
+    font-weight:bold;
+    text-align: center;
+  }
+  
+}

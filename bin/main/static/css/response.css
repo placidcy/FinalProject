@@ -1,0 +1,9 @@
+.spacing {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.smallBtn {
+    width: 80px;
+    height: 40px;
+}
