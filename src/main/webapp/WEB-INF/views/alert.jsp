@@ -1,18 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="/resources/css/alert.css" rel="stylesheet" />
     <link rel="stylesheet" href="/resources/css/main.css">
-	<link rel="stylesheet" href="/resources/css/common.css">
+    <link rel="stylesheet" href="/resources/css/common.css">
+	<link rel="stylesheet" href="/resources/css/mobile.css">
+    <script src="/resources/js/mobile.js"></script>
     <title>Document</title>
 </head>
 
@@ -23,7 +23,7 @@
             <h1>알림 목록</h1>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">HTML의 기초</span>
                     <span class="alert_content">새 강의자료가(이) 등록되었습니다.</span>
@@ -32,7 +32,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">HTML의 기초</span>
                     <span class="alert_content">새 공지사항이(가) 등록되었습니다.</span>
@@ -41,7 +41,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">소프트웨어 개발도구의 이해와 응용</span>
                     <span class="alert_content">새 강의자료가(이) 등록되었습니다.</span>
@@ -50,7 +50,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">소프트웨어 개발도구의 이해와 응용</span>
                     <span class="alert_content">새 공지사항이(가) 등록되었습니다.</span>
@@ -59,7 +59,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">데이터베이스 기초 및 설계</span>
                     <span class="alert_content">새 공지사항이(가) 등록되었습니다.</span>
@@ -68,7 +68,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">데이터베이스 기초 및 설계</span>
                     <span class="alert_content">새 강의자료가(이) 등록되었습니다.</span>
@@ -77,7 +77,7 @@
             </a>
 
             <a href="" class="alert_list">
-                <img class="sidebar-icon" src="./img/alert_list.png" alt="">
+                <img class="sidebar-icon" src="/resources/img/alert_list.png" alt="">
                 <div class="alerts">
                     <span class="alert_title">데이터베이스 기초 및 설계</span>
                     <span class="alert_content">새 강의자료가(이) 등록되었습니다.</span>
@@ -94,12 +94,6 @@
             </div>
         </main>
     </div>
-
-    <script>
-        $(function () {
-            $("#main_sideBar").load("main.html");
-        });
-    </script>
 
 </body>
 
