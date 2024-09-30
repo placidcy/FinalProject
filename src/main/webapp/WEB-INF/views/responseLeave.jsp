@@ -8,10 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/dialog.css">
-    <link rel="stylesheet" href="css/request.css">
-    <link rel="stylesheet" href="css/response.css">
-    <script src="script/dialog.js"></script>
+    <link rel="stylesheet" href="/resources/css/dialog.css">
+    <link rel="stylesheet" href="/resources/css/request.css">
+    <link rel="stylesheet" href="/resources/css/response.css">
+    <script src="/resources/js/dialog.js"></script>
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>

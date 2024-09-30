@@ -8,12 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/course_mu.css">
-    <link rel="stylesheet" href="css/postDetail.css">
-    <link rel="stylesheet" href="css/dialog.css">
+    <link rel="stylesheet" href="/resources/css/course_mu.css">
+    <link rel="stylesheet" href="/resources/css/postDetail.css">
+    <link rel="stylesheet" href="/resources/css/dialog.css">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <script src="js/postDetail.js"></script>
+    <script src="/resources/js/postDetail.js"></script>
 
 </head>
 
