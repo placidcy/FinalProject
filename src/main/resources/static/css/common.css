@@ -60,7 +60,6 @@ a {
 }
 
 /* display 및 하위 속성 정의 */
-
 .flex {
 	display: flex;
 }
@@ -96,7 +95,6 @@ a {
 }
 
 /* margin 속성 정의 */
-
 .mb10 {
 	margin-block: 10px;
 }
@@ -119,7 +117,6 @@ a {
 }
 
 /* 폰트 속성 정의 */
-
 .f36 {
 	font-size: 36px;
 }
@@ -213,8 +210,7 @@ a {
 	text-align: center;
 }
 
-.sidebar.main,
-.side.main {
+.sidebar.main, .side.main {
 	background-color: #2f2a2a;
 }
 
@@ -227,7 +223,6 @@ a {
 }
 
 /* 강의 사이드바 하위 영역 스타일 정의 */
-
 .side.main {
 	width: 60px;
 }
@@ -273,6 +268,7 @@ a {
 .btn {
 	width: 110px;
 	height: 50px;
+	border: 1px solid #d9d9d9;
 }
 
 .btn.small {
@@ -284,14 +280,47 @@ a {
 	width: 400px;
 }
 
-.btn:hover,
-.menu:not(.selected):hover {
+.btn:hover, .menu:not(.selected):hover {
 	background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
 /* 아이콘 관련 스타일 정의 */
 .icon {
 	filter: invert(1);
+}
+
+/* 검색바 관련 스타일 정의 */
+.search.box {
+	position: relative;
+	display: flex;
+	justify-self: end;
+	justify-content: end;
+	align-items: center;
+}
+
+.search.box>input[type="text"] {
+	width: 100%;
+	padding: 20px;
+	font-size: 16px;
+	box-sizing: border-box;
+	border: 1px solid gainsboro;
+	border-radius: 30px;
+}
+
+.search.box>.iconBtn {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+.search.box>.iconBtn:hover {
+	cursor: pointer;
 }
 
 /* 페이지네이션 관련 스타일 정의 */
@@ -321,47 +350,37 @@ a {
 }
 
 /* 미디어 쿼리 정의 */
-
 @media screen and (max-width: 768px) {
 	.container {
 		width: 100%;
 		height: 100%;
 		display: grid !important;
 	}
-
 	.modal {
 		width: 100%;
 	}
-
 	.logo {
 		position: sticky !important;
 		height: 70px !important;
 	}
-
-	.sidebar,
-	.contents {
+	.sidebar, .contents {
 		width: 100vw;
 	}
-
 	.sidebar {
 		position: relative;
 		height: 100px;
 	}
-
 	.mobile {
 		position: absolute;
 		display: block;
 		right: 30px;
 	}
-
 	.mobile:hover {
 		cursor: pointer;
 	}
-
 	.sidebar.main>.menulist {
 		background-color: #2f2a2a;
 	}
-
 	.menulist {
 		position: absolute;
 		z-index: 3;
@@ -369,11 +388,9 @@ a {
 		display: none;
 		padding-bottom: 50px;
 	}
-
 	.menulist.show {
 		display: inherit;
 	}
-
 	.contents {
 		padding: 30px;
 	}
