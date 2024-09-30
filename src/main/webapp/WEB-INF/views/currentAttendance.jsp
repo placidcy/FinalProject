@@ -59,86 +59,13 @@
                 <!-- for문으로 처리  -->
                 <!-- status-bar 컴포넌트 화 -->
                 <div id="infoList">
-                    <div class="infoBox">
-                        <div class="infoArea1">1</div>
-                        <div class="infoArea2">손흥민</div>
-                        <div class="infoArea3">KDT유데미</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">2</div>
-                        <div class="infoArea2">황희찬</div>
-                        <div class="infoArea3">KDT유데미</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">3</div>
-                        <div class="infoArea2">김연아</div>
-                        <div class="infoArea3">서울대학교</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">4</div>
-                        <div class="infoArea2">김연경</div>
-                        <div class="infoArea3">홍익대학교</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">5</div>
-                        <div class="infoArea2">류현진</div>
-                        <div class="infoArea3">삼성</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">6</div>
-                        <div class="infoArea2">이대호</div>
-                        <div class="infoArea3">롯데</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">0</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">20</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">7</div>
-                        <div class="infoArea2">강호동</div>
-                        <div class="infoArea3">1반</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">2</div>
-                        <div class="infoArea6">0</div>
-                        <div class="infoArea7">18</div>
-                    </div>
-
-                    <div class="infoBox">
-                        <div class="infoArea1">8</div>
-                        <div class="infoArea2">고창석</div>
-                        <div class="infoArea3">2반</div>
-                        <div class="infoArea4"><div class="status-bar"></div>6/6</div>
-                        <div class="infoArea5">1</div>
-                        <div class="infoArea6">1</div>
-                        <div class="infoArea7">16</div>
-                    </div>
-                    
+					<c:forEach items="${memberList}" var="member" varStatus="status">
+                        <div class="infoBox">
+							<div class="infoArea1">${status.count}</div>
+							<div class="infoArea2">${member.m_name}</div>
+							<div class="infoArea3">${member.m_dept}</div>              
+                        </div>
+                    </c:forEach>                
                 </div>
             </div>
             <!--자바스크립트로 버튼 활성화 비활성화-->

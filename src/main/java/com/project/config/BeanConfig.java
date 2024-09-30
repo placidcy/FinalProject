@@ -1,5 +1,6 @@
 package com.project.config;
 
+import com.project.model.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,5 +28,10 @@ public class BeanConfig {
 	@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
+	}
+	
+	@Bean
+	public AttendanceDAO attendanceDAO(DataSource dataSource){
+		return new AttendanceDAO(dataSource);
 	}
 }
