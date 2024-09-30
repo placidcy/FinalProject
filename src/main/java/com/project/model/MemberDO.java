@@ -1,18 +1,21 @@
 package com.project.model;
 
 public class MemberDO {
+	
 	private int member_id;
 	private String m_name;
 	private String m_acctid;
-	private String m_acctpw;
-	private String e_mail;
+	private String m_acctpwd;
+	private String m_email;
+
 	private String m_tel;
 	private String m_dept;
 	private String m_pfp;
 	private int m_status;
 	private int m_role;
 	
-	public MemberDO() {
+	public MemberDO() {		
+
 	}
 	
 	public int getMember_id() {
@@ -33,18 +36,18 @@ public class MemberDO {
 	public void setM_acctid(String m_acctid) {
 		this.m_acctid = m_acctid;
 	}
-	public String getM_acctpw() {
-		return m_acctpw;
+	public String getM_acctpwd() {
+		return m_acctpwd;
 	}
-	public void setM_acctpw(String m_acctpw) {
-		this.m_acctpw = m_acctpw;
+	public void setM_acctpwd(String m_acctpwd) {
+		this.m_acctpwd = m_acctpwd;
 	}
-	public String getE_mail() {
-		return e_mail;
+	public String getM_email() {
+		return m_email;
 	}
-	public void setE_mail(String e_mail) {
-		this.e_mail = e_mail;
-	}
+	public void setM_email(String m_email) {
+		this.m_email = m_email;
+
 	public String getM_tel() {
 		return m_tel;
 	}
@@ -75,6 +78,5 @@ public class MemberDO {
 	public void setM_role(int m_role) {
 		this.m_role = m_role;
 	}
-	
-	
+
 }
