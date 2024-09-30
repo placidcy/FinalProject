@@ -8,11 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECK-마이페이지</title>
-    <link rel="stylesheet" href="recources/css/main.css" />
-    <link rel="stylesheet" href="recources/css/mypage.css" />
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/mypage.css" />
+	<link rel="stylesheet" href="/resources/css/common.css" />
     <!-- 모바일 헤더 -->
     <link rel="stylesheet" href="resources/css/mobile.css">
-    <script src="recources/js/mobile.js"></script>
+    <script src="/resources/js/mobile.js"></script>
 </head>
 <body>
     <div id="container">

@@ -21,7 +21,7 @@
         <main> 
          <div id="contentBox">
             <div id="attBox">
-            <div id="allAtt" class="selectedAtt">출석 현황</div> <div id="setAtt" class="unselectedAtt"><div id="setAttText">온라인 출석부 설정</div></div>
+            <a href="/currentAttendance" id="allAtt" class="selectedAtt">출석 현황</a> <a href="setAttendance" id="setAtt" class="unselectedAtt"><div id="setAttText">온라인 출석부 설정</div></a>
             </div>
             <hr />
 
