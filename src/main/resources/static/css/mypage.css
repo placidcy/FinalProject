@@ -1,0 +1,163 @@
+main {
+    background-color: #ffffff;
+}
+
+div {
+    margin: 0;
+}
+
+#profileBox {
+    border: 1px solid #d9d9d9;
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    display: block;
+    text-align: center;
+}
+
+img {
+    object-fit: contain;
+    margin: 10% 0;
+}
+
+label {
+    cursor: pointer;
+    color: #d9d9d9;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+input {
+    visibility: hidden;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0 40px;
+    margin: 0;
+    padding: 0;
+}
+
+th {
+    width: 20%;
+}
+
+.title {
+    color: rgba(0, 0, 0, 1);
+    font-size: 32px;
+    font-weight: bold;
+}
+
+button {
+    width: 76px;
+    height: 42px;
+
+    border-radius: 5px;
+    border: none;
+    
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    
+    background-color: #87c691;
+    box-shadow: 1px 2px 0px #d9d9d9;
+    cursor: pointer;
+}
+
+#profile-save {
+    float: right;
+}
+
+#profile-cancel {
+    background: #d9d9d9;
+    float: right;
+    margin-left:16px;
+}
+
+hr {
+    clear: both;
+    margin: 16px 0;
+    height: 1px;
+    color: #d9d9d9;
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    border: none;
+}
+
+hr:nth-child(2) {
+    margin-top:16px;
+    margin-bottom:16px;
+}
+
+a {
+    color: #d9d9d9;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#change-mail {
+    margin-left: 2%;
+}
+
+#leave {
+    color: red;
+}
+
+@media (hover:hover) and (pointer:fine) {
+    #profile-save:hover {
+        background: #88b890;
+    }
+
+    #profile-cancel:hover {
+        background: #d3cece;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-bottom: 15vh;
+    }
+
+    #header span, #header hr {
+        display: none;
+    }
+
+    #header {
+        width: 100%;
+        position: absolute;
+        bottom: 10vh;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+    
+    th {
+        width: 40%;
+    }
+    
+    td {
+        width: 60%;
+    }
+    
+    button {
+        width: 30vw;
+        height: 7vh;
+        margin: 0 1rem;
+    }
+
+    #profile-cancel {
+        background: #d9d9d9;
+        margin: 0;
+    }
+
+    span {
+        flex-basis: auto;
+    }
+}
