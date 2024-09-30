@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-a{
-	text-decoration:none;
-}
-
 #attBox{
   display: flex;
 }
@@ -141,6 +137,11 @@ main{
   padding-bottom:50px;
 }
 
+#attBox>a{
+	text-decoration:none;
+	display:block;
+}
+
 #allAtt{
   padding-top:16px;
   width:155px;
@@ -192,15 +193,19 @@ main{
     padding-top:24px;
   }
   
-  #allAtt{
-    padding-top:16px;
-    width:25%;
-  }
+  #attBox>a[id="allAtt"]{
+	text-decoration:none;
+	display:block;
+	padding-top:16px;
+	width:25%;
+	}
 
-  #setAtt{
-    display:table;
-    width:30%;
+  #attBox>a[id="setAtt"]{
+	text-decoration:none;
+	display:table;
+	width:30%;
   }
+    
 
   #setAttText{
     display: table-cell;
