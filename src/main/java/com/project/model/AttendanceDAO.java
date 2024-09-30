@@ -21,4 +21,6 @@ public class AttendanceDAO {
 		return this.jdbcTemplate.query(sql, new MemberRowMapper(),course_id);
 	}
 	
+
+	
 }
