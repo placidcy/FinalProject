@@ -47,7 +47,8 @@ public class MemberDO {
 	}
 	public void setM_email(String m_email) {
 		this.m_email = m_email;
-
+	}
+	
 	public String getM_tel() {
 		return m_tel;
 	}

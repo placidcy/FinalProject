@@ -8,10 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../main/css/checkin.css">
-    <link rel="stylesheet" href="../admin/css/admin-form.css">
+    <link rel="stylesheet" href="/resources/css/checkin.css">
+    <link rel="stylesheet" href="/resources/css/admin-form.css">
     <link rel="stylesheet" href="css/dialog.css">
-    <script src="js/attendanceCalender.js"></script>
+    <script src="/resources/js/attendanceCalender.js"></script>
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 

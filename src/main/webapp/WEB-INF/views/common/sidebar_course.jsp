@@ -7,37 +7,37 @@
         <ul class="sidebar-menu">
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/mypage.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/mypage.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/course.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/course.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/attend.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/attend.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/register.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/register.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/alert.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/alert.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/notice.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/notice.png" alt="">
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img class="sidebar-icon" src="./img/logout.png" alt="">
+                    <img class="sidebar-icon" src="/resources/img/logout.png" alt="">
                 </a>
             </li>
         </ul>

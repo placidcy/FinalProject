@@ -8,11 +8,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/course_mu.css">
-    <link rel="stylesheet" href="css/attendanceDetail.css">
+    <link rel="stylesheet" href="/resources/css/course_mu.css">
+    <link rel="stylesheet" href="/resources/css/attendanceDetail.css">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <script src="js/course.js"></script>
+    <script src="/resources/js/course.js"></script>
 </head>
 
 <body>
