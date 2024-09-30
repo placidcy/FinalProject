@@ -16,4 +16,20 @@ public class CourseController {
 		return "alert";
 	}
 	
+	@GetMapping("acceptanceManagement")
+	public String acceptance_managementHandler() {
+		return "acceptance_management";
+	}
+	
+	@GetMapping("calendarForm")
+	public String calendarFormHandler() {
+		return "calendarForm";
+	}
+	
+	@GetMapping("courseAttend")
+	public String courseAttendHandler() {
+		return "course_attend";
+	}
+	
+	
 }
