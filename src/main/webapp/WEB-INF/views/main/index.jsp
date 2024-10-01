@@ -47,16 +47,14 @@
 					</c:forEach>
 				</table>
 				<ul class="pagination">
-					<c:if test="${size > 1 }">
-						<c:forEach varStatus="status" begin="1" end="${size }">
-							<c:if test="${status.count ne 1 }">
-								<li class="page">이전</li>
-							</c:if>
-							<li class="page selected">${status.count}</li>
-							<c:if test="${status.count ne end}">
-								<li class="page">다음</li>
-							</c:if>
-						</c:forEach>
+					<c:if test="${page ne 1 }">
+						<li class="page ${page eq 1}">이전</li>
+					</c:if>
+					<c:forEach var="i" begin="1" end="${size }">
+						<li class="page selected">${i}</li>
+					</c:forEach>
+					<c:if test="${page ne size}">
+						<li class="page">다음</li>
 					</c:if>
 				</ul>
 			</div>

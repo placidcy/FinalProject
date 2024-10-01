@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -33,103 +34,38 @@
 					</div>
 				</div>
 				<table class="tab course">
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">웹 개발</td>
-						<td class="name">HTML의 기초</td>
-						<td class="flex g20 cen v">
-							<div class="grid" style="text-align: start;">
-								<p>
-									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
-								</p>
-								<p>
-									<strong>정원</strong> 27/30 (명)
-								</p>
-							</div>
-							<div>
-								<button class="btn bg87c791 cffffff">신청</button>
-							</div>
-						</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">데이터 과학</td>
-						<td class="name">빅데이터와 비즈니스의 미래</td>
-						<td class="flex g20 cen v">
-							<div class="grid" style="text-align: start;">
-								<p>
-									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
-								</p>
-								<p>
-									<strong>정원</strong> 27/30 (명)
-								</p>
-							</div>
-							<div>
-								<button class="btn bg87c791 cffffff">신청</button>
-							</div>
-						</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">데이터베이스</td>
-						<td class="name">데이터베이스 기초 및 설계</td>
-						<td class="flex g20 cen v">
-							<div class="grid" style="text-align: start;">
-								<p>
-									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
-								</p>
-								<p>
-									<strong>정원</strong> 27/30 (명)
-								</p>
-							</div>
-							<div>
-								<button class="btn bg87c791 cffffff">신청</button>
-							</div>
-						</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">프로그래밍 언어</td>
-						<td class="name">프로그래밍 언어의 기초</td>
-						<td class="flex g20 cen v">
-							<div class="grid" style="text-align: start;">
-								<p>
-									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
-								</p>
-								<p>
-									<strong>정원</strong> 27/30 (명)
-								</p>
-							</div>
-							<div>
-								<button class="btn bg87c791 cffffff">신청</button>
-							</div>
-						</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">소프트웨어 개발 도구</td>
-						<td class="name">소프트웨어 개발 도구의 이해와 응용</td>
-						<td class="flex g20 cen v">
-							<div class="grid" style="text-align: start;">
-								<p>
-									<strong>기간</strong> 2024.03.12-2024.06.30 (총 40시간)
-								</p>
-								<p>
-									<strong>정원</strong> 27/30 (명)
-								</p>
-							</div>
-							<div>
-								<button class="btn bg87c791 cffffff">신청</button>
-							</div>
-						</td>
-					</tr>
+					<c:forEach items="${list }" var="item">
+						<tr class="item">
+							<td class="deco"></td>
+							<td class="category">${item.categoryName }</td>
+							<td class="name">${item.courseName }</td>
+							<td class="flex g20 cen v">
+								<div class="grid" style="text-align: start;">
+									<p>
+										<strong>기간</strong> ${item.startDate }-${item.endDate }
+									</p>
+									<p>
+										<strong>정원</strong> ${item.count }/${item.limits }(명)
+									</p>
+								</div>
+								<div>
+									<button class="btn bg87c791 cffffff"
+										data-id="${item.courseId }">신청</button>
+								</div>
+							</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<ul class="pagination">
-					<li class="page disabled">이전</li>
-					<li class="page selected">1</li>
-					<li class="page">2</li>
-					<li class="page">3</li>
-					<li class="page">다음</li>
+					<c:if test="${page ne 1 }">
+						<li class="page">이전</li>
+					</c:if>
+					<c:forEach var="i" begin="1" end="${size }">
+						<li class="page selected">${i}</li>
+					</c:forEach>
+					<c:if test="${page ne size}">
+						<li class="page">다음</li>
+					</c:if>
 				</ul>
 			</div>
 		</main>
