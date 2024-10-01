@@ -4,6 +4,10 @@ public class CourseItem {
 	private int courseId;
 	private String courseName;
 	private String categoryName;
+	private int limits;
+	private int count;
+	private String startDate;
+	private String endDate;
 
 	public CourseItem() {
 
@@ -38,4 +42,37 @@ public class CourseItem {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
+	public int getLimits() {
+		return limits;
+	}
+
+	public void setLimits(int limits) {
+		this.limits = limits;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 }

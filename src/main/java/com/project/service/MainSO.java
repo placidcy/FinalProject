@@ -27,6 +27,16 @@ public class MainSO extends ItemSO {
 		return this.getSize(courseDAO.getCountByMemberId(memberId), limit);
 	}
 
+	public List<CourseItem> selectByDates(int page) {
+		int limit = 10;
+		return courseDAO.selectByDates(this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public int getSizeByDates() {
+		int limit = 10;
+		return this.getSize(courseDAO.getCountByDates(), limit);
+	}
+
 	public List<NoticeItem> selectNoticeItems(int page) {
 		int limit = 10;
 		return noticeDAO.selecNoticeItems(this.getStartNum(page, limit), this.getEndNum(page, limit));

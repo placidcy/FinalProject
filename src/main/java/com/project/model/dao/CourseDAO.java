@@ -19,6 +19,49 @@ public class CourseDAO extends ItemDAO {
 		super();
 	}
 
+	public List<CourseItem> selectByDates(int startNum, int endNum) {
+		this.sqlString = """
+				select fcs.course_id, c_title, c_name, c_count, c_limits, to_char(c_sdate, 'yyyy.mm.dd') c_sdate, to_char(c_edate, 'yyyy.mm.dd') c_edate
+				from final_course fc
+				inner join final_course_category fcc on fc.category_id = fcc.category_id
+				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
+				where c_count < c_limits
+				order by c_sdate, c_edate desc
+				""";
+//		and sysdate between e_sdate and e_edate""";
+		this.sqlString = setPaging(sqlString, startNum, endNum);
+
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sqlString, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setLimits(rs.getInt("c_limits"));
+				courseItem.setCount(rs.getInt("c_count"));
+				courseItem.setStartDate(rs.getString("c_sdate"));
+				courseItem.setEndDate(rs.getString("c_edate"));
+
+				return courseItem;
+			}
+		});
+
+		return courseItems;
+	}
+
+	public int getCountByDates() {
+		this.sqlString = """
+				select count(*) as cnt
+				from final_course fc
+				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
+				where c_count < c_limits
+				""";
+
+		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class);
+	}
+
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
 		this.sqlString = """
 				select fcs.course_id, c_title, c_name
@@ -51,6 +94,7 @@ public class CourseDAO extends ItemDAO {
 				inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where member_id = ?
 				""";
+
 		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class, memberId);
 	}
 }
