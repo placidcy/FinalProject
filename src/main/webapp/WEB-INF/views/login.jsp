@@ -25,7 +25,7 @@
         <button type="submit">로그인</button>
       </form>
       <div id="text-tag">
-        <a href="<c:url value='/findidpw' />">
+        <a href="<c:url value='/findcheck' />">
           <span>아이디 / 비밀번호 찾기</span>
         </a>
         <a href="<c:url value='/signup-agreement' />">

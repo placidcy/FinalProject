@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="container">
+<!-- 
         <header>
             <div id="header1">
                 <a href="#">
@@ -27,7 +28,11 @@
                 </div>
             </div>
         </header>
-
+ -->
+ 		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="pageTitle" value="비밀번호 찾기"/>
+        	<jsp:param name="pageContent" value="비밀번호를 잊으셨다면, 아이디와 이메일을 통해 비밀번호를 재설정할 수 있습니다."/>
+ 		</jsp:include>
         <main>
             <div class="formBox">
             	<div id="top">
@@ -40,7 +45,7 @@
 	                </form>
             	</div>
             	<div id="bottom">
-                    <button type="submit" id="searchBtn">찾기</button>
+                    <button type="submit" id="submitBtn">찾기</button>
                     <button id="cancelBtn">취소</button>
             	</div>
             </div>

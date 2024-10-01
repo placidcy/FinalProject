@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="container">
+<%--     
         <header>
             <div id="header1">
                 <a href="<c:url value='/login' />">
@@ -27,7 +28,11 @@
                 </div>
             </div>
         </header>
-
+ --%>
+ 		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="pageTitle" value="아이디 / 비밀번호 찾기"/>
+        	<jsp:param name="pageContent" value="회원가입 시 입력한 개인정보를 통해 아이디 또는 비밀번호를 찾을 수 있습니다."/>
+ 		</jsp:include>
         <main>
             <div class="box">
                 <div class="top">

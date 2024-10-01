@@ -13,6 +13,7 @@
 </head>
 <body>
     <div id="container">
+<%--     
         <header>
             <div id="header1">
                 <a href="<c:url value='/login' />">
@@ -28,7 +29,11 @@
                 </div>
             </div>
         </header>
-
+         --%>
+ 		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="pageTitle" value="아이디 찾기"/>
+        	<jsp:param name="pageContent" value="아이디를 잊으셨다면, 이름과 이메일을 통해 아이디를 찾을 수 있습니다."/>
+ 		</jsp:include>
         <main>
             <div class="formBox">
                 <div id="top">
@@ -41,7 +46,7 @@
                     </form>
                 </div>
                 <div id="bottom">
-                    <button type="submit" id="searchBtn" >찾기</button>
+                    <button type="submit" id="submitBtn" >찾기</button>
                     <button id="cancelBtn">취소</button>
                 </div>
             </div>

@@ -41,6 +41,16 @@ public class MemberController {
 //	public String findProcessHandler() {
 //		
 //	}
+	
+	@GetMapping("/changepw")
+	public String changePw() {
+		return "changepw";
+	}
+	
+//	@PostMapping("/changepwProcess")
+//	public String changePwProcess() {
+//		
+//	}
  	
 	@GetMapping("/mypage")
 	public String mypageHandler() {
