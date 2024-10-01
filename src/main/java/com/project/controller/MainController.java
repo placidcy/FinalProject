@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.project.service.MainSO;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/")
@@ -15,9 +15,12 @@ public class MainController {
 	MainSO mainSO;
 
 	@GetMapping("/")
-	public String getMain(org.springframework.ui.Model model) {
-		// model.addAttribute("course", mainSO.selectCourseItems(3, 1));
-		// model.addAttribute("notice", mainSO.selectNoticeItems());
+	public String getMain(Model model) {
+		int memberId = 3;
+		int page = 1;
+
+		model.addAttribute("course", mainSO.selectCourseItems(memberId, page));
+		model.addAttribute("notice", mainSO.selectNoticeItems());
 
 		return "main/index";
 	}
