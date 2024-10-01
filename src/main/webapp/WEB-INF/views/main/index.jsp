@@ -22,7 +22,7 @@
 			<div class="grid g20 mbe30">
 				<div class="grid fr2 cen v">
 					<h3 class="f24">공지 목록</h3>
-					<a id="seemore" class="end self" href=""> <span>더보기</span>
+					<a id="seemore" class="end self" href="/notice"> <span>더보기</span>
 					</a>
 				</div>
 				<table class="tab notice">

@@ -19,13 +19,14 @@ public class NoticeDAO extends ItemDAO {
 		super();
 	}
 
-	public List<NoticeItem> selecNoticeItems() {
+	public List<NoticeItem> selecNoticeItems(int startNum, int endNum) {
 		this.sqlString = """
 				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id
 				from final_course_post fcp
 				where type_id=0 and p_target = 0
+				order by p_regdate desc
 				""";
-		this.sqlString = setPaging(sqlString, 1, 5);
+		this.sqlString = setPaging(sqlString, startNum, endNum);
 		List<NoticeItem> noticeItems = this.getJdbcTemplate().query(sqlString, new RowMapper<NoticeItem>() {
 			@Override
 			public NoticeItem mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -39,5 +40,14 @@ public class NoticeDAO extends ItemDAO {
 		});
 
 		return noticeItems;
+	}
+
+	public int getCount() {
+		this.sqlString = """
+				select count(*) as cnt
+				from final_course_post fcp
+				where type_id = 0 and p_target = 0
+				""";
+		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class);
 	}
 }

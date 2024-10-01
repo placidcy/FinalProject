@@ -21,7 +21,7 @@ public class MainController {
 		int page = 1;
 
 		model.addAttribute("course", mainSO.selectByMemberId(memberId, page));
-		model.addAttribute("notice", mainSO.selectNoticeItems());
+		model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 		model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 
 		return "main/index";
@@ -43,7 +43,11 @@ public class MainController {
 	}
 
 	@GetMapping("/notice")
-	public String getNotice() {
+	public String getNotice(Model model) {
+		int page = 1;
+
+		model.addAttribute("list", mainSO.selectNoticeItems(page));
+		model.addAttribute("size", mainSO.getSize());
 		return "main/notice";
 	}
 

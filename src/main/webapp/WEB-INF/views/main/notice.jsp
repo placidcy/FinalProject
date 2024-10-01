@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,45 +33,25 @@
 					</div>
 				</div>
 				<table class="tab notice mbe30">
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">2024년 1분기 오프라인 강의 안내</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">홈페이지 점검 안내(2024.08.12(월) 19:00 ~ 24:00)</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">일반 로그인 장애 안내(조치완료)</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">근로자의 날 (5월 1일) 휴무 안내</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">홈페이지 접속 에러 안내(조치완료)</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">홈페이지 점검 안내(2024.07.22(월) 14:30 ~ 24:00)</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">입실 시간 변경 안내</td>
-					</tr>
-					<tr class="item">
-						<td class="prefix">공지</td>
-						<td class="title">일부 QR 코드 인식 장애 안내(조치완료)</td>
-					</tr>
+					<c:forEach items="${list }" var="item">
+						<tr class="item" data-id="${item.noticeId }">
+							<td class="prefix">공지</td>
+							<td class="title">${item.noticeTitle }</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<ul class="pagination">
-					<li class="page disabled">이전</li>
-					<li class="page selected">1</li>
-					<li class="page">2</li>
-					<li class="page">3</li>
-					<li class="page">다음</li>
+					<c:if test="${size > 1 }">
+						<c:forEach varStatus="status" begin="1" end="${size }">
+							<c:if test="${status.count ne 1 }">
+								<li class="page">이전</li>
+							</c:if>
+							<li class="page selected">${status.count}</li>
+							<c:if test="${status.count ne end}">
+								<li class="page">다음</li>
+							</c:if>
+						</c:forEach>
+					</c:if>
 				</ul>
 			</div>
 		</main>

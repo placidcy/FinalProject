@@ -24,10 +24,20 @@ public class MainSO extends ItemSO {
 
 	public int getSizeByMemberId(int memberId) {
 		int limit = 10;
-		return this.getSize(memberId, limit);
+		return this.getSize(courseDAO.getCountByMemberId(memberId), limit);
 	}
 
-	public List<NoticeItem> selectNoticeItems() {
-		return noticeDAO.selecNoticeItems();
+	public List<NoticeItem> selectNoticeItems(int page) {
+		int limit = 10;
+		return noticeDAO.selecNoticeItems(this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectNoticeItems(int startNum, int endNum) {
+		return noticeDAO.selecNoticeItems(startNum, endNum);
+	}
+
+	public int getSize() {
+		int limit = 10;
+		return this.getSize(noticeDAO.getCount(), limit);
 	}
 }
