@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.project.model.CourseItem;
 import com.project.service.MainSO;
 
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ public class MainController {
 	public String getMain(Model model) {
 		int memberId = 3;
 		int page = 1;
+
+		System.out.println(mainSO.selectCourseItems(memberId, page).size());
 
 		model.addAttribute("course", mainSO.selectCourseItems(memberId, page));
 		model.addAttribute("notice", mainSO.selectNoticeItems());

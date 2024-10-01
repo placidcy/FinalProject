@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,45 +27,25 @@
 					</a>
 				</div>
 				<table class="tab notice">
-					<tr class="item">
-						<th>공지</th>
-						<td>9/24 임시 점검 안내</td>
-					</tr>
-					<tr class="item">
-						<th>공지</th>
-						<td>9/20 정기 점검 안내</td>
-					</tr>
+					<c:forEach items="${notice }" var="item">
+						<tr class="item">
+							<th>공지</th>
+							<td>${item.noticeTitle }</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 			<div class="grid g20">
 				<h3 class="f24">강의 목록</h3>
 				<p class="c87c791">강의 시작 14일 전, 강의 종료 14일 후까지 표시됩니다.</p>
 				<table class="tab course">
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">웹 개발</td>
-						<td class="name">HTML의 기초</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">데이터 과학</td>
-						<td class="name">빅데이터와 비즈니스의 미래</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">데이터베이스</td>
-						<td class="name">데이터베이스 기초 및 설계</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">프로그래밍 언어</td>
-						<td class="name">프로그래밍 언어의 기초</td>
-					</tr>
-					<tr class="item">
-						<td class="deco"></td>
-						<td class="category">소프트웨어 개발 도구</td>
-						<td class="name">소프트웨어 개발 도구의 이해와 응용</td>
-					</tr>
+					<c:forEach items="${course }" var="item">
+						<tr class="item">
+							<td class="deco"></td>
+							<td class="category">${item.categoryName }</td>
+							<td class="name">${item.courseName }</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<ul class="pagination">
 					<li class="page disabled">이전</li>
