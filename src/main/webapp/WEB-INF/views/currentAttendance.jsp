@@ -51,9 +51,9 @@
                     <div class="infoArea2">이름</div>
                     <div class="infoArea3">소속</div>
                     <div class="infoArea4">출석</div>
-                    <div class="infoArea5">지각</div>
-                    <div class="infoArea6">결석</div>
-                    <div class="infoArea7">점수</div>
+                    <div class="infoArea4">지각</div>
+                    <div class="infoArea4">결석</div>
+                    <div class="infoArea4">점수</div>
                 </div>
 
                 <!-- for문으로 처리  -->
@@ -63,7 +63,11 @@
                         <div class="infoBox">
 							<div class="infoArea1">${status.count}</div>
 							<div class="infoArea2">${member.m_name}</div>
-							<div class="infoArea3">${member.m_dept}</div>              
+							<div class="infoArea3">${member.m_dept}</div>  
+							<div class="infoArea4">${member.c}</div>
+							<div class="infoArea4">${member.l}</div>
+							<div class="infoArea4">${member.ab}</div>
+							<div class="infoArea4">0</div>
                         </div>
                     </c:forEach>                
                 </div>
