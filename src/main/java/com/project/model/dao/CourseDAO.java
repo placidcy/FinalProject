@@ -19,7 +19,7 @@ public class CourseDAO extends ItemDAO {
 		super();
 	}
 
-	public List<CourseItem> selectCourseItems(int memberId, int startNum, int endNum) {
+	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
 		this.sqlString = """
 				select fcs.course_id, c_title, c_name
 				from final_course fc
@@ -42,5 +42,15 @@ public class CourseDAO extends ItemDAO {
 		}, memberId);
 
 		return courseItems;
+	}
+
+	public int getCountByMemberId(int memberId) {
+		this.sqlString = """
+				select count(*) as cnt
+				from final_course fc
+				inner join final_course_student fcs on fc.course_id = fcs.course_id
+				where member_id = ?
+				""";
+		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class, memberId);
 	}
 }

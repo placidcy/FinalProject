@@ -20,10 +20,9 @@ public class MainController {
 		int memberId = 3;
 		int page = 1;
 
-		System.out.println(mainSO.selectCourseItems(memberId, page).size());
-
-		model.addAttribute("course", mainSO.selectCourseItems(memberId, page));
+		model.addAttribute("course", mainSO.selectByMemberId(memberId, page));
 		model.addAttribute("notice", mainSO.selectNoticeItems());
+		model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 
 		return "main/index";
 	}

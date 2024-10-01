@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -48,11 +47,17 @@
 					</c:forEach>
 				</table>
 				<ul class="pagination">
-					<li class="page disabled">이전</li>
-					<li class="page selected">1</li>
-					<li class="page">2</li>
-					<li class="page">3</li>
-					<li class="page">다음</li>
+					<c:if test="${size > 1 }">
+						<c:forEach varStatus="status" begin="1" end="${size }">
+							<c:if test="${status.count ne 1 }">
+								<li class="page">이전</li>
+							</c:if>
+							<li class="page selected">${status.count}</li>
+							<c:if test="${status.count ne end}">
+								<li class="page">다음</li>
+							</c:if>
+						</c:forEach>
+					</c:if>
 				</ul>
 			</div>
 		</main>
