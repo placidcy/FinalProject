@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.project.model.MemberSO;
+import com.project.model.*;
 
 
 @Controller
@@ -22,6 +22,26 @@ public class MemberController {
 //		
 //	}
 	
+	@GetMapping("/findcheck")
+	public String findHandler() {
+		return "findcheck";
+	}
+	
+	@GetMapping("/findid")
+	public String findIdHandler() {
+		return "findid";
+	}
+	
+	@GetMapping("/findpw")
+	public String findPwHandler() {
+		return "findpw";
+	}
+	
+//	@PostMapping("/findProcess")
+//	public String findProcessHandler() {
+//		
+//	}
+ 	
 	@GetMapping("/mypage")
 	public String mypageHandler() {
 		return "mypage";

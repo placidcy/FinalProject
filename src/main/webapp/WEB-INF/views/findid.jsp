@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,12 +9,13 @@
     <title>CHECK-아이디 찾기</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
+    <script src="/resources/js/find.js"></script>
 </head>
 <body>
     <div id="container">
         <header>
             <div id="header1">
-                <a href="#">
+                <a href="<c:url value='/login' />">
                     <h1>CHECK</h1>
                 </a>
             </div>
@@ -33,13 +35,13 @@
                     <p>이름과 이메일을 입력하세요.</p>
                 </div>
                 <div id="middle">
-                    <form action="" method="POST">
+                    <form id="findProcess" action="<c:url value='/findidProcess' />" method="POST">
                         <input type="text" name="inputname" placeholder="이름 입력" required />
                         <input type="email" name="inputemail" placeholder="이메일 입력" required />
                     </form>
                 </div>
                 <div id="bottom">
-                    <button type="submit" id="searchBtn">찾기</button>
+                    <button type="submit" id="searchBtn" >찾기</button>
                     <button id="cancelBtn">취소</button>
                 </div>
             </div>

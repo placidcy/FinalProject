@@ -8,6 +8,7 @@
     <title>CHECK-비밀번호 찾기</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
+    <script src="/resources/js/find.js"></script>
 </head>
 <body>
     <div id="container">
@@ -29,13 +30,19 @@
 
         <main>
             <div class="formBox">
-                <p>아이디과 이메일을 입력하세요.</p>
-                <form action="" method="POST">
-                    <input type="text" name="inputid" placeholder="아이디 입력" required />
-                    <input type="email" name="inputemail" placeholder="이메일 입력" required />
+            	<div id="top">
+	                <p>아이디과 이메일을 입력하세요.</p>
+            	</div>
+            	<div id="middle">
+	                <form action="" method="POST">
+	                    <input type="text" name="inputid" placeholder="아이디 입력" required />
+	                    <input type="email" name="inputemail" placeholder="이메일 입력" required />
+	                </form>
+            	</div>
+            	<div id="bottom">
                     <button type="submit" id="searchBtn">찾기</button>
                     <button id="cancelBtn">취소</button>
-                </form>
+            	</div>
             </div>
         </main>
     </div>

@@ -24,7 +24,7 @@
         </header>
 
         <main>
-            <form action="#" method="Post">
+            <form action="<c:url value='/signupProcess' />" method="Post">
                 <table>
                     <tr>
                         <th>
