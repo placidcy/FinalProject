@@ -27,10 +27,10 @@ public class AttendanceController {
 	
 	@GetMapping("/currentAttendance")
 	public String currentAttendanceHandler(Model model) {
-		/*일단 2로 둠*/
-		List<MemberDO> memberList = attendanceDAO.selectAllMemberByCourse(2);
 		
-		model.addAttribute("memberList",memberList);
+		List<StudentAttendanceDO> memberList = attendanceDAO.selectAllMemberAttendanceByCourse(2);
+		model.addAttribute("memberList", memberList);
+		
 		return "currentAttendance";
 	}
 	
