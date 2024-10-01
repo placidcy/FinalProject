@@ -21,11 +21,11 @@ public class CourseDAO extends ItemDAO {
 
 	public List<CourseItem> selectCourseItems(int memberId, int startNum, int endNum) {
 		this.sqlString = """
-				select course_id, c_title, c_name
+				select fcs.course_id, c_title, c_name
 				from final_course fc
 				inner join final_course_category fcc on fc.category_id = fcc.category_id
 				inner join final_course_student fcs on fc.course_id = fcs.course_id
-				where member_id = ? and sysdate between e_state-14 and e_edate+14;
+				where member_id = ? and sysdate between c_sdate-14 and c_edate+14
 				""";
 		this.sqlString = setPaging(sqlString, startNum, endNum);
 		List<CourseItem> courseItems = this.getJdbcTemplate().query(sqlString, new RowMapper<CourseItem>() {
