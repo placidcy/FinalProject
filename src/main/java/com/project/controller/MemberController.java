@@ -6,20 +6,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.project.model.*;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 public class MemberController {
 	
-	MemberSO memberSO;
+	MemberDAO memberDao;
 	
 	@GetMapping("/login")
 	public String loginHandler() {
 		return "login";
 	}
 	
-//	@PostMapping
-//	public String loginProcessHandler() {
+//	@PostMapping("/loginProcess")
+//	public String loginProcessHandler(HttpSession session, MemberDO m_acctid, MemberDO m_acctpw) {
+//
 //		
+////		if(m_role=1) {
+////			return "/";
+////		}
+////		else if(m_role=2){
+////			return "/";
+////		}
+////		else if(m_role=0) {
+////			return "/";
+////		}
 //	}
 	
 	@GetMapping("/findcheck")

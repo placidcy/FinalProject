@@ -1,6 +1,7 @@
 package com.project.model;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class MemberDAO {
@@ -10,6 +11,16 @@ public class MemberDAO {
 	
 	public MemberDAO(DataSource ds) {
 		this.jdbcTemplate = new JdbcTemplate(ds);
+	}
+	
+	public MemberDO login(String m_acctid, String m_acctpwd) {
+		MemberDO member = null;
+		this.sql = "select m_name, m_acctid, m_email, m_tel, m_dept, m_pfp, m_role"
+				+ "from final_member"
+				+ "where m_acctid=? and m_acctpwd=?";
+		
+		member = this.jdbcTemplate.queryForObject(sql, new MemberRowMapper(), m_acctid, m_acctpwd);
+		return member;
 	}
 	
 	public int inserMember(MemberDO member) {
@@ -28,7 +39,7 @@ public class MemberDAO {
 	
 	public int updatePassword(MemberDO member) {
 		this.sql = "update final_member"
-				+ "set m_acctpw=?"
+				+ "set m_acctpwd=?"
 				+ "where member_id=?";
 		return this.jdbcTemplate.update(sql, member.getM_acctpwd(), member.getMember_id());
 	}
