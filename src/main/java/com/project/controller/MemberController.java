@@ -34,6 +34,20 @@ public class MemberController {
 ////		}
 //	}
 	
+	@GetMapping("/agreement")
+	public String agreementHandler() {
+		return "agreement";
+	}
+	
+	@GetMapping("/signupform")
+	public String signupHandler() {
+		return "signupform";
+	}
+	
+//	@PostMapping("/signupProcess")
+//	public String signupProcessHandler() {
+//	}
+	
 	@GetMapping("/findcheck")
 	public String findHandler() {
 		return "findcheck";
@@ -55,12 +69,12 @@ public class MemberController {
 //	}
 	
 	@GetMapping("/changepw")
-	public String changePw() {
+	public String changePwdHandler() {
 		return "changepw";
 	}
 	
 //	@PostMapping("/changepwProcess")
-//	public String changePwProcess() {
+//	public String changePwdProcessHandler() {
 //		
 //	}
  	

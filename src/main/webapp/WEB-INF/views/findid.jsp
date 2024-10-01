@@ -9,7 +9,7 @@
     <title>CHECK-아이디 찾기</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
-    <script src="/resources/js/find.js"></script>
+    <script src="/resources/js/buttonLocation.js"></script>
 </head>
 <body>
     <div id="container">

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECK-회원 가입</title>
     <link rel="stylesheet" href="resources/css/header.css" />
-    <link rel="stylesheet" href="resources/css/joinform.css" />
+    <link rel="stylesheet" href="resources/css/signupform.css" />
 </head>
 <body>
     <div id="container">
@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div id="header3">
-                <p>회원 정보 입력 <span>(필수)</span></p>
+                <p>회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span></p>
                 <hr>
             </div>
         </header>
@@ -28,7 +28,7 @@
                 <table>
                     <tr>
                         <th>
-                            <label for="inputid">아이디</label>
+                            <label for="inputid">아이디 <span>*</span></label>
                         </th>
                         <td>
                             <input type="text" name="inputId" id="inputId" required />
@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputpw">비밀번호</label>
+                            <label for="inputpw">비밀번호 <span>*</span></label>
                         </th>
                         <td>
                             <input type="password" name="inputpw" id="inputpw" required />
@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <label for="confirmpw">비밀번호 확인</label>
+                            <label for="confirmpw">비밀번호 확인 <span>*</span></label>
                         </th>
                         <td>
                             <input type="password" name="confirmpw" id="confirmpw" required />
@@ -55,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputname">성명</label>
+                            <label for="inputname">성명 <span>*</span></label>
                         </th>
                         <td>
                             <input type="password" name="inputname" id="inputname" required />
@@ -64,16 +64,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputtel">전화번호</label>
-                        </th>
-                        <td>
-                            <input type="tel" name="inputtel" id="inputtel" required />
-                            <p>010-1234-5678 형식으로 입력하세요.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label for="inputmail">이메일</label>
+                            <label for="inputmail">이메일 <span>*</span></label>
                         </th>
                         <td>
                             <input type="email" name="inputmail" id="inputmail" required />
@@ -82,16 +73,25 @@
                     </tr>
                     <tr>
                         <th>
+                            <label for="inputtel">전화번호</label>
+                        </th>
+                        <td>
+                            <input type="tel" name="inputtel" id="inputtel" />
+                            <p>010-1234-5678 형식으로 입력하세요.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             <label for="inputgroup">소속 / 조직</label>
                         </th>
                         <td>
-                            <input type="password" name="inputgroup" id="inputgroup" required />
+                            <input type="password" name="inputgroup" id="inputgroup" />
                             <p>현재 소속을 입력하세요.</p>
                         </td>
                     </tr>
                 </table>
                 <hr />
-                <button type="submit" id="joinBtn">가입</button>
+                <button type="submit" id="signupBtn">가입</button>
             </form>
         </main>
     </div>

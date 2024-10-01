@@ -1,7 +1,6 @@
 package com.project.model;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class MemberDAO {

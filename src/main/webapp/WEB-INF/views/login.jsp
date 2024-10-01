@@ -28,7 +28,7 @@
         <a href="<c:url value='/findcheck' />">
           <span>아이디 / 비밀번호 찾기</span>
         </a>
-        <a href="<c:url value='/signup-agreement' />">
+        <a href="<c:url value='/agreement' />">
           <span id="signup">회원가입</span>
         </a>
       </div>
