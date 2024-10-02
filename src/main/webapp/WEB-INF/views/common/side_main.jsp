@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<!-- 메인 사이드바 -->
 <aside class="sidebar main cffffff">
 	<div class="flex cen v h logo p50">
 		<h1 class="f32">
