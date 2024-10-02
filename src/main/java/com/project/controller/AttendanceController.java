@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
@@ -18,6 +19,9 @@ public class AttendanceController {
 	
 	@Autowired
 	private AttendanceDAO attendanceDAO;
+	
+	@Autowired
+	private CourseDAO courseDAO;
 	
 	@GetMapping("/attendanceCalendar")
 	public String attendanceCalendarHandler() {
@@ -42,10 +46,18 @@ public class AttendanceController {
 	@GetMapping("/setAttendance")
 	public String setAttendanceHandler(@RequestParam(value="setAttPage", defaultValue="0") int setAttPage ,Model model) {
 		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(2);
-		
+		CourseDO courseScore =courseDAO.getCourseScore(2);
+		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("setAttPage",setAttPage);
 		model.addAttribute("courseDateInfo", courseDateInfo);
 		return "setAttendance";
+	}
+	
+	@PostMapping("setAttendanceScore")
+	public String setAttendanceScoreHandler(CourseDO courseDO) {
+		courseDO.setCourse_id(2);
+		attendanceDAO.updateAttendanceScore(courseDO);
+		return "redirect:setAttendance";
 	}
 	
 	

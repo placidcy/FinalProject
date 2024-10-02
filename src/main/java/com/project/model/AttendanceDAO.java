@@ -52,6 +52,11 @@ public class AttendanceDAO {
 		},course_id);
 	}
 	
+	public void updateAttendanceScore(CourseDO courseDO) {
+		this.sql="update final_course set c_prsscore=?, c_absscore=?, c_trdscore=? where course_id=?";
+		this.jdbcTemplate.update(this.sql, courseDO.getC_prsscore(),courseDO.getC_absscore(),courseDO.getC_trdscore(), courseDO.getCourse_id());
+	}
+	
 	
 
 	
