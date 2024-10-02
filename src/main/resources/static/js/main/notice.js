@@ -4,29 +4,61 @@
 
 let currentId = -1;
 
-function createRowElement() {
+function createRow() {
 	let tr = document.createElement('tr');
 	let td = document.createElement('td');
 
+	/* tr 태그에 대한 속성 추가 */
 	tr.classList.add('item');
 	tr.classList.add('details');
+
+	/* tr 태그의 자식인 td 태그에 대한 속성 추가 */
 	tr.append(td);
 
 	return tr;
 }
 
+function insertAfter(parent, newRow, currentRow) {
+	parent.insertBefore(newRow, currentRow.nextSibling);
+}
+
+function responseHandler(error, response) {
+	console.log(response);
+}
+
+function sendRequest(url, method, callback) {
+	const xhr = new XMLHttpRequest();
+	xhr.open(method, url, true);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				const response = JSON.parse(xhr.responseText);
+				callback(null, response);
+			} else {
+				callback(new Error(`AJAX 요청 실패: ${xhr.status}`));
+			}
+		}
+	};
+
+	xhr.send();
+}
+
 function clickHandler(item) {
 	const itemId = item.dataset.id;
-	const newRow = createRowElement();
+	const parent = item.parentNode;
+	const newRow = createRow();
 
 	if (currentId === itemId) {
 		return false;
 	} else {
-		const currentRow = document.querySelector('tr.details');
-		if (currentRow !== null) {
-			item.parentNode.removeChild(currentRow);
+		const details = document.querySelector('tr.details');
+		if (details !== null) {
+			const url = '/api/notice/getItem?noticeId=' + itemId;
+			parent.removeChild(details);
+			sendRequest(url, 'GET', responseHandler);
 		}
-		item.parentNode.insertBefore(newRow, item.nextSibling.nextSibling);
+		insertAfter(parent, newRow, item);
 	}
 }
 

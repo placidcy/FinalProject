@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.model.NoticeItem;
 import com.project.service.MainSO;
 
 import org.springframework.ui.Model;
@@ -82,6 +84,12 @@ public class MainController {
 		model.addAttribute("menu", "notice");
 		model.addAttribute("keyword", keyword);
 		return "main/notice_search";
+	}
+
+	@ResponseBody
+	@GetMapping("/api/notice/getItem")
+	public NoticeItem getNoticeItem(@RequestParam(name = "noticeId") int noticeId) {
+		return null;
 	}
 
 	@GetMapping("/mypage")
