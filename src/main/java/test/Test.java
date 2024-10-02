@@ -1,10 +1,17 @@
 package test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 import com.project.model.AttendanceDAO;
+import com.project.model.CourseDO;
 import com.project.model.StudentAttendanceDO;
 
 public class Test {
@@ -22,11 +29,12 @@ public class Test {
 		ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
+		CourseDO courseDateInfo = attDao.getCourseInfo(2);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime edate = courseDateInfo.getC_edate();
+		LocalDateTime sdate =courseDateInfo.getC_sdate();
+		System.out.print(ChronoUnit.WEEKS.between(sdate, edate)); 
 		
-		for(StudentAttendanceDO student : attDao.selectAllMemberAttendanceByCourse(2)) {
-			System.out.print(student.getAb());
-		}
-
 
 	}
 
