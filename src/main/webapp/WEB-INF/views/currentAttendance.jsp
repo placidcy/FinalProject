@@ -59,22 +59,52 @@
                 <!-- for문으로 처리  -->
                 <!-- status-bar 컴포넌트 화 -->
                 <div id="infoList">
-					<c:forEach items="${memberList}" var="member" varStatus="status">
+					<c:forEach items="${memberList}" var="member" varStatus="status" begin="${currAttPage*10}" end="${currAttPage*10 + 9}">
                         <div class="infoBox">
-							<div class="infoArea1">${status.count}</div>
+							<div class="infoArea1">${status.count+ currAttPage*10}</div>
 							<div class="infoArea2">${member.m_name}</div>
 							<div class="infoArea3">${member.m_dept}</div>  
 							<div class="infoArea4">${member.c}</div>
 							<div class="infoArea4">${member.l}</div>
 							<div class="infoArea4">${member.ab}</div>
-							<div class="infoArea4">0</div>
+							<div class="infoArea4">${courseScore.c_prsscore*member.c + courseScore.c_trdscore*member.l + courseScore.c_absscore*member.ab}</div>
                         </div>
                     </c:forEach>                
                 </div>
             </div>
-            <!--자바스크립트로 버튼 활성화 비활성화-->
-            <div id="page">
-                <button id="minusPage">이전</button> <span id="targetPage" class="pageNumber">1</span> <span class="pageNumber">2</span> <span class="pageNumber">3</span> <button id="plusPage">다음</button>
+
+			<div id="page">
+				
+				<c:choose>
+					<c:when test="${currAttPage==0}">
+						<button id="minusPage" disabled>이전</button>
+					</c:when>
+					<c:otherwise>
+						<a href="/currentAttendance?currAttPage=${currAttPage-1}"><button id="minusPage">이전</button></a>	
+					</c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+					<c:when test="${memberList.size()==0}">
+						<span id="targetPage" class="pageNumber">1</span>
+					</c:when>
+					<c:otherwise>
+						<c:forEach  begin="0" end="${Math.floor((memberList.size()-1)/10)}" varStatus="status">
+							<a href="/currentAttendance?currAttPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span></a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				
+				
+				<c:choose>
+					<c:when test="${memberList.size()==0 || Math.floor((memberList.size()-1)/10) == currAttPage}">
+						<button id="plusPage" disabled>다음</button>
+					</c:when>
+					<c:otherwise>
+						<a href="/currentAttendance?currAttPage=${currAttPage+1}"><button id="plusPage">다음</button></a>
+					</c:otherwise>
+				</c:choose>
+
             </div>
          </div>
         </main>

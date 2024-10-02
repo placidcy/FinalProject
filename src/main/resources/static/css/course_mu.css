@@ -191,7 +191,7 @@ ul {
     #menuList{
         position:absolute;
         width:100%;
-        top:69px;
+        top:65px;
         text-align: center;
         background-color: #2F2A2A;
         color:white;
@@ -201,6 +201,11 @@ ul {
         padding-bottom: 100px;
     }
 
+	#menuList>li>a{
+		text-decoration:none;
+		color:white;
+
+	}
     #menuList>li{
         height:50px;
         padding-top:7px;
