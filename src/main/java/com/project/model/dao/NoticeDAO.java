@@ -28,6 +28,7 @@ public class NoticeDAO extends ItemDAO {
 
 				noticeItem.setNoticeId(rs.getInt("post_id"));
 				noticeItem.setNoticeTitle(rs.getString("p_title"));
+				noticeItem.setRegdate(rs.getString("p_regdate"));
 
 				return noticeItem;
 			}
@@ -46,6 +47,7 @@ public class NoticeDAO extends ItemDAO {
 
 				noticeItem.setNoticeId(rs.getInt("post_id"));
 				noticeItem.setNoticeTitle(rs.getString("p_title"));
+				noticeItem.setRegdate(rs.getString("p_regdate"));
 
 				return noticeItem;
 			}
@@ -72,7 +74,7 @@ public class NoticeDAO extends ItemDAO {
 				where type_id = 0 and p_target = 0
 				""");
 		this.query.put("selectAll", """
-				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id
+				select  to_char(p_regdate, 'YYYY-MM-DD') as p_regdate, p_title, p_contents, post_id
 				from final_course_post fcp
 				where type_id=0 and p_target = 0
 				order by p_regdate desc

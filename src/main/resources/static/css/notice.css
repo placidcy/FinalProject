@@ -11,6 +11,7 @@
 }
 
 .tab.notice .item {
+	position: relative;
 	display: flex;
 	width: 100%;
 	padding: 20px 40px;
@@ -27,6 +28,14 @@
 
 .title {
 	font-size: 20px;
+}
+
+.date {
+	position: absolute;
+	color: #888888;
+	font-size: 14px;
+	text-align: end;
+	right: 20px;
 }
 
 .keyword {
