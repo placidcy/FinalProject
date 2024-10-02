@@ -34,6 +34,22 @@ public class AttendanceDAO {
 		},course_id);
 	}
 	
+	public CourseScheduleDO getCourseDateInfo(int course_id) {
+		this.sql = "select * from final_course_schedule where course_id=?";
+	
+		return this.jdbcTemplate.queryForObject(this.sql, new RowMapper<CourseScheduleDO>() {
+			@Override
+			public CourseScheduleDO mapRow(ResultSet rs, int rownum) throws SQLException{
+				CourseScheduleDO courseSchedule = new CourseScheduleDO();
+				courseSchedule.setS_stime(rs.getString("s_stime"));
+				courseSchedule.setS_etime(rs.getString("s_etime"));
+				courseSchedule.setS_sdate(rs.getTimestamp("s_sdate").toLocalDateTime());
+				courseSchedule.setS_edate(rs.getTimestamp("s_edate").toLocalDateTime());	
+				return courseSchedule;
+			}
+		},course_id);
+	}
+	
 	
 
 	
