@@ -1,30 +1,6 @@
-@media screen and (max-width: 768px) {
-	.course .item {
-		display: grid !important;
-	}
-	.course .name {
-		width: auto !important;
-		font-size: 20px !important;
-	}
-	.course .item .category {
-		width: 100% !important;
-		background: transparent !important;
-		color: #24C2A2;
-		font-size: 14px;
-		padding: 0 !important;
-		font-weight: normal !important;
-		margin: 0;
-		text-align: start !important;
-	}
-}
-
 .tab, .tab .item {
 	width: 100%;
 	box-sizing: border-box;
-}
-
-.tab .item:hover {
-	cursor: pointer;
 }
 
 .tab.notice {
@@ -62,6 +38,31 @@
 	background-color: #87C791;
 }
 
+.course .item .enter {
+	position: absolute;
+	right: 15px;
+	height: 100%;
+	display: grid;
+	align-items: center;
+}
+
+.enter>button {
+	width: 100px;
+	height: 100px;
+	border: none;
+	background: #d9d9d9;
+	color: white;
+	border-radius: 100%;
+	transition: 0.5s;
+	font-size: 16px;
+}
+
+.enter>button:hover {
+	cursor: pointer;
+	color: black;
+	background: #87c791;
+}
+
 .course .item .category {
 	width: 120px;
 	padding: 10px;
@@ -79,6 +80,35 @@
 	font-weight: bold;
 }
 
+.course .item .info {
+	text-align: start;
+}
+
 #seemore {
 	font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+	.course .item {
+		display: grid;
+		gap: 10px;
+	}
+	.course .item .name {
+		width: auto;
+		font-size: 20px;
+	}
+	.course .item .category {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		color: #24C2A2;
+		background: transparent;
+		font-size: 14px;
+		font-weight: normal;
+		text-align: start;
+	}
+	.tab.notice .item {
+		font-size: 16px;
+		height: 30px;
+	}
 }

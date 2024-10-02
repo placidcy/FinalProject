@@ -10,7 +10,6 @@
 <title>CHECK-수강신청</title>
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/mobile.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="js/mobile.js"></script>
@@ -33,26 +32,21 @@
                             </svg>
 					</div>
 				</div>
-				<table class="tab course">
+				<table class="tab course" id="register">
 					<c:forEach items="${list }" var="item">
 						<tr class="item">
 							<td class="deco"></td>
 							<td class="category">${item.categoryName }</td>
 							<td class="name">${item.courseName }</td>
-							<td class="flex g20 cen v">
-								<div class="grid" style="text-align: start;">
-									<p>
-										<strong>기간</strong> ${item.startDate }-${item.endDate }
-									</p>
-									<p>
-										<strong>정원</strong> ${item.count }/${item.limits }(명)
-									</p>
-								</div>
-								<div>
-									<button class="btn bg87c791 cffffff"
-										data-id="${item.courseId }">신청</button>
-								</div>
+							<td class="info">
+								<p>
+									<strong>기간</strong> ${item.startDate }-${item.endDate }
+								</p>
+								<p>
+									<strong>정원</strong> ${item.count }/${item.limits }(명)
+								</p>
 							</td>
+							<td class="enter"><button>신청하기</button></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -43,6 +43,7 @@
 							<td class="deco"></td>
 							<td class="category">${item.categoryName }</td>
 							<td class="name">${item.courseName }</td>
+							<td class="enter"><button>입장하기</button></td>
 						</tr>
 					</c:forEach>
 				</table>
