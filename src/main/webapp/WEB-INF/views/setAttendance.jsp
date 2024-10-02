@@ -39,13 +39,15 @@
                 <!-- for문으로 처리 12개 -->
                 <!-- 입실시간, 퇴실시간 눌렀을때 모달창 처리 -->
                 <div id="infoList">
+					<c:forEach items="${courseDateInfo}" var="dateInfo" varStatus="status">
                     <div class="infoBox">
-                        <div class="infoArea1">1</div>
-                        <div class="infoArea2">${courseDateInfo.s_sdate}</div>
-                        <div class="infoArea2">${courseDateInfo.s_edate}</div>
-                        <div class="infoArea3">${courseDateInfo.s_stime}</div>
-                        <div class="infoArea3">${courseDateInfo.s_etime}</div>
+                        <div class="infoArea1">${status.count}</div>
+						<div class="infoArea2">${dateInfo.s_sdate.getYear()}-${dateInfo.getZero(dateInfo.s_sdate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_sdate.getDayOfMonth())}</div>
+						<div class="infoArea2">${dateInfo.s_edate.getYear()}-${dateInfo.getZero(dateInfo.s_edate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_edate.getDayOfMonth())}</div>
+                        <div class="infoArea3">${dateInfo.getCtime(dateInfo.s_stime, dateInfo.s_cinterm)}</div>
+                        <div class="infoArea3">${dateInfo.getCtime(dateInfo.s_etime, dateInfo.s_coutterm)}</div>
                     </div>
+					</c:forEach>
 
                     
                     
