@@ -353,7 +353,7 @@ a {
 @media screen and (max-width: 768px) {
 	.container {
 		width: 100%;
-		height: 100%;
+		height: auto;
 		display: grid !important;
 	}
 	.modal {

@@ -58,13 +58,19 @@
 				</table>
 				<ul class="pagination">
 					<c:if test="${page ne 1 }">
-						<li class="page">이전</li>
+						<a href="/register?page=${page-1 }">
+							<li class="page">이전</li>
+						</a>
 					</c:if>
 					<c:forEach var="i" begin="1" end="${size }">
-						<li class="page selected">${i}</li>
+						<a href="/register?page=${i}">
+							<li class="page <c:if test="${i eq page }">selected</c:if>">${i}</li>
+						</a>
 					</c:forEach>
 					<c:if test="${page ne size}">
-						<li class="page">다음</li>
+						<a href="/register?page=${page+1 }">
+							<li class="page">다음</li>
+						</a>
 					</c:if>
 				</ul>
 			</div>
