@@ -45,7 +45,7 @@
 						<li class="page">이전</li>
 					</c:if>
 					<c:forEach var="i" begin="1" end="${size }">
-						<li class="page selected">${i}</li>
+						<li class="page <c:if test="${i eq page }">selected</c:if>">${i}</li>
 					</c:forEach>
 					<c:if test="${page ne size}">
 						<li class="page">다음</li>

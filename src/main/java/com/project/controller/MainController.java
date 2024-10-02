@@ -23,12 +23,13 @@ public class MainController {
 		model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 		model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 		model.addAttribute("page", page);
-
+		model.addAttribute("menu", "main");
 		return "main/index";
 	}
 
 	@GetMapping("/checkin")
-	public String getChecin() {
+	public String getChecin(Model model) {
+		model.addAttribute("menu", "checkin");
 		return "main/checkin";
 	}
 
@@ -38,12 +39,13 @@ public class MainController {
 		model.addAttribute("list", mainSO.selectByDates(Integer.parseInt(page)));
 		model.addAttribute("size", mainSO.getSizeByDates());
 		model.addAttribute("page", page);
-
+		model.addAttribute("menu", "register");
 		return "main/register";
 	}
 
 	@GetMapping("/notification")
-	public String getNotifications() {
+	public String getNotifications(Model model) {
+		model.addAttribute("menu", "alert");
 		return "main/alert";
 	}
 
@@ -53,12 +55,13 @@ public class MainController {
 		model.addAttribute("list", mainSO.selectNoticeItems(Integer.parseInt(page)));
 		model.addAttribute("size", mainSO.getSize());
 		model.addAttribute("page", page);
-
+		model.addAttribute("menu", "notice");
 		return "main/notice";
 	}
 
 	@GetMapping("/mypage")
-	public String getMyPage() {
+	public String getMyPage(Model model) {
+		model.addAttribute("menu", "mypage");
 		return "main/mypage";
 	}
 
