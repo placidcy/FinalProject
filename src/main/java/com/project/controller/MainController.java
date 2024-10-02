@@ -89,7 +89,7 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/notice/getItem")
 	public NoticeItem getNoticeItem(@RequestParam(name = "noticeId") int noticeId) {
-		return null;
+		return mainSO.selectOne(noticeId);
 	}
 
 	@GetMapping("/mypage")

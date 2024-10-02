@@ -4,7 +4,25 @@
 
 let currentId = -1;
 
-function createRow() {
+function createPost(item) {
+	let post = document.createElement('div');
+	let contents = document.createElement('pre');
+
+	post.classList.add('post');
+	contents.classList.add('contents');
+
+	if (item.postContents === null) {
+		item.postContents = '';
+	}
+
+	contents.innerHTML = item.postContents.trim() !== '' ? item.postContents : '(내용 없음)';
+
+	post.appendChild(contents);
+
+	return post;
+}
+
+function createRow(item) {
 	let tr = document.createElement('tr');
 	let td = document.createElement('td');
 
@@ -13,6 +31,7 @@ function createRow() {
 	tr.classList.add('details');
 
 	/* tr 태그의 자식인 td 태그에 대한 속성 추가 */
+	td.appendChild(createPost(item));
 	tr.append(td);
 
 	return tr;
@@ -22,8 +41,14 @@ function insertAfter(parent, newRow, currentRow) {
 	parent.insertBefore(newRow, currentRow.nextSibling);
 }
 
+let parentNode, currentNode;
+
 function responseHandler(error, response) {
-	console.log(response);
+	if (error === null) {
+		insertAfter(parentNode, createRow(response), currentNode);
+	} else {
+		console.error(error);
+	}
 }
 
 function sendRequest(url, method, callback) {
@@ -46,19 +71,20 @@ function sendRequest(url, method, callback) {
 
 function clickHandler(item) {
 	const itemId = item.dataset.id;
-	const parent = item.parentNode;
-	const newRow = createRow();
+
+	currentNode = item;
+	parentNode = item.parentNode;
 
 	if (currentId === itemId) {
 		return false;
 	} else {
+		currentId = itemId;
 		const details = document.querySelector('tr.details');
 		if (details !== null) {
-			const url = '/api/notice/getItem?noticeId=' + itemId;
-			parent.removeChild(details);
-			sendRequest(url, 'GET', responseHandler);
+			parentNode.removeChild(details);
 		}
-		insertAfter(parent, newRow, item);
+		const url = '/api/notice/getItem?noticeId=' + itemId;
+		sendRequest(url, 'GET', responseHandler);
 	}
 }
 

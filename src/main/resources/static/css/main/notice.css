@@ -43,6 +43,13 @@
 	text-align: center;
 }
 
+/* 게시글 관련 CSS 정의 */
+.post>.contents {
+	width: 100%;
+	padding: 0;
+	white-space: pre-wrap;
+}
+
 @media screen and (max-width: 768px) {
 	.title {
 		font-size: 16px !important;

@@ -17,6 +17,8 @@ public class MainSO extends ItemSO {
 	@Autowired
 	private NoticeDAO noticeDAO;
 
+	/* 강의 관련 메소드 정의 */
+
 	public List<CourseItem> selectByMemberId(int memberId, int page) {
 		int limit = 10;
 		return courseDAO.selectByMemberId(memberId, this.getStartNum(page, limit), this.getEndNum(page, limit));
@@ -47,6 +49,8 @@ public class MainSO extends ItemSO {
 		return this.getSize(courseDAO.getCountByDates(keyword), limit);
 	}
 
+	/* 공지사항 관련 DAO 메소드 정의 */
+
 	public List<NoticeItem> selectNoticeItems(int page) {
 		int limit = 10;
 		return noticeDAO.selectAll(this.getStartNum(page, limit), this.getEndNum(page, limit));
@@ -59,6 +63,10 @@ public class MainSO extends ItemSO {
 
 	public List<NoticeItem> selectNoticeItems(int startNum, int endNum) {
 		return noticeDAO.selectAll(startNum, endNum);
+	}
+
+	public NoticeItem selectOne(int noticeId) {
+		return noticeDAO.selectOne(noticeId);
 	}
 
 	public int getSize() {

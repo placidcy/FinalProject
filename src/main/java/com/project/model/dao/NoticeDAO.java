@@ -18,6 +18,25 @@ public class NoticeDAO extends ItemDAO {
 		init();
 	}
 
+	public NoticeItem selectOne(int noticeId) {
+		this.sql = query.get("selectOne");
+		NoticeItem noticeItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<NoticeItem>() {
+			@Override
+			public NoticeItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				NoticeItem noticeItem = new NoticeItem();
+
+				noticeItem.setNoticeId(rs.getInt("post_id"));
+				noticeItem.setNoticeTitle(rs.getString("p_title"));
+				noticeItem.setRegdate(rs.getString("p_regdate"));
+				noticeItem.setNoticeContents(rs.getString("p_contents"));
+				noticeItem.setAttachments(rs.getArray("p_attms"));
+
+				return noticeItem;
+			}
+		}, noticeId);
+		return noticeItem;
+	}
+
 	public List<NoticeItem> selectAll(int startNum, int endNum) {
 		this.sql = query.get("selectAll");
 		this.sql = setPaging(sql, startNum, endNum);
@@ -79,6 +98,15 @@ public class NoticeDAO extends ItemDAO {
 				where type_id=0 and p_target = 0
 				order by p_regdate desc
 				""");
-		this.query.put("", "");
+		this.query.put("selectOne",
+				"""
+						select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, p_attms, fcp.post_id
+						from final_course_post fcp left outer join (
+							select post_id, LISTAGG(p_attm, ',')  WITHIN GROUP(ORDER BY p_attm) as p_attms
+							from final_post_attm
+							group by post_id
+						) fpa on fcp.post_id = fpa.post_id
+						where fcp.post_id = ?
+						""");
 	}
 }

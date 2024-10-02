@@ -1,34 +1,41 @@
 package com.project.model;
 
-public class NoticeItem {
-	private int noticeId;
-	private String noticeTitle;
-	private String regdate;
+public class NoticeItem extends PostItem {
+	private int target;
 
 	public NoticeItem() {
+		super();
+	}
+
+	public int getTarget() {
+		return target;
+	}
+
+	public void setTarget(int target) {
+		this.target = target;
 	}
 
 	public int getNoticeId() {
-		return noticeId;
-	}
-
-	public String getNoticeTitle() {
-		return noticeTitle;
-	}
-
-	public String getRegdate() {
-		return regdate;
+		return super.getPostId();
 	}
 
 	public void setNoticeId(int noticeId) {
-		this.noticeId = noticeId;
+		super.setPostId(noticeId);
+	}
+
+	public String getNoticeTitle() {
+		return super.getPostTitle();
 	}
 
 	public void setNoticeTitle(String noticeTitle) {
-		this.noticeTitle = noticeTitle;
+		super.setPostTitle(noticeTitle);
 	}
 
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
+	public String getNoticeContents() {
+		return super.getPostContents();
+	}
+
+	public void setNoticeContents(String noticeContents) {
+		super.setPostContents(noticeContents);
 	}
 }
