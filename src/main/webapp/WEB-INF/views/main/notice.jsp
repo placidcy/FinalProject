@@ -8,13 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHECK-공지사항</title>
 <link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="css/notice.css">
+<link rel="stylesheet" href="/css/main/notice.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="js/mobile.js"></script>
-<script type="text/javascript">
-	
-</script>
+<script src="/js/main/mobile.js"></script>
 </head>
 
 <body>
