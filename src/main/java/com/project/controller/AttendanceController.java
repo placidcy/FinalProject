@@ -40,8 +40,8 @@ public class AttendanceController {
 	
 	@GetMapping("/setAttendance")
 	public String setAttendanceHandler(Model model) {
-		CourseScheduleDO courseDateInfo = attendanceDAO.getCourseDateInfo(2);
-		
+		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(2);
+
 		model.addAttribute("courseDateInfo", courseDateInfo);
 		return "setAttendance";
 	}
