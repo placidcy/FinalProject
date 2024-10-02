@@ -108,30 +108,15 @@ hr{
 }
 
 .infoArea3{
-  width:14%;
-  text-align: center;
-}
-
-.infoArea4{
   display: flex;
   align-items: center;
   justify-content: center;
-  width:33.5%;
+  width:38%;
 }
 
-.infoArea5{
-  width:9.5%;
-  text-align: center;
-}
-
-.infoArea6{
-  width:9.5%;
-  text-align: center;
-}
-
-.infoArea7{
-  width:9.5%;
-  text-align: center;
+.infoArea4{
+	width:9.5%;
+	text-align: center;
 }
 
 

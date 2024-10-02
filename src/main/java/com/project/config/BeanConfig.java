@@ -1,11 +1,10 @@
 package com.project.config;
 
+import com.project.model.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import com.project.model.*;
 
 @Configuration
 public class BeanConfig {
@@ -34,5 +33,15 @@ public class BeanConfig {
 	@Bean
 	public MemberDAO memberDao(DataSource dataSource) {
 		return new MemberDAO(dataSource);
+	}
+
+	@Bean
+	public AttendanceDAO attendanceDAO(DataSource dataSource){
+		return new AttendanceDAO(dataSource);
+	}
+	
+	@Bean
+	public CourseDAO courseDAO(DataSource dataSource){
+		return new CourseDAO(dataSource);
 	}
 }
