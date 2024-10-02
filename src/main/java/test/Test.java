@@ -29,11 +29,9 @@ public class Test {
 		ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
-		CourseDO courseDateInfo = attDao.getCourseInfo(2);
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDateTime edate = courseDateInfo.getC_edate();
-		LocalDateTime sdate =courseDateInfo.getC_sdate();
-		System.out.print(ChronoUnit.WEEKS.between(sdate, edate)); 
+		
 		
 
 	}
