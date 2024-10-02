@@ -1,10 +1,7 @@
 package com.project.model.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.DataSource;
+import java.sql.*;
+import java.util.*;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,25 +10,20 @@ import com.project.model.CourseItem;
 
 @Repository
 public class CourseDAO extends ItemDAO {
-	private String sqlString;
+	private String sql;
+	private Map<String, String> query;
 
 	public CourseDAO() {
 		super();
+		init();
 	}
 
 	public List<CourseItem> selectByDates(int startNum, int endNum) {
-		this.sqlString = """
-				select fcs.course_id, c_title, c_name, c_count, c_limits, to_char(c_sdate, 'yyyy.mm.dd') c_sdate, to_char(c_edate, 'yyyy.mm.dd') c_edate
-				from final_course fc
-				inner join final_course_category fcc on fc.category_id = fcc.category_id
-				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
-				where c_count < c_limits
-				order by c_sdate, c_edate desc
-				""";
+		this.sql = query.get("selectByDates");
 //		and sysdate between e_sdate and e_edate""";
-		this.sqlString = setPaging(sqlString, startNum, endNum);
+		this.sql = setPaging(sql, startNum, endNum);
 
-		List<CourseItem> courseItems = this.getJdbcTemplate().query(sqlString, new RowMapper<CourseItem>() {
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
 			@Override
 			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 				CourseItem courseItem = new CourseItem();
@@ -52,18 +44,11 @@ public class CourseDAO extends ItemDAO {
 	}
 
 	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum) {
-		this.sqlString = """
-				select fcs.course_id, c_title, c_name, c_count, c_limits, to_char(c_sdate, 'yyyy.mm.dd') c_sdate, to_char(c_edate, 'yyyy.mm.dd') c_edate
-				from final_course fc
-				inner join final_course_category fcc on fc.category_id = fcc.category_id
-				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
-				where c_count < c_limits and c_name like ?
-				order by c_sdate, c_edate desc
-				""";
+		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
 //		and sysdate between e_sdate and e_edate""";
-		this.sqlString = setPaging(sqlString, startNum, endNum);
+		this.sql = setPaging(sql, startNum, endNum);
 
-		List<CourseItem> courseItems = this.getJdbcTemplate().query(sqlString, new RowMapper<CourseItem>() {
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
 			@Override
 			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 				CourseItem courseItem = new CourseItem();
@@ -84,37 +69,22 @@ public class CourseDAO extends ItemDAO {
 	}
 
 	public int getCountByDates() {
-		this.sqlString = """
-				select count(*) as cnt
-				from final_course fc
-				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
-				where c_count < c_limits
-				""";
+		this.sql = query.get("getCountByDates");
 
-		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class);
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
 	public int getCountByDates(String keyword) {
-		this.sqlString = """
-				select count(*) as cnt
-				from final_course fc
-				inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
-				where c_count < c_limits and c_name like ?
-				""";
+		this.sql = query.get("getCountByDates") + " and c_name like ?";
 
-		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class, "%" + keyword + "%");
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%");
 	}
 
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
-		this.sqlString = """
-				select fcs.course_id, c_title, c_name
-				from final_course fc
-				inner join final_course_category fcc on fc.category_id = fcc.category_id
-				inner join final_course_student fcs on fc.course_id = fcs.course_id
-				where member_id = ? """;
+		this.sql = query.get("selectByMemberId");
 //		and sysdate between c_sdate-14 and c_edate+14""";
-		this.sqlString = setPaging(sqlString, startNum, endNum);
-		List<CourseItem> courseItems = this.getJdbcTemplate().query(sqlString, new RowMapper<CourseItem>() {
+		this.sql = setPaging(sql, startNum, endNum);
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
 			@Override
 			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 				CourseItem courseItem = new CourseItem();
@@ -131,13 +101,37 @@ public class CourseDAO extends ItemDAO {
 	}
 
 	public int getCountByMemberId(int memberId) {
-		this.sqlString = """
+		this.sql = query.get("getCountByMemberId");
+
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
+	}
+
+	private void init() {
+		this.query = new HashMap<String, String>();
+		this.query.put("selectByDates",
+				"""
+						select fcs.course_id, c_title, c_name, c_count, c_limits, to_char(c_sdate, 'yyyy.mm.dd') c_sdate, to_char(c_edate, 'yyyy.mm.dd') c_edate
+						from final_course fc
+						inner join final_course_category fcc on fc.category_id = fcc.category_id
+						inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
+						where c_count < c_limits
+						order by c_sdate, c_edate desc""");
+		this.query.put("selectByMemberId", """
+				select fcs.course_id, c_title, c_name
+				from final_course fc
+				inner join final_course_category fcc on fc.category_id = fcc.category_id
+				inner join final_course_student fcs on fc.course_id = fcs.course_id
+				where member_id = ? """);
+		this.query.put("getCountByDates",
+				"""
+						select count(*) as cnt
+						from final_course fc
+						inner join (select course_id, count(*) as c_count from final_course_student fcs group by course_id) fcs on fcs.course_id = fc.course_id
+						where c_count < c_limits""");
+		this.query.put("getCountByMemberId", """
 				select count(*) as cnt
 				from final_course fc
 				inner join final_course_student fcs on fc.course_id = fcs.course_id
-				where member_id = ?
-				""";
-
-		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class, memberId);
+				where member_id = ?""");
 	}
 }

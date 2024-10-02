@@ -1,10 +1,7 @@
 package com.project.model.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.DataSource;
+import java.sql.*;
+import java.util.*;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,21 +10,18 @@ import com.project.model.NoticeItem;
 
 @Repository
 public class NoticeDAO extends ItemDAO {
-	private String sqlString;
+	private String sql;
+	private Map<String, String> query;
 
 	public NoticeDAO() {
 		super();
+		init();
 	}
 
 	public List<NoticeItem> selectAll(int startNum, int endNum) {
-		this.sqlString = """
-				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id
-				from final_course_post fcp
-				where type_id=0 and p_target = 0
-				order by p_regdate desc
-				""";
-		this.sqlString = setPaging(sqlString, startNum, endNum);
-		List<NoticeItem> noticeItems = this.getJdbcTemplate().query(sqlString, new RowMapper<NoticeItem>() {
+		this.sql = query.get("selectAll");
+		this.sql = setPaging(sql, startNum, endNum);
+		List<NoticeItem> noticeItems = this.getJdbcTemplate().query(sql, new RowMapper<NoticeItem>() {
 			@Override
 			public NoticeItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 				NoticeItem noticeItem = new NoticeItem();
@@ -43,14 +37,9 @@ public class NoticeDAO extends ItemDAO {
 	}
 
 	public List<NoticeItem> selectByKeyword(String keyword, int startNum, int endNum) {
-		this.sqlString = """
-				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id
-				from final_course_post fcp
-				where type_id=0 and p_target = 0 and (p_title like ? or p_contents like ?)
-				order by p_regdate desc
-				""";
-		this.sqlString = setPaging(sqlString, startNum, endNum);
-		List<NoticeItem> noticeItems = this.getJdbcTemplate().query(sqlString, new RowMapper<NoticeItem>() {
+		this.sql = "select * from (" + query.get("selectAll") + ") where p_title like ? or p_contents like ?";
+		this.sql = setPaging(sql, startNum, endNum);
+		List<NoticeItem> noticeItems = this.getJdbcTemplate().query(sql, new RowMapper<NoticeItem>() {
 			@Override
 			public NoticeItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 				NoticeItem noticeItem = new NoticeItem();
@@ -66,21 +55,28 @@ public class NoticeDAO extends ItemDAO {
 	}
 
 	public int getCount() {
-		this.sqlString = """
-				select count(*) as cnt
-				from final_course_post fcp
-				where type_id = 0 and p_target = 0
-				""";
-		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class);
+		this.sql = query.get("getCount");
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
 	public int getCount(String keyword) {
-		this.sqlString = """
+		this.sql = query.get("getCount") + "  and p_title like ? or p_contents like ?";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%", "%" + keyword + "%");
+	}
+
+	private void init() {
+		this.query = new HashMap<String, String>();
+		this.query.put("getCount", """
 				select count(*) as cnt
 				from final_course_post fcp
-				where type_id = 0 and p_target = 0 and (p_title like ? or p_contents like ?)
-				""";
-		return this.getJdbcTemplate().queryForObject(sqlString, Integer.class, "%" + keyword + "%",
-				"%" + keyword + "%");
+				where type_id = 0 and p_target = 0
+				""");
+		this.query.put("selectAll", """
+				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id
+				from final_course_post fcp
+				where type_id=0 and p_target = 0
+				order by p_regdate desc
+				""");
+		this.query.put("", "");
 	}
 }
