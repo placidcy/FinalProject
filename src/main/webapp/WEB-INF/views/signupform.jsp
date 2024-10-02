@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,23 +26,23 @@
         </header>
 
         <main>
-            <form action="<c:url value='/signupProcess' />" method="Post">
+            <form action="<c:url value='/signupProcess' />" method="POST">
                 <table>
                     <tr>
                         <th>
-                            <label for="inputid">아이디 <span>*</span></label>
+                            <label for="m_acctid">아이디 <span>*</span></label>
                         </th>
                         <td>
-                            <input type="text" name="inputId" id="inputId" required />
+                            <input type="text" name="m_acctid" id="m_acctid" required />
                             <p>영문 또는 숫자 조합 5~15자로 입력하세요.</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputpw">비밀번호 <span>*</span></label>
+                            <label for="m_acctpwd">비밀번호 <span>*</span></label>
                         </th>
                         <td>
-                            <input type="password" name="inputpw" id="inputpw" required />
+                            <input type="password" name="m_acctpwd" id="m_acctpwd" required />
                             <p>영문 대/소문자와 숫자, 특수문자 중 3가지의 조합 8~24자로 입력하세요.</p>
                         </td>
                     </tr>
@@ -55,37 +57,37 @@
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputname">성명 <span>*</span></label>
+                            <label for="m_name">성명 <span>*</span></label>
                         </th>
                         <td>
-                            <input type="password" name="inputname" id="inputname" required />
+                            <input type="text" name="m_name" id="m_name" required />
                             <p>이름을 입력하세요.</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputmail">이메일 <span>*</span></label>
+                            <label for="m_email">이메일 <span>*</span></label>
                         </th>
                         <td>
-                            <input type="email" name="inputmail" id="inputmail" required />
+                            <input type="email" name="m_email" id="m_email" required />
                             <p>example@example.com 형식으로 입력하세요.</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputtel">전화번호</label>
+                            <label for="m_tel">전화번호</label>
                         </th>
                         <td>
-                            <input type="tel" name="inputtel" id="inputtel" />
+                            <input type="tel" name="m_tel" id="m_tel" />
                             <p>010-1234-5678 형식으로 입력하세요.</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label for="inputgroup">소속 / 조직</label>
+                            <label for="m_dept">소속 / 조직</label>
                         </th>
                         <td>
-                            <input type="password" name="inputgroup" id="inputgroup" />
+                            <input type="text" name="m_dept" id="m_dept" />
                             <p>현재 소속을 입력하세요.</p>
                         </td>
                     </tr>

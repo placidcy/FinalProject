@@ -62,6 +62,10 @@ input {
     margin: 0 10px;
 }
 
+.checkLabel {
+	cursor: pointer;
+}
+
 .agreeBtn {
     flex-basis: auto;
     text-align: right;

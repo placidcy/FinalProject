@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,12 +26,12 @@
         </header>
         
         <main>
-        	<form id="agreementForm" action="signupform" method="GET">
+        	<form id="agreementForm" action="agreementForm" method="POST">
 	            <div class="section">
 		            <div class="labelBox">
 		            	<label class="msg">모든 약관에 동의하시겠습니까?</label>
-		            	<input type="checkbox" name="checkbox" id="allagree" />
-		            	<label for="allagree" class="agreeCheckbox">전체 동의</label>
+		            	<input type="checkbox" name="allagree" id="allagree" />
+		            	<label for="allagree" class="checkLabel">전체 동의</label>
 		            </div>
 	            </div>
 	            <div class="section">
@@ -77,8 +77,8 @@
 	                </pre>
 	                <div class="labelBox">
 		                <label class="msg">이용약관에 동의하지 않으면 서비스를 제공받을 수 없습니다. 동의하시겠습니까?</label>
-		                <input type="checkbox" name="checkbox" id="memberagree" required />
-		                <label for="memberagree" class="agreeCheckbox">동의함</label>	                
+		                <input type="checkbox" name="memberagree" id="memberagree" required />
+		                <label for="memberagree" class="checkLabel">동의함</label>	                
 	                </div>
 	            </div>
 	            <div class="section">
@@ -120,8 +120,8 @@
 	                </pre>
 	                <div class="labelBox">
 		                <label class="msg">이용약관에 동의하지 않으면 서비스를 제공받을 수 없습니다. 동의하시겠습니까?</label>
-		                <input type="checkbox" name="checkbox" id="personalagree" required />
-		                <label for="personalagree" class="agreeCheckbox">동의함</label>
+		                <input type="checkbox" name="personalagree" id="personalagree" required />
+		                <label for="personalagree" class="checkLabel">동의함</label>
 	                </div>
 	            </div>
 	            <hr>

@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.project.model.*;
+
 @Configuration
 public class BeanConfig {
 	@Bean
@@ -27,5 +29,10 @@ public class BeanConfig {
 	@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
+	}
+	
+	@Bean
+	public MemberDAO memberDao(DataSource dataSource) {
+		return new MemberDAO(dataSource);
 	}
 }

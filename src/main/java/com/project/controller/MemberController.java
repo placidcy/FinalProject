@@ -3,8 +3,10 @@ package com.project.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.model.*;
+import com.project.model.MemberSO;
+import com.project.model.request.SignupRequest;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -12,7 +14,11 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class MemberController {
 	
-	MemberDAO memberDao;
+	private MemberSO memberSo;
+	
+	public MemberController(MemberSO memberSo) {
+		this.memberSo = memberSo;
+	}
 	
 	@GetMapping("/login")
 	public String loginHandler() {
@@ -39,14 +45,35 @@ public class MemberController {
 		return "agreement";
 	}
 	
+	@PostMapping("/agreementForm")
+	public String checkAgreement(
+			@RequestParam(value = "allagree", required = false) boolean allagree,
+			@RequestParam(value = "memberagree", required = true) boolean memberagree,
+			@RequestParam(value = "personalagree", required = true) boolean personalagree) {
+		if(memberagree && personalagree) {
+			return "/signupform";
+		}
+		else {
+			return "redirect:/agreement";
+		}
+	}
+	
 	@GetMapping("/signupform")
 	public String signupHandler() {
 		return "signupform";
 	}
 	
-//	@PostMapping("/signupProcess")
-//	public String signupProcessHandler() {
-//	}
+	@PostMapping("/signupProcess")
+	public String signupProcessHandler(SignupRequest req) {
+		try {
+			memberSo.signupStudent(req);
+			return "redirect:/login";
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:/signupform?error=signupFailed";
+		}
+	}
 	
 	@GetMapping("/findcheck")
 	public String findHandler() {
