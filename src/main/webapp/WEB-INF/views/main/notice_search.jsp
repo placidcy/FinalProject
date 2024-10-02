@@ -12,11 +12,7 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/js/mobile.js"></script>
-<script type="text/javascript">
-	
-</script>
 </head>
-
 <body>
 	<div class="container flex">
 		<!-- 메인 사이드바 -->
@@ -25,19 +21,11 @@
 		<main class="contents bgf2f2f2">
 			<div class="grid g20">
 				<h3 class="f24">공지사항</h3>
-				<form class="search box" action="/notice/search" method="POST">
-					<input type="text" name="keyword" placeholder="검색어를 입력하세요.">
-					<div class="iconBtn">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
-							width="20px" height="20px">
-                                <path
-								d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z" />
-                            </svg>
-					</div>
-				</form>
+				<!-- 서치바 -->
+				<jsp:include page="./notice_searchbar.jsp"></jsp:include>
 				<table class="tab notice mbe30">
 					<tr>
-						<td class="p30"><b>'${keyword }'</b> <c:choose>
+						<td class="keyword"><b>'${keyword }'</b> <c:choose>
 								<c:when test="${empty list }">
 								에 대한 검색결과가 존재하지 않습니다.
 								</c:when>
