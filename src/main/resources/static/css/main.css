@@ -88,6 +88,11 @@
 	font-weight: bold;
 }
 
+.keyword {
+	padding: 20px;
+	text-align: center;
+}
+
 @media screen and (max-width: 768px) {
 	.course .item {
 		display: grid;

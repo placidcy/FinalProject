@@ -44,6 +44,18 @@ public class MainController {
 		return "main/register";
 	}
 
+	@RequestMapping("/register/search")
+	public String searchCourse(Model model,
+			@RequestParam(required = false, defaultValue = "1", name = "page") String page,
+			@RequestParam(required = true, name = "keyword") String keyword) {
+		model.addAttribute("list", mainSO.selectByDates(keyword, Integer.parseInt(page)));
+		model.addAttribute("size", mainSO.getSizeByDates(keyword));
+		model.addAttribute("page", page);
+		model.addAttribute("menu", "register");
+		model.addAttribute("keyword", keyword);
+		return "main/register_search";
+	}
+
 	@GetMapping("/notification")
 	public String getNotifications(Model model) {
 		model.addAttribute("menu", "alert");
