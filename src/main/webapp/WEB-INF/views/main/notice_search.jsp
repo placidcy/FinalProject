@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHECK-공지사항</title>
-<link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="css/notice.css">
+<title>CHECK-공지사항 : '${keyword }' 검색결과</title>
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/notice.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="js/mobile.js"></script>
+<script src="/js/mobile.js"></script>
 <script type="text/javascript">
 	
 </script>
@@ -36,6 +36,16 @@
 					</div>
 				</form>
 				<table class="tab notice mbe30">
+					<tr>
+						<td class="p30"><b>'${keyword }'</b> <c:choose>
+								<c:when test="${empty list }">
+								에 대한 검색결과가 존재하지 않습니다.
+								</c:when>
+								<c:otherwise>
+								에 대한 검색결과입니다.
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
 					<c:forEach items="${list }" var="item">
 						<tr class="item" data-id="${item.noticeId }">
 							<td class="prefix">공지</td>
@@ -45,17 +55,17 @@
 				</table>
 				<ul class="pagination">
 					<c:if test="${page ne 1 }">
-						<a href="/notice?page=${page-1 }">
+						<a href="/notice/search?page=${page-1 }&keyword=${keyword}">
 							<li class="page">이전</li>
 						</a>
 					</c:if>
 					<c:forEach var="i" begin="1" end="${size }">
-						<a href="/notice?page=${i}">
+						<a href="/notice/search?page=${i}&keyword=${keyword}">
 							<li class="page <c:if test="${i eq page }">selected</c:if>">${i}</li>
 						</a>
 					</c:forEach>
 					<c:if test="${page ne size}">
-						<a href="/notice?page=${page+1 }">
+						<a href="/notice/search?page=${page+1 }&keyword=${keyword}">
 							<li class="page">다음</li>
 						</a>
 					</c:if>

@@ -3,6 +3,7 @@ package com.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,6 +58,18 @@ public class MainController {
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "notice");
 		return "main/notice";
+	}
+
+	@RequestMapping("/notice/search")
+	public String searchNotice(Model model,
+			@RequestParam(required = false, defaultValue = "1", name = "page") String page,
+			@RequestParam(required = true, name = "keyword") String keyword) {
+		model.addAttribute("list", mainSO.selectNoticeItems(Integer.parseInt(page), keyword));
+		model.addAttribute("size", mainSO.getSize(keyword));
+		model.addAttribute("page", page);
+		model.addAttribute("menu", "notice");
+		model.addAttribute("keyword", keyword);
+		return "main/notice_search";
 	}
 
 	@GetMapping("/mypage")

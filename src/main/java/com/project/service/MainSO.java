@@ -39,15 +39,25 @@ public class MainSO extends ItemSO {
 
 	public List<NoticeItem> selectNoticeItems(int page) {
 		int limit = 10;
-		return noticeDAO.selecNoticeItems(this.getStartNum(page, limit), this.getEndNum(page, limit));
+		return noticeDAO.selectAll(this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectNoticeItems(int page, String keyword) {
+		int limit = 10;
+		return noticeDAO.selectByKeyword(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
 
 	public List<NoticeItem> selectNoticeItems(int startNum, int endNum) {
-		return noticeDAO.selecNoticeItems(startNum, endNum);
+		return noticeDAO.selectAll(startNum, endNum);
 	}
 
 	public int getSize() {
 		int limit = 10;
 		return this.getSize(noticeDAO.getCount(), limit);
+	}
+
+	public int getSize(String keyword) {
+		int limit = 10;
+		return this.getSize(noticeDAO.getCount(keyword), limit);
 	}
 }
