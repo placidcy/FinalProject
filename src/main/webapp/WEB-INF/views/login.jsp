@@ -12,12 +12,15 @@
 </head>
 <body>
   <div id="container">
+<%--   
     <header>
       <a href="<c:url value='/login' />">
         <h1>CHECK</h1>
       </a>
     </header>
-
+ --%>
+ 
+ 	<jsp:include page="common/find_header.jsp" />
     <main>
       <form action="<c:url value='/loginProcess' />" method="POST" name="loginForm">
         <input type="text" name="inputid" placeholder="아이디 입력" required />

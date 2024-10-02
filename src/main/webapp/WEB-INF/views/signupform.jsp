@@ -13,6 +13,7 @@
 </head>
 <body>
     <div id="container">
+<!--     
         <header>
             <div id="header1">
                 <a href="#">
@@ -24,7 +25,11 @@
                 <hr>
             </div>
         </header>
-
+ -->
+		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="noContent" />
+ 			<jsp:param name="pageTitle" value="회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span>"/>
+ 		</jsp:include>
         <main>
             <form action="<c:url value='/signupProcess' />" method="POST">
                 <table>
