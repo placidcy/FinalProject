@@ -39,9 +39,9 @@
                 <!-- for문으로 처리 12개 -->
                 <!-- 입실시간, 퇴실시간 눌렀을때 모달창 처리 -->
                 <div id="infoList">
-					<c:forEach items="${courseDateInfo}" var="dateInfo" varStatus="status">
+					<c:forEach items="${courseDateInfo}" var="dateInfo" varStatus="status" begin="${setAttPage*10}" end="${setAttPage*10 + 9}">
                     <div class="infoBox">
-                        <div class="infoArea1">${status.count}</div>
+                        <div class="infoArea1">${setAttPage*10+status.count}</div>
 						<div class="infoArea2">${dateInfo.s_sdate.getYear()}-${dateInfo.getZero(dateInfo.s_sdate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_sdate.getDayOfMonth())}</div>
 						<div class="infoArea2">${dateInfo.s_edate.getYear()}-${dateInfo.getZero(dateInfo.s_edate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_edate.getDayOfMonth())}</div>
                         <div class="infoArea3">${dateInfo.getCtime(dateInfo.s_stime, dateInfo.s_cinterm)}</div>
@@ -55,8 +55,28 @@
             </div>
             <!--자바스크립트로 버튼 활성화 비활성화-->
             <!-- 12개의 목록마다 1페이지 -->
+			
             <div id="page">
-                <button id="minusPage">이전</button> <span id="targetPage" class="pageNumber">1</span> <span class="pageNumber">2</span> <span class="pageNumber">3</span> <button id="plusPage">다음</button>
+				<c:choose>
+					<c:when test="${setAttPage==0}">
+						<button id="minusPage" disabled>이전</button>
+					</c:when>
+					<c:otherwise>
+						<a href="/setAttendance?setAttPage=${setAttPage-1}"><button id="minusPage">이전</button></a>	
+					</c:otherwise>
+				</c:choose>
+					<c:forEach  begin="0" end="${Math.floor((courseDateInfo.size()-0.1)/10)}" varStatus="status">
+					<a href="/setAttendance?setAttPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span> </a>
+					</c:forEach>
+				<c:choose>
+					<c:when test="${Math.floor((courseDateInfo.size()-0.1)/10) == setAttPage}">
+						<button id="plusPage" disabled>다음</button>
+					</c:when>
+					<c:otherwise>
+						<a href="/setAttendance?setAttPage=${setAttPage+1}"><button id="plusPage">다음</button></a>
+					</c:otherwise>
+				</c:choose>
+
             </div>
          </div>
         </main>

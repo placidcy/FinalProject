@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
 
@@ -39,9 +40,10 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("/setAttendance")
-	public String setAttendanceHandler(Model model) {
+	public String setAttendanceHandler(@RequestParam(value="setAttPage", defaultValue="0") int setAttPage ,Model model) {
 		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(2);
-
+		
+		model.addAttribute("setAttPage",setAttPage);
 		model.addAttribute("courseDateInfo", courseDateInfo);
 		return "setAttendance";
 	}
