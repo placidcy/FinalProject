@@ -6,7 +6,7 @@
     <div class="course-sidebar-left">
         <ul class="sidebar-menu">
             <li>
-                <a href="">
+                <a href="mypage">
                     <img class="sidebar-icon" src="/resources/img/mypage.png" alt="">
                 </a>
             </li>
@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="alert">
                     <img class="sidebar-icon" src="/resources/img/alert.png" alt="">
                 </a>
             </li>
@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="login">
                     <img class="sidebar-icon" src="/resources/img/logout.png" alt="">
                 </a>
             </li>
@@ -45,7 +45,7 @@
 
     <div class="course-sidebar-right">
         <div class="sidebar-logo">
-            <a href=""><h1>CHECK</h1></a>
+            <a href="home"><h1>CHECK</h1></a>
             <h3>HTML의 기초</h3>
                 <hr>
         </div>
@@ -61,23 +61,45 @@
             </div>
         </div>
         <!-- 강사/학생에 따라 인라인 css 적용 -->
-        <ul class="sidebar-menu">
-            <a href="" class="sidebar-menu-selected" style="width:25%"><li>홈</li></a>
-            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 게시판</li></a>
-            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>출결 확인</li></a>
-            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>수강 신청 관리</li></a>
-            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 일정 관리</li></a>
-        </ul>
-
-        <ul id="menuList" style="visibility: hidden;">
-            <li>코스</li>
-            <li>출석 체크</li>
-            <li>수강 신청</li>
-            <li>알림</li>
-            <li>공지사항</li>
-            <li>마이 페이지</li>
-            <li>로그아웃</li>
-        </ul>
+		<c:choose>
+		<c:when test="${m_role==1}">
+			<ul class="sidebar-menu">
+	            <a href="home" class="sidebar-menu-selected" style="width:33.333%"><li>홈</li></a>
+	            <a href="" class="sidebar-menu-unselected" style="width:33.333%"><li>강의 게시판</li></a>
+	            <a href="attendanceCalendar" class="sidebar-menu-unselected" style="width:33.333%"><li>출결 확인</li></a>        
+	        </ul>
+			
+	        <ul id="menuList" style="visibility: hidden;">
+	            <li>코스</li>
+	            <li>출석 체크</li>
+	            <li>수강 신청</li>
+	            <li><a href="alert">알림</a></li>
+	            <li>공지사항</li>
+	            <li><a href="mypage">마이 페이지</a></li>
+	            <li>로그아웃</li>
+	        </ul>
+		</c:when>
+        
+		<c:otherwise>
+			<ul class="sidebar-menu">
+	            <a href="home" class="sidebar-menu-selected" style="width:25%"><li>홈</li></a>
+	            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 게시판</li></a>
+	            <a href="currentAttendance" class="sidebar-menu-unselected" style="width:25%"><li>출결 확인</li></a>
+	            <a href="acceptanceManagement" class="sidebar-menu-unselected" style="width:25%"><li>수강 신청 관리</li></a>
+	            <a href="courseAttend" class="sidebar-menu-unselected" style="width:25%"><li>강의 일정 관리</li></a>
+	        </ul>
+			
+	        <ul id="menuList" style="visibility: hidden;">
+	            <li>코스</li>
+	            <li>출석 체크</li>
+	            <li><a href="alert">알림</a></li>
+	            <li>공지사항</li>
+	            <li><a href="mypage">마이 페이지</a></li>
+	            <li>로그아웃</li>
+	        </ul>
+		</c:otherwise>
+		</c:choose>
+		
     </div>
 
     
