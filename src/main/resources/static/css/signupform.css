@@ -2,6 +2,11 @@ main {
     margin: 1% 0;
 }
 
+span {
+	font-weight: bold;
+	color: red;
+}
+
 table {
     text-align: left;
     width: 100%;
@@ -46,13 +51,13 @@ button {
     box-shadow: 0 2px 4px #d9d9d9;
 }
 
-#joinBtn {
+#signupBtn {
     background-color: #87c691;
     float: right;
 }
 
 @media (hover:hover) and (pointer:fine) {
-    #joinBtn:hover {
+    #signupBtn:hover {
         background-color: #88b890;
     }
 }

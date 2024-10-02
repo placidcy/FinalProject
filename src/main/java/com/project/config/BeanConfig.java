@@ -31,6 +31,11 @@ public class BeanConfig {
 	}
 	
 	@Bean
+	public MemberDAO memberDao(DataSource dataSource) {
+		return new MemberDAO(dataSource);
+	}
+
+	@Bean
 	public AttendanceDAO attendanceDAO(DataSource dataSource){
 		return new AttendanceDAO(dataSource);
 	}

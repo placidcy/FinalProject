@@ -45,7 +45,7 @@ button {
     font-weight: bold;
 }
 
-#modifyBtn {
+#submitBtn {
     background-color: #87c691;
     float: right;
 }
@@ -56,7 +56,7 @@ button {
 }
 
 @media (hover:hover) and (pointer:fine) {
-    #modifyBtn:hover {
+    #submitBtn:hover {
         background-color: #88b890;
     }
     #cancelBtn:hover {

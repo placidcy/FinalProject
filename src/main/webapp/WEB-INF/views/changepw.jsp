@@ -8,9 +8,11 @@
     <title>CHECK-비밀번호 재설정</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/changepw.css" />
+    <script src="/resources/js/find.js"></script>
 </head>
 <body>
     <div id="container">
+<!--     
         <header>
             <div id="header1">
                 <a href="#">
@@ -26,9 +28,13 @@
                 </div>
             </div>
         </header>
-
+ -->
+ 		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="pageTitle" value="비밀번호 재설정"/>
+        	<jsp:param name="pageContent" value="비밀번호를 변경할 수 있습니다."/>
+ 		</jsp:include>
         <main>
-            <form action="#" method="Post">
+            <form id="findProcess" action="<c:url value='/changepwProcess' />" method="Post">
                 <table>
                     <tr>
                         <th>
@@ -62,7 +68,7 @@
             <hr />
             <div class="btn">
                 <button id="cancelBtn">취소</button>
-                <button type="submit" id="modifyBtn">수정</button>
+                <button type="submit" id="submitBtn">수정</button>
             </div>
         </main>
     </div>
