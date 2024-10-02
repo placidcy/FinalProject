@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script src="/js/search.js"></script>
+<script src="/js/main/search.js"></script>
 <form class="search box" action="/register/search" method="POST">
 	<input type="text" name="keyword" placeholder="강의명을 입력하세요.">
 	<button class="iconBtn">
