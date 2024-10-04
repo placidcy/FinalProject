@@ -117,10 +117,12 @@ public class StudentAttendanceDO {
 	
 	public String getEmblem(int status) {
 		String result = "○";
-		if(status==1) {
+		if(status==3) {
 			result = "▲";
 		}else if(status==2) {
 			result = "X";
+		}else if(status == 0) {
+			result = "";
 		}
 		
 		return result;
