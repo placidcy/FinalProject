@@ -20,6 +20,8 @@ function submitHandler(event){
 	}
 }
 
+
+
 function init() {
 	document.querySelector('#submitBtn').addEventListener('click', submitHandler);
 	menuHandler();

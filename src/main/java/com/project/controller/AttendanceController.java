@@ -1,8 +1,5 @@
 package com.project.controller;
 
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.text.ParseException;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,12 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("/attendanceDetail")
-	public String attendanceDetailHandler() {
+	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, Model model) {
+		List<StudentAttendanceDO> attList = attendanceDAO.selectStudentAttendance(studentAtt.getStudent_id());
+		
+		model.addAttribute("studentAtt", attendanceDAO.getStudentAttendance(studentAtt.getStudent_id()));
+		model.addAttribute("attList", attList);
+		
 		return "attendanceDetail";
 	}
 	
@@ -37,12 +39,12 @@ public class AttendanceController {
 	/*강의 밑에 강사 밑에 학생을 조회해야할 듯 하다 강의 하나만으로는 강사가 구분 안 됨*/
 	@GetMapping("/currentAttendance")
 	public String currentAttendanceHandler(@RequestParam(value="currAttPage", defaultValue="0") int currAttPage, Model model) {
-		List<StudentAttendanceDO> memberList = attendanceDAO.selectAllMemberAttendanceByCourse(2);
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.selectAllMemberAttendanceByCourse(2);
 		CourseDO courseScore =courseDAO.getCourseScore(2);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",currAttPage);
-		model.addAttribute("memberList", memberList);
+		model.addAttribute("studentAttList", studentAttList);
 		
 		return "currentAttendance";
 	}
@@ -61,7 +63,10 @@ public class AttendanceController {
 	
 	@PostMapping("/setAttendanceScore")
 	public String setAttendanceScoreHandler(CourseDO courseDO) {
+		/*세션에서 받아올 거임*/
 		courseDO.setCourse_id(2);
+		/*이후 삭제할 것*/
+		courseDO.setCourse_id(courseDO.getCourse_id());
 		attendanceDAO.updateAttendanceScore(courseDO);
 		return "redirect:setAttendance";
 	}

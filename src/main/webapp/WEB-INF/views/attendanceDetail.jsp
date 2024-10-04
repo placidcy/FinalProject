@@ -21,15 +21,35 @@
         <main> 
         <button id="allListBtn">전체 목록</button>
         <div id="infoBox-header">
+			
             <div id="infoBox">
-              <div id="infoTitle">소속</div><div id="infoContent">KDT 유데미</div>
+			 <c:choose>
+			  <c:when test="${studentAtt.m_dept == null}">
+				<div id="infoTitle">소속</div><div id="infoContent">-</div>
+			  </c:when>
+			  <c:otherwise>
+               <div id="infoTitle">소속</div><div id="infoContent">${studentAtt.m_dept}</div>
+			  </c:otherwise>
+			 </c:choose>	 
             </div>  
+			
             <div id="infoBox">
-              <div id="infoTitle">이름</div><div id="infoContent">손흥민</div>
+              <div id="infoTitle">이름</div><div id="infoContent">${studentAtt.m_name}</div>
             </div>
-            <div id="infoBox">
-              <div id="infoTitle">휴대 전화</div><div id="infoContent">010-1234-5678</div>
+			
+			<div id="infoBox">
+		 	 <c:choose>
+			  <c:when test="${studentAtt.m_tel == null}">
+				<div id="infoTitle">휴대 전화</div><div id="infoContent">-</div>
+			   </c:when>
+			   <c:otherwise>
+	            <div id="infoTitle">휴대 전화</div><div id="infoContent">${studentAtt.m_tel}</div>
+			   </c:otherwise>
+	  		  </c:choose>	 
+
             </div>
+			
+			
         </div>
 
 
@@ -40,16 +60,16 @@
                     <br />
                     <div id="summationInfoBox">
                         <div class="summationInfo">
-                            <span class="summationFont">출석</span><br/> <strong>65</strong>
+                            <span class="summationFont">출석</span><br/> <strong>${studentAtt.c}</strong>
                         </div>
                         <div class="summationInfo">
-                            <span class="summationFont">지각</span><br/> <strong>6</strong>
+                            <span class="summationFont">지각</span><br/> <strong>${studentAtt.l}</strong>
                         </div>
                         <div class="summationInfo">
-                            <span class="summationFont">조퇴</span><br/> <strong>1</strong>
+                            <span class="summationFont">조퇴</span><br/> <strong>${studentAtt.d}</strong>
                         </div>
                         <div class="summationInfo">
-                            <span class="summationFont">결석</span><br/> <strong>2</strong>
+                            <span class="summationFont">결석</span><br/> <strong>${studentAtt.ab}</strong>
                         </div>
                     </div>
                 </div>
