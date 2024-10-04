@@ -122,6 +122,30 @@ public class CourseDAO extends ItemDAO {
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
+	public CourseItem getInfo(int courseId) {
+		this.sql = query.get("getInfo");
+		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setdDay(rs.getInt("c_dday"));
+				courseItem.setStartDate(rs.getString("c_sdate"));
+				courseItem.setEndDate(rs.getString("c_edate"));
+				courseItem.setInstList(rs.getString("c_ilist"));
+				courseItem.setQrCode(rs.getString("q_code"));
+				courseItem.setQrRegdate(rs.getString("q_regdate"));
+				courseItem.setQrEffdate(rs.getString("q_effdate"));
+
+				return courseItem;
+			}
+		}, courseId);
+
+		return courseItem;
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
@@ -188,5 +212,47 @@ public class CourseDAO extends ItemDAO {
 					INNER JOIN FINAL_COURSE_DAY fcd ON fc.COURSE_ID = fcd.COURSE_ID
 					INNER JOIN FINAL_COURSE_STUDENT fcs ON fc.COURSE_ID = fcs.COURSE_ID)
 				WHERE c_result = 1 AND member_id = ?""");
+		/*
+		 * 강의 정보를 불러오는 쿼리문 - 현재 시간에 유효한 QR코드가 존재하는지 체크하는 구문 제외
+		 */
+		this.query.put("getInfo", """
+				SELECT
+					fc.*,
+					q_code,
+					to_char(q_regdate, 'yyyy-mm-dd hh24:mi:ss') q_regdate,
+					to_char(q_regdate + q_efftime/24/60, 'yyyy-mm-dd hh24:mi:ss') q_effdate
+				FROM
+					(
+					SELECT
+						fc.course_id,
+						c_title,
+						c_name,
+						TO_CHAR(c_sdate, 'yyyy.mm.dd') c_sdate,
+						TO_CHAR(c_edate, 'yyyy.mm.dd') c_edate,
+						LISTAGG(m_name, ', ') WITHIN GROUP (
+					ORDER BY
+						m_name) AS c_ilist,
+						trunc(c_edate) - trunc(sysdate) AS c_dday
+					FROM
+						FINAL_COURSE fc
+					INNER JOIN FINAL_COURSE_INSTRUCTOR fci ON
+						fc.COURSE_ID = fci.COURSE_ID
+					INNER JOIN FINAL_COURSE_CATEGORY fcc ON
+						fc.CATEGORY_ID = fcc.CATEGORY_ID
+					INNER JOIN FINAL_MEMBER fm ON
+						fm.MEMBER_ID = fci.MEMBER_ID
+					WHERE
+						fc.COURSE_ID = ?
+					GROUP BY
+						fc.course_id,
+						c_title,
+						c_name,
+						TO_CHAR(c_sdate, 'yyyy.mm.dd'),
+						TO_CHAR(c_edate, 'yyyy.mm.dd'),
+						trunc(c_edate) - trunc(sysdate)
+					) fc
+				LEFT OUTER JOIN FINAL_COURSE_QR fcq ON
+					fc.course_id = fcq.course_id
+								""");
 	}
 }

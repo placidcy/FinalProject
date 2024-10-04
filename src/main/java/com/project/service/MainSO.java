@@ -82,4 +82,8 @@ public class MainSO extends ItemSO {
 	public int checkCourse(int memberId) {
 		return courseDAO.checkCourse(memberId);
 	}
+
+	public CourseItem getInfo(int courseId) {
+		return courseDAO.getInfo(courseId);
+	}
 }

@@ -1,5 +1,8 @@
 package com.project.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CourseItem {
 	private int courseId;
 	private String courseName;
@@ -8,15 +11,14 @@ public class CourseItem {
 	private int count;
 	private String startDate;
 	private String endDate;
+	private List<String> instList;
+	private int dDay;
+	private String qrCode;
+	private String qrRegdate;
+	private String qrEffdate;
 
 	public CourseItem() {
 
-	}
-
-	public CourseItem(int courseId, String courseName, String categoryName) {
-		this.courseId = courseId;
-		this.courseName = courseName;
-		this.categoryName = categoryName;
 	}
 
 	public int getCourseId() {
@@ -75,4 +77,43 @@ public class CourseItem {
 		this.endDate = endDate;
 	}
 
+	public List<String> getInstList() {
+		return instList;
+	}
+
+	public void setInstList(String instString) {
+		this.instList = Arrays.asList(instString.split(","));
+	}
+
+	public int getdDay() {
+		return dDay;
+	}
+
+	public void setdDay(int dDay) {
+		this.dDay = dDay;
+	}
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
+	}
+
+	public String getQrRegdate() {
+		return qrRegdate;
+	}
+
+	public void setQrRegdate(String qrRegdate) {
+		this.qrRegdate = qrRegdate;
+	}
+
+	public String getQrEffdate() {
+		return qrEffdate;
+	}
+
+	public void setQrEffdate(String qrEffdate) {
+		this.qrEffdate = qrEffdate;
+	}
 }
