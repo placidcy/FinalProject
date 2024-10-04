@@ -22,9 +22,9 @@
  
  	<jsp:include page="common/find_header.jsp" />
     <main>
-      <form action="<c:url value='/loginProcess' />" method="POST" name="loginForm">
-        <input type="text" name="inputid" placeholder="아이디 입력" required />
-        <input type="password" name="inputpw" placeholder="비밀번호 입력" required />
+      <form action="loginProcess" method="POST" id="loginForm">
+        <input type="text" name="m_acctid" placeholder="아이디 입력" required />
+        <input type="password" name="m_acctpwd" placeholder="비밀번호 입력" required />
         <button type="submit">로그인</button>
       </form>
       <div id="text-tag">

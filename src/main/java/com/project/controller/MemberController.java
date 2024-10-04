@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.MemberSO;
+import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,8 +27,13 @@ public class MemberController {
 	}
 	
 //	@PostMapping("/loginProcess")
-//	public String loginProcessHandler(HttpSession session, MemberDO m_acctid, MemberDO m_acctpw) {
-//
+//	public String loginProcessHandler(LoginRequest req, HttpSession session) {
+//		try {
+//			session.setAttribute("session", session);
+//		}
+//		catch(Exception e) {
+//			e.printStackTrace();
+//		}
 //		
 ////		if(m_role=1) {
 ////			return "/";

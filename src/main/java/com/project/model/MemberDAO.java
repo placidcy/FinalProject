@@ -13,7 +13,7 @@ public class MemberDAO {
 		this.jdbcTemplate = new JdbcTemplate(ds);
 	}
 	
-	public MemberDO login(String m_acctid, String m_acctpwd) {
+	public MemberDO selectedById(String m_acctid, String m_acctpwd) {
 		MemberDO member = null;
 		this.sql = "select m_name, m_acctid, m_acctpwd, m_email, m_tel, m_dept, m_pfp, m_role"
 				+ "from final_member"

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
 
 @Service
@@ -33,5 +34,9 @@ public class MemberSO {
         newMember.setM_status(1);
 		
 		memberDao.insertMember(newMember);
+	}
+	
+	public void login(LoginRequest req) {
+		MemberDO member = new MemberDO();
 	}
 }
