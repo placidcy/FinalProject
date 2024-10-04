@@ -32,6 +32,11 @@ public class MainController {
 
 	@GetMapping("/checkin")
 	public String getChecin(Model model) {
+		int memberId = 3;
+		if (mainSO.checkCourse(memberId) != -1) {
+			System.out.println("오늘 강의 존재");
+		}
+
 		model.addAttribute("menu", "checkin");
 		return "main/checkin";
 	}

@@ -78,4 +78,8 @@ public class MainSO extends ItemSO {
 		int limit = 10;
 		return this.getSize(noticeDAO.getCount(keyword), limit);
 	}
+
+	public int checkCourse(int memberId) {
+		return courseDAO.checkCourse(memberId);
+	}
 }
