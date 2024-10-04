@@ -14,6 +14,10 @@ public class CourseScheduleDO {
 	private String s_etime;
 	private int s_cinterm;
 	private int s_coutterm;
+	
+	public CourseScheduleDO() {
+	}
+	
 	public int getCourse_id() {
 		return course_id;
 	}

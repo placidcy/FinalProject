@@ -18,20 +18,57 @@ public class AttendanceDAO {
 	}
 
 	public List<StudentAttendanceDO> selectAllMemberAttendanceByCourse(int course_id){
-		this.sql = "select m_name, m_dept, c, ab, l from (select fsa.student_id, a_status, m_name, m_dept from final_student_attend fsa inner join (select student_id, m_name, m_dept from final_member fm inner join (select * from final_course_student where course_id = ?) fcs on fm.member_id=fcs.member_id) fcm  on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l)) order by student_id";	
+		this.sql = "select student_id, m_name, m_dept, m_tel, c, ab, l, d from (select fsa.student_id, a_status, m_name, m_dept, m_tel from final_student_attend fsa inner join (select student_id, m_name, m_dept, m_tel from final_member fm inner join (select * from final_course_student where course_id = ?) fcs on fm.member_id=fcs.member_id) fcm  on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l, 4 as d)) order by student_id";	
 
 		return this.jdbcTemplate.query(this.sql, new RowMapper<StudentAttendanceDO>() {
 			@Override
 			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
 				StudentAttendanceDO studentAtt = new StudentAttendanceDO();
-				studentAtt.setM_name(rs.getString(1));
-				studentAtt.setM_dept(rs.getString(2));	
-				studentAtt.setC(rs.getLong(3));
-				studentAtt.setAb(rs.getLong(4));
-				studentAtt.setL(rs.getLong(5));
+				studentAtt.setStudent_id(rs.getInt(1));
+				studentAtt.setM_name(rs.getString(2));
+				studentAtt.setM_dept(rs.getString(3));
+				studentAtt.setM_tel(rs.getString(4));
+				studentAtt.setC(rs.getLong(5));
+				studentAtt.setAb(rs.getLong(6));
+				studentAtt.setL(rs.getLong(7));
+				studentAtt.setD(rs.getLong(8));
 				return studentAtt;
 			}
 		},course_id);
+	}
+	
+	
+	public List<StudentAttendanceDO> selectStudentAttendance(int student_id) {
+		this.sql ="select * from final_student_attend where student_id=?";
+		return this.jdbcTemplate.query(this.sql, new RowMapper<StudentAttendanceDO>() {
+			@Override
+			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
+				StudentAttendanceDO studentAtt = new StudentAttendanceDO();
+				studentAtt.setA_date(rs.getTimestamp("a_date").toLocalDateTime());
+				studentAtt.setA_status(rs.getInt("a_status"));
+				return studentAtt;
+			}
+		},student_id);
+	}
+	
+	public StudentAttendanceDO getStudentAttendance(int student_id) {
+		this.sql = "select student_id, m_name, m_dept, m_tel, c, ab, l, d from (select fsa.student_id, a_status, m_name, m_dept, m_tel from final_student_attend fsa inner join (select student_id, m_name, m_dept, m_tel from final_member fm inner join (select * from final_course_student where student_id = ?) fcs on fm.member_id=fcs.member_id) fcm  on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l, 4 as d)) order by student_id";	
+	
+		return this.jdbcTemplate.queryForObject(this.sql, new RowMapper<StudentAttendanceDO>() {
+			@Override
+			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
+				StudentAttendanceDO studentAtt = new StudentAttendanceDO();
+				studentAtt.setStudent_id(rs.getInt(1));
+				studentAtt.setM_name(rs.getString(2));
+				studentAtt.setM_dept(rs.getString(3));
+				studentAtt.setM_tel(rs.getString(4));
+				studentAtt.setC(rs.getLong(5));
+				studentAtt.setAb(rs.getLong(6));
+				studentAtt.setL(rs.getLong(7));
+				studentAtt.setD(rs.getLong(8));
+				return studentAtt;
+			}
+		},student_id);
 	}
 	
 	public List<CourseScheduleDO> getCourseDateInfo(int course_id) {

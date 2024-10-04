@@ -90,7 +90,7 @@
 						<button id="minusPage" disabled>이전</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/setAttendance?setAttPage=${setAttPage-1}"><button id="minusPage">이전</button></a>	
+						<a href="/setAttendance?setAttPage=${setAttPage-1}"><button id="minusPage" style="cursor:pointer">이전</button></a>	
 					</c:otherwise>
 				</c:choose>
 				
@@ -110,7 +110,7 @@
 						<button id="plusPage" disabled>다음</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/setAttendance?setAttPage=${setAttPage+1}"><button id="plusPage">다음</button></a>
+						<a href="/setAttendance?setAttPage=${setAttPage+1}"><button id="plusPage" style="cursor:pointer">다음</button></a>
 					</c:otherwise>
 				</c:choose>
 

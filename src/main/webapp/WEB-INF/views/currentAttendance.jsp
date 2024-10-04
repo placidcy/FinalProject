@@ -59,16 +59,18 @@
                 <!-- for문으로 처리  -->
                 <!-- status-bar 컴포넌트 화 -->
                 <div id="infoList">
-					<c:forEach items="${memberList}" var="member" varStatus="status" begin="${currAttPage*10}" end="${currAttPage*10 + 9}">
-                        <div class="infoBox">
+					<c:forEach items="${studentAttList}" var="studentAtt" varStatus="status" begin="${currAttPage*10}" end="${currAttPage*10 + 9}">
+						<a href="/attendanceDetail?student_id=${studentAtt.student_id}">
+						<div class="infoBox">
 							<div class="infoArea1">${status.count+ currAttPage*10}</div>
-							<div class="infoArea2">${member.m_name}</div>
-							<div class="infoArea3">${member.m_dept}</div>  
-							<div class="infoArea4">${member.c}</div>
-							<div class="infoArea4">${member.l}</div>
-							<div class="infoArea4">${member.ab}</div>
-							<div class="infoArea4">${courseScore.c_prsscore*member.c + courseScore.c_trdscore*member.l + courseScore.c_absscore*member.ab}</div>
+							<div class="infoArea2" >${studentAtt.m_name}</div>
+							<div class="infoArea3">${studentAtt.m_dept}</div>  
+							<div class="infoArea4">${studentAtt.c}</div>
+							<div class="infoArea4">${studentAtt.l}</div>
+							<div class="infoArea4">${studentAtt.ab}</div>
+							<div class="infoArea4">${courseScore.c_prsscore*studentAtt.c + courseScore.c_trdscore*studentAtt.l + courseScore.c_absscore*studentAtt.ab}</div>
                         </div>
+						</a>
                     </c:forEach>                
                 </div>
             </div>
@@ -80,16 +82,16 @@
 						<button id="minusPage" disabled>이전</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/currentAttendance?currAttPage=${currAttPage-1}"><button id="minusPage">이전</button></a>	
+						<a href="/currentAttendance?currAttPage=${currAttPage-1}"><button id="minusPage" style="cursor:pointer">이전</button></a>	
 					</c:otherwise>
 				</c:choose>
 				
 				<c:choose>
-					<c:when test="${memberList.size()==0}">
+					<c:when test="${studentAttList.size()==0}">
 						<span id="targetPage" class="pageNumber">1</span>
 					</c:when>
 					<c:otherwise>
-						<c:forEach  begin="0" end="${Math.floor((memberList.size()-1)/10)}" varStatus="status">
+						<c:forEach  begin="0" end="${Math.floor((studentAttList.size()-1)/10)}" varStatus="status">
 							<a href="/currentAttendance?currAttPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span></a>
 						</c:forEach>
 					</c:otherwise>
@@ -97,11 +99,11 @@
 				
 				
 				<c:choose>
-					<c:when test="${memberList.size()==0 || Math.floor((memberList.size()-1)/10) == currAttPage}">
+					<c:when test="${studentAttList.size()==0 || Math.floor((studentAttList.size()-1)/10) == currAttPage}">
 						<button id="plusPage" disabled>다음</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/currentAttendance?currAttPage=${currAttPage+1}"><button id="plusPage">다음</button></a>
+						<a href="/currentAttendance?currAttPage=${currAttPage+1}"><button id="plusPage" style="cursor:pointer">다음</button></a>
 					</c:otherwise>
 				</c:choose>
 
