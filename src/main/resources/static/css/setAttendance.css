@@ -96,7 +96,9 @@ hr{
   color: #87C791;
 
 }
-
+#page>a{
+	text-decoration:none;
+}
 .pageNumber{
   margin:15px;
   cursor: pointer;
@@ -107,7 +109,6 @@ hr{
   font-weight:bold;
   border: none;
   background-color: rgba(255, 255, 255, 1);
-  cursor: pointer;
 }
 
 #plusPage{
@@ -115,7 +116,6 @@ hr{
   font-weight:bold;
   border: none;
   background-color: rgba(255, 255, 255, 1);
-  cursor: pointer;
 }
 
 @media (min-width: 769px){

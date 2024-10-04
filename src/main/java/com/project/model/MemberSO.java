@@ -1,5 +1,37 @@
 package com.project.model;
 
-public class MemberSO {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.project.model.request.SignupRequest;
+
+@Service
+public class MemberSO {
+	
+	@Autowired
+	private MemberDAO memberDao;
+	
+	public MemberSO() {
+		
+	}
+	
+	@Transactional
+	public void signupStudent(SignupRequest req) {
+		MemberDO newMember = new MemberDO();
+		
+		newMember.setMember_id(req.getMember_id());
+		newMember.setM_acctid(req.getM_acctid());
+		newMember.setM_acctpwd(req.getM_acctpwd());
+		newMember.setM_name(req.getM_name());
+		newMember.setM_email(req.getM_email());
+		newMember.setM_tel(req.getM_tel());
+		newMember.setM_dept(req.getM_dept());
+        
+        // 학생 기본값 설정
+		newMember.setM_role(1);
+        newMember.setM_status(1);
+		
+		memberDao.insertMember(newMember);
+	}
 }
