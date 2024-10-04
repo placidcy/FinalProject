@@ -19,7 +19,9 @@
     <div id="container">
        <jsp:include page="common/sidebar_course.jsp" />
         <main> 
+		<a href="currentAttendance?course_id=2">
         <button id="allListBtn">전체 목록</button>
+		</a>
         <div id="infoBox-header">
 			
             <div id="infoBox">
@@ -74,12 +76,12 @@
                     </div>
                 </div>
                 <div>
-                    <strong>출석률</strong> &nbsp<span class="summationFont">60.2% (65/108일)</span>
+                    <strong>출석률</strong> &nbsp<span class="summationFont">${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}% (${studentAtt.c+studentAtt.d}/${(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab)}일)</span>
                     <br />
                     <!-- 60.2%라면 -1.3%를 뺴줘야 설명 부분의 위치가 맞게 위치한다. -->
                     <div id="staticBox">
-                       <div id="static-bar"><div id="static-bar-gage" style="width:60.2%"></div></div>
-                       <div id="explain" style="margin-left:58.9%">▲<br /><strong>손흥민</strong><br /> 60.2%</div>
+                       <div id="static-bar"><div id="static-bar-gage" style="width:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%"></div></div>
+                       <div id="explain" style="margin-left:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100-1.3}%">▲<br /><strong>${studentAtt.m_name}</strong><br /> ${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%</div>
                     </div>
                 </div>
             </div>
@@ -97,71 +99,13 @@
     
                     <!-- for문으로 처리  -->
                     <div id="infoList">
+						<c:forEach items="${attList}" var="att"> 
                          <div class="infoBox">
-                            <div class="infoArea1">3/14</div>
-                            <div class="infoArea2">○</div>
+                            <div class="infoArea1">${att.getZero(att.a_date.getMonthValue())}/${att.getZero(att.a_date.getDayOfMonth())}</div>
+                            <div class="infoArea2">${att.getEmblem(att.a_status)}</div>
                             <div class="infoArea3"></div>
                         </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/16</div>
-                            <div class="infoArea2">○</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/19</div>
-                            <div class="infoArea2">○</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/21</div>
-                            <div class="infoArea2">▲</div>
-                            <div class="infoArea3">정정 요청</div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/23</div>
-                            <div class="infoArea2">X</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/26</div>
-                            <div class="infoArea2">○</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/28</div>
-                            <div class="infoArea2">○</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">3/30</div>
-                            <div class="infoArea2">○</div>
-                            <div class="infoArea3"></div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">4/04</div>
-                            <div class="infoArea2"></div>
-                            <div class="infoArea3">공가 요청</div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">4/06</div>
-                            <div class="infoArea2"></div>
-                            <div class="infoArea3">공가 요청</div>
-                        </div>
-
-                        <div class="infoBox">
-                            <div class="infoArea1">4/08</div>
-                            <div class="infoArea2"></div>
-                            <div class="infoArea3">공가 요청</div>
-                        </div>
+						</c:forEach> 
                     </div>
 
                 </div>
