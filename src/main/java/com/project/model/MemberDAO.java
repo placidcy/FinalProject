@@ -2,6 +2,7 @@ package com.project.model;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class MemberDAO {
@@ -21,6 +22,33 @@ public class MemberDAO {
 		
 		member = this.jdbcTemplate.queryForObject(sql, new MemberRowMapper(), m_acctid, m_acctpwd);
 		return member;
+	}
+	
+	// 중복된 아이디가 존재하면 true, 없으면 false
+	public boolean duplicateCheckM_acctid(String m_acctid) {
+		this.sql = "select m_acctid from final_member where m_acctid=?";
+		
+		try {
+			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_acctid);
+			return result != null;
+		}
+		catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+	}
+	
+	// 중복된 이메일이 존재하면 true, 없으면 false
+	public boolean duplicateCheckM_email(String m_email) {
+		this.sql = "select m_email from final_member where m_email=?";
+		
+		try {
+			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_email);
+			return result != null;
+		}
+		catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+		
 	}
 	
 	public int insertMember(MemberDO member) {
@@ -67,4 +95,5 @@ public class MemberDAO {
 				+ "where member_id=?";
 		return this.jdbcTemplate.update(sql, member.getMember_id());
 	}
+
 }
