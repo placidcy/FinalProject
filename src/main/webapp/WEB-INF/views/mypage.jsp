@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="container">
-    	<jsp:include page="common/side_main.jsp"></jsp:include>
+    	<jsp:include page="common/side_main.jsp" />
         <main>
             <div id="header">
                 <span class="title">마이페이지</span>

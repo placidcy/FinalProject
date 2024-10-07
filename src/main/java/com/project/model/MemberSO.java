@@ -36,6 +36,10 @@ public class MemberSO {
 		memberDao.insertMember(newMember);
 	}
 	
+	public MemberDO selectedByMember_id(int member_id) {
+		return memberDao.selectedByMember_id(member_id);
+	}
+	
 	public LoginResponse login(String m_acctid, String m_acctpwd) {
 		MemberDO member = memberDao.login(m_acctid);
 		if(member == null) {
