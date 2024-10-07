@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -14,6 +15,7 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="js/main/mobile.js"></script>
+<script src="js/main/checkin.js"></script>
 <body>
 	<div class="container flex">
 		<!-- 메인 사이드바 -->
@@ -49,12 +51,12 @@
 				</div>
 				<table class="tab ta cen">
 					<tr>
-						<td><span>입실</span> <span class="bold">09:00</span></td>
-						<td><span>복귀</span> <span class="bold">00:00</span></td>
+						<td><span>입실</span> <span class="bold">${time.cinTime }</span></td>
+						<td><span>복귀</span> <span class="bold">${time.retTime }</span></td>
 					</tr>
 					<tr>
-						<td><span>외출</span> <span class="bold">00:00</span></td>
-						<td><span>퇴실</span> <span class="bold">00:00</span></td>
+						<td><span>외출</span> <span class="bold">${time.soutTime }</span></td>
+						<td><span>퇴실</span> <span class="bold">${time.coutTime }</span></td>
 					</tr>
 				</table>
 				<div class="fig qr">
@@ -102,13 +104,19 @@
 					</div>
 					<div class="grid g10">
 						<p>
-							<span class="bold">나의 출석률</span> ${stats.myCnt/stats.totalCnt }%
-							(${stats.myCnt }/${stats.totalCnt }일)
+							<span class="bold">나의 출석률</span> <span> <fmt:formatNumber
+									value="${stats.myCnt/stats.totalCnt }" type="percent"
+									pattern="0.0%"></fmt:formatNumber>
+							</span> <span> (${stats.myCnt }/${stats.totalCnt }일)</span>
 						</p>
 						<!-- 차트 라이브러리 연결 후 수정-->
 						<div class="chart grid cen v">
 							<div class="grid cen h" id="avg">
-								<span><b>평균</b> ${stats.avgCnt / stats.totalCnt }%</span>
+								<p>
+									<b>평균</b> <span id="avgPer"><fmt:formatNumber
+											value="${stats.avgCnt/stats.totalCnt }" type="percent"
+											pattern="0.0%"></fmt:formatNumber></span>
+								</p>
 								<div class="line"></div>
 							</div>
 							<div class="bullet box bgd9d9d9">
@@ -116,7 +124,11 @@
 							</div>
 							<div class="grid cen h" id="curr">
 								<div class="line"></div>
-								<span><b>나</b> ${stats.myCnt / stats.totalCnt }%</span>
+								<p>
+									<b>나</b> <span id="myPer"><fmt:formatNumber
+											value="${stats.myCnt/stats.totalCnt }" type="percent"
+											pattern="0.0%"></fmt:formatNumber></span>
+								</p>
 							</div>
 						</div>
 					</div>
