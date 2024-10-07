@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.project.model.CourseItem;
+import com.project.model.StatsItem;
 
 @Repository
 public class CourseDAO extends ItemDAO {
@@ -16,22 +17,6 @@ public class CourseDAO extends ItemDAO {
 	public CourseDAO() {
 		super();
 		init();
-	}
-
-	/*
-	 * memberId에 따라 현재 요일에 수강해야하는 강의 목록을 조회하는 쿼리
-	 */
-	public int checkCourse(int memberId) {
-		int courseId = -1;
-		this.sql = query.get("checkCourse");
-
-		courseId = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
-			@Override
-			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return rs.getInt("course_id");
-			}
-		}, memberId);
-		return courseId;
 	}
 
 	public List<CourseItem> selectByDates(int startNum, int endNum) {
@@ -122,7 +107,23 @@ public class CourseDAO extends ItemDAO {
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
-	public CourseItem getInfo(int courseId) {
+	/*
+	 * memberId에 따라 현재 요일에 수강해야하는 강의 목록을 조회하는 쿼리
+	 */
+	public int checkCourse(int memberId) {
+		int studentId = -1;
+		this.sql = query.get("checkCourse");
+
+		studentId = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt("student_id");
+			}
+		}, memberId);
+		return studentId;
+	}
+
+	public CourseItem getInfo(int studentId) {
 		this.sql = query.get("getInfo");
 		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
 			@Override
@@ -141,9 +142,31 @@ public class CourseDAO extends ItemDAO {
 
 				return courseItem;
 			}
-		}, courseId);
+		}, studentId);
 
 		return courseItem;
+	}
+
+	public StatsItem getStats(int studentId) {
+		this.sql = query.get("getStats");
+		StatsItem statsItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<StatsItem>() {
+			@Override
+			public StatsItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				StatsItem statsItem = new StatsItem();
+				statsItem.setPresentCnt(rs.getInt("출석"));
+				statsItem.setTardyCnt(rs.getInt("지각"));
+				statsItem.setLeaveCnt(rs.getInt("조퇴"));
+				statsItem.setAbsentCnt(rs.getInt("결석"));
+				statsItem.setTotalCnt(rs.getInt("total_count"));
+				statsItem.setAvgCnt(rs.getInt("avg_count"));
+				statsItem.setMyCnt(rs.getInt("student_count"));
+
+				return statsItem;
+			}
+		}, studentId);
+
+		return statsItem;
+
 	}
 
 	private void init() {
@@ -189,29 +212,34 @@ public class CourseDAO extends ItemDAO {
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 코드
 		 */
 		this.query.put("checkCourse", """
-				SELECT *
-				FROM ( SELECT fcs.MEMBER_ID , fc.COURSE_ID, fc.C_NAME,
-						CASE
-							WHEN TO_CHAR(SYSDATE, 'D') = 2
-							AND fcd.D_MON = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 3
-							AND fcd.D_TUE = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 4
-							AND fcd.D_WED = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 5
-							AND fcd.D_THU = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 6
-							AND fcd.D_FRI = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 7
-							AND fcd.D_SAT = 1 THEN 1
-							WHEN TO_CHAR(SYSDATE, 'D') = 1
-							AND fcd.D_SUN = 1 THEN 1
+				SELECT
+					student_id
+				FROM
+					(
+					SELECT
+						fc.course_id,
+						member_id,
+						student_id,
+						fc.C_NAME,
+							CASE
+							WHEN TO_CHAR(SYSDATE, 'D') = 2 AND fcd.D_MON = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 3 AND fcd.D_TUE = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 4 AND fcd.D_WED = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 5 AND fcd.D_THU = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 6 AND fcd.D_FRI = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 7 AND fcd.D_SAT = 1 THEN 1
+							WHEN TO_CHAR(SYSDATE, 'D') = 1 AND fcd.D_SUN = 1 THEN 1
 							ELSE 0
 						END AS C_RESULT
-					FROM FINAL_COURSE fc
-					INNER JOIN FINAL_COURSE_DAY fcd ON fc.COURSE_ID = fcd.COURSE_ID
-					INNER JOIN FINAL_COURSE_STUDENT fcs ON fc.COURSE_ID = fcs.COURSE_ID)
-				WHERE c_result = 1 AND member_id = ?""");
+					FROM
+						FINAL_COURSE fc
+					INNER JOIN FINAL_COURSE_DAY fcd ON
+						fc.COURSE_ID = fcd.COURSE_ID
+					INNER JOIN FINAL_COURSE_STUDENT fcs ON
+						fc.COURSE_ID = fcs.COURSE_ID)
+				WHERE
+					c_result = 1
+					AND member_id = ?""");
 		/*
 		 * 강의 정보를 불러오는 쿼리문 - 현재 시간에 유효한 QR코드가 존재하는지 체크하는 구문 제외
 		 */
@@ -241,8 +269,10 @@ public class CourseDAO extends ItemDAO {
 						fc.CATEGORY_ID = fcc.CATEGORY_ID
 					INNER JOIN FINAL_MEMBER fm ON
 						fm.MEMBER_ID = fci.MEMBER_ID
+					INNER JOIN FINAL_COURSE_STUDENT fcs ON
+						fcs.course_id = fc.course_id
 					WHERE
-						fc.COURSE_ID = ?
+						fcs.student_id = ?
 					GROUP BY
 						fc.course_id,
 						c_title,
@@ -254,5 +284,101 @@ public class CourseDAO extends ItemDAO {
 				LEFT OUTER JOIN FINAL_COURSE_QR fcq ON
 					fc.course_id = fcq.course_id
 								""");
+		/*
+		 * 어제까지의 강의 출석 내역(출석/지각/조퇴/결석 등)을 조회하는 쿼리문
+		 */
+		this.query.put("getStats",
+				"""
+						-- 출석 현황을 조회하는 쿼리
+						SELECT
+							c1.*,
+							nvl(c2.출석, 0) as "출석",
+							nvl(c2.결석, 0) as "결석",
+							nvl(c2.지각, 0) as "지각",
+							nvl(c2.조퇴, 0) as "조퇴"
+						FROM
+							(
+							SELECT
+								fcs.*,
+								avg(student_count) avg_count
+							FROM
+								(
+								SELECT
+									fc.course_id,
+									fcs.student_id,
+									trunc((c_edate - c_sdate) / 7 * total_sum) AS total_count,
+									nvl(student_count, 0) AS student_count
+								FROM
+									FINAL_COURSE fc
+								INNER JOIN (
+									-- 전체 출석일수 조회
+									SELECT
+										course_id,
+										SUM(NVL(D_MON, 0) + NVL(D_TUE, 0) + NVL(D_WED, 0) + NVL(D_THU, 0) + NVL(D_FRI, 0) + NVL(D_SAT, 0) + NVL(D_SUN, 0)) AS total_sum
+									FROM
+										final_course_day
+									GROUP BY
+										COURSE_ID) fcd ON
+									fcd.course_id = fc.COURSE_ID
+								INNER JOIN FINAL_COURSE_STUDENT fcs ON
+									fc.COURSE_ID = fcs.COURSE_ID
+								LEFT OUTER JOIN (
+									-- 나의 출석일수 조회
+									SELECT
+										student_id,
+										count(student_id) AS student_count
+									FROM
+										FINAL_STUDENT_ATTEND fsa
+									WHERE
+										a_status != 2
+									GROUP BY
+										student_id
+								) fsa ON
+									fsa.student_id = fcs.STUDENT_ID
+						) fcs
+							GROUP BY
+								(course_id,
+								student_id,
+								total_count,
+								student_count)
+						) c1
+						LEFT OUTER JOIN
+						(
+							-- 출석/결석/지각/조퇴일수를 한번에 조회하는 쿼리
+							SELECT
+								*
+							FROM
+								(
+								SELECT
+									fsa.student_id,
+									a_status
+								FROM
+									final_student_attend fsa
+								INNER JOIN (
+									SELECT
+										*
+									FROM
+										final_course_student
+									WHERE
+										student_id = 0) fcs ON
+									fsa.student_id = fcs.student_id
+								INNER JOIN (
+									SELECT
+										*
+									FROM
+										final_course) fc ON
+									fc.course_id = fcs.course_id
+								WHERE
+									(a_date BETWEEN fc.c_sdate AND trunc(sysdate)))
+						pivot(count(a_status) FOR a_status IN (1 AS "출석",
+								2 AS "결석",
+								3 "지각",
+								4 "조퇴"))
+
+						) c2 ON
+							c1.student_id = c2.student_id
+						WHERE
+							c1.student_id = ?
+										""");
 	}
 }

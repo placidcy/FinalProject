@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.model.CourseItem;
 import com.project.model.NoticeItem;
+import com.project.model.StatsItem;
 import com.project.model.dao.CourseDAO;
 import com.project.model.dao.NoticeDAO;
 
@@ -83,7 +84,11 @@ public class MainSO extends ItemSO {
 		return courseDAO.checkCourse(memberId);
 	}
 
-	public CourseItem getInfo(int courseId) {
-		return courseDAO.getInfo(courseId);
+	public CourseItem getInfo(int studentId) {
+		return courseDAO.getInfo(studentId);
+	}
+
+	public StatsItem getStats(int studentId) {
+		return courseDAO.getStats(studentId);
 	}
 }
