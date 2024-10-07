@@ -1,3 +1,4 @@
+
 package com.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class MainController {
 		if (studentId != -1) {
 			model.addAttribute("info", mainSO.getInfo(studentId));
 			model.addAttribute("stats", mainSO.getStats(studentId));
+			model.addAttribute("time", mainSO.getTimetable(studentId));
 		}
 		model.addAttribute("menu", "checkin");
 		return "main/checkin";

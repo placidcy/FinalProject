@@ -6,8 +6,7 @@ import java.util.*;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.project.model.CourseItem;
-import com.project.model.StatsItem;
+import com.project.model.*;
 
 @Repository
 public class CourseDAO extends ItemDAO {
@@ -147,6 +146,25 @@ public class CourseDAO extends ItemDAO {
 		return courseItem;
 	}
 
+	public Timetable getTimetable(int studentId) {
+		this.sql = query.get("getTimetable");
+		Timetable timetable = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Timetable>() {
+			@Override
+			public Timetable mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Timetable timetable = new Timetable();
+
+				timetable.setCinTime(rs.getString("a_cintime"));
+				timetable.setCoutTime(rs.getString("a_couttime"));
+				timetable.setRetTime(rs.getString("a_rettime"));
+				timetable.setSoutTime(rs.getString("a_souttime"));
+
+				return timetable;
+			}
+		}, studentId);
+
+		return timetable;
+	}
+
 	public StatsItem getStats(int studentId) {
 		this.sql = query.get("getStats");
 		StatsItem statsItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<StatsItem>() {
@@ -209,7 +227,7 @@ public class CourseDAO extends ItemDAO {
 				inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where member_id = ?""");
 		/*
-		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 코드
+		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
 		this.query.put("checkCourse", """
 				SELECT
@@ -240,6 +258,19 @@ public class CourseDAO extends ItemDAO {
 				WHERE
 					c_result = 1
 					AND member_id = ?""");
+		/*
+		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
+		 */
+		this.query.put("getTimetable", """
+				SELECT
+					*
+				FROM
+					FINAL_STUDENT_ATTEND fsa
+				WHERE
+					STUDENT_ID = ?
+					AND A_DATE = trunc(sysdate)
+								""");
+
 		/*
 		 * 강의 정보를 불러오는 쿼리문 - 현재 시간에 유효한 QR코드가 존재하는지 체크하는 구문 제외
 		 */

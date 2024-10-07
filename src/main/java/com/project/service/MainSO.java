@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.model.CourseItem;
-import com.project.model.NoticeItem;
-import com.project.model.StatsItem;
-import com.project.model.dao.CourseDAO;
-import com.project.model.dao.NoticeDAO;
+import com.project.model.*;
+import com.project.model.dao.*;
 
 @Service
 public class MainSO extends ItemSO {
@@ -82,6 +79,10 @@ public class MainSO extends ItemSO {
 
 	public int checkCourse(int memberId) {
 		return courseDAO.checkCourse(memberId);
+	}
+
+	public Timetable getTimetable(int studentId) {
+		return courseDAO.getTimetable(studentId);
 	}
 
 	public CourseItem getInfo(int studentId) {
