@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -28,19 +29,20 @@
 			</div>
 			<div class="grid c2 g10">
 				<div class="grid g20 fig full">
-					<p class="f20 bold">분류 > 웹 개발</p>
-					<p class="f30 bold">HTML의 기초</p>
+					<p class="f20 bold">분류 > ${info.categoryName }</p>
+					<p class="f30 bold">${info.courseName }</p>
 					<div class="info">
 						<p>
-							<span>강의 기간:</span><span class="float-right">2024년 03월 12일
-								~ 2024년 06월 30일</span>
+							<span>강의 기간:</span><span class="float-right">${info.startDate }
+								~ ${info.endDate }</span>
 						</p>
 						<p>
-							<span>강사:</span><span class="float-right">박지성</span>
+							<span>강사:</span><span class="float-right"><c:forEach
+									items="${info.instList }" var="inst" varStatus="status">${inst }</c:forEach></span>
 						</p>
 					</div>
 					<p>
-						종료일까지 남은 기간: <span class="bold">D-100</span>
+						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
 					</p>
 					<a class="f20 bold h end self" href="course.html">📖 강의 홈으로
 						이동하기</a>
@@ -61,14 +63,14 @@
 							해당 코드는 <span class="bold">공유가 불가능</span>하며, 이를 이용한 <span
 								class="bold">부정 출결 시 제적</span>을 당할 수 있습니다.
 						</p>
-						<div class="grid c2 cen">
+						<div class="grid c2 cen v h">
 							<div class="">
 								<p>QR코드 만료까지 남은 시간</p>
-								<p class="bold">00시간 00분 00초</p>
+								<p class="bold" id="timeLimit">00시간 00분 00초</p>
 							</div>
 							<div>
 								<img class="img s200"
-									src="https://quickchart.io/qr?text=Here's my text&centerImageUrl=https://imgur.com/RB0yUtw.png"
+									src="https://quickchart.io/qr?text=${empty info.qrCode ? 'null' : info.qrCode }&centerImageUrl=https://imgur.com/RB0yUtw.png"
 									alt="">
 							</div>
 						</div>
@@ -83,29 +85,30 @@
 					<div class="grid c4 ta cen fig">
 						<div class="border-right">
 							<p>출석</p>
-							<p class="bold">65</p>
+							<p class="bold">${stats.presentCnt }</p>
 						</div>
 						<div class="border-right">
 							<p>지각</p>
-							<p class="bold">6</p>
+							<p class="bold">${stats.tardyCnt }</p>
 						</div>
 						<div class="border-right">
 							<p>조퇴</p>
-							<p class="bold">1</p>
+							<p class="bold">${stats.leaveCnt }</p>
 						</div>
 						<div>
 							<p>결석</p>
-							<p class="bold">2</p>
+							<p class="bold">${stats.absentCnt }</p>
 						</div>
 					</div>
 					<div class="grid g10">
 						<p>
-							<span class="bold">나의 출석률</span> 60.2% (65/108일)
+							<span class="bold">나의 출석률</span> ${stats.myCnt/stats.totalCnt }%
+							(${stats.myCnt }/${stats.totalCnt }일)
 						</p>
 						<!-- 차트 라이브러리 연결 후 수정-->
 						<div class="chart grid cen v">
 							<div class="grid cen h" id="avg">
-								<span><b>평균</b> 49.8%</span>
+								<span><b>평균</b> ${stats.avgCnt / stats.totalCnt }%</span>
 								<div class="line"></div>
 							</div>
 							<div class="bullet box bgd9d9d9">
@@ -113,7 +116,7 @@
 							</div>
 							<div class="grid cen h" id="curr">
 								<div class="line"></div>
-								<span><b>나</b> 60.2%</span>
+								<span><b>나</b> ${stats.myCnt / stats.totalCnt }%</span>
 							</div>
 						</div>
 					</div>
