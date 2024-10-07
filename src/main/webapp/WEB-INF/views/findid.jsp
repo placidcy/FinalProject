@@ -31,6 +31,7 @@
         </header>
          --%>
  		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="content" />
  			<jsp:param name="pageTitle" value="아이디 찾기"/>
         	<jsp:param name="pageContent" value="아이디를 잊으셨다면, 이름과 이메일을 통해 아이디를 찾을 수 있습니다."/>
  		</jsp:include>

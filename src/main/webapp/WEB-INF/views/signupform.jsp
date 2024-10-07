@@ -10,9 +10,11 @@
     <title>CHECK-회원 가입</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/signupform.css" />
+    <script src="resources/js/signupCheck.js"></script>
 </head>
 <body>
     <div id="container">
+<!--     
         <header>
             <div id="header1">
                 <a href="#">
@@ -24,9 +26,13 @@
                 <hr>
             </div>
         </header>
-
+ -->
+		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="noContent" />
+ 			<jsp:param name="pageTitle" value="회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span>"/>
+ 		</jsp:include>
         <main>
-            <form action="<c:url value='/signupProcess' />" method="POST">
+            <form action="signupProcess" method="POST" id="form">
                 <table>
                     <tr>
                         <th>
@@ -35,6 +41,7 @@
                         <td>
                             <input type="text" name="m_acctid" id="m_acctid" required />
                             <p>영문 또는 숫자 조합 5~15자로 입력하세요.</p>
+                            <p id="idmsg"></p>
                         </td>
                     </tr>
                     <tr>
@@ -44,6 +51,7 @@
                         <td>
                             <input type="password" name="m_acctpwd" id="m_acctpwd" required />
                             <p>영문 대/소문자와 숫자, 특수문자 중 3가지의 조합 8~24자로 입력하세요.</p>
+                            <p id="passerr"></p>
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +60,8 @@
                         </th>
                         <td>
                             <input type="password" name="confirmpw" id="confirmpw" required />
-                            <p>위의 비밀번호를 다시 입력하세요.</p>
+                            <p id="cfmmsg">위의 비밀번호를 다시 입력하세요.</p>
+                            <p id="cfmerr"></p>
                         </td>
                     </tr>
                     <tr>
@@ -61,7 +70,8 @@
                         </th>
                         <td>
                             <input type="text" name="m_name" id="m_name" required />
-                            <p>이름을 입력하세요.</p>
+                            <p id="namemsg">이름을 입력하세요.</p>
+                            <p id="nameerr"></p>
                         </td>
                     </tr>
                     <tr>
@@ -71,6 +81,7 @@
                         <td>
                             <input type="email" name="m_email" id="m_email" required />
                             <p>example@example.com 형식으로 입력하세요.</p>
+                            <p id="emailmsg"></p>
                         </td>
                     </tr>
                     <tr>
@@ -80,6 +91,7 @@
                         <td>
                             <input type="tel" name="m_tel" id="m_tel" />
                             <p>010-1234-5678 형식으로 입력하세요.</p>
+                            <p id="telerr"></p>
                         </td>
                     </tr>
                     <tr>

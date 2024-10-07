@@ -13,6 +13,7 @@
 </head>
 <body>
     <div id="container">
+<!--     
         <header>
             <div id="header1">
                 <a href="#">
@@ -24,7 +25,11 @@
                 <hr>
             </div>
         </header>
-        
+         -->
+        <jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="noContent" />
+ 			<jsp:param name="pageTitle" value="약관 동의"/>
+ 		</jsp:include>
         <main>
         	<form id="agreementForm" action="agreementForm" method="POST">
 	            <div class="section">
