@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/resources/css/mypage.css" />
 	<link rel="stylesheet" href="/resources/css/common.css" />
     <!-- 모바일 헤더 -->
-    <link rel="stylesheet" href="resources/css/mobile.css">
+    <link rel="stylesheet" href="/resources/css/mobile.css">
     <script src="/resources/js/mobile.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
                         <th>프로필 이미지</th>
                         <td>
                             <div id="profileBox">
-                                <img class="emptyImg" src="recources/img/emptyimg.png" alt="프로필 사진" /><br>
+                                <img class="emptyImg" src="/resources/img/emptyimg.png" alt="프로필 사진" /><br>
                                 <label for="uploadImg">이미지 변경</label>
                                 <input type="file" name="uploadImg" id="uploadImg" accept="image/*" />
                             </div>
