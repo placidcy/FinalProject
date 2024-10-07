@@ -166,9 +166,9 @@ VALUES(2, TO_DATE('2024-10-28', 'YYYY-MM-DD'), TO_DATE('2024-10-30', 'YYYY-MM-DD
  /*정정요청, 공가요청*/
  insert into final_attend_correq (student_id, a_date,c_contents) values (6, '2024-05-29', '당시 교통사고를 당해 불가피하게 지각을 하게 되었습니다.');
  insert into final_attend_correq (student_id, a_date,c_contents) values (8, '2024-05-29', '당시 지진이 일어나 도로가 망가져 지각 하게 되었습니다.');
- insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (6, '2024-09-02', '2024-09-05', '입원','해당 기간에 수술이 예정되어 있어 참여가 어렵습니다.');
- insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (6, '2024-10-07', '2024-10-11', '입원','해당 기간에 수술이 예정되어 있어 참여가 어렵습니다.');
- insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (8, '2024-08-26', '2024-08-29', '예비군','예비군 훈련 기간입니다.');
- insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (10, '2024-09-27', '2024-09-28', '그 외','친척 어르신께서 돌아가셔서 장례를 치러야 합니다.');
+ insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents, req_date) values (6, '2024-09-02', '2024-09-05', '입원','해당 기간에 수술이 예정되어 있어 참여가 어렵습니다.','2024-08-10');
+ insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents, req_date) values (6, '2024-10-07', '2024-10-11', '입원','해당 기간에 수술이 예정되어 있어 참여가 어렵습니다.', '2024-09-10');
+ insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents, req_date) values (8, '2024-08-26', '2024-08-29', '예비군','예비군 훈련 기간입니다.','2024-07-03');
+ insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents, req_date) values (10, '2024-09-27', '2024-09-28', '그 외','친척 어르신께서 돌아가셔서 장례를 치러야 합니다.','2024-08-08');
  
  commit;

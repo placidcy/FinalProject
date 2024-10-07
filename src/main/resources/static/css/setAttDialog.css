@@ -7,6 +7,10 @@
     position: relative;
     padding: 10px;
     background-color: #87C791;
+	margin-bottom:10px;
+	font-weight:bold;
+	text-align:center;
+	font-size:18px;
 }
 
 .exit {
@@ -64,6 +68,7 @@ input[type="number"]{
 	margin-top:20px;
     padding: 10px;
 	font-size:20px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) ;
 }
 
 .btn:hover {
@@ -80,7 +85,6 @@ input[type="number"]{
 dialog {
     position:fixed;
     left: 50%;
-    transform: translate(-50%, 0);
     width: 550px;
     height: 550px;
     padding: 0;
@@ -104,4 +108,5 @@ dialog {
         z-index: 1;
 
     }
+}
     
