@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.model.MemberSO;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
+import com.project.model.response.LoginResponse;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -15,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class MemberController {
 	
+	@Autowired
 	private MemberSO memberSo;
 	
 	public MemberController(MemberSO memberSo) {
@@ -26,25 +30,42 @@ public class MemberController {
 		return "login";
 	}
 	
-//	@PostMapping("/loginProcess")
-//	public String loginProcessHandler(LoginRequest req, HttpSession session) {
-//		try {
-//			session.setAttribute("session", session);
-//		}
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-////		if(m_role=1) {
-////			return "/";
-////		}
-////		else if(m_role=2){
-////			return "/";
-////		}
-////		else if(m_role=0) {
-////			return "/";
-////		}
-//	}
+	@PostMapping("/loginProcess")
+	public String loginProcessHandler(LoginRequest req, HttpSession session) {
+		try {
+			LoginResponse auth = memberSo.login(req.getM_acctid(), req.getM_acctpwd());
+			
+			if(auth != null) {
+				session.setAttribute("auth", auth);
+				
+				int m_role = memberSo.checkM_role(auth.getMember_id());
+				
+				switch(m_role) {
+					case 1:
+						return "redirect:/mypage";
+					case 2:
+						return "redirect:/instructHome";
+					default:
+						return "redirect:/adminHome";
+				}
+			}
+			else {
+				session.setAttribute("loginFailMsg", "로그인에 실패했습니다.");
+				return "redirect:/login";
+			}
+		}
+		catch(EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			session.setAttribute("loginFailMsg", "일치하는 정보가 없습니다.");
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/logout")
+	public String logoutHandler(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
 	
 	@GetMapping("/agreement")
 	public String agreementHandler() {
@@ -52,7 +73,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/agreementForm")
-	public String checkAgreement(
+	public String checkAgreementHandler(
 			@RequestParam(value = "allagree", required = false) boolean allagree,
 			@RequestParam(value = "memberagree", required = true) boolean memberagree,
 			@RequestParam(value = "personalagree", required = true) boolean personalagree) {
@@ -91,12 +112,16 @@ public class MemberController {
 		return "findid";
 	}
 	
-	@GetMapping("/findpw")
-	public String findPwHandler() {
+	@GetMapping("/findpwd")
+	public String findPwdHandler() {
 		return "findpw";
 	}
 	
-//	@PostMapping("/findProcess")
+//	@PostMapping("/findidProcess")
+//	public String findProcessHandler() {
+//		
+//	}
+//	@PostMapping("/findpwdProcess")
 //	public String findProcessHandler() {
 //		
 //	}
