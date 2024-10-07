@@ -116,7 +116,7 @@ public class MemberController {
 	
 	@GetMapping("/findpwd")
 	public String findPwdHandler() {
-		return "findpw";
+		return "findpwd";
 	}
 	
 //	@PostMapping("/findidProcess")
