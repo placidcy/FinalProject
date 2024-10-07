@@ -116,6 +116,48 @@ public class AttendanceDAO {
 		},course_id);
 	}
 	
+	public List<AttendanceRequest> getStudentLvreq(int student_id){
+		this.sql = "select l_sdate, l_edate, req_date, far.r_status from (select l_sdate, l_edate, req_date, response_id from final_attend_lvreq where student_id=?) fal left outer join final_attend_response far on far.response_id = fal.response_id";
+		
+		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
+			@Override
+			public AttendanceRequest mapRow(ResultSet rs, int rownum) throws SQLException{
+				AttendanceRequest attReq = new AttendanceRequest();
+				attReq.setL_sdate(rs.getTimestamp("l_sdate").toLocalDateTime());
+				attReq.setL_edate(rs.getTimestamp("l_edate").toLocalDateTime());
+				attReq.setReq_date(rs.getTimestamp("req_date").toLocalDateTime());
+				if(rs.getInt("r_status") == 1 && rs.getInt("r_status") == 2) {
+					attReq.setR_status(rs.getInt("r_status"));	
+				}else {
+					attReq.setR_status(0);	
+				}
+				return attReq;
+			}
+		},student_id);
+	}
+	
+	public List<AttendanceRequest> getStudentCorreq(int student_id){
+		this.sql = "select fsa.a_date, a_status , req_date, r_status from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select a_date, req_date, r_status from (select a_date, req_date,response_id from final_attend_correq where student_id=?) fac left outer join final_attend_response far on far.response_id = fac.response_id) crq on fsa.a_date=crq.a_date";
+		
+		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
+			@Override
+			public AttendanceRequest mapRow(ResultSet rs, int rownum) throws SQLException{
+				AttendanceRequest attReq = new AttendanceRequest();
+				attReq.setA_date(rs.getTimestamp("a_date").toLocalDateTime());
+				attReq.setA_status(rs.getInt("a_status"));
+				attReq.setReq_date(rs.getTimestamp("req_date").toLocalDateTime());
+				if(rs.getInt("r_status") == 1 && rs.getInt("r_status") == 2) {
+					attReq.setR_status(rs.getInt("r_status"));	
+				}else {
+					attReq.setR_status(0);	
+				}
+				return attReq;
+			}
+		},student_id, student_id);
+	}
+	
+	
+	
 	
 
 	

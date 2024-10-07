@@ -28,9 +28,13 @@ public class AttendanceController {
 	@GetMapping("/attendanceDetail")
 	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, Model model) {
 		List<StudentAttendanceDO> attList = attendanceDAO.selectStudentAttendance(studentAtt.getStudent_id());
+		List<AttendanceRequest> lvreqList = attendanceDAO.getStudentLvreq(studentAtt.getStudent_id());
+		List<AttendanceRequest> correqList = attendanceDAO.getStudentCorreq(studentAtt.getStudent_id());
 		
 		model.addAttribute("studentAtt", attendanceDAO.getStudentAttendance(studentAtt.getStudent_id()));
 		model.addAttribute("attList", attList);
+		model.addAttribute("lvreqList", lvreqList);
+		model.addAttribute("correqList", correqList);
 		
 		return "attendanceDetail";
 	}
