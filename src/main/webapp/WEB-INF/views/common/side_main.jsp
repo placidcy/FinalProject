@@ -28,10 +28,10 @@
         <a href="">
             <li class="menu cffffff">공지사항</li>
         </a>
-        <a href="">
+        <a href="<c:url value='/mypage' />">
             <li class="menu cffffff">마이 페이지</li>
         </a>
-        <a href="">
+        <a href="<c:url value='/logout' />">
             <li class="menu cffffff">로그아웃</li>
         </a>
     </ul>
