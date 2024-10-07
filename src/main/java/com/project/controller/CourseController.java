@@ -16,17 +16,17 @@ public class CourseController {
 		return "alert";
 	}
 	
-	@GetMapping("acceptanceManagement")
+	@GetMapping("/acceptanceManagement")
 	public String acceptance_managementHandler() {
 		return "acceptance_management";
 	}
 	
-	@GetMapping("calendarForm")
+	@GetMapping("/calendarForm")
 	public String calendarFormHandler() {
 		return "calendarForm";
 	}
 	
-	@GetMapping("courseAttend")
+	@GetMapping("/courseAttend")
 	public String courseAttendHandler() {
 		return "course_attend";
 	}

@@ -35,7 +35,7 @@
 			           <form class="grid g10 requestForm" method="POST" action="setAttendanceScore">
 			               <table>
 			                   <tr>
-								<p class="modal-text">*출석점수는 0에서 10점 사이의 값이어야 합니다.</p>
+								<p class="modal-text">*출석점수는 0에서 20점 사이의 값이어야 합니다.</p>
 								<p class="modal-text">*지각, 결석 점수는 -10에서 10점 사이의 값이어야 합니다.</p>
 			                       <td>출석점수</td>
 			                       <td><input type="number" id="c_prsscore" name="c_prsscore" value="${courseScore.c_prsscore}"></td>
@@ -69,41 +69,48 @@
                 <!-- for문으로 처리 12개 -->
                 <!-- 입실시간, 퇴실시간 눌렀을때 모달창 처리 -->
                 <div id="infoList">
-					<c:forEach items="${courseDateInfo}" var="dateInfo" varStatus="status" begin="${setAttPage*10}" end="${setAttPage*10 + 9}">
+					
+					<c:forEach items="${courseDateInfo}" var="dateInfo" varStatus="status" begin="${setAttPage*12}" end="${setAttPage*12 + 11}">
                     <div class="infoBox">
-                        <div class="infoArea1">${setAttPage*10+status.count}</div>
+                        <div class="infoArea1">${setAttPage*12+status.count}</div>
 						<div class="infoArea2">${dateInfo.s_sdate.getYear()}-${dateInfo.getZero(dateInfo.s_sdate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_sdate.getDayOfMonth())}</div>
 						<div class="infoArea2">${dateInfo.s_edate.getYear()}-${dateInfo.getZero(dateInfo.s_edate.getMonthValue())}-${dateInfo.getZero(dateInfo.s_edate.getDayOfMonth())}</div>
                         <div class="infoArea3">${dateInfo.getCtime(dateInfo.s_stime, -dateInfo.s_cinterm)}</div>
                         <div class="infoArea3">${dateInfo.getCtime(dateInfo.s_etime, dateInfo.s_coutterm)}</div>
                     </div>
 					</c:forEach>
-
-                    
-                    
-                </div>
+				
+				</div>
             </div>
-            <!--자바스크립트로 버튼 활성화 비활성화-->
-            <!-- 12개의 목록마다 1페이지 -->
 			
             <div id="page">
+				
 				<c:choose>
 					<c:when test="${setAttPage==0}">
 						<button id="minusPage" disabled>이전</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/setAttendance?setAttPage=${setAttPage-1}"><button id="minusPage">이전</button></a>	
+						<a href="/setAttendance?setAttPage=${setAttPage-1}"><button id="minusPage" style="cursor:pointer">이전</button></a>	
 					</c:otherwise>
 				</c:choose>
-					<c:forEach  begin="0" end="${Math.floor((courseDateInfo.size()-0.1)/10)}" varStatus="status">
-					<a href="/setAttendance?setAttPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span> </a>
-					</c:forEach>
+				
 				<c:choose>
-					<c:when test="${Math.floor((courseDateInfo.size()-0.1)/10) == setAttPage}">
+					<c:when test="${courseDateInfo.size()==0}">
+						<span id="targetPage" class="pageNumber">1</span>
+					</c:when>
+					<c:otherwise>
+						<c:forEach  begin="0" end="${Math.floor((courseDateInfo.size()-1)/12)}" varStatus="status">
+							<a href="/setAttendance?setAttPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span></a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+					
+				<c:choose>
+					<c:when test="${courseDateInfo.size()==0 || Math.floor((courseDateInfo.size()-1)/12) == setAttPage}">
 						<button id="plusPage" disabled>다음</button>
 					</c:when>
 					<c:otherwise>
-						<a href="/setAttendance?setAttPage=${setAttPage+1}"><button id="plusPage">다음</button></a>
+						<a href="/setAttendance?setAttPage=${setAttPage+1}"><button id="plusPage" style="cursor:pointer">다음</button></a>
 					</c:otherwise>
 				</c:choose>
 
