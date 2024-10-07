@@ -132,21 +132,25 @@
                 <!-- for문으로 처리 -->
                 <!-- 정정 승인, 공가 승인 모달창과 연결 -->
                 <div id="requestList">
+				<c:forEach items="${correqList}" var="correq">
                 <div id="requestInfoBox">
                     <div class="requestArea6">출결 정정 요청</div>
-                    <div class="requestArea7">지각</div>
-                    <div class="requestArea8">2024.03.21</div>
-                    <div class="requestArea9">2024.03.30</div>
-                    <div class="requestArea10">요청</div>
+                    <div class="requestArea7">${correq.getStatus(correq.a_status)}</div>
+                    <div class="requestArea8">${correq.a_date.getYear()}.${correq.getZero(correq.a_date.getMonthValue())}.${correq.getZero(correq.a_date.getDayOfMonth())}</div>
+                    <div class="requestArea9">${correq.req_date.getMonthValue()}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
+                    <div class="requestArea10">${correq.getRstatus(correq.r_status)}</div>
                 </div>
-
+				</c:forEach>
+				
+				<c:forEach items="${lvreqList}" var="lvreq">
                 <div id="requestInfoBox">
                     <div class="requestArea6">공가 요청</div>
                     <div class="requestArea7"></div>
-                    <div class="requestArea8">2024.04.09~4.13</div>
-                    <div class="requestArea9">2024.03.30</div>
-                    <div class="requestArea10">거절</div>
+                    <div class="requestArea8">${lvreq.l_sdate.getYear()}.${lvreq.getZero(lvreq.l_sdate.getMonthValue())}.${lvreq.getZero(lvreq.l_sdate.getDayOfMonth())}~${lvreq.getZero(lvreq.l_edate.getMonthValue())}.${lvreq.getZero(lvreq.l_edate.getDayOfMonth())}</div>
+                    <div class="requestArea9">${lvreq.req_date.getMonthValue()}.${lvreq.getZero(lvreq.req_date.getDayOfMonth())}</div>
+                    <div class="requestArea10">${correq.getRstatus(lvreq.r_status)}</div>
                 </div>
+				</c:forEach>
 
                </div>
 
