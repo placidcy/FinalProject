@@ -28,7 +28,7 @@
             </div>
 			<dialog id="setAttScoreModal">
 			       <div class="modal-top flex cen">
-			           <span class="bold" id="reqType">출석 점수 설정</span>
+			           <span class="bold">출석 점수 설정</span>
 			           <span class="f24 exit">✕</span>
 			       </div>
 			       <div class="modal-bottom req">

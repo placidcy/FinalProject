@@ -10,9 +10,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="/resources/css/course_mu.css">
     <link rel="stylesheet" href="/resources/css/attendanceDetail.css">
+	<link rel="stylesheet" href="/resources/css/attendanceDetailDialog.css">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <script src="/resources/js/course.js"></script>
+    <script src="/resources/js/attendanceDetail.js"></script>
 </head>
 
 <body>
@@ -53,7 +54,52 @@
 			
 			
         </div>
-
+		<dialog id="responseModal">
+			    <div class="modal-top flex cen">
+					<!--공가요청이면 공가 요청 승인-->
+			        <span class="bold">출결 정정 승인</span>
+			        <span class="f24 exit">✕</span>
+			    </div>
+			    <div class="modal-bottom req">
+					     <div>
+							<!--공가요청이면 일자 시작일~마지막일-->
+			                <div class="modalFont">일자 : &nbsp&nbsp <span class="modalFont">2024.03.21</span></div>
+			                <div class="modalFont">출결 : &nbsp&nbsp <span class="modalFont">지각</span></div>
+							
+							<!--공가요청이면 공가 사유 추가-->
+	
+			                <label for="textBox" id="textBoxLabel">내용 :</label>
+			                <textarea id="textBox" disabled>일전에 있던 3월 23일 수업에 교통사고로 인해 불가피하게 지각하였습니다.</textarea> 
+							
+			                <div class="modalFont"> 증명서류: &nbsp&nbsp <a class="file" href="">파일</a></div>
+		                <hr />
+				<form class="grid g10 requestForm" action="">
+		            <input type="hidden" name="date" value="2024.03.21" />
+					
+                    <label id="radioLabel" for="radioBox">응답 상태:</label>
+                    <div id="radioBox">
+                        <div>
+                            <input type="radio" name="reqStatus" id="approved" value="approved">
+                            <label for="approved" class="modalFont">승인</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="reqStatus" id="denied" value="denied">
+                            <label for="denied" class="modalFont">거부</label>
+                        </div>
+                    </div>
+					
+	                <div class="hidden" id="reqCheckRow">
+	                    <label class="modalFont">응답 사유:</label>
+						<select name="reqCheck" id="reqCheck"></select>
+		            </div>
+					
+		            <div class="btnBox">
+		                <input type="submit" class="modalBtn" id="submitBtn" value="요청처리" />
+		                <input type="button" class="modalBtn" id="cancleModal" value="취소" />
+		            </div>
+		        </form>
+			    </div>
+			</dialog>
 
         <div id="contentBox">
             <div class="content">
@@ -112,7 +158,7 @@
 
                 
             </div>
-
+								            
             <div id="requestBox">
                 <div>
                     <strong>출결 정정/공가 요청</strong>
@@ -133,25 +179,29 @@
                 <!-- 정정 승인, 공가 승인 모달창과 연결 -->
                 <div id="requestList">
 				<c:forEach items="${correqList}" var="correq">
-                <div id="requestInfoBox">
+                <div class="correquestInfoBox">
                     <div class="requestArea6">출결 정정 요청</div>
                     <div class="requestArea7">${correq.getStatus(correq.a_status)}</div>
                     <div class="requestArea8">${correq.a_date.getYear()}.${correq.getZero(correq.a_date.getMonthValue())}.${correq.getZero(correq.a_date.getDayOfMonth())}</div>
-                    <div class="requestArea9">${correq.req_date.getMonthValue()}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
+					<input type="hidden" data-text="${correq.contents}" />
+					<input type="hidden" data-text="${correq.attm}" />
+                    <div class="requestArea9">${correq.getZero(correq.req_date.getMonthValue())}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
                     <div class="requestArea10">${correq.getRstatus(correq.r_status)}</div>
                 </div>
 				</c:forEach>
 				
 				<c:forEach items="${lvreqList}" var="lvreq">
-                <div id="requestInfoBox">
+                <div class="lvrequestInfoBox">
                     <div class="requestArea6">공가 요청</div>
                     <div class="requestArea7"></div>
                     <div class="requestArea8">${lvreq.l_sdate.getYear()}.${lvreq.getZero(lvreq.l_sdate.getMonthValue())}.${lvreq.getZero(lvreq.l_sdate.getDayOfMonth())}~${lvreq.getZero(lvreq.l_edate.getMonthValue())}.${lvreq.getZero(lvreq.l_edate.getDayOfMonth())}</div>
-                    <div class="requestArea9">${lvreq.req_date.getMonthValue()}.${lvreq.getZero(lvreq.req_date.getDayOfMonth())}</div>
-                    <div class="requestArea10">${correq.getRstatus(lvreq.r_status)}</div>
+					<input type="hidden" data-text="${lvreq.contents}" />
+					<input type="hidden" data-text="${lvreq.attm}" />
+					<input type="hidden" data-text="${lvreq.l_reason}" />
+					<div class="requestArea9">${lvreq.getZero(lvreq.req_date.getMonthValue())}.${lvreq.getZero(lvreq.req_date.getDayOfMonth())}</div>
+                    <div class="requestArea10">${lvreq.getRstatus(lvreq.r_status)}</div>
                 </div>
 				</c:forEach>
-
                </div>
 
             </div>
