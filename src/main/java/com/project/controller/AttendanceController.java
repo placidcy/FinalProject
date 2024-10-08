@@ -91,13 +91,13 @@ public class AttendanceController {
 	}
 	
 	@PostMapping("/currentAttSearch")
-	public String currentAttSearchHandler(@RequestParam(value="currAttPage", defaultValue="0") int currAttPage, @RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
-		List<StudentAttendanceDO> memberList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
+	public String currentAttSearchHandler(@RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
 		CourseDO courseScore =courseDAO.getCourseScore(2);
 		
 		model.addAttribute("courseScore", courseScore);
-		model.addAttribute("currAttPage",currAttPage);
-		model.addAttribute("memberList", memberList);
+		model.addAttribute("currAttPage",0);
+		model.addAttribute("studentAttList", studentAttList);
 		
 		
 		return "currentAttendance";
