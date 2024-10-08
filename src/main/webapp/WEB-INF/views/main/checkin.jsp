@@ -51,16 +51,12 @@
 				</div>
 				<table class="tab ta cen">
 					<tr>
-						<td><span>입실</span> <span class="bold">${time.cinTime }</span>
-							<button class="btn attend" id="cinBtn">입실</button></td>
-						<td><span>복귀</span> <span class="bold">${time.retTime }</span>
-							<button class="btn attend" id="retBtn">복귀</button></td>
+						<td><span>입실</span> <span class="bold">${time.cinTime }</span></td>
+						<td><span>복귀</span> <span class="bold">${time.retTime }</span></td>
 					</tr>
 					<tr>
-						<td><span>외출</span> <span class="bold">${time.soutTime }</span>
-							<button class="btn attend" id="soutBtn">외출</button></td>
-						<td><span>퇴실</span> <span class="bold">${time.coutTime }</span>
-							<button class="btn attend" id="coutBtn">퇴실</button></td>
+						<td><span>외출</span> <span class="bold">${time.soutTime }</span></td>
+						<td><span>퇴실</span> <span class="bold">${time.coutTime }</span></td>
 					</tr>
 				</table>
 				<div class="fig qr">
@@ -86,6 +82,23 @@
 						</p>
 					</div>
 				</div>
+				<table>
+					<tr>
+						<td><c:if test="${empty time.cinTime }">
+								<button class="btn attend" id="cinBtn">입실</button>
+							</c:if> <c:if test="${empty time.coutTime and not empty time.soutTime }">
+								<button class="btn attend" id="retBtn">복귀</button>
+							</c:if></td>
+					</tr>
+					<tr>
+						<td><c:if
+								test="${not empty time.cinTime and empty time.coutTime }">
+								<button class="btn attend" id="soutBtn">외출</button>
+							</c:if> <c:if test="${not empty time.cinTime and empty time.coutTime }">
+								<button class="btn attend" id="coutBtn">퇴실</button>
+							</c:if></td>
+					</tr>
+				</table>
 				<div class="grid g20 fig full">
 					<p class="f20 bold">출결 현황</p>
 					<div class="grid c4 ta cen fig">
