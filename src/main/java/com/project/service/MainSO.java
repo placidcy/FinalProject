@@ -85,6 +85,29 @@ public class MainSO extends ItemSO {
 		return courseDAO.getTimetable(studentId);
 	}
 
+	public int updateTimetable(int studentId, String keyword) {
+		String updateKey = "";
+
+		switch (keyword) {
+		case "입실":
+			updateKey = "setCheckin";
+			break;
+		case "퇴실":
+			updateKey = "setCheckout";
+			break;
+		case "외출":
+			updateKey = "setStepout";
+			break;
+		case "복귀":
+			updateKey = "setReturn";
+			break;
+		default:
+			return -1;
+		}
+
+		return courseDAO.updateTimetable(updateKey, studentId);
+	}
+
 	public CourseItem getInfo(int studentId) {
 		return courseDAO.getInfo(studentId);
 	}

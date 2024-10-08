@@ -174,11 +174,11 @@ public class CourseDAO extends ItemDAO {
 		return timetable;
 	}
 
-	public int updateTimetable(String column, int studentId) {
-		this.sql = query.get("updateTimetable");
+	public int updateTimetable(String updateKey, int studentId) {
+		this.sql = query.get(updateKey);
 		int rowNum = -1;
 
-		rowNum = this.getJdbcTemplate().update(sql, column, studentId);
+		rowNum = this.getJdbcTemplate().update(sql, studentId);
 
 		return rowNum;
 	}
@@ -345,15 +345,50 @@ public class CourseDAO extends ItemDAO {
 				  """);
 
 		/* 조건에 따라 출결시간 정보를 갱신하는 쿼리 */
-		this.query.put("updateTimetable", """
+		this.query.put("setCheckin", """
 				UPDATE
 				  FINAL_STUDENT_ATTEND
 				SET
-				  ? = to_char(sysdate, 'HH24:MI')
+				  a_cintime = to_char(sysdate, 'HH24:MI')
 				WHERE
 				  STUDENT_ID = ?
 				  AND A_DATE = TRUNC(SYSDATE)
+				  AND a_cintime is null
 				  """);
+
+		this.query.put("setCheckout", """
+				UPDATE
+				  FINAL_STUDENT_ATTEND
+				SET
+				  a_couttime = to_char(sysdate, 'HH24:MI')
+				WHERE
+				  STUDENT_ID = ?
+				  AND A_DATE = TRUNC(SYSDATE)
+				  AND a_cintime is not null
+				""");
+
+		this.query.put("setStepout", """
+				UPDATE
+				  FINAL_STUDENT_ATTEND
+				SET
+				  a_souttime = to_char(sysdate, 'HH24:MI')
+				WHERE
+				  STUDENT_ID = ?
+				  AND A_DATE = TRUNC(SYSDATE)
+				  AND a_cintime is not null
+				  AND a_couttime is null
+				""");
+		this.query.put("setReturn", """
+				UPDATE
+				  FINAL_STUDENT_ATTEND
+				SET
+				  a_rettime = to_char(sysdate, 'HH24:MI')
+				WHERE
+				  STUDENT_ID = ?
+				  AND A_DATE = TRUNC(SYSDATE)
+				  AND a_souttime is not null
+				  AND a_couttime is null
+				""");
 
 		/*
 		 * 강의 정보를 불러오는 쿼리문 - 현재 시간에 유효한 QR코드가 존재하는지 체크하는 구문 제외

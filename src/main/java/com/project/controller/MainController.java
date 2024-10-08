@@ -47,10 +47,11 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/checkin/update")
-	public boolean requestMethodName(@RequestParam(required = true, name = "keyword") String keyword) {
-		System.out.println(keyword);
+	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword) {
+		int memberId = 3;
+		int studentId = mainSO.checkCourse(memberId);
 
-		return Boolean.FALSE;
+		return mainSO.updateTimetable(studentId, keyword) > 0;
 	}
 
 	@GetMapping("/register")
