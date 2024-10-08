@@ -117,7 +117,7 @@ public class AttendanceDAO {
 	}
 	
 	public List<AttendanceRequest> getStudentLvreq(int student_id){
-		this.sql = "select l_sdate, l_edate, req_date, far.r_status from (select l_sdate, l_edate, req_date, response_id from final_attend_lvreq where student_id=?) fal left outer join final_attend_response far on far.response_id = fal.response_id";
+		this.sql = "select l_sdate, l_edate, req_date, r_status, l_reason, l_contents as contents, l_attm as attm from (select * from final_attend_lvreq where student_id=?) fal left outer join final_attend_response far on far.response_id = fal.response_id";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -131,13 +131,16 @@ public class AttendanceDAO {
 				}else {
 					attReq.setR_status(0);	
 				}
+				attReq.setContents(rs.getString("contents"));
+				attReq.setAttm(rs.getString("attm"));
+				attReq.setL_reason(rs.getString("l_reason"));
 				return attReq;
 			}
 		},student_id);
 	}
 	
 	public List<AttendanceRequest> getStudentCorreq(int student_id){
-		this.sql = "select fsa.a_date, a_status , req_date, r_status from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select a_date, req_date, r_status from (select a_date, req_date,response_id from final_attend_correq where student_id=?) fac left outer join final_attend_response far on far.response_id = fac.response_id) crq on fsa.a_date=crq.a_date";
+		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select a_date, req_date, r_status, c_contents, c_attm from (select a_date, req_date,response_id, c_contents, c_attm from final_attend_correq where student_id=?) fac left outer join final_attend_response far on far.response_id = fac.response_id) crq on fsa.a_date=crq.a_date";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -151,6 +154,8 @@ public class AttendanceDAO {
 				}else {
 					attReq.setR_status(0);	
 				}
+				attReq.setContents(rs.getString("contents"));
+				attReq.setAttm(rs.getString("attm"));
 				return attReq;
 			}
 		},student_id, student_id);
