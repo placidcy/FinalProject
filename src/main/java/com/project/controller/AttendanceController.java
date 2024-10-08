@@ -39,6 +39,21 @@ public class AttendanceController {
 		return "attendanceDetail";
 	}
 	
+	@PostMapping("/attResponse")
+	public String attResponseHandler(AttendanceResponse attendanceResponse) {
+		attendanceDAO.insertResponse(attendanceResponse);
+		
+		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
+	}
+	
+	@PostMapping("/attResponseUpdate")
+	public String attResponseUpdateHandler(AttendanceResponse attendanceResponse) {
+		attendanceDAO.updateResponse(attendanceResponse);
+		
+		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
+	}
+	
+	
 	/*추후 세션에 저장된 course_id 커맨드 객체나, RequestParam으로 받아오기*/
 	/*강의 밑에 강사 밑에 학생을 조회해야할 듯 하다 강의 하나만으로는 강사가 구분 안 됨*/
 	@GetMapping("/currentAttendance")

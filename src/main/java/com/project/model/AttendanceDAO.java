@@ -39,14 +39,19 @@ public class AttendanceDAO {
 	
 	
 	public List<StudentAttendanceDO> selectStudentAttendance(int student_id) {
-		this.sql ="select fsa.a_date, a_status, c_contents from (select * from final_student_attend where student_id=?) fsa left outer join (select * from final_attend_correq where student_id=?) fac on fsa.a_date=fac.a_date";
+		this.sql ="select fsa.a_date, a_status , r_status,c_contents from (select a_date, a_status from final_student_attend where student_id=?) fsa left outer join (select fac.a_date, req_date, r_status, c_contents, c_attm from (select * from final_attend_correq where student_id=?) fac left outer join final_attend_corres far on far.student_id = fac.student_id) crq on fsa.a_date=crq.a_date order by a_date";
 		return this.jdbcTemplate.query(this.sql, new RowMapper<StudentAttendanceDO>() {
 			@Override
 			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
 				StudentAttendanceDO studentAtt = new StudentAttendanceDO();
 				studentAtt.setA_date(rs.getTimestamp("a_date").toLocalDateTime());
 				studentAtt.setA_status(rs.getInt("a_status"));
-				if(rs.getString("c_contents") != null) {
+				
+				if(rs.getInt("r_status") == 1) {
+					studentAtt.setA_request("정정승낙");	
+				}else if(rs.getInt("r_status") == 2) {
+					studentAtt.setA_request("정정거절");	
+				}else if(rs.getString("c_contents") != null) {
 					studentAtt.setA_request("정정요청");	
 				}
 				return studentAtt;
@@ -123,7 +128,7 @@ public class AttendanceDAO {
 	}
 	
 	public List<AttendanceRequest> getStudentLvreq(int student_id){
-		this.sql = "select l_sdate, l_edate, req_date, r_status, l_reason, l_contents as contents, l_attm as attm from (select * from final_attend_lvreq where student_id=?) fal left outer join final_attend_response far on far.response_id = fal.response_id";
+		this.sql = "select fal.l_sdate, l_edate, req_date, r_status, l_reason, l_contents as contents, l_attm as attm from (select * from final_attend_lvreq where student_id=?) fal left outer join final_attend_lvres far on far.student_id = fal.student_id and far.l_sdate=fal.l_sdate";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -132,11 +137,7 @@ public class AttendanceDAO {
 				attReq.setL_sdate(rs.getTimestamp("l_sdate").toLocalDateTime());
 				attReq.setL_edate(rs.getTimestamp("l_edate").toLocalDateTime());
 				attReq.setReq_date(rs.getTimestamp("req_date").toLocalDateTime());
-				if(rs.getInt("r_status") == 1 && rs.getInt("r_status") == 2) {
-					attReq.setR_status(rs.getInt("r_status"));	
-				}else {
-					attReq.setR_status(0);	
-				}
+				attReq.setR_status(rs.getInt("r_status"));	
 				attReq.setContents(rs.getString("contents"));
 				attReq.setAttm(rs.getString("attm"));
 				attReq.setL_reason(rs.getString("l_reason"));
@@ -146,7 +147,7 @@ public class AttendanceDAO {
 	}
 	
 	public List<AttendanceRequest> getStudentCorreq(int student_id){
-		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select a_date, req_date, r_status, c_contents, c_attm from (select a_date, req_date,response_id, c_contents, c_attm from final_attend_correq where student_id=?) fac left outer join final_attend_response far on far.response_id = fac.response_id) crq on fsa.a_date=crq.a_date";
+		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select fac.a_date, req_date, r_status, c_contents, c_attm from (select * from final_attend_correq where student_id=?) fac left outer join final_attend_corres far on far.student_id = fac.student_id) crq on fsa.a_date=crq.a_date";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -155,17 +156,35 @@ public class AttendanceDAO {
 				attReq.setA_date(rs.getTimestamp("a_date").toLocalDateTime());
 				attReq.setA_status(rs.getInt("a_status"));
 				attReq.setReq_date(rs.getTimestamp("req_date").toLocalDateTime());
-				if(rs.getInt("r_status") == 1 && rs.getInt("r_status") == 2) {
-					attReq.setR_status(rs.getInt("r_status"));	
-				}else {
-					attReq.setR_status(0);	
-				}
+				attReq.setR_status(rs.getInt("r_status"));	
 				attReq.setContents(rs.getString("contents"));
 				attReq.setAttm(rs.getString("attm"));
 				return attReq;
 			}
 		},student_id, student_id);
 	}
+	
+	
+	public void insertResponse(AttendanceResponse attendanceResponse){
+		if(attendanceResponse.getReqType() == 1) {
+			this.sql = "insert into final_attend_corres (response_id, r_status, r_details, student_id, a_date) values (seq_att_response_id.nextval, ?, ?, ?, ?)";	
+		}else if(attendanceResponse.getReqType() == 2) {
+			this.sql = "insert into final_attend_lvres (response_id, r_status, r_details, student_id, l_sdate) values (seq_att_response_id.nextval, ?, ?, ?, ?)";	
+		}
+		this.jdbcTemplate.update(this.sql, attendanceResponse.getR_status(), attendanceResponse.getR_details(), attendanceResponse.getStudent_id(), attendanceResponse.getDate());
+
+	}
+	
+	public void updateResponse(AttendanceResponse attendanceResponse) {
+		if(attendanceResponse.getReqType() == 1) {
+			this.sql = "update final_attend_corres set r_status=?, r_details=? where a_date=? and student_id=?";	
+		}else if(attendanceResponse.getReqType() == 2) {
+			this.sql = "update final_attend_lvres set r_status=?, r_details=? where l_sdate=? and student_id=?";	
+		}
+		this.jdbcTemplate.update(this.sql, attendanceResponse.getR_status(), attendanceResponse.getR_details(), attendanceResponse.getDate(), attendanceResponse.getStudent_id());
+		
+	}
+	
 	
 	
 	
