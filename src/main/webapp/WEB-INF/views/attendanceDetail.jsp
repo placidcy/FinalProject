@@ -196,9 +196,9 @@
 
                 <div id="requestHeader">
                     <div class="requestArea1">요청 유형</div>
-                    <div class="requestArea2">출결</div>
                     <div class="requestArea3">대상 일자</div>
                     <div class="requestArea4">요청 일자</div>
+					<div class="requestArea4">응답일자</div>
                     <div class="requestArea5">상태</div>
                 </div>
 
@@ -207,25 +207,25 @@
                 <div id="requestList">
 				<c:forEach items="${correqList}" var="correq">
                 <div class="correquestInfoBox">
-                    <div class="requestArea6">출결 정정 요청</div>
-                    <div class="requestArea7">${correq.getStatus(correq.a_status)}</div>
+                    <div class="requestArea6">출결 정정</div>
                     <div class="requestArea8">${correq.a_date.getYear()}.${correq.getZero(correq.a_date.getMonthValue())}.${correq.getZero(correq.a_date.getDayOfMonth())}</div>
 					<input type="hidden" data-text="${correq.contents}" />
 					<input type="hidden" data-text="${correq.attm}" />
                     <div class="requestArea9">${correq.getZero(correq.req_date.getMonthValue())}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
+					<div class="requestArea7">${correq.getStatus(correq.a_status)}</div>
                     <div class="requestArea10">${correq.getRstatus(correq.r_status)}</div>
                 </div>
 				</c:forEach>
 				
 				<c:forEach items="${lvreqList}" var="lvreq">
                 <div class="lvrequestInfoBox">
-                    <div class="requestArea6">공가 요청</div>
-                    <div class="requestArea7"></div>
+                    <div class="requestArea6">공가</div>
                     <div class="requestArea8">${lvreq.l_sdate.getYear()}.${lvreq.getZero(lvreq.l_sdate.getMonthValue())}.${lvreq.getZero(lvreq.l_sdate.getDayOfMonth())}~${lvreq.getZero(lvreq.l_edate.getMonthValue())}.${lvreq.getZero(lvreq.l_edate.getDayOfMonth())}</div>
 					<input type="hidden" data-text="${lvreq.contents}" />
 					<input type="hidden" data-text="${lvreq.attm}" />
 					<input type="hidden" data-text="${lvreq.l_reason}" />
 					<div class="requestArea9">${lvreq.getZero(lvreq.req_date.getMonthValue())}.${lvreq.getZero(lvreq.req_date.getDayOfMonth())}</div>
+					<div class="requestArea7">10.04</div>
                     <div class="requestArea10">${lvreq.getRstatus(lvreq.r_status)}</div>
                 </div>
 				</c:forEach>
