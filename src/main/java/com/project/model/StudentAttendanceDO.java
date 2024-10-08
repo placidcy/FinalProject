@@ -14,6 +14,7 @@ public class StudentAttendanceDO {
 	private LocalDateTime a_date;
 	private int a_status;
 	private String a_request;
+	private int r_status;
 
 	public StudentAttendanceDO() {
 	}
@@ -104,6 +105,14 @@ public class StudentAttendanceDO {
 
 	public void setA_request(String a_request) {
 		this.a_request = a_request;
+	}
+
+	public int getR_status() {
+		return r_status;
+	}
+
+	public void setR_status(int r_status) {
+		this.r_status = r_status;
 	}
 
 	public String getZero(int value) {

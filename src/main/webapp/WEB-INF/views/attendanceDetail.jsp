@@ -63,36 +63,37 @@
 			    <div class="modal-bottom req">
 					     <div>
 							<!--공가요청이면 일자 시작일~마지막일-->
-			                <div class="modalFont">일자 : &nbsp&nbsp <span class="modalFont">2024.03.21</span></div>
-			                <div class="modalFont">출결 : &nbsp&nbsp <span class="modalFont">지각</span></div>
-							
-							<!--공가요청이면 공가 사유 추가-->
+			                <div class="modalFont">일자 : &nbsp&nbsp <span class="modalFont"></span></div>
+							<!--공가요청이면 공가 사유-->
+							<div class="modalFont">출결 : &nbsp&nbsp <span class="modalFont"></span></div>
 	
 			                <label for="textBox" id="textBoxLabel">내용 :</label>
 			                <textarea id="textBox" disabled>일전에 있던 3월 23일 수업에 교통사고로 인해 불가피하게 지각하였습니다.</textarea> 
 							
 			                <div class="modalFont"> 증명서류: &nbsp&nbsp <a class="file" href="">파일</a></div>
 		                <hr />
-				<form class="grid g10 requestForm" action="">
+				<form class="requestForm" method="POST" action="/attResponse">
 		            <input type="hidden" name="date" value="2024.03.21" />
+					<input type="hidden" name="reqType" value="1" />
+					<input type="hidden" name="student_id" value="${studentAtt.student_id}" />
 					
                     <label id="radioLabel" for="radioBox">응답 상태:</label>
                     <div id="radioBox">
                         <div>
-                            <input type="radio" name="reqStatus" id="approved" value="approved">
+                            <input type="radio" name="r_status" id="approved" value="1">
                             <label for="approved" class="modalFont">승인</label>
                         </div>
                         <div>
-                            <input type="radio" name="reqStatus" id="denied" value="denied">
+                            <input type="radio" name="r_status" id="denied" value="2">
                             <label for="denied" class="modalFont">거부</label>
                         </div>
                     </div>
 					
 	                <div class="hidden" id="reqCheckRow">
 	                    <label class="modalFont">응답 사유:</label>
-						<select name="reqCheck" id="reqCheck"></select>
+						<select name="r_details" id="r_details"></select>
 		            </div>
-					
+
 		            <div class="btnBox">
 		                <input type="submit" class="modalBtn" id="submitBtn" value="요청처리" />
 		                <input type="button" class="modalBtn" id="cancleModal" value="취소" />
@@ -163,7 +164,18 @@
 						<c:forEach items="${attList}" var="att"> 
                          <div class="infoBox">
                             <div class="infoArea1">${att.getZero(att.a_date.getMonthValue())}/${att.getZero(att.a_date.getDayOfMonth())}</div>
-                            <div class="infoArea2">${att.getEmblem(att.a_status)}</div>
+                            
+						<c:choose>
+							
+							<c:when test="${att.a_request == '정정승낙'}">
+								<div class="infoArea2">○</div>
+							</c:when>
+							
+							<c:otherwise>
+								<div class="infoArea2">${att.getEmblem(att.a_status)}</div>
+							</c:otherwise>	
+							
+						</c:choose>
                             <div class="infoArea3">${att.a_request}</div>
                         </div>
 						</c:forEach> 
