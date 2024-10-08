@@ -122,13 +122,28 @@
                     </div>
                 </div>
                 <div>
-                    <strong>출석률</strong> &nbsp<span class="summationFont">${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}% (${studentAtt.c+studentAtt.d}/${(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab)}일)</span>
-                    <br />
-                    <!-- 60.2%라면 -1.3%를 뺴줘야 설명 부분의 위치가 맞게 위치한다. -->
-                    <div id="staticBox">
-                       <div id="static-bar"><div id="static-bar-gage" style="width:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%"></div></div>
-                       <div id="explain" style="margin-left:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100-1.3}%">▲<br /><strong>${studentAtt.m_name}</strong><br /> ${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%</div>
-                    </div>
+					<c:choose>
+						
+						<c:when test="${studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab==0}">
+							<strong>출석률</strong> &nbsp<span class="summationFont">(0일/0일)</span>
+							<br />
+							<!-- 60.2%라면 -1.3%를 뺴줘야 설명 부분의 위치가 맞게 위치한다. -->
+							<div id="staticBox">
+							   <div id="static-bar"><div id="static-bar-gage" style="width:0%"></div></div>             	
+							</div>
+						</c:when>
+						
+						<c:otherwise>
+							<strong>출석률</strong> &nbsp<span class="summationFont">${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}% (${studentAtt.c+studentAtt.d}/${(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab)}일)</span>
+							<br />
+							<!-- 60.2%라면 -1.3%를 뺴줘야 설명 부분의 위치가 맞게 위치한다. -->
+							<div id="staticBox">
+							   <div id="static-bar"><div id="static-bar-gage" style="width:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%"></div></div>
+							   <div id="explain" style="margin-left:${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100-1.3}%">▲<br /><strong>${studentAtt.m_name}</strong><br /> ${Math.round((studentAtt.c+studentAtt.d)*10000/(studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab))/100}%</div>               	
+							</div>
+						</c:otherwise>
+						
+					</c:choose>						
                 </div>
             </div>
 
@@ -149,7 +164,7 @@
                          <div class="infoBox">
                             <div class="infoArea1">${att.getZero(att.a_date.getMonthValue())}/${att.getZero(att.a_date.getDayOfMonth())}</div>
                             <div class="infoArea2">${att.getEmblem(att.a_status)}</div>
-                            <div class="infoArea3"></div>
+                            <div class="infoArea3">${att.a_request}</div>
                         </div>
 						</c:forEach> 
                     </div>

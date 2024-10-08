@@ -3,7 +3,7 @@ package com.project.model;
 import java.sql.*;
 import java.util.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
-
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -39,21 +39,24 @@ public class AttendanceDAO {
 	
 	
 	public List<StudentAttendanceDO> selectStudentAttendance(int student_id) {
-		this.sql ="select * from final_student_attend where student_id=?";
+		this.sql ="select fsa.a_date, a_status, c_contents from (select * from final_student_attend where student_id=?) fsa left outer join (select * from final_attend_correq where student_id=?) fac on fsa.a_date=fac.a_date";
 		return this.jdbcTemplate.query(this.sql, new RowMapper<StudentAttendanceDO>() {
 			@Override
 			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
 				StudentAttendanceDO studentAtt = new StudentAttendanceDO();
 				studentAtt.setA_date(rs.getTimestamp("a_date").toLocalDateTime());
 				studentAtt.setA_status(rs.getInt("a_status"));
+				if(rs.getString("c_contents") != null) {
+					studentAtt.setA_request("정정요청");	
+				}
 				return studentAtt;
 			}
-		},student_id);
+		},student_id,student_id);
 	}
 	
 	public StudentAttendanceDO getStudentAttendance(int student_id) {
-		this.sql = "select student_id, m_name, m_dept, m_tel, c, ab, l, d from (select fsa.student_id, a_status, m_name, m_dept, m_tel from final_student_attend fsa inner join (select student_id, m_name, m_dept, m_tel from final_member fm inner join (select * from final_course_student where student_id = ?) fcs on fm.member_id=fcs.member_id) fcm  on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l, 4 as d)) order by student_id";	
-	
+		this.sql = "select student_id, m_name, m_dept, m_tel, c, ab, l, d from (select fcm.student_id, a_status, m_name, m_dept, m_tel from final_student_attend fsa right outer join (select student_id, m_name, m_dept, m_tel from final_member fm inner join (select * from final_course_student where student_id = ?) fcs on fm.member_id=fcs.member_id) fcm on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l, 4 as d))";	
+		try {
 		return this.jdbcTemplate.queryForObject(this.sql, new RowMapper<StudentAttendanceDO>() {
 			@Override
 			public StudentAttendanceDO mapRow(ResultSet rs, int rownum) throws SQLException{
@@ -69,6 +72,9 @@ public class AttendanceDAO {
 				return studentAtt;
 			}
 		},student_id);
+		}catch(IncorrectResultSizeDataAccessException error) {
+			return null;
+		}
 	}
 	
 	public List<CourseScheduleDO> getCourseDateInfo(int course_id) {
