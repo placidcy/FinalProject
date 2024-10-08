@@ -47,6 +47,9 @@ function dialogHandler() {
 	
 	
 	correquestInfoBox.forEach((v, index) => 	v.addEventListener('click', () => {
+			if(corText[index]['r_status']==='승인' || corText[index]['r_status']==='거절'){
+				dialog.open ? dialog.open = false : dialog.open = false;
+			}else{
 	        dialog.open ? dialog.open = true : dialog.open = true;
 			dialog.children[1].children[0].children[0].children[0].innerText=corText[index]['date'];
 			dialog.children[1].children[0].children[1].innerHTML= '출결 : &nbsp&nbsp' + corText[index]['status'];
@@ -58,23 +61,15 @@ function dialogHandler() {
 			}
 			date.value=corText[index]['date'].replaceAll('.','-');
 			reqType.value=1;
-			dialog.children[1].children[0].children[6].children[4].children[0].children[0].removeAttribute('checked');
-			dialog.children[1].children[0].children[6].children[4].children[1].children[0].removeAttribute('checked');
-			dialog.children[1].children[0].children[6].setAttribute('action','/attResponse');
-			
-			if(corText[index]['r_status']==='승인'){
-				dialog.children[1].children[0].children[6].children[4].children[0].children[0].setAttribute('checked',true);
-				dialog.children[1].children[0].children[6].setAttribute('action','/attResponseUpdate');	
-			}else if(corText[index]['r_status']==='거절'){
-				dialog.children[1].children[0].children[6].children[4].children[1].children[0].setAttribute('checked',true);
-				dialog.children[1].children[0].children[6].setAttribute('action','/attResponseUpdate');	
-				
 			}
 
 			
 	}));
 	
 	lvrequestInfoBox.forEach((v, index) => 	v.addEventListener('click', () => {
+				if(lvText[index]['r_status']==='승인' || lvText[index]['r_status']==='거절'){
+					dialog.open ? dialog.open = false : dialog.open = false;
+				}else{
 		        dialog.open ? dialog.open = true : dialog.open = true;
 				dialog.children[1].children[0].children[0].children[0].innerText=lvText[index]['date'];
 				dialog.children[1].children[0].children[1].innerHTML= '사유 : &nbsp&nbsp ' + lvText[index]['reason'];
@@ -86,18 +81,8 @@ function dialogHandler() {
 				}
 				date.value=lvText[index]['date'].substr(0,10).replaceAll('.','-');
 				reqType.value=2;
-				dialog.children[1].children[0].children[6].children[4].children[0].children[0].removeAttribute('checked');
-				dialog.children[1].children[0].children[6].children[4].children[1].children[0].removeAttribute('checked');
-				dialog.children[1].children[0].children[6].setAttribute('action','/attResponse');
-				
-				if(lvText[index]['r_status']==='승인'){
-					dialog.children[1].children[0].children[6].children[4].children[0].children[0].setAttribute('checked',true);
-					dialog.children[1].children[0].children[6].setAttribute('action','/attResponseUpdate');	
-				}else if(lvText[index]['r_status']==='거절'){
-					dialog.children[1].children[0].children[6].children[4].children[1].children[0].setAttribute('checked',true);
-					dialog.children[1].children[0].children[6].setAttribute('action','/attResponseUpdate');	
-					
 				}
+				
 		}));
 	
 	

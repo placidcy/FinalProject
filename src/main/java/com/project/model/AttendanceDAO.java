@@ -175,15 +175,11 @@ public class AttendanceDAO {
 
 	}
 	
-	public void updateResponse(AttendanceResponse attendanceResponse) {
-		if(attendanceResponse.getReqType() == 1) {
-			this.sql = "update final_attend_corres set r_status=?, r_details=? where a_date=? and student_id=?";	
-		}else if(attendanceResponse.getReqType() == 2) {
-			this.sql = "update final_attend_lvres set r_status=?, r_details=? where l_sdate=? and student_id=?";	
-		}
-		this.jdbcTemplate.update(this.sql, attendanceResponse.getR_status(), attendanceResponse.getR_details(), attendanceResponse.getDate(), attendanceResponse.getStudent_id());
-		
+	public void updateStudentAttendance(AttendanceResponse attendanceResponse) {
+		this.sql = "update final_student_attend set a_status=1 where a_date=? and student_id=?";	
+		this.jdbcTemplate.update(this.sql, attendanceResponse.getDate(), attendanceResponse.getStudent_id());
 	}
+	
 	
 	
 	

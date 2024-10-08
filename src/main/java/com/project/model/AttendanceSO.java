@@ -10,6 +10,11 @@ public class AttendanceSO {
 	@Autowired
 	private AttendanceDAO attDao;
 	
-	//@Transactional
-	
+	@Transactional
+	public void updateAttendanceInfo(AttendanceResponse attendanceResponse) {
+		attDao.insertResponse(attendanceResponse);
+		if(attendanceResponse.getReqType() ==1) {
+			attDao.updateStudentAttendance(attendanceResponse);
+		}
+	}
 }
