@@ -7,6 +7,7 @@ public class AttendanceResponse {
 	private int student_id;
 	private int response_id;
 	private String date;
+	private int a_status;
 	
 	public AttendanceResponse() {
 		
@@ -59,6 +60,16 @@ public class AttendanceResponse {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
+	public int getA_status() {
+		return a_status;
+	}
+
+	public void setA_status(int a_status) {
+		this.a_status = a_status;
+	}
+	
+	
 	
 	
 }

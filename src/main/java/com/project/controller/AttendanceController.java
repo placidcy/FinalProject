@@ -20,6 +20,9 @@ public class AttendanceController {
 	@Autowired
 	private CourseDAO courseDAO;
 	
+	@Autowired
+	private AttendanceSO attendanceSO;
+	
 	@GetMapping("/attendanceCalendar")
 	public String attendanceCalendarHandler() {
 		return "attendanceCalendar";
@@ -41,14 +44,7 @@ public class AttendanceController {
 	
 	@PostMapping("/attResponse")
 	public String attResponseHandler(AttendanceResponse attendanceResponse) {
-		attendanceDAO.insertResponse(attendanceResponse);
-		
-		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
-	}
-	
-	@PostMapping("/attResponseUpdate")
-	public String attResponseUpdateHandler(AttendanceResponse attendanceResponse) {
-		attendanceDAO.updateResponse(attendanceResponse);
+		attendanceSO.updateAttendanceInfo(attendanceResponse);
 		
 		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
 	}
