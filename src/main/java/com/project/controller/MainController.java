@@ -13,6 +13,7 @@ import com.project.model.NoticeItem;
 import com.project.service.MainSO;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
@@ -42,6 +43,14 @@ public class MainController {
 		}
 		model.addAttribute("menu", "checkin");
 		return "main/checkin";
+	}
+
+	@ResponseBody
+	@GetMapping("/api/checkin/update")
+	public boolean requestMethodName(@RequestParam(required = true, name = "keyword") String keyword) {
+		System.out.println(keyword);
+
+		return Boolean.FALSE;
 	}
 
 	@GetMapping("/register")
