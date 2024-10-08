@@ -36,6 +36,11 @@ public class MemberSO {
 		memberDao.insertMember(newMember);
 	}
 	
+	public MemberDO selectedByMember_id(int member_id) {
+		return memberDao.selectedByMember_id(member_id);
+	}
+	
+	// 로그인
 	public LoginResponse login(String m_acctid, String m_acctpwd) {
 		MemberDO member = memberDao.login(m_acctid);
 		if(member == null) {
@@ -46,7 +51,7 @@ public class MemberSO {
 		}
 		return new LoginResponse(member.getMember_id(), member.getM_name(), member.getM_acctid(), member.getM_email(), member.getM_tel(), member.getM_dept(), member.getM_pfp(), member.getM_role());
 	}
-	
+	// 로그인 시 m_role 불러오기
 	public int checkM_role(int member_id) {
 		return memberDao.checkM_role(member_id);
 	}

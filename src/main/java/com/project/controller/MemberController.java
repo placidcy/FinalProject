@@ -3,10 +3,12 @@ package com.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.model.MemberDO;
 import com.project.model.MemberSO;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
@@ -51,13 +53,13 @@ public class MemberController {
 			}
 			else {
 				session.setAttribute("loginFailMsg", "로그인에 실패했습니다.");
-				return "redirect:/login";
+				return "redirect:/login?error=loginFailed";
 			}
 		}
 		catch(EmptyResultDataAccessException e) {
 			e.printStackTrace();
 			session.setAttribute("loginFailMsg", "일치하는 정보가 없습니다.");
-			return "redirect:/login";
+			return "redirect:/login?error=loginFailed";
 		}
 	}
 	
@@ -114,7 +116,7 @@ public class MemberController {
 	
 	@GetMapping("/findpwd")
 	public String findPwdHandler() {
-		return "findpw";
+		return "findpwd";
 	}
 	
 //	@PostMapping("/findidProcess")
@@ -137,7 +139,33 @@ public class MemberController {
 //	}
  	
 	@GetMapping("/mypage")
-	public String mypageHandler() {
+	public String mypageHandler(HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
+		
+		// auth가 없으면 로그인 페이지로
+		if(auth == null) {
+			return "redirect:/login";
+		}
+		
+		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
+		
+		String roleName;
+		if(member.getM_role() == 1) {
+			roleName = "학생";
+		}
+		else if(member.getM_role() == 2) {
+			roleName = "강사";
+		}
+		else {
+			roleName = "관리자";
+		}
+			
+		model.addAttribute("m_pfp", member.getM_pfp());
+		model.addAttribute("m_name", member.getM_name());
+		model.addAttribute("m_dept", member.getM_dept());
+		model.addAttribute("m_role", roleName);
+		model.addAttribute("m_acctid", member.getM_acctid());
+		model.addAttribute("m_email", member.getM_email());
 		return "mypage";
 	}
 	
