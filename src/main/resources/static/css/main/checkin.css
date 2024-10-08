@@ -1,36 +1,3 @@
-a {
-	text-decoration: none;
-	color: black;
-}
-
-a:hover {
-	cursor: pointer;
-}
-
-.bold {
-	font-weight: bold
-}
-
-.f20 {
-	font-size: 20px;
-}
-
-.f24 {
-	font-size: 24px;
-}
-
-.f30 {
-	font-size: 30px;
-}
-
-.f32 {
-	font-size: 32px;
-}
-
-.grid {
-	display: grid;
-}
-
 .grid.g10 {
 	gap: 10px;
 }
@@ -49,10 +16,6 @@ a:hover {
 
 .grid.c4.per {
 	grid-template-columns: 10% 40% 10% 40%;
-}
-
-.flex {
-	display: flex;
 }
 
 .w400 {
@@ -137,4 +100,71 @@ a:hover {
 
 .info {
 	width: 400px;
+}
+
+/* 모바일 화면에서 플로팅 아이콘 스타일 정의 */
+.floating-icon {
+	display: flex;
+	position: relative;
+	justify-content: center;
+	gap: 10px;
+}
+
+/* 스캐너 메뉴 */
+.floating-icon>.scanner {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	margin: 0;
+	box-sizing: border-box;
+	background-color: #24C2A2;
+	border-radius: 30px;
+	z-index: 3;
+	display: none;
+}
+
+/* 스캐너 메뉴 클릭 시 나타나는 보조 메뉴 영역 스타일 정의 */
+.floating-icon>.sub-menu {
+	position: absolute;
+	display: flex;
+	gap: 5px;
+	justify-content: space-around;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	bottom: 20px;
+	z-index: 4;
+	padding: 10px;
+}
+
+/* 보조 메뉴 영역 하위의 스타일 정의 */
+.sub-menu>li {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.scanner:hover, .floating-icon.clicked>.scanner {
+	background-color: #127763;
+}
+
+.floating-icon.clicked>.sub-menu>li.show {
+	opacity: 1 !important;
+	transform: translateY(0) !important;
+}
+
+.sub-menu.hidden {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
+	.scanner {
+		display: flex !important;
+	}
+	.scanner>svg {
+		filter: invert(1);
+	}
 }

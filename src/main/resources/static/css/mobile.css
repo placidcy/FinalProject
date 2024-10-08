@@ -1,87 +1,47 @@
-@media (max-width: 768px) {
-    .float-right {
-        float: inherit;
-        margin-left: 10px;
-    }
-
-    .tab {
-        width: 100%;
-        grid-column-start: 1;
-        grid-column-end: 3;
-    }
-
-    .tab td {
-        padding: 20px 0;
-    }
-
-    .fig.qr {
-        display: none;
-    }
-
-    .scanner {
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        margin: 0;
-        right: 20px;
-        bottom: 20px;
-        box-sizing: border-box;
-        background-color: #24C2A2;
-        border-radius: 30px;
-        z-index: 3;
-    }
-
-    .scanner>svg {
-        filter: invert(1);
-    }
-
-    .scanner:hover {
-        cursor: pointer;
-        background-color: #127763;
-    }
-
-    .tab.inst {
-        grid-column-end: inherit;
-    }
-
-    .qr {
-        grid-column-start: 1;
-        grid-column-end: 3;
-    }
-
-    .info {
-        width: auto;
-    }
-
-    .search-box,
-    .search-box>div,
-    .search-box [type="text"] {
-        width: 100% !important;
-    }
-
-    .course-additional>* {
-        width: 100%;
-    }
-
-    .course-info {
-        max-width: 200px;
-    }
+@media ( max-width : 768px) {
+	.float-right {
+		float: inherit;
+		margin-left: 10px;
+	}
+	.tab {
+		width: 100%;
+		grid-column-start: 1;
+		grid-column-end: 3;
+	}
+	.tab td {
+		padding: 20px 0;
+	}
+	.fig.qr {
+		display: none;
+	}
+	.tab.inst {
+		grid-column-end: inherit;
+	}
+	.qr {
+		grid-column-start: 1;
+		grid-column-end: 3;
+	}
+	.info {
+		width: auto;
+	}
+	.search-box, .search-box>div, .search-box [type="text"] {
+		width: 100% !important;
+	}
+	.course-additional>* {
+		width: 100%;
+	}
+	.course-info {
+		max-width: 200px;
+	}
 }
 
 .tab.inst {
-    color: #888888;
-    transition: 3s;
+	color: #888888;
+	transition: 3s;
 }
 
 .tab.inst td:hover {
-    cursor: pointer;
-    color: white;
-    background-color: #24C2A2;
-}
-
-.scanner {
-    display: none;
+	cursor: pointer;
+	color: white;
+	background-color: #24C2A2;
 }

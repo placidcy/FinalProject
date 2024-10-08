@@ -95,9 +95,27 @@ function setButtons() {
 	}
 }
 
+function setFloatingIcon() {
+	const floatingIcon = document.querySelector('.floating-icon');
+	const subMenu = floatingIcon.querySelector('.sub-menu');
+	const list = subMenu.querySelectorAll('li');
+
+	floatingIcon.addEventListener('click', function() {
+		floatingIcon.classList.toggle('clicked');
+		subMenu.classList.toggle('hidden');
+
+		for (let i = 0; i < list.length; i++) {
+			setTimeout(() => {
+				list[i].classList.toggle('show');
+			}, i * 200); // 200ms(0.2초) 간격으로 실행
+		}
+	});
+}
+
 function init() {
 	setChart();
 	setButtons();
+	setFloatingIcon();
 }
 
 window.addEventListener('load', init);

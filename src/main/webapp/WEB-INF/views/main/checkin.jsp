@@ -87,23 +87,6 @@
 						</p>
 					</div>
 				</div>
-				<table>
-					<tr>
-						<td><c:if test="${empty time.cinTime }">
-								<button class="btn attend" id="cinBtn">입실</button>
-							</c:if> <c:if test="${empty time.coutTime and not empty time.soutTime }">
-								<button class="btn attend" id="retBtn">복귀</button>
-							</c:if></td>
-					</tr>
-					<tr>
-						<td><c:if
-								test="${not empty time.cinTime and empty time.coutTime }">
-								<button class="btn attend" id="soutBtn">외출</button>
-							</c:if> <c:if test="${not empty time.cinTime and empty time.coutTime }">
-								<button class="btn attend" id="coutBtn">퇴실</button>
-							</c:if></td>
-					</tr>
-				</table>
 				<div class="grid g20 fig full">
 					<p class="f20 bold">출결 현황</p>
 					<div class="grid c4 ta cen fig">
@@ -154,16 +137,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="scanner">
-						<svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px"
-							viewBox="0 0 24 24">
-	                            <g>
-	                                <path fill="none" d="M0 0h24v24H0z" />
-	                                <path
-								d="M15 3h6v5h-2V5h-4V3zM9 3v2H5v3H3V3h6zm6 18v-2h4v-3h2v5h-6zm-6 0H3v-5h2v3h4v2zM3 11h18v2H3v-2z" />
-	                            </g>
-	                        </svg>
-					</div>
+					<jsp:include page="./checkin_floating.jsp"></jsp:include>
 				</div>
 			</div>
 		</main>
