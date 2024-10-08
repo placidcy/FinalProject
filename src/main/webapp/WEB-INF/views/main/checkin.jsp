@@ -65,17 +65,22 @@
 							해당 코드는 <span class="bold">공유가 불가능</span>하며, 이를 이용한 <span
 								class="bold">부정 출결 시 제적</span>을 당할 수 있습니다.
 						</p>
-						<div class="grid c2 cen v h">
-							<div class="">
-								<p>QR코드 만료까지 남은 시간</p>
-								<p class="bold" id="timeLimit">00시간 00분 00초</p>
+						<c:if test="${not empty info.qrCode }">
+							<div class="grid c2 cen v h">
+								<div class="">
+									<p>QR코드 만료까지 남은 시간</p>
+									<p class="bold" id="timeLimit">00시간 00분 00초</p>
+								</div>
+								<div>
+									<img class="img s200"
+										src="https://quickchart.io/qr?text=${info.qrCode}&centerImageUrl=https://imgur.com/RB0yUtw.png"
+										alt="">
+								</div>
 							</div>
-							<div>
-								<img class="img s200"
-									src="https://quickchart.io/qr?text=${empty info.qrCode ? 'null' : info.qrCode }&centerImageUrl=https://imgur.com/RB0yUtw.png"
-									alt="">
-							</div>
-						</div>
+						</c:if>
+						<c:if test="${empty info.qrCode }">
+							<div class="p30">현재 유효한 출석 QR코드가 존재하지 않습니다.</div>
+						</c:if>
 						<p>
 							<span class="bold">QR 코드 스캔</span>은 <span class="bold">모바일
 								환경으로 접속</span>하여 수행하시길 바랍니다.
