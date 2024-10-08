@@ -44,7 +44,7 @@
 	                <a href="<c:url value='/findid' />">
 	                    <button name="param" value="1">아이디 찾기</button>
 	                </a>
-	                <a href="<c:url value='/findpw' />">
+	                <a href="<c:url value='/findpwd' />">
 	                    <button name="param" value="1">비밀번호 찾기</button>
 	                </a>
                 </div>
@@ -61,7 +61,7 @@
 	                <a href="<c:url value='/findid' />">
 	                    <button name="param" value="2">아이디 찾기</button>
 	                </a>
-	                <a href="<c:url value='/findpw' />">
+	                <a href="<c:url value='/findpwd' />">
 	                    <button name="param" value="2">비밀번호 찾기</button>
 	                </a>
                 </div>
