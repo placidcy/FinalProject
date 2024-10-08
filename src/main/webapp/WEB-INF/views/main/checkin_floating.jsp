@@ -3,8 +3,8 @@
 <div class="floating-icon">
 	<ul class="sub-menu hidden">
 		<li><button class="btn attend" id="cinBtn">입실</button></li>
-		<li><button class="btn attend" id="retBtn">복귀</button></li>
 		<li><button class="btn attend" id="soutBtn">외출</button></li>
+		<li><button class="btn attend" id="retBtn">복귀</button></li>
 		<li><button class="btn attend" id="coutBtn">퇴실</button></li>
 	</ul>
 	<div class="scanner">

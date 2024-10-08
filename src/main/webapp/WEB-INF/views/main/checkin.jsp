@@ -51,12 +51,12 @@
 				</div>
 				<table class="tab ta cen">
 					<tr>
-						<td><span>입실</span> <span class="bold">${time.cinTime }</span></td>
-						<td><span>복귀</span> <span class="bold">${time.retTime }</span></td>
+						<td><span>입실</span></td><td><span class="bold">${time.cinTime }</span></td>
+						<td><span>복귀</span></td><td><span class="bold">${time.retTime }</span></td>
 					</tr>
 					<tr>
-						<td><span>외출</span> <span class="bold">${time.soutTime }</span></td>
-						<td><span>퇴실</span> <span class="bold">${time.coutTime }</span></td>
+						<td><span>외출</span></td><td><span class="bold">${time.soutTime }</span></td>
+						<td><span>퇴실</span></td><td><span class="bold">${time.coutTime }</span></td>
 					</tr>
 				</table>
 				<div class="fig qr">

@@ -110,6 +110,17 @@ function setFloatingIcon() {
 			}, i * 200); // 200ms(0.2초) 간격으로 실행
 		}
 	});
+
+	window.addEventListener('resize', () => {
+		if (window.innerWidth > 768) {
+			floatingIcon.classList.remove('clicked');
+			subMenu.classList.add('hidden');
+
+			for (let i = 0; i < list.length; i++) {
+				list[i].classList.remove('show');
+			}
+		}
+	})
 }
 
 function init() {
