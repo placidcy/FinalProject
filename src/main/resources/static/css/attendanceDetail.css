@@ -141,56 +141,6 @@ main {
   color:white;
 }
 
-.requestArea1{
-  width:24%;
-  text-align: center;
-  font-weight: bold;
-}
-
-.requestArea2{
-  width:9%;
-  text-align: center;
-  font-weight: bold;
-}
-.requestArea3{
-  width:34%;
-  text-align: center;
-}
-.requestArea4{
-  width:17%;
-  text-align: center;
-}
-.requestArea5{
-  width:12.8%;
-  text-align: center;
-  font-weight: bold;
-}
-
-.requestArea6{
-  width:25%;
-  text-align: center;
-  font-weight: bold;
-}
-
-.requestArea7{
-  width:9.5%;
-  text-align: center;
-  font-weight: bold;
-}
-.requestArea8{
-  width:33.2%;
-  text-align: center;
-}
-.requestArea9{
-  width:22%;
-  text-align: center;
-}
-.requestArea10{
-  margin-left:7.4px;
-  text-align: center;
-  font-weight: bold;
-}
-
 
 .lvrequestInfoBox{
   display: flex;
@@ -282,13 +232,57 @@ main {
 }
 
 #requestBox{
-  margin-left:20px;
+  margin-left:30px;
 }
 
 #requestList{
-  width:440px;
+  width:500px;
   max-height:480px;
   overflow-y: scroll;
+}
+
+.requestArea1{
+  width:20%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.requestArea3{
+  width:28%;
+  text-align: center;
+}
+.requestArea4{
+  width:18%;
+  text-align: center;
+}
+.requestArea5{
+  width:9.5%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.requestArea6{
+  width:20%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.requestArea8{
+  width:30%;
+  text-align: center;
+}
+.requestArea7{
+  width:19%;
+  text-align: center;
+}
+.requestArea9{
+  width:19%;
+  text-align: center;
+}
+.requestArea10{
+  width:11%;
+  text-align: center;
+  font-weight: bold;
 }
 
 }
@@ -352,6 +346,57 @@ main {
     width:100%;
     max-height:480px;
     overflow-y: scroll;
+  }
+  
+  .requestArea1{
+    width:19.50%;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .requestArea3{
+    width:28%;
+    text-align: center;
+  }
+  .requestArea4{
+    width:18.7%;
+    text-align: center;
+  }
+  .requestArea5{
+	margin-left:0.8%;
+    width:7%;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .requestArea6{
+	margin-left:2%;
+    width:16.5%;
+    text-align: center;
+    font-weight: bold;
+  }
+  .requestArea7{
+	margin-left:14.8%;
+	width:5.2%;
+	text-align: center;
+  	margin-right:2.5%;
+    }
+  .requestArea8{
+	margin-left:3%;
+    width:26%;
+    text-align: center;
+	margin-right:2.5%;
+  }
+  .requestArea9{
+	margin-left:6%;
+    width:5%;
+    text-align: center;
+  }
+  .requestArea10{
+	margin-left:6.5%;
+	width:5%;
+    text-align: center;
+    font-weight: bold;
   }
   
 }
