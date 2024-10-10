@@ -17,7 +17,7 @@
 
 <body>
     <div id="container">
-       <jsp:include page="common/sidebar_course.jsp" />
+       <jsp:include page="common/side_course.jsp" />
         <main> 
         <button id="allListBtn">전체 목록</button>
         <div id="infoBox-header">

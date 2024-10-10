@@ -19,7 +19,7 @@
 
 <body>
     <div id="container">
-        <jsp:include page="common/sidebar_course.jsp" />
+        <jsp:include page="common/side_course.jsp" />
         <main> 
             <dialog id="modal">
                 <div class="modal-top flex cen">
