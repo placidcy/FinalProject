@@ -210,6 +210,9 @@ main {
   text-align: center;
   padding-top:20px;
 }
+#attRatio{
+	margin-left:20px;
+}
 
 #staticBox{
   font-size:13px;

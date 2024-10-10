@@ -83,58 +83,47 @@
             
             <table id="calendarBox">
                 <!-- for 문으로 저번 월에 맞는 일수만큼 생성 -->
-                <tr class="weekBox">
-                    <td class="preMonthDate-ww">28</td>
-                    <td class="preMonthDate">29</td>
-                    <td class="preMonthDate">30</td>
-                    <td class="preMonthDate">31</td>
-                    <td class="monthDate-nc">1</td>
-                    <td class="monthDate-a">2</td>
-                    <td class="monthDate-w">3</td>  
-                </tr>
-                <!-- for 문으로 현재 월에 맞는 일수만큼 생성 -->
-                
-                <tr class="weekBox">
-                    <td class="monthDate-ww">4</td>
-                    <td class="monthDate-a">5</td>
-                    <td class="monthDate-nc">6</td>
-                    <td class="monthDate-a">7</td>
-                    <td class="monthDate-nc">8</td>
-                    <td class="monthDate-a">9</td>
-                    <td class="monthDate-w">10</td>
-                </tr>
-
-                <tr class="weekBox">
-                    <td class="monthDate-ww">11</td>
-                    <td class="monthDate-a">12</td>
-                    <td class="monthDate-nc">13</td>
-                    <td class="monthDate-a">14</td>
-                    <td class="monthDate-nc">15</td>
-                    <td class="monthDate-a">16</td>
-                    <td class="monthDate-w">17</td>
-                </tr>
-
-                <tr class="weekBox">
-                    <td class="monthDate-ww">18</td>
-                    <td class="monthDate-a">19</td>
-                    <td class="monthDate-nc">20</td>
-                    <td class="monthDate-l"><span style="color:white">21</span> <div class="attReq">정정 요청 진행 중</div></td>
-                    <td class="monthDate-nc">22</td>
-                    <td class="monthDate-ab"><span style="color:white">23</span></td>
-                     <td class="monthDate-w">24</td>
-                </tr>
-
-                
-                <tr class="weekBox">
-                    <td class="monthDate-ww">25</td>
-                    <td class="monthDate-a">26</td>
-                    <td class="monthDate-nc">27</td>
-                    <td class="monthDate-a">28</td>
-                    <td class="monthDate-nc">29</td>
-                    <td class="monthDate-c">30<div class="attReq">공가 요청 진행 중</div></td>
-                     <td class="monthDate-w">31</td>
-                </tr>
-                
+				<!--월요일이 2-->
+				<c:forEach begin="0" end="${attCal.size()/7}" varStatus="status">
+				<tr class="weekBox">
+				<c:forEach items="${attCal}" var="cal" begin="${(status.count-1)*7}" end="${(status.count-1)*7+6}">
+					<c:choose>
+						<c:when test="${cal.d==7}">
+							<td class="monthDate-w">${cal.dt.getDayOfMonth()}</td>
+						</c:when>
+						<c:when test="${cal.d==1}">
+							<td class="monthDate-ww">${cal.dt.getDayOfMonth()}</td>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${cal.a_status==1}">
+									<td class="monthDate-a">${cal.dt.getDayOfMonth()}</td>
+								</c:when>
+								<c:when test="${cal.a_status==2}">
+									<td class="monthDate-ab">${cal.dt.getDayOfMonth()}
+										<c:choose>
+											<c:when test="${cal.req_type == 1 && cal.r_status==2}">
+												<p class="attReq">정정 요청 거절</p>
+											</c:when>
+											<c:when test="${cal.req_type == 1 && cal.r_status==0}">
+												<p class="attReq">정정 요청 진행 중${cal.d}</p>
+											</c:when>
+										</c:choose>
+									</td>
+								</c:when>
+								<c:when test="${cal.a_status==3}">
+									<td class="monthDate-l">${cal.dt.getDayOfMonth()}<c:if test="${cal.req_type != 0}"><p class="attReq">${cal.req_type}</p></c:if></td>
+								</c:when>
+								<c:otherwise>
+									<td class="monthDate-nc">${cal.dt.getDayOfMonth()}<c:if test="${cal.req_type != 0}"><p class="attReq">${cal.req_type}</p></c:if></td>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				</c:forEach>
+				</tr>
+                          
             </table>
             <div id="calendarExplain">
                 출결 정정 요청 또는 공가 요청 날짜를 클릭/드래그 해 주세요.
