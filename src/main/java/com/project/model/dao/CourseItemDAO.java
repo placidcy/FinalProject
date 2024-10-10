@@ -167,8 +167,6 @@ public class CourseItemDAO extends ItemDAO {
 				}
 			}, studentId);
 		} catch (Exception e) {
-			this.sql = query.get("setTimetable");
-			this.getJdbcTemplate().update(sql, studentId);
 		}
 
 		return timetable;
@@ -319,7 +317,10 @@ public class CourseItemDAO extends ItemDAO {
 		 */
 		this.query.put("getTimetable", """
 				SELECT
-				  *
+				  to_char(a_cintime, 'hh24:mi') as a_cintime,
+				  to_char(a_couttime, 'hh24:mi') as a_couttime,
+				  to_char(a_souttime, 'hh24:mi') as a_souttime,
+				  to_char(a_rettime, 'hh24:mi') as a_rettime
 				FROM
 				  FINAL_STUDENT_ATTEND fsa
 				WHERE
@@ -347,7 +348,7 @@ public class CourseItemDAO extends ItemDAO {
 				UPDATE
 				  FINAL_STUDENT_ATTEND
 				SET
-				  a_cintime = to_char(sysdate, 'HH24:MI')
+				  a_cintime = sysdate
 				WHERE
 				  STUDENT_ID = ?
 				  AND A_DATE = TRUNC(SYSDATE)
@@ -358,7 +359,7 @@ public class CourseItemDAO extends ItemDAO {
 				UPDATE
 				  FINAL_STUDENT_ATTEND
 				SET
-				  a_couttime = to_char(sysdate, 'HH24:MI')
+				  a_couttime = sysdate
 				WHERE
 				  STUDENT_ID = ?
 				  AND A_DATE = TRUNC(SYSDATE)
@@ -369,7 +370,7 @@ public class CourseItemDAO extends ItemDAO {
 				UPDATE
 				  FINAL_STUDENT_ATTEND
 				SET
-				  a_souttime = to_char(sysdate, 'HH24:MI')
+				  a_souttime = sysdate
 				WHERE
 				  STUDENT_ID = ?
 				  AND A_DATE = TRUNC(SYSDATE)
@@ -380,7 +381,7 @@ public class CourseItemDAO extends ItemDAO {
 				UPDATE
 				  FINAL_STUDENT_ATTEND
 				SET
-				  a_rettime = to_char(sysdate, 'HH24:MI')
+				  a_rettime = sysdate
 				WHERE
 				  STUDENT_ID = ?
 				  AND A_DATE = TRUNC(SYSDATE)
