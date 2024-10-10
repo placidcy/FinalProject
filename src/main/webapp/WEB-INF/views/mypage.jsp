@@ -19,7 +19,7 @@
 <body>
     <div class="container flex">
     	<jsp:include page="common/side_main.jsp" />
-        <main class="contents">
+        <main class="contents bgf2f2f2">
             <div id="header">
                 <span class="title">마이페이지</span>
                 <button id="profile-cancel">취소</button>
@@ -56,12 +56,12 @@
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail">변경</a></td>
+                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail" class="a">변경</a></td>
                     </tr>
                     <tr>
                         <th>비밀번호 변경</th>
                         <td>
-                            <a href="<c:url value='/change-pw' />">비밀번호 변경하기</a>
+                            <a href="<c:url value='/change-pw' />" class="a">비밀번호 변경하기</a>
                         </td>
                     </tr>
                 </table>
@@ -69,7 +69,7 @@
                 <table>
                     <tr>
                         <th>회원 탈퇴</th>
-                        <td><a href="<c:url value='/leave' />" id="leave">회원 탈퇴하기</a></td>
+                        <td><a href="<c:url value='/leave' />" id="leave" class="a">회원 탈퇴하기</a></td>
                     </tr>
                 </table>
             </div>
