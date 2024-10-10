@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHECK-공지사항 : '${keyword }' 검색결과</title>
-<link rel="stylesheet" href="/css/common.css">
-<link rel="stylesheet" href="/css/main/notice.css">
+<link rel="stylesheet" href="/resources/css/common.css">
+<link rel="stylesheet" href="/resources/css/main/notice.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="/js/main/mobile.js"></script>
-<script src="/js/main/notice.js"></script>
+<script src="/resources/js/main/mobile.js"></script>
+<script src="/resources/js/main/notice.js"></script>
 </head>
 <body>
 	<div class="container flex">
