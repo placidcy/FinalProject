@@ -210,7 +210,7 @@ public class CourseItemDAO extends ItemDAO {
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
-		 * 수강 신청 목록 조횤 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 신청 목록 조횤 쿼리
 		 */
 		this.query.put("selectByDates", """
 				select
@@ -235,12 +235,15 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				order by
 				  c_sdate,
 				  c_edate desc
 				""");
 		/*
-		 * 수강 중인 강의 목록 조회 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 중인 강의 목록 조회 쿼리
 		 */
 		this.query.put("selectByMemberId", """
 				select
@@ -253,9 +256,12 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				 """);
 		/*
-		 * 수강 신청 목록 총 갯수 반환 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 신청 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByDates", """
 				select
@@ -273,9 +279,12 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
-		 * 수강 중인 강의 목록 총 갯수 반환 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 중인 강의 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByMemberId", """
 				select
@@ -284,7 +293,10 @@ public class CourseItemDAO extends ItemDAO {
 				  final_course fc
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
-				  member_id = ?
+				  member_id = ? 
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
@@ -295,8 +307,12 @@ public class CourseItemDAO extends ItemDAO {
 					SELECT *
 					FROM FINAL_COURSE_STUDENT fcs
 					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
 					)
-				WHERE member_id = ?
+				WHERE member_id = ? 
+				-- 현재일이 강의 시작일 및 종료일 사이에 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate and c_edate
 				""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
