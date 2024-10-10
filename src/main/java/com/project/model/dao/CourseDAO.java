@@ -290,31 +290,13 @@ public class CourseDAO extends ItemDAO {
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
 		this.query.put("checkCourse", """
-				SELECT
-				  student_id
-				FROM
-				  (
-				    SELECT
-				      fc.course_id,
-				      member_id,
-				      student_id,
-				      fc.C_NAME,
-				      CASE WHEN TO_CHAR(SYSDATE, 'D') = 2
-				      AND fcd.D_MON = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 3
-				      AND fcd.D_TUE = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 4
-				      AND fcd.D_WED = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 5
-				      AND fcd.D_THU = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 6
-				      AND fcd.D_FRI = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 7
-				      AND fcd.D_SAT = 1 THEN 1 WHEN TO_CHAR(SYSDATE, 'D') = 1
-				      AND fcd.D_SUN = 1 THEN 1 ELSE 0 END AS C_RESULT
-				    FROM
-				      FINAL_COURSE fc
-				      INNER JOIN FINAL_COURSE_DAY fcd ON fc.COURSE_ID = fcd.COURSE_ID
-				      INNER JOIN FINAL_COURSE_STUDENT fcs ON fc.COURSE_ID = fcs.COURSE_ID
-				  )
-				WHERE
-				  c_result = 1
-				  AND member_id = ?
+				SELECT student_id
+				FROM (
+					SELECT *
+					FROM FINAL_COURSE_STUDENT fcs
+					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+					)
+				WHERE member_id = ?
 				""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
