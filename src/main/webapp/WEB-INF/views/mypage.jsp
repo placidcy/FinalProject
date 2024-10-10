@@ -8,17 +8,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECK-마이페이지</title>
-    <link rel="stylesheet" href="/resources/css/main.css" />
+	<link rel="stylesheet" href="/resources/css/common.css">
+	<link rel="stylesheet" href="/resources/css/main/main.css">
     <link rel="stylesheet" href="/resources/css/mypage.css" />
-	<link rel="stylesheet" href="/resources/css/common.css" />
-    <!-- 모바일 헤더 -->
-    <link rel="stylesheet" href="/resources/css/mobile.css">
-    <script src="/resources/js/mobile.js"></script>
+    <link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<script src="/resources/js/main/mobile.js"></script>
 </head>
+
 <body>
-    <div id="container">
+    <div class="container flex">
     	<jsp:include page="common/side_main.jsp" />
-        <main>
+        <main class="contents">
             <div id="header">
                 <span class="title">마이페이지</span>
                 <button id="profile-cancel">취소</button>
