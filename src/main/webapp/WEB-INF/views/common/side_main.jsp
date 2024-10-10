@@ -42,8 +42,7 @@
 		<a href="/mypage"><c:set var="mypage" value="mypage"></c:set>
 			<li
 			class="menu <c:if test="${menu eq mypage}">selected</c:if>
-				cffffff">마이
-				페이지</li> </a>
+				cffffff">마이페이지</li> </a>
 		<a href="/logout">
 			<li class="menu cffffff">로그아웃</li>
 		</a>
