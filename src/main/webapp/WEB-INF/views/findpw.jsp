@@ -8,9 +8,11 @@
     <title>CHECK-비밀번호 찾기</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
+    <script src="/resources/js/buttonLocation.js"></script>
 </head>
 <body>
     <div id="container">
+<!-- 
         <header>
             <div id="header1">
                 <a href="#">
@@ -26,16 +28,27 @@
                 </div>
             </div>
         </header>
-
+ -->
+ 		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="content" />
+ 			<jsp:param name="pageTitle" value="비밀번호 찾기"/>
+        	<jsp:param name="pageContent" value="비밀번호를 잊으셨다면, 아이디와 이메일을 통해 비밀번호를 재설정할 수 있습니다."/>
+ 		</jsp:include>
         <main>
             <div class="formBox">
-                <p>아이디과 이메일을 입력하세요.</p>
-                <form action="" method="POST">
-                    <input type="text" name="inputid" placeholder="아이디 입력" required />
-                    <input type="email" name="inputemail" placeholder="이메일 입력" required />
-                    <button type="submit" id="searchBtn">찾기</button>
+            	<div id="top">
+	                <p>아이디과 이메일을 입력하세요.</p>
+            	</div>
+            	<div id="middle">
+	                <form action="" method="POST">
+	                    <input type="text" name="inputid" placeholder="아이디 입력" required />
+	                    <input type="email" name="inputemail" placeholder="이메일 입력" required />
+	                </form>
+            	</div>
+            	<div id="bottom">
+                    <button type="submit" id="submitBtn">찾기</button>
                     <button id="cancelBtn">취소</button>
-                </form>
+            	</div>
             </div>
         </main>
     </div>

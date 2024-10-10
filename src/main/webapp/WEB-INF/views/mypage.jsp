@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="/resources/css/mypage.css" />
 	<link rel="stylesheet" href="/resources/css/common.css" />
     <!-- 모바일 헤더 -->
-    <link rel="stylesheet" href="resources/css/mobile.css">
+    <link rel="stylesheet" href="/resources/css/mobile.css">
     <script src="/resources/js/mobile.js"></script>
 </head>
 <body>
     <div id="container">
-    	<jsp:include page="common/side_main.jsp"></jsp:include>
+    	<jsp:include page="common/side_main.jsp" />
         <main>
             <div id="header">
                 <span class="title">마이페이지</span>
@@ -31,7 +31,7 @@
                         <th>프로필 이미지</th>
                         <td>
                             <div id="profileBox">
-                                <img class="emptyImg" src="recources/img/emptyimg.png" alt="프로필 사진" /><br>
+                                <img class="emptyImg" src="/resources/img/emptyimg.png" alt="프로필 사진" /><br>
                                 <label for="uploadImg">이미지 변경</label>
                                 <input type="file" name="uploadImg" id="uploadImg" accept="image/*" />
                             </div>
@@ -39,23 +39,23 @@
                     </tr>
                     <tr>
                         <th>이름</th>
-                        <td>홍길동</td>
+                        <td>${m_name}</td>
                     </tr>
                     <tr>
                         <th>소속/조직</th>
-                        <td>KDT 유데미 풀스택 자바 1기</td>
+                        <td>${m_dept}</td>
                     </tr>
                     <tr>
                         <th>회원 분류</th>
-                        <td>학생</td>
+                        <td>${m_role}</td>
                     </tr>
                     <tr>
                         <th>아이디</th>
-                        <td>gildong123</td>
+                        <td>${m_acctid}</td>
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>gildong123@gmail.com <a href="<c:url value='/change-mail' />" id="change-mail">변경</a></td>
+                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail">변경</a></td>
                     </tr>
                     <tr>
                         <th>비밀번호 변경</th>

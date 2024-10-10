@@ -17,6 +17,19 @@ public class MemberDO {
 
 	}
 	
+	public MemberDO(int member_id, String m_name, String m_acctid, String m_acctpwd, String m_email,
+			String m_tel, String m_dept, int m_status, int m_role) {
+		this.member_id = member_id;
+		this.m_name = m_name;
+		this.m_acctid = m_acctid;
+		this.m_acctpwd = m_acctpwd;
+		this.m_email = m_email;
+		this.m_tel = m_tel;
+		this.m_dept = m_dept;
+		this.m_status = m_status;
+		this.m_role = m_role;
+	}
+
 	public int getMember_id() {
 		return member_id;
 	}
