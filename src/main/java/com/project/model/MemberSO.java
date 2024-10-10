@@ -60,9 +60,16 @@ public class MemberSO {
 	public boolean isM_acctidDuplicate(String m_acctid) {
 		return !memberDao.duplicateCheckM_acctid(m_acctid);
 	}
-	
 	// 중복되지 않은 이메일이면 true
 	public boolean isM_emailDuplicate(String m_email) {
 		return !memberDao.duplicateCheckM_email(m_email);
 	}
+	
+	public String findM_acctid(String m_name, String m_email, int m_role) {
+		return memberDao.findM_acctid(m_name, m_email, m_role);
+	}
+	public String findM_acctpwd(String m_acctid, String m_email, int m_role) {
+		return memberDao.findM_acctpwd(m_acctid, m_email, m_role);
+	}
+
 }

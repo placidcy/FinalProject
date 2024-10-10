@@ -65,10 +65,21 @@ public class MemberDAO {
 		
 	}
 
-	public String findM_acctid(String m_name, String m_email) {
-		this.sql = "select m_acctid from final_member where m_name=? and m_email=?";
+	public String findM_acctid(String m_name, String m_email, int m_role) {
+		this.sql = "select m_acctid from final_member where m_name=? and m_email=? and m_role=?";
 		try {
-			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_name, m_email);
+			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_name, m_email, m_role);
+			return result;
+		}
+		catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	public String findM_acctpwd(String m_acctid, String m_email, int m_role) {
+		this.sql = "select member_id from final_member where m_acctid=? and m_email=? and m_role=?";
+		try {
+			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_acctid, m_email, m_role);
 			return result;
 		}
 		catch (EmptyResultDataAccessException e) {

@@ -4,9 +4,11 @@ function cancelHandler() {
 	location.href='/findcheck';
 }
 function submitHandler() {
-	let findProcess = document.querySelector('#findProcess');
+	let findidProcess = document.querySelector('#findidProcess');
+	let findpwdProcess = document.querySelector('#findpwdProcess');
 	
-	findProcess.submit();
+	//findidProcess.submit();
+	findpwdProcess.submit();
 }
 
 function init() {

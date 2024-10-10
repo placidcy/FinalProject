@@ -123,20 +123,20 @@
     margin-left:20px;
 }
 
-
 @media (min-width: 550px){
-dialog {
-    position:fixed;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 550px;
-    height: 550px;
-    padding: 0;
-    border: 1px solid gainsboro;
-    overflow: hidden;
-    border-radius: 20px;
-    z-index: 1;
-}
+	
+	dialog {
+	    position:fixed;
+	    left: 50%;
+	    transform: translate(-50%, 0);
+	    width: 550px;
+	    height: 550px;
+	    padding: 0;
+	    border: 1px solid gainsboro;
+	    overflow: hidden;
+	    border-radius: 20px;
+	    z-index: 1;
+	}
 
 }
 
