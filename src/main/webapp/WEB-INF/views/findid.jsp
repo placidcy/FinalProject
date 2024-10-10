@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
     <!-- 모달 -->
-    <link rel="stylesheet" href="/resources/css/checkin.css" />
+    <link rel="stylesheet" href="/resources/css/main/checkin.css" />
     <link rel="stylesheet" href="/resources/css/admin-form.css" />
     <link rel="stylesheet" href="/resources/css/dialog.css" />
     <link rel="stylesheet" href="/resources/css/request.css" />

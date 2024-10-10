@@ -1,5 +1,6 @@
-alter table final_attend_response add res_date date default sysdate not null;
 alter table final_attend_correq add req_date date default sysdate not null;
+alter table final_attend_correq drop column response_id;
+drop table final_attend_response;
 drop table final_attend_lvreq;
 
 create table final_attend_lvreq(
@@ -10,16 +11,26 @@ student_id number(8) constraint att_lvreq_student_id_fk references final_course_
 , l_reason varchar2(100) constraint att_lvreq_reason_ck not null check (l_reason in ('훈련', '시험', '면접', '예비군', '결혼', '사망', '질병', '입원', '그 외' ))
 , l_contents varchar2(4000) constraint att_lvreq_contents_nn not null
 , l_attm varchar2(4000)  
-, response_id number(9) constraint att_lvreq_response_id_fk references final_attend_response (response_id)
 , constraint att_lvreq_pk primary key (student_id, l_sdate)
-);                					
+);       
 
+create table final_attend_corres(
+response_id number(9) constraint corres_id_pk primary key
+, res_date date default sysdate
+, r_status number(1) constraint corre_status_ck not null check (r_status in (1,2))
+, r_details varchar2(100) constraint corres_details_nn not null
+, student_id number(8)  not null
+, a_date date not null
+, constraint corres_fk foreign key (student_id, a_date) references final_attend_correq (student_id, a_date)
+); 
 
-create view course_2_day as (
-select s_date
-from (
-	select to_date((select c_sdate from final_course where course_id=2),'YYYY/MM/DD') + LEVEL -1 as s_date
-	from dual 
-	connect by level <= (to_date((select c_edate from final_course where course_id=2),'YYYY/MM/DD')-to_date((select c_sdate from final_course where course_id=2),'YYYY/MM/DD') + 1)
-)
-where to_char(s_date,'D') in ('7', '2', '4'));
+create table final_attend_lvres(
+response_id number(9) constraint lvres_id_pk primary key
+, res_date date default sysdate
+, r_status number(1) constraint lvres_status_ck not null check (r_status in (1,2))
+, r_details varchar2(100) constraint lvres_details_nn not null
+, student_id number(8) not null
+, l_sdate date not null
+, constraint lvres_fk foreign key (student_id, l_sdate) references final_attend_lvreq (student_id, l_sdate)
+);         					
+

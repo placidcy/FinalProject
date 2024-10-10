@@ -30,7 +30,7 @@ public class Test {
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		System.out.print(attDao.getStudentAttendance(11));
 		
 		
 

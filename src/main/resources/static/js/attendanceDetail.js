@@ -1,5 +1,17 @@
 function submitHandler(event){
-	event.preventDefault();
+	if(!document.querySelector('#r_details').value){
+		event.preventDefault();
+		alert('응답 사유를 선택해 주세요.');
+	}
+	
+	if(document.querySelector('#responseModal').children[1].children[0].children[6].getAttribute('action')==='/attResponseUpdate'){
+		 if (confirm("정말 수정하시겠습니까??") == true){    
+		 }else{   
+		    event.preventDefault();
+		}
+		
+	}
+	
 }
 
 function dialogHandler() {
@@ -8,6 +20,8 @@ function dialogHandler() {
 	let lvrequestInfoBox = document.querySelectorAll('.lvrequestInfoBox');
     let exit = document.querySelector('.exit');
 	let cancelModal = document.querySelector('#cancleModal');
+	let reqType = document.querySelector('[name="reqType"]');
+	let date = document.querySelector('[name="date"]');
     let corText=[];
 	let lvText=[];
 	
@@ -15,7 +29,8 @@ function dialogHandler() {
 		corText[index] = {"date": v.children[2].innerText, 
 						  "status": v.children[1].innerText, 
 						  "contents": v.children[3].getAttribute("data-text"), 
-						  "attm": v.children[4].getAttribute("data-text")
+						  "attm": v.children[4].getAttribute("data-text"),
+						  "r_status":v.children[6].innerText
 		}
 	}
 	);
@@ -24,13 +39,17 @@ function dialogHandler() {
 			lvText[index] = {"date": v.children[2].innerText, 
 							  "reason": v.children[5].getAttribute("data-text"), 
 							  "contents": v.children[3].getAttribute("data-text"), 
-							  "attm": v.children[4].getAttribute("data-text")
+							  "attm": v.children[4].getAttribute("data-text"),
+							  "r_status":v.children[7].innerText
 		}
 	}
 	);
 	
 	
 	correquestInfoBox.forEach((v, index) => 	v.addEventListener('click', () => {
+			if(corText[index]['r_status']==='승인' || corText[index]['r_status']==='거절'){
+				dialog.open ? dialog.open = false : dialog.open = false;
+			}else{
 	        dialog.open ? dialog.open = true : dialog.open = true;
 			dialog.children[1].children[0].children[0].children[0].innerText=corText[index]['date'];
 			dialog.children[1].children[0].children[1].innerHTML= '출결 : &nbsp&nbsp' + corText[index]['status'];
@@ -40,9 +59,17 @@ function dialogHandler() {
 			}else{
 			dialog.children[1].children[0].children[4].innerText='증명서류 :  미제출';
 			}
+			date.value=corText[index]['date'].replaceAll('.','-');
+			reqType.value=1;
+			}
+
+			
 	}));
 	
 	lvrequestInfoBox.forEach((v, index) => 	v.addEventListener('click', () => {
+				if(lvText[index]['r_status']==='승인' || lvText[index]['r_status']==='거절'){
+					dialog.open ? dialog.open = false : dialog.open = false;
+				}else{
 		        dialog.open ? dialog.open = true : dialog.open = true;
 				dialog.children[1].children[0].children[0].children[0].innerText=lvText[index]['date'];
 				dialog.children[1].children[0].children[1].innerHTML= '사유 : &nbsp&nbsp ' + lvText[index]['reason'];
@@ -52,6 +79,10 @@ function dialogHandler() {
 				}else{
 				dialog.children[1].children[0].children[4].innerText='증명서류 :  미제출';
 				}
+				date.value=lvText[index]['date'].substr(0,10).replaceAll('.','-');
+				reqType.value=2;
+				}
+				
 		}));
 	
 	
@@ -66,8 +97,8 @@ function dialogHandler() {
 }
 
 function checkReqStatusHandler() {
-    let reqStatusList = document.querySelectorAll('[name="reqStatus"]');
-    let reqCheck = document.querySelector('[name="reqCheck"]');
+    let reqStatusList = document.querySelectorAll('[name="r_status"]');
+    let reqCheck = document.querySelector('[name="r_details"]');
     let reqCheckRow = document.querySelector('#reqCheckRow');
 
     let approvedOptions = [
@@ -132,7 +163,7 @@ function checkReqStatusHandler() {
             reqCheck.options.length = 0;
 
             switch (event.target.value) {
-                case 'approved':
+                case '1':
                     for (option of approvedOptions) {
                         let optionElement = document.createElement('option');
                         optionElement.setAttribute('value', option.num);
@@ -141,7 +172,7 @@ function checkReqStatusHandler() {
                         reqCheck.append(optionElement);
                     }
                     break;
-                case 'denied':
+                case '2':
                     for (option of deniedOptions) {
                         let optionElement = document.createElement('option');
                         optionElement.setAttribute('value', option.num);
