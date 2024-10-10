@@ -44,7 +44,7 @@ public class MemberController {
 				
 				switch(m_role) { //리턴주소 추후 변경
 					case 1:
-						return "redirect:/mypage";
+						return "redirect:/";
 					case 2:
 						return "redirect:/instructHome";
 					default:
