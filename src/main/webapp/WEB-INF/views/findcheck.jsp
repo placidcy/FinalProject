@@ -45,7 +45,7 @@
 	                	<input type="hidden" name="m_role" value="1" /> 
 	                    <button>아이디 찾기</button>
 	                </form>
-	                <form action="<c:url value='/findpwdProcess' />" method="POST">
+	                <form action="<c:url value='/findpwd' />" method="GET">
 	                	<input type="hidden" name="m_role" value="1" /> 
 	                    <button>비밀번호 찾기</button>
 	                </form>
@@ -60,11 +60,11 @@
                     <span>강사</span>
                 </div>
                 <div class="btnBox">
-	                <form action="<c:url value='/findidProcess' />" method="GET">
+	                <form action="<c:url value='/findid' />" method="GET">
 	                	<input type="hidden" name="m_role" value="2" /> 
 	                    <button>아이디 찾기</button>
 	                </form>
-	                <form action="<c:url value='/findpwdProcess' />" method="GET">
+	                <form action="<c:url value='/findpwd' />" method="GET">
 	                	<input type="hidden" name="m_role" value="2" /> 
 	                    <button>비밀번호 찾기</button>
 	                </form>

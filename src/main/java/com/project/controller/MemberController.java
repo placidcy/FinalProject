@@ -109,7 +109,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/findid")
-	public String findIdHandler() {
+	public String findidHandler() {
 		return "findid";
 	}
 	
@@ -131,24 +131,41 @@ public class MemberController {
 			}
 		}
 		catch (Exception e) {
-			model.addAttribute("error", "아이디 찾기 중 오류가 발생했습니다.");
+			model.addAttribute("result", "아이디 찾기 중 오류가 발생했습니다.");
 			return "redirect:/findid?error=findidFailed";
 		}
 	}
 	
 	@GetMapping("/findpwd")
-	public String findPwdHandler() {
+	public String findpwdHandler() {
 		return "findpwd";
 	}
 	
-//	@PostMapping("/findpwdProcess")
-//	public String findProcessHandler() {
-//		
-//	}
+	@PostMapping("/findpwdProcess")
+	public String findpwdProcessHandler(
+			@RequestParam("m_acctid") String m_acctid,
+			@RequestParam("m_email") String m_email,
+			@RequestParam("m_role") int m_role,
+			Model model) {
+		String result = memberSo.findM_acctpwd(m_acctid, m_email, m_role);
+		try {
+			if(result != null) {
+				return "redirect:/changepwd";
+			}
+			else {
+				model.addAttribute("result", "일치하는 정보가 없습니다.");
+				return "findpwd";
+			}
+		}
+		catch (Exception e) {
+			model.addAttribute("result", "비밀번호 찾기 중 오류가 발생했습니다.");
+			return "findpwd?error=findpwdFaild";
+		}
+	}
 	
-	@GetMapping("/changepw")
+	@GetMapping("/changepwd")
 	public String changePwdHandler() {
-		return "changepw";
+		return "changepwd";
 	}
 	
 //	@PostMapping("/changepwProcess")

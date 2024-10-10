@@ -76,6 +76,17 @@ public class MemberDAO {
 		}
 	}
 	
+	public String findM_acctpwd(String m_acctid, String m_email, int m_role) {
+		this.sql = "select member_id from final_member where m_acctid=? and m_email=? and m_role=?";
+		try {
+			String result = this.jdbcTemplate.queryForObject(sql, String.class, m_acctid, m_email, m_role);
+			return result;
+		}
+		catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
 	public int insertMember(MemberDO member) {
 		this.sql = "insert into final_member (member_id, m_acctid, m_acctpwd, m_name, m_email, m_tel, m_dept, m_status, m_role) "
 				+ "values (seq_member_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";

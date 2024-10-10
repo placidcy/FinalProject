@@ -68,4 +68,8 @@ public class MemberSO {
 	public String findM_acctid(String m_name, String m_email, int m_role) {
 		return memberDao.findM_acctid(m_name, m_email, m_role);
 	}
+	public String findM_acctpwd(String m_acctid, String m_email, int m_role) {
+		return memberDao.findM_acctpwd(m_acctid, m_email, m_role);
+	}
+
 }

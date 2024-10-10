@@ -9,13 +9,14 @@
     <title>CHECK-아이디 찾기</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/find.css" />
-    <script src="/resources/js/buttonLocation.js"></script>
     <!-- 모달 -->
     <link rel="stylesheet" href="/resources/css/checkin.css" />
     <link rel="stylesheet" href="/resources/css/admin-form.css" />
     <link rel="stylesheet" href="/resources/css/dialog.css" />
     <link rel="stylesheet" href="/resources/css/request.css" />
     <link rel="stylesheet" href="/resources/css/member.css" />
+    <!-- 자바스크립트 -->
+    <!-- <script src="/resources/js/buttonLocation.js"></script> -->
     <script src="/resources/js/findDialog.js"></script>
 </head>
 <body>
@@ -48,10 +49,10 @@
                     <p>이름과 이메일을 입력하세요.</p>
                 </div>
                 <div id="middle">
-                    <form id="findProcess" action="<c:url value='/findidProcess' />" method="POST">
+                    <form id="findidProcess" action="<c:url value='/findidProcess' />" method="POST">
                     	<input type="hidden" name="m_role" value="${param.m_role}"/>
-                        <input type="text" name="m_name" placeholder="이름 입력" required/>
-                        <input type="email" name="m_email" placeholder="이메일 입력" required/>
+                        <input type="text" name="m_name" id="m_name" placeholder="이름 입력" required/>
+                        <input type="email" name="m_email" id="m_email" placeholder="이메일 입력" required/>
                     </form>
                 </div>
                 <div id="bottom">
