@@ -210,7 +210,7 @@ public class CourseItemDAO extends ItemDAO {
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
-		 * 수강 신청 목록 조횤 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 신청 목록 조횤 쿼리
 		 */
 		this.query.put("selectByDates", """
 				select
@@ -235,12 +235,15 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				order by
 				  c_sdate,
 				  c_edate desc
 				""");
 		/*
-		 * 수강 중인 강의 목록 조회 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 중인 강의 목록 조회 쿼리
 		 */
 		this.query.put("selectByMemberId", """
 				select
@@ -253,9 +256,12 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				 """);
 		/*
-		 * 수강 신청 목록 총 갯수 반환 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 신청 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByDates", """
 				select
@@ -273,9 +279,12 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
-		 * 수강 중인 강의 목록 총 갯수 반환 쿼리 - 날짜 조건 제외 (2024.10.04)
+		 * 수강 중인 강의 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByMemberId", """
 				select
@@ -285,6 +294,9 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
+				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
@@ -295,8 +307,12 @@ public class CourseItemDAO extends ItemDAO {
 					SELECT *
 					FROM FINAL_COURSE_STUDENT fcs
 					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
 					)
 				WHERE member_id = ?
+				-- 현재일이 강의 시작일 및 종료일 사이에 존재하는지 확인하는 구문
+				-- 테스트를 위해 주석 처리
+				-- and sysdate between c_sdate and c_edate
 				""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
@@ -377,7 +393,9 @@ public class CourseItemDAO extends ItemDAO {
 		 */
 		this.query.put("getInfo", """
 				SELECT
+				  -- 강의 정보를 모두 조회
 				  fc.*,
+				  -- 강의 출석 QR코드 관련 정보 조회
 				  q_code,
 				  to_char(
 				    q_regdate, 'yyyy-mm-dd hh24:mi:ss'
@@ -421,13 +439,12 @@ public class CourseItemDAO extends ItemDAO {
 		 */
 		this.query.put("getStats",
 				"""
-						-- 출석 현황을 조회하는 쿼리
 						SELECT
 						  c1.*,
-						  nvl(c2.출석, 0) as "출석",
-						  nvl(c2.결석, 0) as "결석",
-						  nvl(c2.지각, 0) as "지각",
-						  nvl(c2.조퇴, 0) as "조퇴"
+						  nvl (c2.출석, 0) as "출석",
+						  nvl (c2.결석, 0) as "결석",
+						  nvl (c2.지각, 0) as "지각",
+						  nvl (c2.조퇴, 0) as "조퇴"
 						FROM
 						  (
 						    SELECT
@@ -438,10 +455,8 @@ public class CourseItemDAO extends ItemDAO {
 						        SELECT
 						          fc.course_id,
 						          fcs.student_id,
-						          trunc(
-						            (c_edate - c_sdate) / 7 * total_sum
-						          ) AS total_count,
-						          nvl(student_count, 0) AS student_count
+						          trunc ((c_edate - c_sdate) / 7 * total_sum) AS total_count,
+						          nvl (student_count, 0) AS student_count
 						        FROM
 						          FINAL_COURSE fc
 						          INNER JOIN (
@@ -449,7 +464,7 @@ public class CourseItemDAO extends ItemDAO {
 						            SELECT
 						              course_id,
 						              SUM(
-						                NVL(D_MON, 0) + NVL(D_TUE, 0) + NVL(D_WED, 0) + NVL(D_THU, 0) + NVL(D_FRI, 0) + NVL(D_SAT, 0) + NVL(D_SUN, 0)
+						                NVL (D_MON, 0) + NVL (D_TUE, 0) + NVL (D_WED, 0) + NVL (D_THU, 0) + NVL (D_FRI, 0) + NVL (D_SAT, 0) + NVL (D_SUN, 0)
 						              ) AS total_sum
 						            FROM
 						              final_course_day
@@ -465,17 +480,15 @@ public class CourseItemDAO extends ItemDAO {
 						            FROM
 						              FINAL_STUDENT_ATTEND fsa
 						            WHERE
-						            -- 어제까지의 출석현황을 조회
-						              a_status != 2 and a_date < trunc(sysdate)
+						              -- 어제까지의 출석현황을 조회
+						              a_status != 2
+						              and a_date < trunc (sysdate)
 						            GROUP BY
 						              student_id
 						          ) fsa ON fsa.student_id = fcs.STUDENT_ID
 						      ) fcs
 						    GROUP BY
-						      (
-						        course_id, student_id, total_count,
-						        student_count
-						      )
+						      (course_id, student_id, total_count, student_count)
 						  ) c1
 						  LEFT OUTER JOIN (
 						    -- 출석/결석/지각/조퇴일수를 한번에 조회하는 쿼리
@@ -488,34 +501,13 @@ public class CourseItemDAO extends ItemDAO {
 						          a_status
 						        FROM
 						          final_student_attend fsa
-						          INNER JOIN (
-						            SELECT
-						              *
-						            FROM
-						              final_course_student
-						            WHERE
-						              student_id = 0
-						          ) fcs ON fsa.student_id = fcs.student_id
-						          INNER JOIN (
-						            SELECT
-						              *
-						            FROM
-						              final_course
-						          ) fc ON fc.course_id = fcs.course_id
-						        WHERE
-						          (
-						            a_date BETWEEN fc.c_sdate
-						            AND trunc(sysdate-1)
-						          )
-						      ) pivot(
-						        count(a_status) FOR a_status IN (
-						          1 AS "출석", 2 AS "결석", 3 "지각",
-						          4 "조퇴"
-						        )
+						          INNER JOIN FINAL_COURSE_STUDENT fcs ON fsa.student_id = fcs.student_id
+						          INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+						      ) pivot (
+						        count(a_status) FOR a_status IN (1 AS "출석", 2 AS "결석", 3 "지각", 4 "조퇴")
 						      )
 						  ) c2 ON c1.student_id = c2.student_id
-						WHERE
-						  c1.student_id = ?
-						  """);
+						  WHERE c1.student_id = ?
+												  """);
 	}
 }
