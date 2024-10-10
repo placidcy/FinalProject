@@ -18,7 +18,7 @@
 
 <body>
     <div id="container">
-        <jsp:include page="common/sidebar_course.jsp" />
+        <jsp:include page="common/side_course.jsp" />
       
         <main>
             <div id="homeBox">

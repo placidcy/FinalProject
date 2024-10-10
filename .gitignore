@@ -121,3 +121,8 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,gradle
+
+# 기타 충돌 파일 수정
+*.bin
+*.lock
+*.probe

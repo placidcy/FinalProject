@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+.tab.notice .item {
+	border: 1px solid #d9d9d9;
+	border-bottom: none;
+	border-collapse: collapse;
+}
+
+.tab.notice .item:last-child {
+	border-bottom: 1px solid #d9d9d9;
+}
+
+.tab.notice .item {
+	position: relative;
+	display: flex;
+	width: 100%;
+	padding: 20px 40px;
+	box-sizing: border-box;
+	align-items: center;
+	text-align: center;
+	background-color: white;
+}
+
+.prefix {
+	font-weight: bold;
+	padding-right: 20px;
+}
+
+.title {
+	font-size: 20px;
+}
+
+.date {
+	position: absolute;
+	color: #888888;
+	font-size: 14px;
+	text-align: end;
+	right: 20px;
+}
+
+.keyword {
+	padding: 20px;
+	text-align: center;
+}
+
+/* 게시글 관련 CSS 정의 */
+.post>.contents {
+	width: 100%;
+	padding: 0;
+	white-space: pre-wrap;
+}
+
+@media screen and (max-width: 768px) {
+	.title {
+		font-size: 16px !important;
+		text-align: start;
+		max-width: 250px;
+	}
+}
