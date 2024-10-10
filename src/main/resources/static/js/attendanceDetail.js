@@ -26,20 +26,19 @@ function dialogHandler() {
 	let lvText=[];
 	
 	correquestInfoBox.forEach((v,index) => {
-		corText[index] = {"date": v.children[2].innerText, 
-						  "status": v.children[1].innerText, 
-						  "contents": v.children[3].getAttribute("data-text"), 
-						  "attm": v.children[4].getAttribute("data-text"),
+		corText[index] = {"date": v.children[1].innerText, 
+						  "contents": v.children[2].getAttribute("data-text"), 
+						  "attm": v.children[3].getAttribute("data-text"),
 						  "r_status":v.children[6].innerText
 		}
 	}
 	);
 	
 	lvrequestInfoBox.forEach((v,index) => {
-			lvText[index] = {"date": v.children[2].innerText, 
-							  "reason": v.children[5].getAttribute("data-text"), 
-							  "contents": v.children[3].getAttribute("data-text"), 
-							  "attm": v.children[4].getAttribute("data-text"),
+			lvText[index] = {"date": v.children[1].innerText, 
+							  "reason": v.children[4].getAttribute("data-text"), 
+							  "contents": v.children[2].getAttribute("data-text"), 
+							  "attm": v.children[3].getAttribute("data-text"),
 							  "r_status":v.children[7].innerText
 		}
 	}
@@ -71,6 +70,7 @@ function dialogHandler() {
 					dialog.open ? dialog.open = false : dialog.open = false;
 				}else{
 		        dialog.open ? dialog.open = true : dialog.open = true;
+				dialog.children[0].children[0].innerText='공가 요청 승인';
 				dialog.children[1].children[0].children[0].children[0].innerText=lvText[index]['date'];
 				dialog.children[1].children[0].children[1].innerHTML= '사유 : &nbsp&nbsp ' + lvText[index]['reason'];
 				dialog.children[1].children[0].children[3].innerText=lvText[index]['contents'];
@@ -82,6 +82,7 @@ function dialogHandler() {
 				date.value=lvText[index]['date'].substr(0,10).replaceAll('.','-');
 				reqType.value=2;
 				}
+				
 				
 		}));
 	

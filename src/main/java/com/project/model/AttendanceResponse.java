@@ -1,5 +1,7 @@
 package com.project.model;
 
+import java.time.LocalDateTime;
+
 public class AttendanceResponse {
 	private int r_status;
 	private String r_details;
@@ -68,6 +70,8 @@ public class AttendanceResponse {
 	public void setA_status(int a_status) {
 		this.a_status = a_status;
 	}
+	
+	
 	
 	
 	
