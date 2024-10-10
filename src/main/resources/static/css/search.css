@@ -1,0 +1,83 @@
+.xsBtn {
+    width: 80px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.p510 {
+    padding: 5px 20px;
+}
+
+.postList {
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.postList thead td {
+    padding: 20px 0;
+}
+
+.postList thead tr {
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+}
+
+.postList tbody td {
+    padding: 10px 0;
+}
+
+.postList td:first-child {
+    width: 10%;
+}
+
+.postList td:nth-child(2) {
+    width: 30%;
+}
+
+.postList td:nth-child(3) {
+    width: 20%;
+}
+
+.postList td:last-child {
+    width: 30%;
+}
+
+.memberInfo:hover {
+    cursor: pointer;
+    box-shadow: inset 0 -10px 0 #D9FCDB;
+}
+
+.as {
+    align-items: start;
+}
+
+.tc {
+    text-align: center;
+}
+
+
+.memberDetails label,
+.memberDetails input {
+    font-size: 16px !important;
+}
+
+.memberDetails input {
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.memberDetails th {
+    padding: 20px 10px;
+}
+
+.marginBox {
+    margin: 10px;
+}
+
+.required {
+    color: red;
+}
