@@ -20,16 +20,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	@Autowired
 	MainSO mainSO;
+	String viewPath;
 
 	@GetMapping("/")
 	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page) {
-		int memberId = 3;
-		model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
-		model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
-		model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
-		model.addAttribute("page", page);
-		model.addAttribute("menu", "main");
-		return "main/index";
+		/*
+		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
+		 */
+		int testTarget = 1;
+		testTarget = 2;
+
+		int memberId;
+
+		if (testTarget == 1) {
+			memberId = 3;
+
+			model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
+			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
+			model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
+			model.addAttribute("page", page);
+			model.addAttribute("menu", "main");
+			viewPath = "main/index";
+		} else {
+			memberId = 8;
+
+			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
+			viewPath = "main/index_i";
+		}
+
+		return viewPath;
 	}
 
 	@GetMapping("/checkin")
