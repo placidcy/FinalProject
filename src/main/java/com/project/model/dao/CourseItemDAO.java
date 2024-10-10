@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.project.model.*;
 
 @Repository
-public class CourseDAO extends ItemDAO {
+public class CourseItemDAO extends ItemDAO {
 	private String sql;
 	private Map<String, String> query;
 
-	public CourseDAO() {
+	public CourseItemDAO() {
 		super();
 		init();
 	}

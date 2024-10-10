@@ -109,9 +109,4 @@ public class MainController {
 	public NoticeItem getNoticeItem(@RequestParam(name = "noticeId") int noticeId) {
 		return mainSO.selectOne(noticeId);
 	}
-
-	@GetMapping("/logout")
-	public String logout() {
-		return "redirect:/login";
-	}
 }

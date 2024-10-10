@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.project.model.NoticeItem;
 
 @Repository
-public class NoticeDAO extends ItemDAO {
+public class NoticeItemDAO extends ItemDAO {
 	private String sql;
 	private Map<String, String> query;
 
-	public NoticeDAO() {
+	public NoticeItemDAO() {
 		super();
 		init();
 	}
