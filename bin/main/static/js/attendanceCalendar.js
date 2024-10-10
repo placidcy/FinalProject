@@ -31,59 +31,11 @@ function dialogHandler() {
 
 }
 
-function checkReqStatusHandler() {
-    let reqStatusList = document.querySelectorAll('[name="reqStatus"]');
-    let reqCheck = document.querySelector('[name="reqCheck"]');
-    let reqCheckRow = document.querySelector('#reqCheckRow');
-
-    let approvedOptions = [
-        {
-            num: 1,
-            text: '정정'
-        }
-    ];
-
-    let deniedOptions = [
-        {
-            num: 10,
-            text: '서류 불충분'
-        }
-    ];
-
-    for (reqStatus of reqStatusList) {
-        reqStatus.addEventListener('click', (event) => {
-            reqCheckRow.classList.remove('hidden');
-
-            reqCheck.options.length = 0;
-
-            switch (event.target.value) {
-                case 'approved':
-                    for (option of approvedOptions) {
-                        let optionElement = document.createElement('option');
-                        optionElement.setAttribute('value', option.num);
-                        optionElement.innerHTML = option.text;
-
-                        reqCheck.append(optionElement);
-                    }
-                    break;
-                case 'denied':
-                    for (option of deniedOptions) {
-                        let optionElement = document.createElement('option');
-                        optionElement.setAttribute('value', option.num);
-                        optionElement.innerHTML = option.text;
-
-                        reqCheck.append(optionElement);
-                    }
-                    break;
-            }
-        });
-    }
-}
-let num =0;
 function getCalender(number){
     const yearMonth = document.querySelector('#yearMonth');
     const calendarBox = document.querySelector('#calendarBox');
     let today = new Date();
+	/*
     today.setMonth(today.getMonth() + number);
     let firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
     let lastDate= new Date(today.getFullYear(), today.getMonth()+1, 0);
@@ -159,6 +111,7 @@ function getCalender(number){
         
     }  
     calendarBox.innerHTML=firstWeekBox + weekBoxs + lastWeekBox;
+	*/
 }
 
 function mobileHandler(){

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AttendanceController {
 	
@@ -24,7 +26,12 @@ public class AttendanceController {
 	private AttendanceSO attendanceSO;
 	
 	@GetMapping("/attendanceCalendar")
-	public String attendanceCalendarHandler() {
+	public String attendanceCalendarHandler(HttpSession session, Model model) {
+		//세션으로 학생id 가져오기
+		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(6);
+
+		model.addAttribute("attCal", attCal);
+		
 		return "attendanceCalendar";
 	}
 	

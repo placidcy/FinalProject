@@ -1,0 +1,16 @@
+.impleBtn.cen {
+    justify-self: center;
+}
+
+.w150 {
+    width: 150px;
+}
+
+.findId {
+    padding: 10px 30px;
+}
+
+.mtb20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

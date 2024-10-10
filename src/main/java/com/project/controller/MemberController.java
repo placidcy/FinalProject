@@ -42,7 +42,7 @@ public class MemberController {
 				
 				int m_role = memberSo.checkM_role(auth.getMember_id());
 				
-				switch(m_role) {
+				switch(m_role) { //리턴주소 추후 변경
 					case 1:
 						return "redirect:/mypage";
 					case 2:
@@ -57,7 +57,6 @@ public class MemberController {
 			}
 		}
 		catch(EmptyResultDataAccessException e) {
-			e.printStackTrace();
 			session.setAttribute("loginFailMsg", "일치하는 정보가 없습니다.");
 			return "redirect:/login?error=loginFailed";
 		}
@@ -110,27 +109,63 @@ public class MemberController {
 	}
 	
 	@GetMapping("/findid")
-	public String findIdHandler() {
+	public String findidHandler() {
 		return "findid";
 	}
 	
+	@PostMapping("/findidProcess")
+	public String findProcessHandler(
+			@RequestParam("m_name") String m_name,
+			@RequestParam("m_email") String m_email,
+			@RequestParam("m_role") int m_role,
+			Model model) {
+		String result = memberSo.findM_acctid(m_name, m_email, m_role);
+		try {
+			if(result != null) {
+				model.addAttribute("result", result);
+				return "findid";
+			}
+			else {
+				model.addAttribute("result", "일치하는 아이디가 없습니다.");
+				return "findid";
+			}
+		}
+		catch (Exception e) {
+			model.addAttribute("result", "아이디 찾기 중 오류가 발생했습니다.");
+			return "redirect:/findid?error=findidFailed";
+		}
+	}
+	
 	@GetMapping("/findpwd")
-	public String findPwdHandler() {
+	public String findpwdHandler() {
 		return "findpwd";
 	}
 	
-//	@PostMapping("/findidProcess")
-//	public String findProcessHandler() {
-//		
-//	}
-//	@PostMapping("/findpwdProcess")
-//	public String findProcessHandler() {
-//		
-//	}
+	@PostMapping("/findpwdProcess")
+	public String findpwdProcessHandler(
+			@RequestParam("m_acctid") String m_acctid,
+			@RequestParam("m_email") String m_email,
+			@RequestParam("m_role") int m_role,
+			Model model) {
+		String result = memberSo.findM_acctpwd(m_acctid, m_email, m_role);
+		try {
+			if(result != null) {
+				return "redirect:/changepwd";
+			}
+			else {
+				model.addAttribute("result", "일치하는 정보가 없습니다.");
+				return "findpwd";
+			}
+		}
+		catch (Exception e) {
+			model.addAttribute("result", "비밀번호 찾기 중 오류가 발생했습니다.");
+			return "findpwd?error=findpwdFaild";
+		}
+	}
 	
-	@GetMapping("/changepw")
+	@GetMapping("/changepwd")
 	public String changePwdHandler() {
-		return "changepw";
+		return "changepwd";
 	}
 	
 //	@PostMapping("/changepwProcess")
@@ -157,7 +192,7 @@ public class MemberController {
 			roleName = "강사";
 		}
 		else {
-			roleName = "관리자";
+			roleName = "사용자 오류";
 		}
 			
 		model.addAttribute("m_pfp", member.getM_pfp());
