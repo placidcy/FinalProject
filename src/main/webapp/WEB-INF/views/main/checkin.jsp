@@ -51,12 +51,16 @@
 				</div>
 				<table class="tab ta cen">
 					<tr>
-						<td><span>입실</span></td><td><span class="bold">${time.cinTime }</span></td>
-						<td><span>복귀</span></td><td><span class="bold">${time.retTime }</span></td>
+						<td><span>입실</span></td>
+						<td class="time"><span class="bold">${time.cinTime }</span></td>
+						<td><span>복귀</span></td>
+						<td class="time"><span class="bold">${time.retTime }</span></td>
 					</tr>
 					<tr>
-						<td><span>외출</span></td><td><span class="bold">${time.soutTime }</span></td>
-						<td><span>퇴실</span></td><td><span class="bold">${time.coutTime }</span></td>
+						<td><span>외출</span></td>
+						<td class="time"><span class="bold">${time.soutTime }</span></td>
+						<td><span>퇴실</span></td>
+						<td class="time"><span class="bold">${time.coutTime }</span></td>
 					</tr>
 				</table>
 				<div class="fig qr">
@@ -125,7 +129,7 @@
 								<div class="line"></div>
 							</div>
 							<div class="bullet box bgd9d9d9">
-								<div class="bullet bar bg24c2a2"></div>
+								<div class="bullet bar"></div>
 							</div>
 							<div class="grid cen h" id="curr">
 								<div class="line"></div>

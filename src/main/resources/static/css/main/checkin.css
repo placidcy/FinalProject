@@ -48,6 +48,10 @@
 	border-right-color: transparent;
 }
 
+.tab .time {
+	width: 100px;
+}
+
 .fig {
 	border: 1px solid #d9d9d9;
 	background-color: white;
@@ -81,6 +85,11 @@
 .bullet.bar {
 	width: 0;
 	height: 30px;
+	transition: background-color 0.3s ease-in-out;
+}
+
+#avg, #curr {
+	transition: 0.3s;
 }
 
 #avg {
