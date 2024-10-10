@@ -9,13 +9,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHECK-출석체크</title>
-<link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="/css/main/checkin.css">
-<link rel="stylesheet" href="/css/mobile.css">
+<link rel="stylesheet" href="/resources/css/common.css">
+<link rel="stylesheet" href="/resources/css/main/checkin.css">
+<link rel="stylesheet" href="/resources/css/mobile.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<script src="js/main/mobile.js"></script>
-<script src="js/main/checkin.js"></script>
+<script src="/resources/js/main/mobile.js"></script>
+<script src="/resources/js/main/checkin.js"></script>
 <body>
 	<div class="container flex">
 		<!-- 메인 사이드바 -->
@@ -46,8 +46,8 @@
 					<p>
 						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
 					</p>
-					<a class="f20 bold h end self" href="course.html">📖 강의 홈으로
-						이동하기</a>
+					<a class="f20 bold h end self" href="home?id=${courseId }">📖
+						강의 홈으로 이동하기</a>
 				</div>
 				<table class="tab ta cen">
 					<tr>
