@@ -30,7 +30,7 @@ public class Test {
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
 		
-		System.out.print(attDao.getStudentAttendance(11));
+		System.out.print(attDao.getStudentAttendanceCalendar(6));
 		
 		
 

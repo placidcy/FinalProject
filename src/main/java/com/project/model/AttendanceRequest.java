@@ -13,6 +13,7 @@ public class AttendanceRequest {
 	private String l_reason;
 	private int a_status;
 	private int r_status;
+	private LocalDateTime res_date;
 	
 	public AttendanceRequest() {
 	}
@@ -85,6 +86,14 @@ public class AttendanceRequest {
 		this.r_status = r_status;
 	}
 	
+	public LocalDateTime getRes_date() {
+		return res_date;
+	}
+
+	public void setRes_date(LocalDateTime res_date) {
+		this.res_date = res_date;
+	}
+
 	public String getStatus(int a_status) {
 		String result ="";
 		if(a_status == 3) {

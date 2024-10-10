@@ -128,7 +128,7 @@ public class AttendanceDAO {
 	}
 	
 	public List<AttendanceRequest> getStudentLvreq(int student_id){
-		this.sql = "select fal.l_sdate, l_edate, req_date, r_status, l_reason, l_contents as contents, l_attm as attm from (select * from final_attend_lvreq where student_id=?) fal left outer join final_attend_lvres far on far.student_id = fal.student_id and far.l_sdate=fal.l_sdate";
+		this.sql = "select fal.l_sdate, l_edate, req_date, r_status, l_reason, l_contents as contents, l_attm as attm, res_date from (select * from final_attend_lvreq where student_id=?) fal left outer join final_attend_lvres far on far.student_id = fal.student_id and far.l_sdate=fal.l_sdate";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -141,13 +141,19 @@ public class AttendanceDAO {
 				attReq.setContents(rs.getString("contents"));
 				attReq.setAttm(rs.getString("attm"));
 				attReq.setL_reason(rs.getString("l_reason"));
+				try{
+					attReq.setRes_date(rs.getTimestamp("res_date").toLocalDateTime());
+				}catch(NullPointerException e){
+					attReq.setRes_date(null);
+				}
+				
 				return attReq;
 			}
 		},student_id);
 	}
 	
 	public List<AttendanceRequest> getStudentCorreq(int student_id){
-		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select fac.a_date, req_date, r_status, c_contents, c_attm from (select * from final_attend_correq where student_id=?) fac left outer join final_attend_corres far on far.student_id = fac.student_id) crq on fsa.a_date=crq.a_date";
+		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm, res_date from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select fac.a_date, req_date, r_status, c_contents, c_attm, res_date from (select * from final_attend_correq where student_id=?) fac left outer join final_attend_corres far on far.student_id = fac.student_id) crq on fsa.a_date=crq.a_date";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -159,6 +165,12 @@ public class AttendanceDAO {
 				attReq.setR_status(rs.getInt("r_status"));	
 				attReq.setContents(rs.getString("contents"));
 				attReq.setAttm(rs.getString("attm"));
+				try{
+					attReq.setRes_date(rs.getTimestamp("res_date").toLocalDateTime());
+				}catch(NullPointerException e){
+					attReq.setRes_date(null);
+				}
+				
 				return attReq;
 			}
 		},student_id, student_id);
@@ -180,6 +192,24 @@ public class AttendanceDAO {
 		this.jdbcTemplate.update(this.sql, attendanceResponse.getDate(), attendanceResponse.getStudent_id());
 	}
 	
+	public List<AttendanceCalendar> getStudentAttendanceCalendar(int student_id){
+		this.sql = "select fc.dt, fc.d, req_type, a_status, r_status from(select * from(WITH test2 AS(SELECT c_sdate sdt, c_edate edt FROM final_course where course_id=(select course_id from final_course_student where student_id=?))SELECT TO_date(sdt + lv - 1, 'RR/MM/DD') dt,  TO_CHAR(sdt + lv - 1, 'D') d FROM (SELECT TO_DATE(sdt, 'RR/MM/DD') sdt, TO_DATE(edt, 'RR/MM/DD') edt FROM test2), (SELECT LEVEL lv FROM dual CONNECT BY LEVEL <= 365) WHERE lv <= edt - sdt + 1)) fc left outer join (select * from(WITH test1 AS(SELECT flr.l_sdate sdt, flr.l_edate edt, (select 2 from dual) req_type, r_status FROM (select * from final_attend_lvreq where student_id=?) flr left outer join (select * from final_attend_lvres where student_id=?) fls on flr.l_sdate=fls.l_sdate) SELECT TO_date(sdt + lv - 1, 'RR/MM/DD') dt,  TO_CHAR(sdt + lv - 1, 'D') d, req_type , r_status FROM (SELECT TO_DATE(sdt, 'RR/MM/DD') sdt, TO_DATE(edt, 'RR/MM/DD') edt, req_type, r_status FROM test1), (SELECT LEVEL lv FROM dual CONNECT BY LEVEL <= 99) WHERE lv <= edt - sdt + 1) UNION ALL select fcr.a_date dt, to_char(fcr.a_date,'d') d, (select 1 from dual) req_type, r_status from (select * from final_attend_correq where student_id=?) fcr left outer join (select * from final_attend_corres where student_id=?) fcs on fcr.a_date=fcs.a_date) req on fc.dt=req.dt and fc.d=req.d left outer join (select a_date as dt, to_char(a_date,'D') d, a_status from final_student_attend where student_id=?) fsa on fc.dt=fsa.dt and fc.d=fsa.d order by 1";
+
+		
+		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceCalendar>() {
+			@Override
+			public AttendanceCalendar mapRow(ResultSet rs, int rownum) throws SQLException{
+				AttendanceCalendar attCal = new AttendanceCalendar();
+				attCal.setDt(rs.getTimestamp("dt").toLocalDateTime());
+				attCal.setD(rs.getString("d"));
+				attCal.setReq_type(rs.getInt("req_type"));
+				attCal.setA_status(rs.getInt("a_status"));	
+				attCal.setReq_type(rs.getInt("r_status"));	
+				
+				return attCal;
+			}
+		},student_id, student_id, student_id, student_id, student_id, student_id);
+	}
 	
 	
 	

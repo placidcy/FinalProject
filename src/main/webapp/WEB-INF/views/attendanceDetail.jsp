@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div id="attRatio">
 					<c:choose>
 						
 						<c:when test="${studentAtt.c+studentAtt.l+studentAtt.d+studentAtt.ab==0}">
@@ -212,7 +212,17 @@
 					<input type="hidden" data-text="${correq.contents}" />
 					<input type="hidden" data-text="${correq.attm}" />
                     <div class="requestArea9">${correq.getZero(correq.req_date.getMonthValue())}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
-					<div class="requestArea7">${correq.getStatus(correq.a_status)}</div>
+					
+					<c:choose>	
+						<c:when test="${correq.res_date != null}">
+							<div class="requestArea7">${correq.getZero(correq.res_date.getMonthValue())}.${correq.getZero(correq.res_date.getDayOfMonth())}</div>
+						</c:when>
+						
+						<c:otherwise>
+							<div class="requestArea7"></div>
+						</c:otherwise>	
+					</c:choose>
+					
                     <div class="requestArea10">${correq.getRstatus(correq.r_status)}</div>
                 </div>
 				</c:forEach>
@@ -225,7 +235,17 @@
 					<input type="hidden" data-text="${lvreq.attm}" />
 					<input type="hidden" data-text="${lvreq.l_reason}" />
 					<div class="requestArea9">${lvreq.getZero(lvreq.req_date.getMonthValue())}.${lvreq.getZero(lvreq.req_date.getDayOfMonth())}</div>
-					<div class="requestArea7">10.04</div>
+					
+					<c:choose>
+						<c:when test="${lvreq.res_date != null}">
+							<div class="requestArea7">${lvreq.getZero(lvreq.res_date.getMonthValue())}.${lvreq.getZero(lvreq.res_date.getDayOfMonth())}</div>
+						</c:when>
+						
+						<c:otherwise>
+							<div class="requestArea7"></div>
+						</c:otherwise>
+					</c:choose>
+
                     <div class="requestArea10">${lvreq.getRstatus(lvreq.r_status)}</div>
                 </div>
 				</c:forEach>
