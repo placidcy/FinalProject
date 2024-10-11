@@ -17,9 +17,9 @@ public class AttendanceDAO {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
-	public int getStudentId(int member_id) {
-		this.sql="select student_id from final_course_student where member_id=?";
-		return this.jdbcTemplate.queryForObject(sql, int.class, member_id);
+	public int getStudentId(int member_id, int course_id) {
+		this.sql="select student_id from final_course_student where member_id=? and course_id=?";
+		return this.jdbcTemplate.queryForObject(sql, int.class, member_id, course_id);
 	}
 
 	public List<StudentAttendanceDO> selectAllMemberAttendanceByCourse(int course_id){
