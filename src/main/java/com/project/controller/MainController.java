@@ -24,6 +24,13 @@ public class MainController {
 	MainSO mainSO;
 	String viewPath;
 
+	@GetMapping("/goCourseHome")
+	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
+		session.setAttribute("currentId", courseId);
+
+		return "redirect:/home";
+	}
+
 	@GetMapping("/")
 	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
 			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
