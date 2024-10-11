@@ -49,7 +49,7 @@ public class MemberController {
 					case 2:
 						return "redirect:/";
 					default:
-						return "redirect:/adminHome";
+						return "redirect:/adminMain";
 				}
 			}
 			else {
