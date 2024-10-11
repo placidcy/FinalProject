@@ -18,7 +18,7 @@
 
 <body>
     <div id="container">
-       <jsp:include page="common/side_course.jsp" />
+       <jsp:include page="common/sidebar_course.jsp" />
         <main> 
 		<a href="currentAttendance?course_id=2">
         <button id="allListBtn">전체 목록</button>
