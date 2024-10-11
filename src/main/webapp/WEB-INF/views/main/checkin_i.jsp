@@ -24,23 +24,27 @@
 		<main class="contents bgf2f2f2">
 			<div class="grid g10 mbe30">
 				<p class="f24 bold">출석 체크</p>
+				<p>
+					학생 전체 출결 정보를 보고 싶다면? <a class="bold" href="#">📝 출결 정보 상세보기</a>
+				</p>
+
 			</div>
 			<div class="grid c2 g10">
 				<div class="grid g20 fig full">
-					<p class="f20 bold">분류 > ${info.categoryName }</p>
-					<p class="f30 bold">${info.courseName }</p>
+					<p class="f20 bold">분류 > ${info.categoryName }웹 개발</p>
+					<p class="f30 bold">${info.courseName }HTML의기초</p>
 					<div class="info">
 						<p>
-							<span>강의 기간:</span><span class="float-right">${info.startDate }
-								~ ${info.endDate }</span>
+							<span>강의 기간:</span><span class="float-right">${info.startDate }2024.03.11
+								~ ${info.endDate }2024.07.12</span>
 						</p>
 						<p>
 							<span>강사:</span><span class="float-right"><c:forEach
-									items="${info.instList }" var="inst" varStatus="status">${inst }</c:forEach></span>
+									items="${info.instList }" var="inst" varStatus="status">${inst }</c:forEach>도경수 이강인 장원영</span>
 						</p>
 					</div>
 					<p>
-						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
+						종료일까지 남은 기간: <span class="bold">${info.dDay }D+92일</span>
 					</p>
 					<a class="f20 bold h end self" href="home?id=${courseId }">📖
 						강의 홈으로 이동하기</a>
@@ -78,19 +82,19 @@
 					<div class="grid c4 ta cen fig">
 						<div class="border-right">
 							<p>출석</p>
-							<p class="bold">${stats.presentCnt }</p>
+							<p class="bold">${stats.presentCnt }0</p>
 						</div>
 						<div class="border-right">
 							<p>지각</p>
-							<p class="bold">${stats.tardyCnt }</p>
+							<p class="bold">${stats.tardyCnt }0</p>
 						</div>
 						<div class="border-right">
 							<p>조퇴</p>
-							<p class="bold">${stats.leaveCnt }</p>
+							<p class="bold">${stats.leaveCnt }0</p>
 						</div>
 						<div>
 							<p>결석</p>
-							<p class="bold">${stats.absentCnt }</p>
+							<p class="bold">${stats.absentCnt }0</p>
 						</div>
 					</div>
 					<div class="grid g10">
@@ -98,7 +102,7 @@
 							<span class="bold">금일 출석률</span> <span> <fmt:formatNumber
 									value="${stats.myCnt/stats.totalCnt }" type="percent"
 									pattern="0.0%"></fmt:formatNumber>
-							</span> <span> (${stats.myCnt }/${stats.totalCnt }일)</span>
+							</span> <span> (${stats.myCnt }0/${stats.totalCnt }0일)</span>
 						</p>
 						<!-- 차트 라이브러리 연결 후 수정-->
 						<div class="chart grid cen v">
