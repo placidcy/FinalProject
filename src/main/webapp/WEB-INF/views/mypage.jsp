@@ -56,12 +56,21 @@
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail" class="a">변경</a></td>
+                        <td>
+                        	<form action="<c:url value='/change-mail' />" method="GET">
+	                        	${m_email} 
+	                            <button type="submit" id="change-mail" class="a">변경</button>
+	                            <input type="hidden" name="member_id" value="${member_id}" required />
+                        	</form>
+                        </td>
                     </tr>
                     <tr>
                         <th>비밀번호 변경</th>
                         <td>
-                            <a href="<c:url value='/change-pw' />" class="a">비밀번호 변경하기</a>
+                            <form action="<c:url value='/changepwd' />" method="GET">
+	                            <button type="submit" class="a">비밀번호 변경하기</button>
+	                            <input type="hidden" name="member_id" value="${member_id}" required />
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -69,7 +78,12 @@
                 <table>
                     <tr>
                         <th>회원 탈퇴</th>
-                        <td><a href="<c:url value='/leave' />" id="leave" class="a">회원 탈퇴하기</a></td>
+                        <td>
+                            <form action="<c:url value='/leave' />" method="GET">
+	                            <button type="submit" id="leave" class="a">회원 탈퇴하기</button>
+	                            <input type="hidden" name="member_id" value="${member_id}" required />
+                            </form>
+                        </td>
                     </tr>
                 </table>
             </div>
