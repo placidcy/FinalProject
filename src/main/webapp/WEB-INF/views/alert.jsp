@@ -11,15 +11,14 @@
     <link href="/resources/css/alert.css" rel="stylesheet" />
     <link rel="stylesheet" href="/resources/css/main.css">
     <link rel="stylesheet" href="/resources/css/common.css">
-	<link rel="stylesheet" href="/resources/css/mobile.css">
     <script src="/resources/js/mobile.js"></script>
-    <title>Document</title>
+    <title>CHECK-알림</title>
 </head>
 
 <body>
-    <div id="container">
+    <div class="container flex">
         <jsp:include page="common/side_main.jsp" />
-        <main>
+        <main class="contents bgf2f2f2">
             <h1>알림 목록</h1>
 
             <a href="" class="alert_list">

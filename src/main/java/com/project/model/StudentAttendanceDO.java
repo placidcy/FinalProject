@@ -14,6 +14,7 @@ public class StudentAttendanceDO {
 	private LocalDateTime a_date;
 	private int a_status;
 	private String a_request;
+	private int r_status;
 
 	public StudentAttendanceDO() {
 	}
@@ -106,6 +107,14 @@ public class StudentAttendanceDO {
 		this.a_request = a_request;
 	}
 
+	public int getR_status() {
+		return r_status;
+	}
+
+	public void setR_status(int r_status) {
+		this.r_status = r_status;
+	}
+
 	public String getZero(int value) {
 		String result = Integer.toString(value);
 		if(value<10) {
@@ -117,10 +126,12 @@ public class StudentAttendanceDO {
 	
 	public String getEmblem(int status) {
 		String result = "○";
-		if(status==1) {
+		if(status==3) {
 			result = "▲";
 		}else if(status==2) {
 			result = "X";
+		}else if(status == 0) {
+			result = "";
 		}
 		
 		return result;

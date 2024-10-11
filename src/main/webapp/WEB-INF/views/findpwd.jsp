@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,6 +31,7 @@
         </header>
  -->
  		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="content" />
  			<jsp:param name="pageTitle" value="비밀번호 찾기"/>
         	<jsp:param name="pageContent" value="비밀번호를 잊으셨다면, 아이디와 이메일을 통해 비밀번호를 재설정할 수 있습니다."/>
  		</jsp:include>
@@ -39,9 +41,10 @@
 	                <p>아이디과 이메일을 입력하세요.</p>
             	</div>
             	<div id="middle">
-	                <form action="" method="POST">
-	                    <input type="text" name="inputid" placeholder="아이디 입력" required />
-	                    <input type="email" name="inputemail" placeholder="이메일 입력" required />
+	                <form id="findpwdProcess" action="<c:url value='/findpwdProcess' />" method="POST">
+	                	<input type="hidden" name="m_role" value="${param.m_role}"/>
+	                    <input type="text" name="m_acctid" id="m_acctid" placeholder="아이디 입력" required />
+	                    <input type="email" name="m_email" id="m_email" placeholder="이메일 입력" required />
 	                </form>
             	</div>
             	<div id="bottom">

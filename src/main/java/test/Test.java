@@ -12,6 +12,8 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 
 import com.project.model.AttendanceDAO;
 import com.project.model.CourseDO;
+import com.project.model.MemberDAO;
+import com.project.model.MemberSO;
 import com.project.model.StudentAttendanceDO;
 
 public class Test {
@@ -29,8 +31,9 @@ public class Test {
 		ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		MemberDAO memberDao = new MemberDAO(ds);
+		MemberSO memberSo = new MemberSO();
+		System.out.print(memberSo.login("nampe0ple","p@ssw0Rd123"));
 		
 		
 

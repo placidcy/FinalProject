@@ -30,6 +30,7 @@
         </header>
  --%>
  		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="content" />
  			<jsp:param name="pageTitle" value="아이디 / 비밀번호 찾기"/>
         	<jsp:param name="pageContent" value="회원가입 시 입력한 개인정보를 통해 아이디 또는 비밀번호를 찾을 수 있습니다."/>
  		</jsp:include>
@@ -40,12 +41,14 @@
                     <span>학생</span>
                 </div>
                 <div class="btnBox">
-	                <a href="<c:url value='/findid' />">
-	                    <button name="param" value="1">아이디 찾기</button>
-	                </a>
-	                <a href="<c:url value='/findpw' />">
-	                    <button name="param" value="1">비밀번호 찾기</button>
-	                </a>
+	                <form action="<c:url value='/findid' />" method="GET">
+	                	<input type="hidden" name="m_role" value="1" /> 
+	                    <button>아이디 찾기</button>
+	                </form>
+	                <form action="<c:url value='/findpwd' />" method="GET">
+	                	<input type="hidden" name="m_role" value="1" /> 
+	                    <button>비밀번호 찾기</button>
+	                </form>
                 </div>
                 <div class="bottom">
                     <p>학생 회원은 이 서비스를 이용하세요.</p>
@@ -57,18 +60,20 @@
                     <span>강사</span>
                 </div>
                 <div class="btnBox">
-	                <a href="<c:url value='/findid' />">
-	                    <button name="param" value="2">아이디 찾기</button>
-	                </a>
-	                <a href="<c:url value='/findpw' />">
-	                    <button name="param" value="2">비밀번호 찾기</button>
-	                </a>
+	                <form action="<c:url value='/findid' />" method="GET">
+	                	<input type="hidden" name="m_role" value="2" /> 
+	                    <button>아이디 찾기</button>
+	                </form>
+	                <form action="<c:url value='/findpwd' />" method="GET">
+	                	<input type="hidden" name="m_role" value="2" /> 
+	                    <button>비밀번호 찾기</button>
+	                </form>
                 </div>
                 <div class="bottom">
                     <p>강사 회원은 이 서비스를 이용하세요.</p>
                 </div>
             </div>
-        </>
+        </main>
     </div>
 </body>
 </html>

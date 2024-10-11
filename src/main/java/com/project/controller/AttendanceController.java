@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AttendanceController {
 	
@@ -20,20 +22,40 @@ public class AttendanceController {
 	@Autowired
 	private CourseDAO courseDAO;
 	
+	@Autowired
+	private AttendanceSO attendanceSO;
+	
 	@GetMapping("/attendanceCalendar")
-	public String attendanceCalendarHandler() {
+	public String attendanceCalendarHandler(HttpSession session, Model model) {
+		//세션으로 학생id 가져오기
+		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(6);
+
+		model.addAttribute("attCal", attCal);
+		
 		return "attendanceCalendar";
 	}
 	
 	@GetMapping("/attendanceDetail")
 	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, Model model) {
 		List<StudentAttendanceDO> attList = attendanceDAO.selectStudentAttendance(studentAtt.getStudent_id());
+		List<AttendanceRequest> lvreqList = attendanceDAO.getStudentLvreq(studentAtt.getStudent_id());
+		List<AttendanceRequest> correqList = attendanceDAO.getStudentCorreq(studentAtt.getStudent_id());
 		
 		model.addAttribute("studentAtt", attendanceDAO.getStudentAttendance(studentAtt.getStudent_id()));
 		model.addAttribute("attList", attList);
+		model.addAttribute("lvreqList", lvreqList);
+		model.addAttribute("correqList", correqList);
 		
 		return "attendanceDetail";
 	}
+	
+	@PostMapping("/attResponse")
+	public String attResponseHandler(AttendanceResponse attendanceResponse) {
+		attendanceSO.updateAttendanceInfo(attendanceResponse);
+		
+		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
+	}
+	
 	
 	/*추후 세션에 저장된 course_id 커맨드 객체나, RequestParam으로 받아오기*/
 	/*강의 밑에 강사 밑에 학생을 조회해야할 듯 하다 강의 하나만으로는 강사가 구분 안 됨*/
@@ -72,13 +94,13 @@ public class AttendanceController {
 	}
 	
 	@PostMapping("/currentAttSearch")
-	public String currentAttSearchHandler(@RequestParam(value="currAttPage", defaultValue="0") int currAttPage, @RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
-		List<StudentAttendanceDO> memberList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
+	public String currentAttSearchHandler(@RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
 		CourseDO courseScore =courseDAO.getCourseScore(2);
 		
 		model.addAttribute("courseScore", courseScore);
-		model.addAttribute("currAttPage",currAttPage);
-		model.addAttribute("memberList", memberList);
+		model.addAttribute("currAttPage",0);
+		model.addAttribute("studentAttList", studentAttList);
 		
 		
 		return "currentAttendance";

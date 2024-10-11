@@ -8,17 +8,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECK-마이페이지</title>
-    <link rel="stylesheet" href="/resources/css/main.css" />
+	<link rel="stylesheet" href="/resources/css/common.css">
+	<link rel="stylesheet" href="/resources/css/main/main.css">
     <link rel="stylesheet" href="/resources/css/mypage.css" />
-	<link rel="stylesheet" href="/resources/css/common.css" />
-    <!-- 모바일 헤더 -->
-    <link rel="stylesheet" href="resources/css/mobile.css">
-    <script src="/resources/js/mobile.js"></script>
+    <link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<script src="/resources/js/main/mobile.js"></script>
 </head>
+
 <body>
-    <div id="container">
-    	<jsp:include page="common/side_main.jsp"></jsp:include>
-        <main>
+    <div class="container flex">
+    	<jsp:include page="common/side_main.jsp" />
+        <main class="contents bgf2f2f2">
             <div id="header">
                 <span class="title">마이페이지</span>
                 <button id="profile-cancel">취소</button>
@@ -31,7 +32,7 @@
                         <th>프로필 이미지</th>
                         <td>
                             <div id="profileBox">
-                                <img class="emptyImg" src="recources/img/emptyimg.png" alt="프로필 사진" /><br>
+                                <img class="emptyImg" src="/resources/img/emptyimg.png" alt="프로필 사진" /><br>
                                 <label for="uploadImg">이미지 변경</label>
                                 <input type="file" name="uploadImg" id="uploadImg" accept="image/*" />
                             </div>
@@ -55,12 +56,12 @@
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail">변경</a></td>
+                        <td>${m_email} <a href="<c:url value='/change-mail' />" id="change-mail" class="a">변경</a></td>
                     </tr>
                     <tr>
                         <th>비밀번호 변경</th>
                         <td>
-                            <a href="<c:url value='/change-pw' />">비밀번호 변경하기</a>
+                            <a href="<c:url value='/change-pw' />" class="a">비밀번호 변경하기</a>
                         </td>
                     </tr>
                 </table>
@@ -68,7 +69,7 @@
                 <table>
                     <tr>
                         <th>회원 탈퇴</th>
-                        <td><a href="<c:url value='/leave' />" id="leave">회원 탈퇴하기</a></td>
+                        <td><a href="<c:url value='/leave' />" id="leave" class="a">회원 탈퇴하기</a></td>
                     </tr>
                 </table>
             </div>
