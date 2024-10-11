@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,7 +37,7 @@
  		</jsp:include>
         <main>
             <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="Post">
-            	<input type="hidden" name="member_id" value="${member_id}" />
+            	<input type="hidden" name="member_id" value="${member_id}" required />
                 <table>
                     <tr>
                         <th>
