@@ -61,7 +61,7 @@
                     <tr>
                         <th>비밀번호 변경</th>
                         <td>
-                            <a href="<c:url value='/change-pw' />" class="a">비밀번호 변경하기</a>
+                            <a href="<c:url value='/changepwd' />" class="a">비밀번호 변경하기</a>
                         </td>
                     </tr>
                 </table>
