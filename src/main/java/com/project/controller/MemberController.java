@@ -46,7 +46,7 @@ public class MemberController {
 					case 1:
 						return "redirect:/";
 					case 2:
-						return "redirect:/instructHome";
+						return "redirect:/";
 					default:
 						return "redirect:/adminHome";
 				}
