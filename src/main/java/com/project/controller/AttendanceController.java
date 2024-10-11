@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
 import com.project.model.response.LoginResponse;
-
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,10 +26,16 @@ public class AttendanceController {
 	private AttendanceSO attendanceSO;
 	
 	@GetMapping("/attendanceCalendar")
-	public String attendanceCalendarHandler(HttpSession session, Model model, HttpServletRequest request) {
-		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+	public String attendanceCalendarHandler(HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if(auth.getM_role()==1) {
-		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id()));
+		
+		//int course_id = (int) session.getAttribute("course_id");
+		/*나중에 삭제할 것*/
+			
+		int course_id = 2;
+		
+		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
 
 		model.addAttribute("attCal", attCal);
 		
@@ -79,8 +83,13 @@ public class AttendanceController {
 	public String currentAttendanceHandler(HttpSession session, @RequestParam(value="currAttPage", defaultValue="0") int currAttPage, Model model) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-		List<StudentAttendanceDO> studentAttList = attendanceDAO.selectAllMemberAttendanceByCourse(2);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.selectAllMemberAttendanceByCourse(course_id);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",currAttPage);
@@ -95,8 +104,13 @@ public class AttendanceController {
 	public String setAttendanceHandler(HttpSession session, @RequestParam(value="setAttPage", defaultValue="0") int setAttPage, Model model) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(2);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(course_id);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("setAttPage",setAttPage);
@@ -111,10 +125,12 @@ public class AttendanceController {
 	public String setAttendanceScoreHandler(HttpSession session, CourseDO courseDO) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-		/*세션에서 받아올 거임*/
-		courseDO.setCourse_id(2);
-		/*이후 삭제할 것*/
-		courseDO.setCourse_id(courseDO.getCourse_id());
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		courseDO.setCourse_id(course_id);
 		attendanceDAO.updateAttendanceScore(courseDO);
 		return "redirect:setAttendance";
 		}
@@ -125,8 +141,13 @@ public class AttendanceController {
 	public String currentAttSearchHandler(HttpSession session, @RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(course_id, searchType, searchText);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",0);
