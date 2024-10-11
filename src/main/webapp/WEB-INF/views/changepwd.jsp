@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECK-비밀번호 재설정</title>
     <link rel="stylesheet" href="resources/css/header.css" />
-    <link rel="stylesheet" href="resources/css/changepw.css" />
-    <script src="/resources/js/find.js"></script>
+    <link rel="stylesheet" href="resources/css/changepwd.css" />
 </head>
 <body>
     <div id="container">
@@ -30,46 +29,39 @@
         </header>
  -->
  		<jsp:include page="common/find_header.jsp">
+ 			<jsp:param name="headerType" value="content" />
  			<jsp:param name="pageTitle" value="비밀번호 재설정"/>
         	<jsp:param name="pageContent" value="비밀번호를 변경할 수 있습니다."/>
  		</jsp:include>
         <main>
-            <form id="findProcess" action="<c:url value='/changepwProcess' />" method="Post">
+            <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="Post">
+            	<input type="hidden" name="member_id" value="${member_id}" />
                 <table>
                     <tr>
                         <th>
-                            <label for="currentpw">현재 비밀번호</label>
+                            <label for="newpwd">새 비밀번호</label>
                         </th>
                         <td>
-                            <input type="password" name="currentpw" id="currentpw" required />
-                            <p>현재 비밀번호를 입력하세요.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label for="changepw">새 비밀번호</label>
-                        </th>
-                        <td>
-                            <input type="password" name="changepw" id="changepw" required />
+                            <input type="password" name="newpwd" id="newpwd" required />
                             <p>새 비밀번호를 영문(대/소문자)과 숫자, 특수문자 중 3가지의 조합 8~24자로 입력하세요.</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label for="confirmpw">새 비밀번호 확인</label>
+                            <label for="confirmpwd">새 비밀번호 확인</label>
                         </th>
                         <td>
-                            <input type="password" name="confirmpw" id="confirmpw" required />
+                            <input type="password" name="confirmpwd" id="confirmpwd" required />
                             <p>새 비밀번호를 다시 입력하세요.</p>
                         </td>
                     </tr>
                 </table>
+	            <hr />
+	            <div class="btn">
+	                <button id="cancelBtn">취소</button>
+	                <button type="submit" id="submitBtn">변경</button>
+	            </div>
             </form>
-            <hr />
-            <div class="btn">
-                <button id="cancelBtn">취소</button>
-                <button type="submit" id="submitBtn">수정</button>
-            </div>
         </main>
     </div>
 </body>

@@ -71,5 +71,10 @@ public class MemberSO {
 	public String findM_acctpwd(String m_acctid, String m_email, int m_role) {
 		return memberDao.findM_acctpwd(m_acctid, m_email, m_role);
 	}
-
+	
+	// 비밀번호 재설정
+	public int updateM_acctpwd(MemberDO member) {
+		return memberDao.updatePassword(member);
+	}
+	
 }

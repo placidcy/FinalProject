@@ -147,9 +147,10 @@ public class MemberController {
 			@RequestParam("m_email") String m_email,
 			@RequestParam("m_role") int m_role,
 			Model model) {
-		String result = memberSo.findM_acctpwd(m_acctid, m_email, m_role);
+		String member_id = memberSo.findM_acctpwd(m_acctid, m_email, m_role);
 		try {
-			if(result != null) {
+			if(member_id != null) {
+				model.addAttribute("result", member_id);
 				return "redirect:/changepwd";
 			}
 			else {
@@ -168,10 +169,33 @@ public class MemberController {
 		return "changepwd";
 	}
 	
-//	@PostMapping("/changepwProcess")
-//	public String changePwdProcessHandler() {
-//		
-//	}
+	@PostMapping("/changepwdProcess")
+	public String changePwdProcessHandler(
+			@RequestParam("member_id") int member_id,
+			@RequestParam("newpwd") String newpwd,
+			@RequestParam("confirmpwd") String confirmpwd,
+			Model model) {
+		
+		if(!newpwd.equals(confirmpwd)) {
+			model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+			return "changepwd";
+		}
+		
+		MemberDO memberDo = new MemberDO();
+		memberDo.setMember_id(member_id);
+		memberDo.setM_acctpwd(newpwd);
+		
+		int result = memberSo.updateM_acctpwd(memberDo);
+		
+		if(result == 1) {
+			model.addAttribute("result", "비밀번호를 변경했습니다.");
+			return "redirect:/login";
+		}
+		else {
+			model.addAttribute("result", "비밀번호를 변경하지 못했습니다.");
+			return "changepwd";
+		}
+	}
  	
 	@GetMapping("/mypage")
 	public String mypageHandler(HttpSession session, Model model) {
