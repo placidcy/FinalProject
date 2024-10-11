@@ -32,7 +32,7 @@
 			class="menu <c:if test="${menu eq alert}">selected</c:if>
 				cffffff">알림
 		</li> </a>
-		<a href="/notice"><c:set var="notice" value="notice"></c:set>
+		<a href="/notice?t=2"><c:set var="notice" value="notice"></c:set>
 			<li
 			class="menu <c:if test="${menu eq notice}">selected</c:if>
 				cffffff">공지사항
