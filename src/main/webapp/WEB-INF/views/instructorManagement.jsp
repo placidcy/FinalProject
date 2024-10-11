@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>강사 관리 페이지</title>
 
 <link rel="stylesheet" href="/resources/css/instructorManagement.css">
+<link rel="stylesheet" href="/resources/css/admin_aside.css">
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
 </head>
 <body>
 	<div id="container">
@@ -40,22 +40,6 @@
 						</div>
 					</nav>
 
-					<aside class="sidebarMenuBox">
-						<div class="titleArea">
-							<h1 class="title">관리자 페이지</h1>
-						</div>
-						<div class="list">
-							<ul>
-								<li class="menu"><a href="#">강의 목록 조회</a></li>
-								<li class="menu"><a href="#">강의 생성</a></li>
-								<li class="menu"><a href="#">전체 통지</a></li>
-								<li class="menu"><a href="#">강사 관리</a></li>
-							</ul>
-						</div>
-						<div class="logout">
-							<span>로그아웃</span>
-						</div>
-					</aside>
 				</div>
 
 				<div class="subtitleInput">
@@ -172,7 +156,6 @@
 					</ul>
 				</div>
 			</div>
-
 		</main>
 	</div>
 </body>

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.model.AttendanceCalendar;
 import com.project.model.response.LoginResponse;
 
 import jakarta.servlet.http.HttpSession;

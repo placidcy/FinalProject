@@ -1,0 +1,19 @@
+
+.bg-f2f2f2 {
+    background-color: #F2F2F2 !important;
+}
+
+.grayscale {
+    filter: grayscale(1);
+}
+
+.course-notice.white {
+    background-color: white;
+}
+
+.mb30 {
+    margin-bottom: 30px;
+}
+
+@media ( max-width : 768px) {
+}
