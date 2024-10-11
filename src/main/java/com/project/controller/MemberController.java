@@ -179,7 +179,7 @@ public class MemberController {
 			Model model) {
 		
 		if(!newpwd.equals(confirmpwd)) {
-			model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "changepwd";
 		}
 		
@@ -190,11 +190,11 @@ public class MemberController {
 		int result = memberSo.updateM_acctpwd(memberDo);
 		
 		if(result == 1) {
-			model.addAttribute("result", "비밀번호를 변경했습니다.");
+			model.addAttribute("msg", "비밀번호를 변경했습니다.");
 			return "redirect:/login";
 		}
 		else {
-			model.addAttribute("result", "비밀번호를 변경하지 못했습니다.");
+			model.addAttribute("msg", "비밀번호를 변경하지 못했습니다.");
 			return "changepwd";
 		}
 	}
@@ -220,7 +220,8 @@ public class MemberController {
 		else {
 			roleName = "사용자 오류";
 		}
-			
+
+		model.addAttribute("member_id", member.getMember_id());
 		model.addAttribute("m_pfp", member.getM_pfp());
 		model.addAttribute("m_name", member.getM_name());
 		model.addAttribute("m_dept", member.getM_dept());
