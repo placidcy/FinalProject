@@ -2,9 +2,12 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <aside class="sidebar main cffffff">
 	<div class="flex cen v h logo p50">
-		<h1 class="f32">
-			<a href="/">CHECK</a>
-		</h1>
+		<div>
+			<h1 class="f32">
+				<a href="/">CHECK</a>
+			</h1>
+			<p class="inst">FOR INSTRUCTORS</p>
+		</div>
 		<div class="mobile" id="hamburger">
 			<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30px"
 				height="30px" viewBox="0 0 24 24" fill="none">
@@ -14,27 +17,22 @@
 		</div>
 	</div>
 	<ul class="menulist" id="main">
-		<a href="/"><c:set var="main" value="main"></c:set>
+		<a href="/?t=2"><c:set var="main" value="main"></c:set>
 			<li
 			class="menu <c:if test="${menu eq main}">selected</c:if>
 				cffffff">코스
 		</li> </a>
-		<a href="/checkin"><c:set var="checkin" value="checkin"></c:set>
+		<a href="/checkin?t=2"><c:set var="checkin" value="checkin"></c:set>
 			<li
 			class="menu <c:if test="${menu eq checkin}">selected</c:if>
 				cffffff">출석
 				체크</li> </a>
-		<a href="/register"><c:set var="register" value="register"></c:set>
-			<li
-			class="menu <c:if test="${menu eq register}">selected</c:if>
-				cffffff">수강
-				신청</li> </a>
 		<a href="/alert"><c:set var="alert" value="alert"></c:set>
 			<li
 			class="menu <c:if test="${menu eq alert}">selected</c:if>
 				cffffff">알림
 		</li> </a>
-		<a href="/notice"><c:set var="notice" value="notice"></c:set>
+		<a href="/notice?t=2"><c:set var="notice" value="notice"></c:set>
 			<li
 			class="menu <c:if test="${menu eq notice}">selected</c:if>
 				cffffff">공지사항
