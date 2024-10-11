@@ -46,8 +46,8 @@
 					<p>
 						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
 					</p>
-					<a class="f20 bold h end self" href="home?id=${courseId }">📖
-						강의 홈으로 이동하기</a>
+					<a class="f20 bold h end self"
+						href="/goCourseHome?courseId=${info.courseId }">📖 강의 홈으로 이동하기</a>
 				</div>
 				<table class="tab ta cen">
 					<tr>
