@@ -8,7 +8,6 @@
 body {
   font-size: 14px;
   font-family: Inter, sans-serif;
-  background-color: #f2f2f2;
 }
 
 /* 컨테이너 */
@@ -28,6 +27,7 @@ body {
 
 main {
   width: 75%;
+  height:100vh;
   padding: 25px;
   display: inline-block;
   background-color: #f2f2f2;
