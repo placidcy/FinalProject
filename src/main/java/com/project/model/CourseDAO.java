@@ -15,4 +15,5 @@ public class CourseDAO {
 		this.sql="select * from final_course where course_id=?";
 		return this.jdbcTemplate.queryForObject(sql, new CourseRowMapper(),course_id);
 	}
+
 }

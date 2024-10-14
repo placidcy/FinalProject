@@ -19,6 +19,7 @@
         <jsp:include page="common/admin_sidebar.jsp" />
         
 		<main class="bg-f2f2f2">
+			
             <div class="grid g20 mb30">
                 <div class="course-notice-title">
                     <h3>공지사항</h3>
@@ -26,22 +27,19 @@
                         <span>더보기</span>
                     </a>
                 </div>
+				
                 <ul class="course-notice white f20">
-                    <li>
-                        2024 1학기 LMS 강사님 오프라인 안내
-
-                    </li>
-                    <li>
-                        홈페이지 점검 안내 ( 2024.08.12(월) 19:00~24:00 )
-                    </li>
-                    <li>
-                        일반 로그인 장애 안내 (조치완료)
-                    </li>
-                    <li>
-                        근로자의 날 (5월 1일) 휴무 안내</li>
-                    </li>
+					<c:forEach items="${noticeList}" var="notice">
+	                    <a href="/notice">
+						<li>${notice.p_title}</li>
+						</a>
+					</c:forEach>
+					<li>abc</li>
+					<li>abc</li>
+					<li>abc</li>
                 </ul>
-            </div>
+			</div>
+			
             <div class="grid g20">
                 <div class="grid c2 ac">
                     <h3>현재 개설 강의 목록</h3>

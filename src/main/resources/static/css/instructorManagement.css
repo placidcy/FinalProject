@@ -160,10 +160,6 @@
 	color: black;
 }
 
-#manageTableArea .sidebarMenuBox {
-	display: none;
-}
-
 .instructorTable thead tr th:nth-child(1) {
 	width: 5%;
 }
@@ -210,73 +206,5 @@
 
 @media ( max-width : 768px) {
 
-	.sidebarMenuBox {
-		display: none;
-	}
-	#manageTableArea .sidebarMenuBox.clicked {
-		display: block;
-	: 100%;	width
-		
-		
-	}
 	
-	.instructorTable thead tr th {
-		font-size: 15px;
-	}
-	.instructorTable tbody tr td {
-		font-size: 15px;
-	}
-	.inputArea select {
-		float: left;
-	}
-	.inputArea .researchBtn {
-		float: right;
-	}
-	.inputArea .researchTag {
-		width: 170px;
-		margin: 0 10px;
-	}
-	#manageTableArea {
-		margin: 0;
-	}
-	#navBox {
-		display: flex;
-		justify-content: space-between;
-	}
-	.h1_Title {
-		display: none;
-	}
-	
-	.logout {
-		position: static;
-		margin: 0;
-		width: inherit;
-		height: 60px;
-		color: black;
-		font-size: 20px;
-		font-weight: bold;
-		justify-content: unset;
-
-		background-color: rgb(217, 217, 217);
-	}
-	
-	.logout:hover {
-		cursor: pointer;
-		transition: background-color 0.5s;
-		background-color: #ADADAD;
-		
-	}
-	
-	.logout > span {
-		display: inline-block;
-		padding: 30px;
-	}
-	
-	.nav_SideBarBox {
-		position: fixed;
-		width: 100%;
-		top: 0;
-		left: 0;
-
-	}
 }
