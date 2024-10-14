@@ -16,6 +16,16 @@
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/resources/js/main/mobile.js"></script>
 <script src="/resources/js/main/checkin.js"></script>
+
+<!-- QR코드 스캔 관련 스타일 및 스크립트 코드 정의 -->
+<!-- 스타일 정의 -->
+<link rel="stylesheet" href="/resources/css/main/scanner.css">
+
+<!-- QR 코드 스캐너를 구현하기 위한 HTML5 QR 코드 라이브러리 사용 방법: https://scanapp.org/html5-qrcode-docs/docs/intro -->
+<!-- HTML5 QR 코드 라이브러리 불러오기 -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<!-- QR코드 관련 자체 자바스크립트 코드 불러오기 -->
+<script src="/resources/js/main/checkin_qr.js" type="text/javascript"></script>
 <body>
 	<div class="container flex">
 		<!-- 메인 사이드바 -->
@@ -46,8 +56,8 @@
 					<p>
 						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
 					</p>
-					<a class="f20 bold h end self" href="home?id=${courseId }">📖
-						강의 홈으로 이동하기</a>
+					<a class="f20 bold h end self"
+						href="/goCourseHome?courseId=${info.courseId }">📖 강의 홈으로 이동하기</a>
 				</div>
 				<table class="tab ta cen">
 					<tr>
@@ -146,6 +156,7 @@
 			</div>
 		</main>
 	</div>
+	<jsp:include page="./checkin_scan.jsp"></jsp:include>
 </body>
 
 </html>

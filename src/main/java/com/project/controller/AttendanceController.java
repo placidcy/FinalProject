@@ -38,7 +38,7 @@ public class AttendanceController {
 		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
 
 		model.addAttribute("attCal", attCal);
-		
+		model.addAttribute("menu", "attendanceCalendar");
 		return "attendanceCalendar";
 		}
 		
@@ -57,6 +57,7 @@ public class AttendanceController {
 		model.addAttribute("attList", attList);
 		model.addAttribute("lvreqList", lvreqList);
 		model.addAttribute("correqList", correqList);
+		model.addAttribute("menu", "currentAttendance");
 		
 		return "attendanceDetail";
 		}
@@ -94,6 +95,7 @@ public class AttendanceController {
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",currAttPage);
 		model.addAttribute("studentAttList", studentAttList);
+		model.addAttribute("menu", "currentAttendance");
 		
 		return "currentAttendance";
 		}
@@ -115,6 +117,7 @@ public class AttendanceController {
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("setAttPage",setAttPage);
 		model.addAttribute("courseDateInfo", courseDateInfo);
+		model.addAttribute("menu", "currentAttendance");
 		
 		return "setAttendance";
 		}
