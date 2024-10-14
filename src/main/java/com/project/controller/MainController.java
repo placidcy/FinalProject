@@ -36,18 +36,19 @@ public class MainController {
 			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
 		/*
 		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
+		 * 테스트 아이디는 사전 설정한 학생 데이터 및 강사 데이터를 사용
 		 */
 		int memberId;
 
 		if (testTarget == 1) {
-			memberId = 3;
+			memberId = 8080;
 
 			model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
 			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 			model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 			viewPath = "main/index";
 		} else {
-			memberId = 8;
+			memberId = 8081;
 			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 			viewPath = "main/index_i";
 		}
@@ -66,7 +67,7 @@ public class MainController {
 		int memberId, studentId;
 
 		if (testTarget == 1) {
-			memberId = 3;
+			memberId = 8080;
 
 			studentId = mainSO.checkCourse(memberId);
 			if (studentId != -1) {
@@ -92,7 +93,7 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/checkin/update")
 	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword) {
-		int memberId = 3;
+		int memberId = 8080;
 		int studentId = mainSO.checkCourse(memberId);
 
 		return mainSO.updateTimetable(studentId, keyword) > 0;
