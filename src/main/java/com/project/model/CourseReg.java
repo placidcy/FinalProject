@@ -7,6 +7,7 @@ public class CourseReg {
 	private String m_name;
 	private String m_dept;
 	private int c_regstatus;
+	private int member_id;
 
 	public CourseReg() {
 		
@@ -36,7 +37,15 @@ public class CourseReg {
 		this.c_regstatus = c_regstatus;
 	}
 
+	public int getMember_id() {
+		return member_id;
+	}
 
+	public void setMember_id(int member_id) {
+		this.member_id = member_id;
+	}
+
+	
 	
 	
 }

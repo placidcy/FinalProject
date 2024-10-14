@@ -15,6 +15,7 @@ import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
 import com.project.model.CourseNoticeItem;
 import com.project.model.CourseReg;
+import com.project.model.CourseSO;
 import com.project.model.StudentAttendanceDO;
 import com.project.model.dao.CourseNoticeDAO;
 import com.project.model.response.LoginResponse;
@@ -25,6 +26,9 @@ import jakarta.servlet.http.HttpSession;
 public class CourseController {
 	@Autowired
 	private CourseDAO courseDAO;
+	
+	@Autowired
+	private CourseSO courseSO;
 	
 	@Autowired
 	private CourseNoticeDAO courseNoticeDAO;
@@ -78,6 +82,38 @@ public class CourseController {
 			model.addAttribute("menu", "acceptanceManagement");
 			
 			return "acceptance_management";
+			}
+			
+			return "redirect:/" ;
+	}
+	
+	@GetMapping("courseRegApprove")
+	public String courseRegApproveHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage,@RequestParam(value="member_id") int member_id, HttpSession session){
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 3;
+			courseSO.approveStudent(course_id, member_id);
+			
+			return "redirect:/acceptanceManagement";
+			}
+			
+			return "redirect:/" ;
+	}
+	
+	@GetMapping("courseRegReject")
+	public String courseRegRejectHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage,@RequestParam(value="member_id") int member_id, HttpSession session){
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 3;
+			courseDAO.rejectCourseReg(course_id, member_id);
+			
+			return "redirect:/acceptanceManagement";
 			}
 			
 			return "redirect:/" ;

@@ -103,7 +103,7 @@ main{
 #noteListBox{
     width:100%;
     min-height:150px;
-    max-height: 540px;
+    max-height: 440px;
     background-color: white;
     margin-top:20px;
     border:1px solid #d9d9d9;
@@ -201,7 +201,7 @@ main{
 #noteListBox{
     width:100%;
     min-height:150px;
-    max-height: 540px;
+    max-height: 440px;
     background-color: white;
     margin-top:20px;
     overflow-y: scroll;
