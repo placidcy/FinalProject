@@ -82,6 +82,13 @@ public class MainController {
 		return viewPath;
 	}
 
+	@GetMapping("/checkin/createQR")
+	public String createQR(Model model, HttpSession session) {
+		int memberId;
+
+		return "redirect:/checkin";
+	}
+
 	@ResponseBody
 	@GetMapping("/api/checkin/update")
 	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword) {

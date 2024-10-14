@@ -124,6 +124,13 @@ public class CourseItemDAO extends ItemDAO {
 		return studentId;
 	}
 
+	public int createQR(int courseId, String qrCode) {
+		this.sql = query.get("createQR");
+		int rowNum = this.getJdbcTemplate().update(sql, courseId, qrCode);
+
+		return rowNum;
+	}
+
 	public CourseItem getInfo(int studentId) {
 		this.sql = query.get("getInfo");
 		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
@@ -510,5 +517,9 @@ public class CourseItemDAO extends ItemDAO {
 						  ) c2 ON c1.student_id = c2.student_id
 						  WHERE c1.student_id = ?
 												  """);
+		this.query.put("createQR", """
+				insert into final_course_qr
+				values(?, sysdate, ?, default)
+				""");
 	}
 }
