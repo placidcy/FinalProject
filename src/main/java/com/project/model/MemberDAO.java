@@ -107,7 +107,7 @@ public class MemberDAO {
 	
 	public int updatePassword(MemberDO member) {
 		this.sql = "update final_member "
-				+ "set m_acctpwd=?"
+				+ "set m_acctpwd=? "
 				+ "where member_id=?";
 		return this.jdbcTemplate.update(sql, member.getM_acctpwd(), member.getMember_id());
 	}

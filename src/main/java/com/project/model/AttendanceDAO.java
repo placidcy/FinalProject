@@ -16,6 +16,11 @@ public class AttendanceDAO {
 	public AttendanceDAO(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
+	
+	public int getStudentId(int member_id, int course_id) {
+		this.sql="select student_id from final_course_student where member_id=? and course_id=?";
+		return this.jdbcTemplate.queryForObject(sql, int.class, member_id, course_id);
+	}
 
 	public List<StudentAttendanceDO> selectAllMemberAttendanceByCourse(int course_id){
 		this.sql = "select student_id, m_name, m_dept, m_tel, c, ab, l, d from (select fsa.student_id, a_status, m_name, m_dept, m_tel from final_student_attend fsa inner join (select student_id, m_name, m_dept, m_tel from final_member fm inner join (select * from final_course_student where course_id = ?) fcs on fm.member_id=fcs.member_id) fcm  on fsa.student_id=fcm.student_id) pivot (count(a_status) for a_status in (1 as c, 2 as ab, 3 as l, 4 as d)) order by student_id";	

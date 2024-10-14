@@ -11,7 +11,7 @@
                 </a>
             </li>
             <li>
-                <a href="/">
+                <a href="">
                     <img class="sidebar-icon" src="/resources/img/course.png" alt="">
                 </a>
             </li>
@@ -21,22 +21,22 @@
                 </a>
             </li>
             <li>
-                <a href="/register">
+                <a href="">
                     <img class="sidebar-icon" src="/resources/img/register.png" alt="">
                 </a>
             </li>
             <li>
-                <a href="/alert">
+                <a href="alert">
                     <img class="sidebar-icon" src="/resources/img/alert.png" alt="">
                 </a>
             </li>
             <li>
-                <a href="/notice">
+                <a href="">
                     <img class="sidebar-icon" src="/resources/img/notice.png" alt="">
                 </a>
             </li>
             <li>
-                <a href="/logout">
+                <a href="logout">
                     <img class="sidebar-icon" src="/resources/img/logout.png" alt="">
                 </a>
             </li>
@@ -62,21 +62,21 @@
         </div>
         <!-- 강사/학생에 따라 인라인 css 적용 -->
 		<c:choose>
-		<c:when test="${auth.m_role==1}">
+		<c:when test="${m_role==1}">
 			<ul class="sidebar-menu">
-	            <a href="/home" class="sidebar-menu-selected" style="width:33.333%"><li>홈</li></a>
+	            <a href="home" class="sidebar-menu-selected" style="width:33.333%"><li>홈</li></a>
 	            <a href="" class="sidebar-menu-unselected" style="width:33.333%"><li>강의 게시판</li></a>
-	            <a href="/attendanceCalendar" class="sidebar-menu-unselected" style="width:33.333%"><li>출결 확인</li></a>        
+	            <a href="attendanceCalendar" class="sidebar-menu-unselected" style="width:33.333%"><li>출결 확인</li></a>        
 	        </ul>
 			
 	        <ul id="menuList" style="visibility: hidden;">
-	            <li><a href="/">코스</a></li>
+	            <li>코스</li>
 	            <li>출석 체크</li>
-	            <li><a href="register">수강 신청</a></li>
-	            <li><a href="/alert">알림</a></li>
-	            <li><a href="/mypage">마이 페이지</a></li>
-				<li><a href="/notice">공지사항</a></li>
-	            <li><a href="/logout">로그아웃</a></li>
+	            <li>수강 신청</li>
+	            <li><a href="alert">알림</a></li>
+	            <li>공지사항</li>
+	            <li><a href="mypage">마이 페이지</a></li>
+	            <li>로그아웃</li>
 	        </ul>
 		</c:when>
         
@@ -84,18 +84,17 @@
 			<ul class="sidebar-menu">
 	            <a href="/home" class="sidebar-menu-selected" style="width:25%"><li>홈</li></a>
 	            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 게시판</li></a>
-	            <a href="/currentAttendance" class="sidebar-menu-unselected" style="width:25%"><li>출결 확인</li></a>
-	            <a href="/acceptanceManagement" class="sidebar-menu-unselected" style="width:25%"><li>수강 신청 관리</li></a>
-	            <a href="/courseAttend" class="sidebar-menu-unselected" style="width:25%"><li>강의 일정 관리</li></a>
+	            <a href="/attendanceCalendar" class="sidebar-menu-unselected" style="width:25%"><li>출결 확인</li></a>
 	        </ul>
 			
 	        <ul id="menuList" style="visibility: hidden;">
-	            <li><a href="/">코스</a></li>
-	            <li>출석 체크</li>
-	            <li><a href="/alert">알림</a></li>
-				<li><a href="/mypage">마이 페이지</a></li>
-	            <li><a href="/notice">공지사항</a></li>
-	            <li><a href="/logout">로그아웃</a></li>
+				<li <c:if test="${menu eq main}">selected</c:if>><a href="/">코스</a></li>
+				<li <c:if test="${menu eq checkin}">selected</c:if>>출석 체크</li>
+				<li <c:if test="${menu eq alert}">selected</c:if>><a href="/alert">알림</a></li>
+				<li <c:if test="${menu eq register}">selected</c:if>><a href="/register">강의신청</a></li>
+				<li <c:if test="${menu eq mypage}">selected</c:if>><a href="/mypage">마이 페이지</a></li>
+				<li <c:if test="${menu eq notice}">selected</c:if>><a href="/notice">공지사항</a></li>
+				<li><a href="/logout">로그아웃</a></li>
 	        </ul>
 		</c:otherwise>
 		</c:choose>

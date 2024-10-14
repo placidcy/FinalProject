@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.project.interceptor.AuthCheckInterceptor;
+import com.project.interceptor.*;
 
 
 @Configuration
@@ -20,4 +20,5 @@ public class MvcConfig implements WebMvcConfigurer{
 	public AuthCheckInterceptor authCheckInterceptor() {
 		return new AuthCheckInterceptor();
 	}
+
 }

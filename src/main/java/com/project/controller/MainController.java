@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.model.NoticeItem;
 import com.project.service.MainSO;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,14 +24,19 @@ public class MainController {
 	MainSO mainSO;
 	String viewPath;
 
+	@GetMapping("/goCourseHome")
+	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
+		session.setAttribute("currentId", courseId);
+
+		return "redirect:/home";
+	}
+
 	@GetMapping("/")
-	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page) {
+	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
+			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
 		/*
 		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
 		 */
-		int testTarget = 1;
-		testTarget = 2;
-
 		int memberId;
 
 		if (testTarget == 1) {
@@ -38,30 +45,41 @@ public class MainController {
 			model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
 			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 			model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
-			model.addAttribute("page", page);
-			model.addAttribute("menu", "main");
 			viewPath = "main/index";
 		} else {
 			memberId = 8;
-
 			model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
 			viewPath = "main/index_i";
 		}
 
+		model.addAttribute("page", page);
+		model.addAttribute("menu", "main");
 		return viewPath;
 	}
 
 	@GetMapping("/checkin")
-	public String getChecin(Model model) {
-		int memberId = 3;
-		int studentId = mainSO.checkCourse(memberId);
-		if (studentId != -1) {
-			model.addAttribute("info", mainSO.getInfo(studentId));
-			model.addAttribute("stats", mainSO.getStats(studentId));
-			model.addAttribute("time", mainSO.getTimetable(studentId));
+	public String getChecin(Model model,
+			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
+		/*
+		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
+		 */
+		int memberId, studentId;
+
+		if (testTarget == 1) {
+			memberId = 3;
+
+			studentId = mainSO.checkCourse(memberId);
+			if (studentId != -1) {
+				model.addAttribute("info", mainSO.getInfo(studentId));
+				model.addAttribute("stats", mainSO.getStats(studentId));
+				model.addAttribute("time", mainSO.getTimetable(studentId));
+			}
+			viewPath = "main/checkin";
+		} else {
+			viewPath = "main/checkin_i";
 		}
 		model.addAttribute("menu", "checkin");
-		return "main/checkin";
+		return viewPath;
 	}
 
 	@ResponseBody

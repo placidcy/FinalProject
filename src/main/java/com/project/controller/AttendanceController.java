@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.model.*;
-
+import com.project.model.response.LoginResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -27,16 +27,28 @@ public class AttendanceController {
 	
 	@GetMapping("/attendanceCalendar")
 	public String attendanceCalendarHandler(HttpSession session, Model model) {
-		//세션으로 학생id 가져오기
-		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(6);
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		if(auth.getM_role()==1) {
+		
+		//int course_id = (int) session.getAttribute("course_id");
+		/*나중에 삭제할 것*/
+			
+		int course_id = 2;
+		
+		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
 
 		model.addAttribute("attCal", attCal);
 		
 		return "attendanceCalendar";
+		}
+		
+		return "redirect:/" ;
 	}
 	
 	@GetMapping("/attendanceDetail")
-	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, Model model) {
+	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
 		List<StudentAttendanceDO> attList = attendanceDAO.selectStudentAttendance(studentAtt.getStudent_id());
 		List<AttendanceRequest> lvreqList = attendanceDAO.getStudentLvreq(studentAtt.getStudent_id());
 		List<AttendanceRequest> correqList = attendanceDAO.getStudentCorreq(studentAtt.getStudent_id());
@@ -47,56 +59,95 @@ public class AttendanceController {
 		model.addAttribute("correqList", correqList);
 		
 		return "attendanceDetail";
+		}
+		
+		return "redirect:/" ;
 	}
 	
 	@PostMapping("/attResponse")
-	public String attResponseHandler(AttendanceResponse attendanceResponse) {
+	public String attResponseHandler(HttpSession session, AttendanceResponse attendanceResponse) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
 		attendanceSO.updateAttendanceInfo(attendanceResponse);
 		
 		return "redirect:attendanceDetail?student_id="+attendanceResponse.getStudent_id();
+		}
+		
+		return "redirect:/" ;
 	}
 	
 	
 	/*추후 세션에 저장된 course_id 커맨드 객체나, RequestParam으로 받아오기*/
 	/*강의 밑에 강사 밑에 학생을 조회해야할 듯 하다 강의 하나만으로는 강사가 구분 안 됨*/
 	@GetMapping("/currentAttendance")
-	public String currentAttendanceHandler(@RequestParam(value="currAttPage", defaultValue="0") int currAttPage, Model model) {
-		List<StudentAttendanceDO> studentAttList = attendanceDAO.selectAllMemberAttendanceByCourse(2);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+	public String currentAttendanceHandler(HttpSession session, @RequestParam(value="currAttPage", defaultValue="0") int currAttPage, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.selectAllMemberAttendanceByCourse(course_id);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",currAttPage);
 		model.addAttribute("studentAttList", studentAttList);
 		
 		return "currentAttendance";
+		}
+		return "redirect:/" ;
 	}
 	
 	@GetMapping("/setAttendance")
-	public String setAttendanceHandler(@RequestParam(value="setAttPage", defaultValue="0") int setAttPage, Model model) {
-		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(2);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+	public String setAttendanceHandler(HttpSession session, @RequestParam(value="setAttPage", defaultValue="0") int setAttPage, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<CourseScheduleDO> courseDateInfo = attendanceDAO.getCourseDateInfo(course_id);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("setAttPage",setAttPage);
 		model.addAttribute("courseDateInfo", courseDateInfo);
 		
 		return "setAttendance";
+		}
+		return "redirect:/" ;
 	}
 	
 	@PostMapping("/setAttendanceScore")
-	public String setAttendanceScoreHandler(CourseDO courseDO) {
-		/*세션에서 받아올 거임*/
-		courseDO.setCourse_id(2);
-		/*이후 삭제할 것*/
-		courseDO.setCourse_id(courseDO.getCourse_id());
+	public String setAttendanceScoreHandler(HttpSession session, CourseDO courseDO) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		courseDO.setCourse_id(course_id);
 		attendanceDAO.updateAttendanceScore(courseDO);
 		return "redirect:setAttendance";
+		}
+		return "redirect:/" ;
 	}
 	
 	@PostMapping("/currentAttSearch")
-	public String currentAttSearchHandler(@RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
-		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(2, searchType, searchText);
-		CourseDO courseScore =courseDAO.getCourseScore(2);
+	public String currentAttSearchHandler(HttpSession session, @RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+		
+		List<StudentAttendanceDO> studentAttList = attendanceDAO.searchMemberAttendance(course_id, searchType, searchText);
+		CourseDO courseScore =courseDAO.getCourseScore(course_id);
 		
 		model.addAttribute("courseScore", courseScore);
 		model.addAttribute("currAttPage",0);
@@ -104,6 +155,8 @@ public class AttendanceController {
 		
 		
 		return "currentAttendance";
+		}
+		return "redirect:/" ;
 	}
 	
 	
