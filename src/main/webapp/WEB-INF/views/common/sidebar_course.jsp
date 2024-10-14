@@ -52,7 +52,7 @@
 
         <div id="mobile-menu">
             <h1 id="backBtn">◀</h1>
-            <h1 class="menuName">HTML의 기초</h1>
+            <p class="menuName" >HTML의 기초</p>
             <div id="mobile-menu-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                     <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round"
@@ -64,9 +64,19 @@
 		<c:choose>
 		<c:when test="${auth.m_role==1}">
 			<ul class="sidebar-menu">
-	            <a href="/home" class="sidebar-menu-selected" style="width:33.333%"><li>홈</li></a>
+				<c:set var="home" value="home"></c:set>
+				<a href="/home" 
+				class="menu <c:if test="${menu eq home}">clicked</c:if>"
+				style="width:33.3%">
+				<li>홈</li></a>
+				
 	            <a href="" class="sidebar-menu-unselected" style="width:33.333%"><li>강의 게시판</li></a>
-	            <a href="/attendanceCalendar" class="sidebar-menu-unselected" style="width:33.333%"><li>출결 확인</li></a>        
+				
+				<c:set var="attendanceCalendar" value="attendanceCalendar"></c:set>
+				<a href="/currentAttendance" 
+				class="menu <c:if test="${menu eq attendanceCalendar}">clicked</c:if>"
+				style="width:25%">
+				<li>출결 확인</li></a>     
 	        </ul>
 			
 	        <ul id="menuList" style="visibility: hidden;">
@@ -82,12 +92,34 @@
         
 		<c:otherwise>
 			<ul class="sidebar-menu">
-	            <a href="/home" class="sidebar-menu-selected" style="width:25%"><li>홈</li></a>
+				<c:set var="home" value="home"></c:set>
+				<a href="/home" 
+				class="menu <c:if test="${menu eq home}">clicked</c:if>"
+				style="width:25%">
+				<li>홈</li></a>
+
 	            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 게시판</li></a>
-	            <a href="/currentAttendance" class="sidebar-menu-unselected" style="width:25%"><li>출결 확인</li></a>
-	            <a href="/acceptanceManagement" class="sidebar-menu-unselected" style="width:25%"><li>수강 신청 관리</li></a>
-	            <a href="/courseAttend" class="sidebar-menu-unselected" style="width:25%"><li>강의 일정 관리</li></a>
+				
+				<c:set var="currentAttendance" value="currentAttendance"></c:set>
+				<a href="/currentAttendance" 
+				class="menu <c:if test="${menu eq currentAttendance}">clicked</c:if>"
+				style="width:25%">
+				<li>출결 확인</li></a>
+				
+				<c:set var="acceptanceManagement" value="acceptanceManagement"></c:set>
+				<a href="/acceptanceManagement" 
+				class="menu <c:if test="${menu eq acceptanceManagement}">clicked</c:if>"
+				style="width:25%">
+				<li>수강 신청 관리</li></a>
+				
+				<c:set var="courseAttend" value="courseAttend"></c:set>
+				<a href="/courseAttend" 
+				class="menu <c:if test="${menu eq courseAttend}">clicked</c:if>"
+				style="width:25%">
+				<li>강의 일정 관리</li></a>
 	        </ul>
+			
+
 			
 	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>

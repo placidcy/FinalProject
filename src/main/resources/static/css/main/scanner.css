@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+#scanner {
+	width: 100vw;
+	height: 100vh;
+	margin: auto;
+	padding: 10px;
+	box-sizing: border-box;
+	border: none;
+	z-index: 5;
+}
+
+#scanner>#reader {
+	width: 100vw;
+	height: 100vw;
+}
