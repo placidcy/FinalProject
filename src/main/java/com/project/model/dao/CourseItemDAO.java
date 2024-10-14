@@ -179,6 +179,20 @@ public class CourseItemDAO extends ItemDAO {
 		return timetable;
 	}
 
+	public int isQRValid(String code, int studentId) {
+		this.sql = query.get("isQRValid");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt("is_valid");
+			}
+		}, code, studentId);
+
+		return rowNum;
+	}
+
 	public int updateTimetable(String updateKey, int studentId) {
 		this.sql = query.get(updateKey);
 		int rowNum = -1;
@@ -441,6 +455,8 @@ public class CourseItemDAO extends ItemDAO {
 				      trunc(c_edate) - trunc(sysdate)
 				  ) fc
 				  LEFT OUTER JOIN FINAL_COURSE_QR fcq ON fc.course_id = fcq.course_id
+				  WHERE sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+				  ORDER BY fcq.q_regdate desc
 				  """);
 		/*
 		 * 어제까지의 강의 출석 내역(출석/지각/조퇴/결석 등)을 조회하는 쿼리문
@@ -521,5 +537,17 @@ public class CourseItemDAO extends ItemDAO {
 				insert into final_course_qr
 				values(?, sysdate, ?, default)
 				""");
+
+		this.query.put("isQRValid", """
+				SELECT
+					count(*) AS is_valid
+				FROM
+					FINAL_COURSE_QR fcq
+				INNER JOIN FINAL_COURSE_STUDENT fcs ON
+					fcq.COURSE_ID = fcs.COURSE_ID
+				WHERE
+					fcq.Q_CODE = ? AND fcs.STUDENT_ID = ?
+					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+					""");
 	}
 }

@@ -47,6 +47,7 @@ function sendRequest(url, method, callback) {
 }
 
 function clickHandler(event) {
+	const qrDialog = document.querySelector('#scanner');
 	const id = event.target.id;
 	let keyword = '';
 
@@ -68,8 +69,8 @@ function clickHandler(event) {
 	const confirmMsg = `현재 시각 ${getCurrentTime()}입니다.\n(서버 시간을 기준)\n\n${keyword} 처리 하시겠습니까?`;
 
 	if (confirm(confirmMsg)) {
-		const url = `/api/checkin/update?keyword=${keyword}`;
-		sendRequest(url, 'GET', responseHandler);
+		qrDialog.setAttribute('open', true);
+		callScanner(qrDialog, keyword);
 	}
 }
 

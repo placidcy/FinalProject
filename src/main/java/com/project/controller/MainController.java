@@ -35,8 +35,8 @@ public class MainController {
 	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
 			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
 		/*
-		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
-		 * 테스트 아이디는 사전 설정한 학생 데이터 및 강사 데이터를 사용
+		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인) 테스트
+		 * 아이디는 사전 설정한 학생 데이터 및 강사 데이터를 사용
 		 */
 		int memberId;
 
@@ -92,11 +92,15 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/checkin/update")
-	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword) {
+	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword,
+			@RequestParam(required = true, name = "code") String code) {
 		int memberId = 8080;
 		int studentId = mainSO.checkCourse(memberId);
 
-		return mainSO.updateTimetable(studentId, keyword) > 0;
+		boolean isValid = false;
+		isValid = mainSO.isQRValid(studentId, code);
+//		return mainSO.updateTimetable(studentId, keyword) > 0;
+		return isValid;
 	}
 
 	@GetMapping("/register")

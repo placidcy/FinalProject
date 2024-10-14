@@ -86,6 +86,10 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.getTimetable(studentId);
 	}
 
+	public boolean isQRValid(int studentId, String code) {
+		return courseItemDAO.isQRValid(code, studentId) > 0;
+	}
+
 	public int updateTimetable(int studentId, String keyword) {
 		String updateKey = "";
 
