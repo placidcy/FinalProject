@@ -49,12 +49,12 @@
 			<c:choose>
 				<c:when test="${courseRegList.size() != 0}">
 				<c:forEach items="${courseRegList}" var="courseReg">
-	                <div class="std_body">
-	                    <span class="std_name">${courseReg.m_name}</span>
+	                <form class="std_body">
+						<span class="std_name">${courseReg.m_name}</span>
 	                    <span class="std_belong">${courseReg.m_dept}</span>
-	                    <a href="" class="std_approval">승인</a>
-	                    <a href="" class="std_rejection">거절</a>
-	                </div>
+	                    <a href="courseRegApprove?member_id=${courseReg.member_id}" class="std_approval">승인</a>
+	                    <a href="courseRegReject?member_id=${courseReg.member_id}" class="std_rejection">거절</a>
+	                </form>
 	            </c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -79,7 +79,7 @@
 						<span id="targetPage" class="pageNumber">1</span>
 					</c:when>
 					<c:otherwise>
-						<c:forEach  begin="0" end="${Math.floor((courseRegList.size()-1)/10)}" varStatus="status">
+						<c:forEach  begin="0" end="${Math.floor((courseRegList.size()-1)/7)}" varStatus="status">
 							<a href="/acceptanceManagement?acceptPage=${status.count-1}"><span id="targetPage" class="pageNumber">${status.count}</span></a>
 						</c:forEach>
 					</c:otherwise>
@@ -87,7 +87,7 @@
 				
 				
 				<c:choose>
-					<c:when test="${courseRegList.size()==0 || Math.floor((courseRegList.size()-1)/10) == acceptPage}">
+					<c:when test="${courseRegList.size()==0 || Math.floor((courseRegList.size()-1)/7) == acceptPage}">
 						<button id="plusPage" disabled>다음</button>
 					</c:when>
 					<c:otherwise>
