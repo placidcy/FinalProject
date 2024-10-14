@@ -22,3 +22,7 @@ VALUES(8080, 8081, trunc(sysdate), trunc(sysdate+100));
 -- 학생에게 강의 수강 정보를 배정
 INSERT INTO FINAL_COURSE_STUDENT fcs
 VALUES(9091, 8080, 8080, DEFAULT);
+
+-- 테스트를 위한 QR코드 
+INSERT INTO FINAL_COURSE_QR fcq 
+VALUES(8080, sysdate, 'this is qr test code', 60);
