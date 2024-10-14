@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.model.dao.NoticeItemDAO;
 import com.project.model.response.LoginResponse;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
+	@Autowired
+	NoticeItemDAO noticeDao;
 
 	@GetMapping("/adminMain")
 	public String adminMainHandler(HttpSession session, Model model) {
@@ -23,7 +26,8 @@ public class AdminController {
 
 			return "/";
 		}
-		
+	
+		model.addAttribute("noticeList", noticeDao.selectAll(0, 3));
 		model.addAttribute("menu", "adminMain");
 		return "adminMain";
 	}

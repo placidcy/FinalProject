@@ -1,4 +1,3 @@
-
 .bg-f2f2f2 {
     background-color: #F2F2F2 !important;
 }
@@ -9,6 +8,16 @@
 
 .course-notice.white {
     background-color: white;
+}
+
+ul.course-notice.white {
+    list-style: disc;
+    padding: 0 100px;
+}
+
+ul.course-notice.white>li {
+    margin-block: 10px;
+	text-align:left;
 }
 
 .mb30 {
