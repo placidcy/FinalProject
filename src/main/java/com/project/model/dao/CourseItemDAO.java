@@ -124,6 +124,13 @@ public class CourseItemDAO extends ItemDAO {
 		return studentId;
 	}
 
+	public int createQR(int courseId, String qrCode) {
+		this.sql = query.get("createQR");
+		int rowNum = this.getJdbcTemplate().update(sql, courseId, qrCode);
+
+		return rowNum;
+	}
+
 	public CourseItem getInfo(int studentId) {
 		this.sql = query.get("getInfo");
 		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
@@ -137,9 +144,6 @@ public class CourseItemDAO extends ItemDAO {
 				courseItem.setStartDate(rs.getString("c_sdate"));
 				courseItem.setEndDate(rs.getString("c_edate"));
 				courseItem.setInstList(rs.getString("c_ilist"));
-				courseItem.setQrCode(rs.getString("q_code"));
-				courseItem.setQrRegdate(rs.getString("q_regdate"));
-				courseItem.setQrEffdate(rs.getString("q_effdate"));
 
 				return courseItem;
 			}
@@ -170,6 +174,47 @@ public class CourseItemDAO extends ItemDAO {
 		}
 
 		return timetable;
+	}
+
+	public int isQRValid(String code, int studentId) {
+		this.sql = query.get("isQRValid");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt("is_valid");
+			}
+		}, code, studentId);
+
+		return rowNum;
+	}
+
+	public CourseItem getQrCode(int studentId, CourseItem courseItem) {
+		this.sql = query.get("getQrCode");
+		CourseItem qrData = null;
+
+		try {
+			qrData = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
+				@Override
+				public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+					CourseItem courseItem = new CourseItem();
+
+					courseItem.setQrCode(rs.getString("q_code"));
+					courseItem.setQrRegdate(rs.getString("q_regdate"));
+					courseItem.setQrEffdate(rs.getString("q_effdate"));
+
+					return courseItem;
+				}
+			}, studentId);
+
+			courseItem.setQrCode(qrData.getQrCode());
+			courseItem.setQrRegdate(qrData.getQrRegdate());
+			courseItem.setQrEffdate(qrData.getQrEffdate());
+		} catch (Exception e) {
+		}
+
+		return courseItem;
 	}
 
 	public int updateTimetable(String updateKey, int studentId) {
@@ -394,46 +439,31 @@ public class CourseItemDAO extends ItemDAO {
 		 */
 		this.query.put("getInfo", """
 				SELECT
-				  -- 강의 정보를 모두 조회
-				  fc.*,
-				  -- 강의 출석 QR코드 관련 정보 조회
-				  q_code,
-				  to_char(
-				    q_regdate, 'yyyy-mm-dd hh24:mi:ss'
-				  ) q_regdate,
-				  to_char(
-				    q_regdate + q_efftime / 24 / 60, 'yyyy-mm-dd hh24:mi:ss'
-				  ) q_effdate
+				  fc.course_id,
+				  c_title,
+				  c_name,
+				  TO_CHAR(c_sdate, 'yyyy.mm.dd') c_sdate,
+				  TO_CHAR(c_edate, 'yyyy.mm.dd') c_edate,
+				  LISTAGG(m_name, ', ') WITHIN GROUP (
+				    ORDER BY
+				      m_name
+				  ) AS c_ilist,
+				  trunc(c_edate) - trunc(sysdate) AS c_dday
 				FROM
-				  (
-				    SELECT
-				      fc.course_id,
-				      c_title,
-				      c_name,
-				      TO_CHAR(c_sdate, 'yyyy.mm.dd') c_sdate,
-				      TO_CHAR(c_edate, 'yyyy.mm.dd') c_edate,
-				      LISTAGG(m_name, ', ') WITHIN GROUP (
-				        ORDER BY
-				          m_name
-				      ) AS c_ilist,
-				      trunc(c_edate) - trunc(sysdate) AS c_dday
-				    FROM
-				      FINAL_COURSE fc
-				      INNER JOIN FINAL_COURSE_INSTRUCTOR fci ON fc.COURSE_ID = fci.COURSE_ID
-				      INNER JOIN FINAL_COURSE_CATEGORY fcc ON fc.CATEGORY_ID = fcc.CATEGORY_ID
-				      INNER JOIN FINAL_MEMBER fm ON fm.MEMBER_ID = fci.MEMBER_ID
-				      INNER JOIN FINAL_COURSE_STUDENT fcs ON fcs.course_id = fc.course_id
-				    WHERE
-				      fcs.student_id = ?
-				    GROUP BY
-				      fc.course_id,
-				      c_title,
-				      c_name,
-				      TO_CHAR(c_sdate, 'yyyy.mm.dd'),
-				      TO_CHAR(c_edate, 'yyyy.mm.dd'),
-				      trunc(c_edate) - trunc(sysdate)
-				  ) fc
-				  LEFT OUTER JOIN FINAL_COURSE_QR fcq ON fc.course_id = fcq.course_id
+				  FINAL_COURSE fc
+				  INNER JOIN FINAL_COURSE_INSTRUCTOR fci ON fc.COURSE_ID = fci.COURSE_ID
+				  INNER JOIN FINAL_COURSE_CATEGORY fcc ON fc.CATEGORY_ID = fcc.CATEGORY_ID
+				  INNER JOIN FINAL_MEMBER fm ON fm.MEMBER_ID = fci.MEMBER_ID
+				  INNER JOIN FINAL_COURSE_STUDENT fcs ON fcs.course_id = fc.course_id
+				WHERE
+				  fcs.student_id = ?
+				GROUP BY
+				  fc.course_id,
+				  c_title,
+				  c_name,
+				  TO_CHAR(c_sdate, 'yyyy.mm.dd'),
+				  TO_CHAR(c_edate, 'yyyy.mm.dd'),
+				  trunc(c_edate) - trunc(sysdate)
 				  """);
 		/*
 		 * 어제까지의 강의 출석 내역(출석/지각/조퇴/결석 등)을 조회하는 쿼리문
@@ -510,5 +540,35 @@ public class CourseItemDAO extends ItemDAO {
 						  ) c2 ON c1.student_id = c2.student_id
 						  WHERE c1.student_id = ?
 												  """);
+		this.query.put("createQR", """
+				insert into final_course_qr
+				values(?, sysdate, ?, default)
+				""");
+
+		this.query.put("isQRValid", """
+				SELECT
+					count(*) AS is_valid
+				FROM
+					FINAL_COURSE_QR fcq
+				INNER JOIN FINAL_COURSE_STUDENT fcs ON
+					fcq.COURSE_ID = fcs.COURSE_ID
+				WHERE
+					fcq.Q_CODE = ? AND fcs.STUDENT_ID = ?
+					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+					""");
+
+		this.query.put("getQrCode", """
+				SELECT
+					q_code,
+					to_char(q_regdate, 'yyyy-mm-dd hh24:mi') q_regdate,
+					to_char(q_regdate + q_efftime/24/60, 'yyyy-mm-dd hh24:mi') q_effdate
+				FROM
+					FINAL_COURSE_QR fcq
+				INNER JOIN FINAL_COURSE_STUDENT fcs ON
+					fcq.COURSE_ID = fcs.COURSE_ID
+				WHERE
+					fcs.STUDENT_ID = ?
+					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+				""");
 	}
 }

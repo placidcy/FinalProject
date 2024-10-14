@@ -86,6 +86,10 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.getTimetable(studentId);
 	}
 
+	public boolean isQRValid(int studentId, String code) {
+		return courseItemDAO.isQRValid(code, studentId) > 0;
+	}
+
 	public int updateTimetable(int studentId, String keyword) {
 		String updateKey = "";
 
@@ -110,10 +114,15 @@ public class MainSO extends ItemSO {
 	}
 
 	public CourseItem getInfo(int studentId) {
-		return courseItemDAO.getInfo(studentId);
+		CourseItem courseItem = courseItemDAO.getInfo(studentId);
+		return courseItemDAO.getQrCode(studentId, courseItem);
 	}
 
 	public StatsItem getStats(int studentId) {
 		return courseItemDAO.getStats(studentId);
+	}
+
+	public boolean createQR(int courseId, String qrCode) {
+		return courseItemDAO.createQR(courseId, qrCode) > 0;
 	}
 }
