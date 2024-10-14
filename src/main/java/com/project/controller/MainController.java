@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.project.model.MessageItem;
 import com.project.model.NoticeItem;
 import com.project.service.MainSO;
 
@@ -92,15 +94,24 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/checkin/update")
-	public boolean updateTimetable(@RequestParam(required = true, name = "keyword") String keyword,
+	public MessageItem updateTimetable(@RequestParam(required = true, name = "keyword") String keyword,
 			@RequestParam(required = true, name = "code") String code) {
 		int memberId = 8080;
 		int studentId = mainSO.checkCourse(memberId);
 
-		boolean isValid = false;
-		isValid = mainSO.isQRValid(studentId, code);
-//		return mainSO.updateTimetable(studentId, keyword) > 0;
-		return isValid;
+		MessageItem response = new MessageItem();
+
+		response.setRes(mainSO.isQRValid(studentId, code));
+
+		if (response.isRes()) {
+			response.setRes(mainSO.updateTimetable(studentId, keyword) > 0);
+			if (!response.isRes()) {
+				response.setMsg("출석체크 요청이 처리되지 않았습니다.");
+			}
+		} else {
+			response.setMsg("QR코드가 유효하지 않습니다.");
+		}
+		return response;
 	}
 
 	@GetMapping("/register")

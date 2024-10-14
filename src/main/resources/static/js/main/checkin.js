@@ -17,12 +17,12 @@ function getCurrentTime() {
 
 function responseHandler(error, response) {
 	if (error === null) {
-		if (response) {
-			alert('정상적으로 요청이 처리되었습니다.');
-			window.location.reload();
+		if (response.res) {
+			alert('요청이 정상적으로 처리되었습니다.')
 		} else {
-			alert('요청이 처리되지 않았습니다.');
+			alert(response.msg);
 		}
+		window.location.reload();
 	} else {
 		console.error(error);
 	}
