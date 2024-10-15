@@ -208,6 +208,9 @@ public class CourseItemDAO extends ItemDAO {
 				}
 			}, studentId);
 		} catch (Exception e) {
+			/* 만일 출결 정보를 조회할 수 없다면(금일 출결 데이터가 생성되지 않은 경우) */
+			this.sql = query.get("setTimetable");
+			this.getJdbcTemplate().update(sql, studentId);
 		}
 
 		return timetable;
@@ -249,6 +252,7 @@ public class CourseItemDAO extends ItemDAO {
 			courseItem.setQrRegdate(qrData.getQrRegdate());
 			courseItem.setQrEffdate(qrData.getQrEffdate());
 		} catch (Exception e) {
+			System.out.println("예외: 현재 유효한 QR코드 없음");
 		}
 
 		return courseItem;
@@ -645,7 +649,7 @@ public class CourseItemDAO extends ItemDAO {
 				FROM
 					FINAL_COURSE_QR fcq
 				WHERE
-					fcs.course_id = ?
+					course_id = ?
 					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
 				""");
 	}

@@ -61,7 +61,7 @@ public class MainController {
 	}
 
 	@GetMapping("/checkin")
-	public String getChecin(Model model,
+	public String getCheckin(Model model,
 			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
 		/*
 		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)

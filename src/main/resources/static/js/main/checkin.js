@@ -133,10 +133,39 @@ function setFloatingIcon() {
 	})
 }
 
+function calculateTimer(duration, display) {
+	let timer = duration, hours, minutes, seconds;
+	setInterval(function() {
+		hours = Math.floor(timer / 3600);
+		minutes = Math.floor((timer % 3600) / 60);
+		seconds = Math.floor(timer % 60);
+
+		hours = hours < 10 ? "0" + hours : hours;
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		display.textContent = hours + "시 " + minutes + "분 " + seconds + "초";
+
+		if (--timer < 0) {
+			timer = 0;
+		}
+	}, 1000);
+}
+
+function setTimer() {
+	const display = document.querySelector('#timeLimit');
+	const startTime = new Date();
+	const endTime = new Date(display.dataset.end);
+	const duration = (endTime - startTime) / 1000;
+
+	calculateTimer(duration, display)
+}
+
 function init() {
 	setChart();
 	setButtons();
 	setFloatingIcon();
+	setTimer();
 }
 
 window.addEventListener('load', init);
