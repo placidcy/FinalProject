@@ -63,7 +63,7 @@
 							<div class="grid c2 cen v h">
 								<div class="">
 									<p>QR코드 만료까지 남은 시간</p>
-									<p class="bold" id="timeLimit">00시간 00분 00초</p>
+									<p class="bold" id="timeLimit" data-end="${info.qrEffdate }"></p>
 								</div>
 								<div>
 									<img class="img s200"
