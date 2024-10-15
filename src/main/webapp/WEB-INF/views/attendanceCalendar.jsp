@@ -80,10 +80,12 @@
             <div class="day">금</div>
             <div id="saturday">토</div>
             </div>
-            
+            <input type="hidden" id="c_sdate" value="${courseDate.c_sdate}" />
+            <input type="hidden" id="c_edate" value="${courseDate.c_edate}" />
             <table id="calendarBox">
                 <!-- for 문으로 저번 월에 맞는 일수만큼 생성 -->
 				<!--월요일이 2-->
+				<!--			
 				<c:forEach begin="0" end="${attCal.size()/7}" varStatus="status">
 				<tr class="weekBox">
 				<c:forEach items="${attCal}" var="cal" begin="${(status.count-1)*7}" end="${(status.count-1)*7+6}">
@@ -122,6 +124,7 @@
 					</c:choose>
 				</c:forEach>
 				</c:forEach>
+				-->
 				</tr>
                           
             </table>
