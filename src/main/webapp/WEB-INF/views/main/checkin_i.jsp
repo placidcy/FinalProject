@@ -64,7 +64,7 @@
 								</div>
 								<div>
 									<img class="img s200"
-										src="/api/checkin/getQRImage?code=${info.qrCode }" alt="">
+										src="/api/checkin/getQRImage?id=${info.courseId }" alt="">
 								</div>
 							</div>
 						</c:if>

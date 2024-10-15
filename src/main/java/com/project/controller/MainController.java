@@ -109,9 +109,10 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/checkin/getQRImage")
-	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "code") String code)
+	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "id") String id)
 			throws WriterException, IOException {
-		return qrSO.generateQRCodeImage(code);
+		CourseItem qrData = mainSO.getQrCode(Integer.parseInt(id), new CourseItem());
+		return qrSO.generateQRCodeImage(qrData.getQrCode());
 	}
 
 	@ResponseBody
