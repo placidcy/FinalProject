@@ -142,4 +142,8 @@ public class MainSO extends ItemSO {
 	public boolean checkCourseConflicts(int memberId, int courseId) {
 		return courseItemDAO.checkCourseConflicts(memberId, courseId) > 0;
 	}
+
+	public boolean register(int memberId, int courseId) {
+		return courseItemDAO.register(courseId, memberId) > 0;
+	}
 }
