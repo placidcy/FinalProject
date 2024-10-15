@@ -124,7 +124,11 @@ public class MainSO extends ItemSO {
 
 	public CourseItem getInfoByCourseId(int courseId) {
 		CourseItem courseItem = courseItemDAO.getInfoByCourseId(courseId);
-		return courseItemDAO.getQrCode(courseItem.getCourseId(), courseItem);
+		return this.getQrCode(courseId, courseItem);
+	}
+
+	public CourseItem getQrCode(int courseId, CourseItem courseItem) {
+		return courseItemDAO.getQrCode(courseId, courseItem);
 	}
 
 	public StatsItem getStats(int studentId) {
