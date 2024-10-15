@@ -34,12 +34,16 @@ public class AttendanceController {
 		/*나중에 삭제할 것*/
 			
 		int course_id = 2;
-		
-		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
+		if (attendanceSO.checkStudentId(auth.getMember_id(), course_id)) {
+			List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
 
-		model.addAttribute("attCal", attCal);
+			model.addAttribute("attCal", attCal);
+		}
+		
+		
 		model.addAttribute("menu", "attendanceCalendar");
 		return "attendanceCalendar";
+		
 		}
 		
 		return "redirect:/" ;
