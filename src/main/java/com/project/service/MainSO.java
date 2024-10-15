@@ -146,4 +146,8 @@ public class MainSO extends ItemSO {
 	public boolean register(int memberId, int courseId) {
 		return courseItemDAO.register(courseId, memberId) > 0;
 	}
+
+	public boolean checkAlreadyRegistered(int memberId, int courseId) {
+		return courseItemDAO.checkAlreadyRegistered(courseId, memberId) > 0;
+	}
 }

@@ -27,6 +27,15 @@ public class CourseItemDAO extends ItemDAO {
 		return rowNum;
 	}
 
+	public int checkAlreadyRegistered(int courseId, int memberId) {
+		this.sql = query.get("checkAlreadyRegistered");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().queryForObject(sql, Integer.class, new Object[] { courseId, memberId });
+
+		return rowNum;
+	}
+
 	public int checkCourseConflicts(int memberId, int courseId) {
 		this.sql = query.get("checkCourseConflicts");
 		int rowNum = -1;
@@ -694,6 +703,12 @@ public class CourseItemDAO extends ItemDAO {
 		this.query.put("register", """
 				INSERT INTO FINAL_COURSE_REGISTER fcr
 				VALUES (?, ?, sysdate, default)
+				""");
+
+		this.query.put("checkAlreadyRegistered", """
+				SELECT count(*)
+				FROM FINAL_COURSE_REGISTER fcr
+				WHERE fcr.COURSE_ID = ? AND fcr.MEMBER_ID = ? AND fcr.C_REGSTATUS = 0
 				""");
 	}
 }
