@@ -1,7 +1,12 @@
 
 package com.project.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.project.model.CourseItem;
 import com.project.model.MessageItem;
 import com.project.model.NoticeItem;
 import com.project.service.MainSO;
+import com.project.service.QrCodeSO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,7 +36,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	@Autowired
 	MainSO mainSO;
-	String viewPath;
+	@Autowired
+	QrCodeSO qrSO;
+
+	private String viewPath;
 
 	@GetMapping("/goCourseHome")
 	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
@@ -91,11 +106,39 @@ public class MainController {
 		return viewPath;
 	}
 
-	@GetMapping("/checkin/createQR")
-	public String createQR(Model model, HttpSession session) {
-		int memberId;
+	@ResponseBody
+	@GetMapping("/api/checkin/getQRImage")
+	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "code") String code)
+			throws WriterException, IOException {
+		return qrSO.generateQRCodeImage(code);
+	}
 
-		return "redirect:/checkin";
+	@ResponseBody
+	@GetMapping("/api/checkin/createQR")
+	public MessageItem createQR(Model model, HttpSession session) {
+		int memberId = 8081;
+		int courseId = mainSO.checkCourseForCourseId(memberId);
+
+		MessageItem response = new MessageItem();
+
+		CourseItem courseItem = mainSO.getQrCode(courseId, new CourseItem());
+
+		if (courseItem.getQrCode() == null) {
+			try {
+				String encryptedText = qrSO.getEncryptedText("test");
+				mainSO.createQR(courseId, encryptedText);
+				response.setRes(true);
+				response.setMsg("QR코드가 성공적으로 생성되었습니다.");
+			} catch (Exception e) {
+				response.setRes(false);
+				response.setMsg("QR 코드 생성 과정에서 오류가 발생하였습니다.");
+			}
+		} else {
+			response.setRes(false);
+			response.setMsg("현재 유효한 QR코드가 있어 생성이 불가능합니다.");
+		}
+
+		return response;
 	}
 
 	@ResponseBody

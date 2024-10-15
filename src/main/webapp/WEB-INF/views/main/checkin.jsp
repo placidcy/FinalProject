@@ -87,8 +87,7 @@
 								</div>
 								<div>
 									<img class="img s200"
-										src="https://quickchart.io/qr?text=${info.qrCode}&centerImageUrl=https://imgur.com/RB0yUtw.png"
-										alt="">
+										src="/api/checkin/getQRImage?code=${info.qrCode }" alt="">
 								</div>
 							</div>
 						</c:if>
