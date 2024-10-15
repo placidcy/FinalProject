@@ -60,7 +60,7 @@ BEGIN
         SELECT student_id, a_yesdate
         FROM final_schedule_yesterday fsy
         INNER JOIN final_course_student fcs ON fsy.course_id = fcs.course_id
-        WHERE ((a_couttime - a_cintime) - (a_rettime - a_souttime)) * 24 < 4
+        WHERE (nvl(a_couttime - a_cintime, 0) - nvl(a_rettime - a_souttime, 0)) * 24 < 4
       ) THEN 2
       WHEN (student_id, a_date) in (
         SELECT fcs.student_id, a_yesdate

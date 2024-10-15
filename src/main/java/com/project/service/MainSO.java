@@ -78,8 +78,12 @@ public class MainSO extends ItemSO {
 		return this.getSize(noticeItemDAO.getCount(keyword), limit);
 	}
 
-	public int checkCourse(int memberId) {
-		return courseItemDAO.checkCourse(memberId);
+	public int checkCourseForStudentId(int memberId) {
+		return courseItemDAO.checkCourseForStudentId(memberId);
+	}
+
+	public int checkCourseForCourseId(int memberId) {
+		return courseItemDAO.checkCourseForCourseId(memberId);
 	}
 
 	public Timetable getTimetable(int studentId) {
@@ -113,9 +117,14 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.updateTimetable(updateKey, studentId);
 	}
 
-	public CourseItem getInfo(int studentId) {
-		CourseItem courseItem = courseItemDAO.getInfo(studentId);
-		return courseItemDAO.getQrCode(studentId, courseItem);
+	public CourseItem getInfoByStudentId(int studentId) {
+		CourseItem courseItem = courseItemDAO.getInfoByStudentId(studentId);
+		return courseItemDAO.getQrCode(courseItem.getCourseId(), courseItem);
+	}
+
+	public CourseItem getInfoByCourseId(int courseId) {
+		CourseItem courseItem = courseItemDAO.getInfoByCourseId(courseId);
+		return courseItemDAO.getQrCode(courseItem.getCourseId(), courseItem);
 	}
 
 	public StatsItem getStats(int studentId) {

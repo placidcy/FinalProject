@@ -61,24 +61,30 @@ public class MainController {
 	}
 
 	@GetMapping("/checkin")
-	public String getChecin(Model model,
+	public String getCheckin(Model model,
 			@RequestParam(required = false, defaultValue = "1", name = "t") int testTarget) {
 		/*
 		 * testTarget: 로그인 연결 이전 테스트를 목적으로 사용하는 변수(1: 회원 계정으로 로그인, 2: 강사 계정으로 로그인)
 		 */
-		int memberId, studentId;
+		int memberId, studentId, courseId;
 
 		if (testTarget == 1) {
 			memberId = 8080;
 
-			studentId = mainSO.checkCourse(memberId);
-			if (studentId != -1) {
-				model.addAttribute("info", mainSO.getInfo(studentId));
+			studentId = mainSO.checkCourseForStudentId(memberId);
+			if (studentId > 0) {
+				model.addAttribute("info", mainSO.getInfoByStudentId(studentId));
 				model.addAttribute("stats", mainSO.getStats(studentId));
 				model.addAttribute("time", mainSO.getTimetable(studentId));
 			}
 			viewPath = "main/checkin";
 		} else {
+			memberId = 8081;
+
+			courseId = mainSO.checkCourseForCourseId(memberId);
+			if (courseId > 0) {
+				model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+			}
 			viewPath = "main/checkin_i";
 		}
 		model.addAttribute("menu", "checkin");
@@ -97,7 +103,7 @@ public class MainController {
 	public MessageItem updateTimetable(@RequestParam(required = true, name = "keyword") String keyword,
 			@RequestParam(required = true, name = "code") String code) {
 		int memberId = 8080;
-		int studentId = mainSO.checkCourse(memberId);
+		int studentId = mainSO.checkCourseForStudentId(memberId);
 
 		MessageItem response = new MessageItem();
 

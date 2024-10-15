@@ -31,23 +31,23 @@
 			</div>
 			<div class="grid c2 g10">
 				<div class="grid g20 fig full">
-					<p class="f20 bold">분류 > ${info.categoryName }웹 개발</p>
-					<p class="f30 bold">${info.courseName }HTML의기초</p>
+					<p class="f20 bold">분류 > ${info.categoryName }</p>
+					<p class="f30 bold">${info.courseName }</p>
 					<div class="info">
 						<p>
-							<span>강의 기간:</span><span class="float-right">${info.startDate }2024.03.11
-								~ ${info.endDate }2024.07.12</span>
+							<span>강의 기간:</span><span class="float-right">${info.startDate }
+								~ ${info.endDate }</span>
 						</p>
 						<p>
 							<span>강사:</span><span class="float-right"><c:forEach
-									items="${info.instList }" var="inst" varStatus="status">${inst }</c:forEach>도경수 이강인 장원영</span>
+									items="${info.instList }" var="inst" varStatus="status">${inst }</c:forEach></span>
 						</p>
 					</div>
 					<p>
-						종료일까지 남은 기간: <span class="bold">${info.dDay }D+92일</span>
+						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
 					</p>
-					<a class="f20 bold h end self" href="home?id=${courseId }">📖
-						강의 홈으로 이동하기</a>
+					<a class="f20 bold h end self"
+						href="/goCourseHome?courseId=${info.courseId }">📖 강의 홈으로 이동하기</a>
 				</div>
 				<table class="tab ta cen inst">
 					<tr>
@@ -63,7 +63,7 @@
 							<div class="grid c2 cen v h">
 								<div class="">
 									<p>QR코드 만료까지 남은 시간</p>
-									<p class="bold" id="timeLimit">00시간 00분 00초</p>
+									<p class="bold" id="timeLimit" data-end="${info.qrEffdate }"></p>
 								</div>
 								<div>
 									<img class="img s200"
@@ -82,19 +82,19 @@
 					<div class="grid c4 ta cen fig">
 						<div class="border-right">
 							<p>출석</p>
-							<p class="bold">${stats.presentCnt }0</p>
+							<p class="bold">${stats.presentCnt }</p>
 						</div>
 						<div class="border-right">
 							<p>지각</p>
-							<p class="bold">${stats.tardyCnt }0</p>
+							<p class="bold">${stats.tardyCnt }</p>
 						</div>
 						<div class="border-right">
 							<p>조퇴</p>
-							<p class="bold">${stats.leaveCnt }0</p>
+							<p class="bold">${stats.leaveCnt }</p>
 						</div>
 						<div>
 							<p>결석</p>
-							<p class="bold">${stats.absentCnt }0</p>
+							<p class="bold">${stats.absentCnt }</p>
 						</div>
 					</div>
 					<div class="grid g10">
@@ -102,7 +102,7 @@
 							<span class="bold">금일 출석률</span> <span> <fmt:formatNumber
 									value="${stats.myCnt/stats.totalCnt }" type="percent"
 									pattern="0.0%"></fmt:formatNumber>
-							</span> <span> (${stats.myCnt }0/${stats.totalCnt }0일)</span>
+							</span> <span> (${stats.myCnt }0/${stats.totalCnt }일)</span>
 						</p>
 						<!-- 차트 라이브러리 연결 후 수정-->
 						<div class="chart grid cen v">
