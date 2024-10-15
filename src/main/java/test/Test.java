@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 import com.project.model.AttendanceDAO;
+import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
 import com.project.model.MemberDAO;
 import com.project.model.MemberSO;
@@ -31,11 +32,14 @@ public class Test {
 		ds.setTimeBetweenEvictionRunsMillis(1000 * 10);
 		
 		AttendanceDAO attDao = new AttendanceDAO(ds);
+		CourseDAO courseDao = new CourseDAO(ds);
 		MemberDAO memberDao = new MemberDAO(ds);
 		MemberSO memberSo = new MemberSO();
-		System.out.print(memberSo.login("nampe0ple","p@ssw0Rd123"));
 		
-		
+		LocalDateTime dateTime = LocalDateTime.now();
+		LocalDateTime c_sdate = courseDao.getCourseDatebyStd(6).getC_sdate();
+		LocalDateTime c_edate =courseDao.getCourseDatebyStd(6).getC_edate();
+		System.out.print(dateTime.getYear()==c_sdate.getYear());
 
 	}
 
