@@ -51,6 +51,14 @@ dependencies {
 	// 문자열 암호화 라이브러리 추가
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
+    
+    // 비밀번호 해싱
+    implementation 'org.springframework.security:spring-security-crypto'
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    
 }
 
 tasks.named('test') {
