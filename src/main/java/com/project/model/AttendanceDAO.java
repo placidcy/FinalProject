@@ -208,7 +208,7 @@ public class AttendanceDAO {
 				attCal.setD(rs.getString("d"));
 				attCal.setReq_type(rs.getInt("req_type"));
 				attCal.setA_status(rs.getInt("a_status"));	
-				attCal.setReq_type(rs.getInt("r_status"));	
+				attCal.setR_status(rs.getInt("r_status"));	
 				
 				return attCal;
 			}
