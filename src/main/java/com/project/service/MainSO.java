@@ -138,4 +138,16 @@ public class MainSO extends ItemSO {
 	public boolean createQR(int courseId, String qrCode) {
 		return courseItemDAO.createQR(courseId, qrCode) > 0;
 	}
+
+	public boolean checkCourseConflicts(int memberId, int courseId) {
+		return courseItemDAO.checkCourseConflicts(memberId, courseId) > 0;
+	}
+
+	public boolean register(int memberId, int courseId) {
+		return courseItemDAO.register(courseId, memberId) > 0;
+	}
+
+	public boolean checkAlreadyRegistered(int memberId, int courseId) {
+		return courseItemDAO.checkAlreadyRegistered(courseId, memberId) > 0;
+	}
 }

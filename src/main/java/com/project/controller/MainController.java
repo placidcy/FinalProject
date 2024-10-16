@@ -197,6 +197,29 @@ public class MainController {
 		return "main/register_search";
 	}
 
+	@ResponseBody
+	@RequestMapping("/api/course/register")
+	public MessageItem register(@RequestParam(name = "courseId") String courseId, HttpSession session) {
+		int memberId;
+		MessageItem messageItem = new MessageItem();
+
+		memberId = ((LoginResponse) session.getAttribute("auth")).getMember_id();
+
+		if (mainSO.checkCourseConflicts(memberId, Integer.parseInt(courseId))) {
+			messageItem.setRes(false);
+			messageItem.setMsg("동일한 시간대에 수강 중인 강의가 있거나, 이미 수강 중인 강의입니다.");
+		} else if (mainSO.checkAlreadyRegistered(memberId, memberId)) {
+			messageItem.setRes(false);
+			messageItem.setMsg("이미 수강 신청을 요청한 강의입니다.");
+		} else {
+			messageItem.setRes(mainSO.register(memberId, memberId));
+			if (!messageItem.isRes()) {
+				messageItem.setMsg("수강 신청 요청이 처리되지 않았습니다.");
+			}
+		}
+		return messageItem;
+	}
+
 	@GetMapping("/notification")
 	public String getNotifications(Model model) {
 		model.addAttribute("menu", "alert");
