@@ -74,20 +74,6 @@ function clickHandler(event) {
 	}
 }
 
-function qrBtnHandler(event) {
-	const id = event.target.id;
-	const url = '/api/checkin/createQR';
-
-	if (!confirm('QR코드를 발급하시겠습니까?')) {
-		return;
-	};
-	switch (id) {
-		case 'new':
-			sendRequest(url, 'GET', responseHandler);
-			break;
-	}
-}
-
 function calculatePosition(size, percentage) {
 	return size / 100 * percentage;
 }
@@ -113,43 +99,10 @@ function setChart() {
 
 function setButtons() {
 	const btns = document.querySelectorAll('.btn.attend');
-	const qrBtns = document.querySelectorAll('.qrBtn');
 
 	for (const btn of btns) {
 		btn.addEventListener('click', clickHandler);
 	}
-
-	for (const btn of qrBtns) {
-		btn.addEventListener('click', qrBtnHandler);
-	}
-}
-
-function calculateTimer(duration, display) {
-	let timer = duration, hours, minutes, seconds;
-	setInterval(function() {
-		hours = Math.floor(timer / 3600);
-		minutes = Math.floor((timer % 3600) / 60);
-		seconds = Math.floor(timer % 60);
-
-		hours = hours < 10 ? "0" + hours : hours;
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? "0" + seconds : seconds;
-
-		display.textContent = hours + "시 " + minutes + "분 " + seconds + "초";
-
-		if (--timer < 0) {
-			timer = 0;
-		}
-	}, 1000);
-}
-
-function setTimer() {
-	const display = document.querySelector('#timeLimit');
-	const startTime = new Date();
-	const endTime = new Date(display.dataset.end);
-	const duration = (endTime - startTime) / 1000;
-
-	calculateTimer(duration, display)
 }
 
 function setFloatingIcon() {
@@ -180,15 +133,39 @@ function setFloatingIcon() {
 	})
 }
 
+function calculateTimer(duration, display) {
+	let timer = duration, hours, minutes, seconds;
+	setInterval(function() {
+		hours = Math.floor(timer / 3600);
+		minutes = Math.floor((timer % 3600) / 60);
+		seconds = Math.floor(timer % 60);
+
+		hours = hours < 10 ? "0" + hours : hours;
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		display.textContent = hours + "시 " + minutes + "분 " + seconds + "초";
+
+		if (--timer < 0) {
+			timer = 0;
+		}
+	}, 1000);
+}
+
+function setTimer() {
+	const display = document.querySelector('#timeLimit');
+	const startTime = new Date();
+	const endTime = new Date(display.dataset.end);
+	const duration = (endTime - startTime) / 1000;
+
+	calculateTimer(duration, display)
+}
+
 function init() {
 	setChart();
 	setButtons();
-	try {
-		setTimer();
-		setFloatingIcon();
-	} catch (e) {
-		console.log('플로팅 아이콘 오류');
-	}
+	setFloatingIcon();
+	setTimer();
 }
 
 window.addEventListener('load', init);

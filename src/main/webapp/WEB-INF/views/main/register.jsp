@@ -13,7 +13,6 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/resources/js/main/mobile.js"></script>
-<script src="/resources/js/main/register.js"></script>
 </head>
 <body>
 	<div class="container flex">
@@ -27,7 +26,7 @@
 				<jsp:include page="./register_searchbar.jsp"></jsp:include>
 				<table class="tab course" id="register">
 					<c:forEach items="${list }" var="item">
-						<tr class="item" data-id="${item.courseId }">
+						<tr class="item">
 							<td class="deco"></td>
 							<td class="category">${item.categoryName }</td>
 							<td class="name">${item.courseName }</td>
