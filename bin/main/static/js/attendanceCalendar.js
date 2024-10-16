@@ -1,36 +1,11 @@
 let today;
 
-function dialogHandler() {
-    let dialog = document.querySelector('#modal');
-    let dateBoxArr = document.querySelectorAll('.weekBox>td');
-    let reqType = document.querySelector('#reqType');
-    let reqDate = document.querySelector('#reqDate');
-    let exit = document.querySelector('.exit');
-    let yearMonth = document.querySelector('#yearMonth');
-
-    for(let dateBox of dateBoxArr){
-        dateBox.addEventListener('mousedown', () => {
-            console.log(dateBox.innerHTML);
-        }
-        );
-        dateBox.addEventListener('mouseup', (event) => {
-            console.log(dateBox.innerHTML);
-            if(dateBox.getAttribute('class') === 'monthDate-l' || dateBox.getAttribute('class') === 'monthDate-ab'){
-                dialog.open=true ;
-                reqType.innerHTML='출결 정정 요청';
-                reqDate.innerHTML= yearMonth.innerText + '.' + dateBox.firstChild.innerText;
-            } 
-        }
-        );
-    }
-    
-    
-
-    exit.addEventListener('click', () => {
-        dialog.open = false;
-    });
-
-
+function dialogHandler(a_status){
+	let dialog = document.querySelector('#modal');
+	if(a_status==2 || a_status==3){
+		dialog.open=true;
+	}
+	
 }
 
 function getDateColor(a_status){
@@ -47,20 +22,20 @@ function getDateColor(a_status){
 
 function getDateText(req_type, r_status){
 	if(req_type==1){
-		if(r_status == 0){
-			return '정정요청중';
-		}else if(r_status == 1){
-			return '정정요청승낙';
+		if(r_status == 1){
+			return '정정 요청 승인';
+		}else if(r_status == 2){
+			return '정정 요청 거절';
 		}else{
-			return '정정요청거절';
+			return '정정 요청 진행 중';
 		}
 	}else if(req_type==2){
-		if(r_status == 0){
-			return '공가요청중';
-		}else if(r_status == 1){
-			return '공가요청승낙';
-		}else{
-			return '공가요청거절';
+		if(r_status == 1){
+			return '공가 요청 승인';
+		}else if(r_status == 2){
+			return '공가 요청 거절';
+		}else{ 
+			return '공가 요청 진행 중';
 		}
 	}else{
 		return '';
@@ -71,7 +46,6 @@ function getDateText(req_type, r_status){
 function getCalender(number){
     const yearMonth = document.querySelector('#yearMonth');
     const calendarBox = document.querySelector('#calendarBox');
-	
 	let dateTime=new Date();
 	let c_sdate = new Date(document.querySelector('#c_sdate').value);
 	let c_edate = new Date(document.querySelector('#c_edate').value);
@@ -99,7 +73,7 @@ function getCalender(number){
 	    let lastDay = lastDate.getDay();
 	    let prevLastDay = prevLastDate.getDay();
 	    let weekCount = (lastDate.getDate()-(7-firstDay + lastDay+1))/7+2
-	    
+
 	    yearMonth.innerText = today.getFullYear() + '.' + ('0'+(today.getMonth()+1)).slice(-2);
 	    
 	 
@@ -107,9 +81,9 @@ function getCalender(number){
 	    if(firstDay!=0){
 	    for(let i = prevLastDay; i >= 0; i--){
 	        if(i==prevLastDay){
-	            firstWeekBox += '<td class="preMonthDate-ww">'+ (prevLastDate.getDate()-i) +'</td>';
+	            firstWeekBox += '<td class="preMonthDate-ww" >'+ (prevLastDate.getDate()-i) +'</td>';
 	        }else{
-	            firstWeekBox += '<td class="preMonthDate">'+ (prevLastDate.getDate()-i) +'</td>';
+	            firstWeekBox += '<td class="preMonthDate" >'+ (prevLastDate.getDate()-i) +'</td>';
 	        }
 	    }
 
@@ -117,7 +91,7 @@ function getCalender(number){
 	        if(i==6-prevLastDay){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
-	            firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '">'+i+'</td>';
+	            firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')">'+i+ '<div class="attReq">' + getDateText(obj[i-1].req_type, obj[i-1].r_status) + '</div></td>';
 	        }
 	        
 	    }
@@ -128,7 +102,7 @@ function getCalender(number){
 	            }else if(i==7){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
-	                firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '">'+i+'</td>';
+	                firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')">'+i+'<div class="attReq">' + getDateText(obj[i-1].req_type, obj[i-1].r_status) + '</div></td>';
 	            }
 	        }
 	    }
@@ -143,7 +117,7 @@ function getCalender(number){
 	        }else if(lastDay==6 && i==0){
 	            lastWeekBox += '<td class="monthDate-w">'+ (lastDate.getDate()) +'</td>';
 	        }else{
-	            lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? getDateColor(obj[lastDate.getDate()-i-1].a_status) : 'monthDate-nc') + '">'+ (lastDate.getDate()-i) +'</td>';
+	            lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
 	        }
 	    }
 
@@ -162,7 +136,7 @@ function getCalender(number){
 	        }else if(j%7==(14-firstDay)%7){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
-	            weekBoxs += '<td class="' + getDateColor(obj[j-1].a_status) + '">'+ j +'</td>';
+				weekBoxs += '<td class="' + getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status +')">'+ j + '<div class="attReq">' + getDateText(obj[j-1].req_type, obj[j-1].r_status) + '</div></td>';
 	        }
 	        
 	    }  
@@ -170,7 +144,6 @@ function getCalender(number){
 		
 								
 		calendarBox.innerHTML=firstWeekBox + weekBoxs + lastWeekBox;
-			
 	}) // 변환된 자바스크립트 객체 obj == response.json()
 	.catch(error => console.log(error));
 		
@@ -198,9 +171,9 @@ function init() {
     document.querySelector('#leftMonth').addEventListener('click', (event) =>{today.getFullYear()==c_sdate.getFullYear() && today.getMonth() == c_sdate.getMonth()? event.preventDefault() : getCalender(--num)});
     document.querySelector('#rightMonth').addEventListener('click', (event) =>{today.getFullYear()==c_edate.getFullYear() && today.getMonth() == c_edate.getMonth() ? event.preventDefault() : getCalender(++num)});
     document.querySelector('#todayBox').addEventListener('click', () =>{num=0; getCalender(num)});
+	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
 	getCalender(num);
     mobileHandler();
-    dialogHandler();
 }
 
 window.addEventListener('load', init);
