@@ -16,16 +16,16 @@
 #container {
     display: flex;
     flex-direction: column;
-    width: 1440px;
-    height: 1080px;
+    width: 100vw;
+    height: 100vh;
 }
 
 #header1 {
-    padding: 5% 10% 2% 10%;
+    padding: 7vh 20vw 5vh 20vw;
 }
 
-#header2, #header3 {
-    padding: 0 10%;
+#header2, #header3, main {
+    padding: 0 20vw;
 }
 
 a {
@@ -69,10 +69,6 @@ hr {
 
 #header2 img, #header2 span {
     vertical-align: middle;
-}
-
-main {
-    padding: 0 10%;
 }
 
 @media screen and (max-width: 768px) {
