@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 #scanner {
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	margin: auto;
@@ -8,9 +9,15 @@
 	box-sizing: border-box;
 	border: none;
 	z-index: 5;
+	top: 0;
+	left: 0;
 }
 
-#scanner>#reader {
-	width: 100vw;
-	height: 100vw;
+#scanText {
+	position: absolute;
+	width: 50vw;
+	left: 25vw;
+	top: 50%;
+	z-index: 4;
+	color: white;
 }

@@ -25,26 +25,6 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceSO attendanceSO;
 	
-	@GetMapping("/attendanceCalendar")
-	public String attendanceCalendarHandler(HttpSession session, Model model) {
-		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
-		if(auth.getM_role()==1) {
-		
-		//int course_id = (int) session.getAttribute("course_id");
-		/*나중에 삭제할 것*/
-			
-		int course_id = 2;
-		
-		List<AttendanceCalendar> attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
-
-		model.addAttribute("attCal", attCal);
-		model.addAttribute("menu", "attendanceCalendar");
-		return "attendanceCalendar";
-		}
-		
-		return "redirect:/" ;
-	}
-	
 	@GetMapping("/attendanceDetail")
 	public String attendanceDetailHandler(StudentAttendanceDO studentAtt, HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
@@ -161,6 +141,25 @@ public class AttendanceController {
 		}
 		return "redirect:/" ;
 	}
+	
+	@GetMapping("/attendanceCalendar")
+	public String attendanceCalendarHandler(HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==1) {
+			//int course_id = (int) session.getAttribute("course_id");
+			/*나중에 삭제할 것*/
+				
+			int course_id = 2;
+			
+			model.addAttribute("courseDate", courseDAO.getCourseDatebyStd(attendanceDAO.getStudentId(auth.getMember_id(), course_id)));
+			model.addAttribute("menu", "attendanceCalendar");
+			return "attendanceCalendar";
+		}
+		
+		return "redirect:/";
+		
+	}
+	
 	
 	
 		

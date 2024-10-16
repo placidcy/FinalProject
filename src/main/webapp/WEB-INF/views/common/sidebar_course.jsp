@@ -70,12 +70,12 @@
 				style="width:33.3%">
 				<li>홈</li></a>
 				
-	            <a href="" class="sidebar-menu-unselected" style="width:33.333%"><li>강의 게시판</li></a>
+	            <a href="" class="sidebar-menu-unselected" style="width:33.3%"><li>강의 게시판</li></a>
 				
 				<c:set var="attendanceCalendar" value="attendanceCalendar"></c:set>
-				<a href="/currentAttendance" 
+				<a href="/attendanceCalendar" 
 				class="menu <c:if test="${menu eq attendanceCalendar}">clicked</c:if>"
-				style="width:25%">
+				style="width:33.3%">
 				<li>출결 확인</li></a>     
 	        </ul>
 			

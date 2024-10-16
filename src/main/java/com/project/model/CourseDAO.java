@@ -70,5 +70,17 @@ public class CourseDAO {
 		this.jdbcTemplate.update(sql, course_id, member_id);
 	}
 
+	public CourseDO getCourseDatebyStd(int student_id) {
+		this.sql="select c_sdate, c_edate from final_course fc inner join (select * from final_course_student where student_id=?) fcs on fc.course_id=fcs.course_id";
+		return this.jdbcTemplate.queryForObject(sql,new RowMapper<CourseDO>() {
+			@Override
+			public CourseDO mapRow(ResultSet rs, int rownum) throws SQLException{
+				CourseDO courseDO = new CourseDO();
+				courseDO.setC_sdate(rs.getTimestamp("c_sdate").toLocalDateTime());
+				courseDO.setC_edate(rs.getTimestamp("c_edate").toLocalDateTime());
+				return courseDO;
+			}
+		}, student_id);
+	}
 
 }

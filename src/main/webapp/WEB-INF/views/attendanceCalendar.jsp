@@ -80,51 +80,14 @@
             <div class="day">금</div>
             <div id="saturday">토</div>
             </div>
-            
+			
+            <input type="hidden" id="c_sdate" value="${courseDate.c_sdate}" />
+            <input type="hidden" id="c_edate" value="${courseDate.c_edate}" />
+			
             <table id="calendarBox">
-                <!-- for 문으로 저번 월에 맞는 일수만큼 생성 -->
-				<!--월요일이 2-->
-				<c:forEach begin="0" end="${attCal.size()/7}" varStatus="status">
-				<tr class="weekBox">
-				<c:forEach items="${attCal}" var="cal" begin="${(status.count-1)*7}" end="${(status.count-1)*7+6}">
-					<c:choose>
-						<c:when test="${cal.d==7}">
-							<td class="monthDate-w">${cal.dt.getDayOfMonth()}</td>
-						</c:when>
-						<c:when test="${cal.d==1}">
-							<td class="monthDate-ww">${cal.dt.getDayOfMonth()}</td>
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${cal.a_status==1}">
-									<td class="monthDate-a">${cal.dt.getDayOfMonth()}</td>
-								</c:when>
-								<c:when test="${cal.a_status==2}">
-									<td class="monthDate-ab">${cal.dt.getDayOfMonth()}
-										<c:choose>
-											<c:when test="${cal.req_type == 1 && cal.r_status==2}">
-												<p class="attReq">정정 요청 거절</p>
-											</c:when>
-											<c:when test="${cal.req_type == 1 && cal.r_status==0}">
-												<p class="attReq">정정 요청 진행 중${cal.d}</p>
-											</c:when>
-										</c:choose>
-									</td>
-								</c:when>
-								<c:when test="${cal.a_status==3}">
-									<td class="monthDate-l">${cal.dt.getDayOfMonth()}<c:if test="${cal.req_type != 0}"><p class="attReq">${cal.req_type}</p></c:if></td>
-								</c:when>
-								<c:otherwise>
-									<td class="monthDate-nc">${cal.dt.getDayOfMonth()}<c:if test="${cal.req_type != 0}"><p class="attReq">${cal.req_type}</p></c:if></td>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-				</c:forEach>
-				</tr>
                           
             </table>
+			
             <div id="calendarExplain">
                 출결 정정 요청 또는 공가 요청 날짜를 클릭/드래그 해 주세요.
             </div>  

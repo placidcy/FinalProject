@@ -18,6 +18,34 @@ public class CourseItemDAO extends ItemDAO {
 		init();
 	}
 
+	public int register(int courseId, int memberId) {
+		this.sql = query.get("register");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().update(sql, new Object[] { courseId, memberId });
+
+		return rowNum;
+	}
+
+	public int checkAlreadyRegistered(int courseId, int memberId) {
+		this.sql = query.get("checkAlreadyRegistered");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().queryForObject(sql, Integer.class, new Object[] { courseId, memberId });
+
+		return rowNum;
+	}
+
+	public int checkCourseConflicts(int memberId, int courseId) {
+		this.sql = query.get("checkCourseConflicts");
+		int rowNum = -1;
+
+		rowNum = this.getJdbcTemplate().queryForObject(sql, Integer.class,
+				new Object[] { courseId, courseId, memberId });
+
+		return rowNum;
+	}
+
 	public List<CourseItem> selectByDates(int startNum, int endNum) {
 		this.sql = query.get("selectByDates");
 //		and sysdate between e_sdate and e_edate""";
@@ -111,9 +139,9 @@ public class CourseItemDAO extends ItemDAO {
 	/*
 	 * memberId에 따라 현재 요일에 수강해야하는 강의 목록을 조회하는 쿼리
 	 */
-	public int checkCourse(int memberId) {
+	public int checkCourseForStudentId(int memberId) {
 		int studentId = -1;
-		this.sql = query.get("checkCourse");
+		this.sql = query.get("checkCourseForStudentId");
 
 		studentId = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
 			@Override
@@ -123,6 +151,22 @@ public class CourseItemDAO extends ItemDAO {
 		}, memberId);
 		return studentId;
 	}
+	/*
+	 * memberId에 따라 현재 요일에 수업해야하는 강의 목록을 조회하는 쿼리
+	 */
+
+	public int checkCourseForCourseId(int memberId) {
+		int courseId = -1;
+		this.sql = query.get("checkCourseForCourseId");
+
+		courseId = this.getJdbcTemplate().queryForObject(sql, new RowMapper<Integer>() {
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt("course_id");
+			}
+		}, memberId);
+		return courseId;
+	}
 
 	public int createQR(int courseId, String qrCode) {
 		this.sql = query.get("createQR");
@@ -131,7 +175,7 @@ public class CourseItemDAO extends ItemDAO {
 		return rowNum;
 	}
 
-	public CourseItem getInfo(int studentId) {
+	public CourseItem getInfoByStudentId(int studentId) {
 		this.sql = query.get("getInfo");
 		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
 			@Override
@@ -148,6 +192,27 @@ public class CourseItemDAO extends ItemDAO {
 				return courseItem;
 			}
 		}, studentId);
+
+		return courseItem;
+	}
+
+	public CourseItem getInfoByCourseId(int courseId) {
+		this.sql = query.get("getInfoByCourseId");
+		CourseItem courseItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setdDay(rs.getInt("c_dday"));
+				courseItem.setStartDate(rs.getString("c_sdate"));
+				courseItem.setEndDate(rs.getString("c_edate"));
+				courseItem.setInstList(rs.getString("c_ilist"));
+
+				return courseItem;
+			}
+		}, courseId);
 
 		return courseItem;
 	}
@@ -171,6 +236,9 @@ public class CourseItemDAO extends ItemDAO {
 				}
 			}, studentId);
 		} catch (Exception e) {
+			/* 만일 출결 정보를 조회할 수 없다면(금일 출결 데이터가 생성되지 않은 경우) */
+			this.sql = query.get("setTimetable");
+			this.getJdbcTemplate().update(sql, studentId);
 		}
 
 		return timetable;
@@ -190,7 +258,7 @@ public class CourseItemDAO extends ItemDAO {
 		return rowNum;
 	}
 
-	public CourseItem getQrCode(int studentId, CourseItem courseItem) {
+	public CourseItem getQrCode(int courseId, CourseItem courseItem) {
 		this.sql = query.get("getQrCode");
 		CourseItem qrData = null;
 
@@ -206,12 +274,13 @@ public class CourseItemDAO extends ItemDAO {
 
 					return courseItem;
 				}
-			}, studentId);
+			}, courseId);
 
 			courseItem.setQrCode(qrData.getQrCode());
 			courseItem.setQrRegdate(qrData.getQrRegdate());
 			courseItem.setQrEffdate(qrData.getQrEffdate());
 		} catch (Exception e) {
+			System.out.println("예외: 현재 유효한 QR코드 없음");
 		}
 
 		return courseItem;
@@ -344,7 +413,7 @@ public class CourseItemDAO extends ItemDAO {
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
-		this.query.put("checkCourse", """
+		this.query.put("checkCourseForStudentId", """
 				SELECT student_id
 				FROM (
 					SELECT *
@@ -356,6 +425,19 @@ public class CourseItemDAO extends ItemDAO {
 				-- 현재일이 강의 시작일 및 종료일 사이에 존재하는지 확인하는 구문
 				-- 테스트를 위해 주석 처리
 				-- and sysdate between c_sdate and c_edate
+				""");
+		/*
+		 * 수업 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리(강사용)
+		 */
+		this.query.put("checkCourseForCourseId", """
+				SELECT course_id
+				FROM (
+					SELECT *
+					FROM FINAL_COURSE_INSTRUCTOR fcs
+					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+					)
+				WHERE member_id = ?
 				""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
@@ -435,7 +517,7 @@ public class CourseItemDAO extends ItemDAO {
 				""");
 
 		/*
-		 * 강의 정보를 불러오는 쿼리문 - 현재 시간에 유효한 QR코드가 존재하는지 체크하는 구문 제외
+		 * 강의 정보를 불러오는 쿼리문
 		 */
 		this.query.put("getInfo", """
 				SELECT
@@ -457,6 +539,36 @@ public class CourseItemDAO extends ItemDAO {
 				  INNER JOIN FINAL_COURSE_STUDENT fcs ON fcs.course_id = fc.course_id
 				WHERE
 				  fcs.student_id = ?
+				GROUP BY
+				  fc.course_id,
+				  c_title,
+				  c_name,
+				  TO_CHAR(c_sdate, 'yyyy.mm.dd'),
+				  TO_CHAR(c_edate, 'yyyy.mm.dd'),
+				  trunc(c_edate) - trunc(sysdate)
+				  """);
+		/*
+		 * 강의 정보를 불러오는 쿼리문(강사용)
+		 */
+		this.query.put("getInfoByCourseId", """
+				SELECT
+				  fc.course_id,
+				  c_title,
+				  c_name,
+				  TO_CHAR(c_sdate, 'yyyy.mm.dd') c_sdate,
+				  TO_CHAR(c_edate, 'yyyy.mm.dd') c_edate,
+				  LISTAGG(m_name, ', ') WITHIN GROUP (
+				    ORDER BY
+				      m_name
+				  ) AS c_ilist,
+				  trunc(c_edate) - trunc(sysdate) AS c_dday
+				FROM
+				  FINAL_COURSE fc
+				  INNER JOIN FINAL_COURSE_INSTRUCTOR fci ON fc.COURSE_ID = fci.COURSE_ID
+				  INNER JOIN FINAL_COURSE_CATEGORY fcc ON fc.CATEGORY_ID = fcc.CATEGORY_ID
+				  INNER JOIN FINAL_MEMBER fm ON fm.MEMBER_ID = fci.MEMBER_ID
+				WHERE
+				  fc.course_id = ?
 				GROUP BY
 				  fc.course_id,
 				  c_title,
@@ -564,11 +676,39 @@ public class CourseItemDAO extends ItemDAO {
 					to_char(q_regdate + q_efftime/24/60, 'yyyy-mm-dd hh24:mi') q_effdate
 				FROM
 					FINAL_COURSE_QR fcq
-				INNER JOIN FINAL_COURSE_STUDENT fcs ON
-					fcq.COURSE_ID = fcs.COURSE_ID
 				WHERE
-					fcs.STUDENT_ID = ?
+					course_id = ?
 					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+				""");
+		this.query.put("checkCourseConflicts", """
+				SELECT DISTINCT count(fcs.COURSE_ID)
+				FROM final_course_student fcs
+				JOIN final_course_schedule fsch1 ON fcs.COURSE_ID = fsch1.COURSE_ID
+				JOIN final_course_schedule fsch2 ON fsch2.COURSE_ID = ?
+				JOIN final_course_day fcd1 ON fcd1.COURSE_ID = fsch1.COURSE_ID
+				JOIN final_course_day fcd2 ON fcd2.COURSE_ID = ?
+				WHERE fcs.MEMBER_ID = ?
+				  AND (fsch1.s_stime < fsch2.s_etime AND fsch1.s_etime > fsch2.s_stime)
+				  AND (fsch1.s_sdate <= fsch2.s_edate AND fsch1.s_edate >= fsch2.s_sdate)
+				  AND (
+				    (fcd1.D_MON = 1 AND fcd2.D_MON = 1) OR
+				    (fcd1.D_TUE = 1 AND fcd2.D_TUE = 1) OR
+				    (fcd1.D_WED = 1 AND fcd2.D_WED = 1) OR
+				    (fcd1.D_THU = 1 AND fcd2.D_THU = 1) OR
+				    (fcd1.D_FRI = 1 AND fcd2.D_FRI = 1) OR
+				    (fcd1.D_SAT = 1 AND fcd2.D_SAT = 1) OR
+				    (fcd1.D_SUN = 1 AND fcd2.D_SUN = 1)
+				  )
+				  """);
+		this.query.put("register", """
+				INSERT INTO FINAL_COURSE_REGISTER fcr
+				VALUES (?, ?, sysdate, default)
+				""");
+
+		this.query.put("checkAlreadyRegistered", """
+				SELECT count(*)
+				FROM FINAL_COURSE_REGISTER fcr
+				WHERE fcr.COURSE_ID = ? AND fcr.MEMBER_ID = ? AND fcr.C_REGSTATUS = 0
 				""");
 	}
 }
