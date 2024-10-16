@@ -29,7 +29,6 @@
 				<table class="tab notice">
 					<c:forEach items="${notice }" var="item">
 						<tr class="item">
-							<th>공지</th>
 							<td>${item.noticeTitle }</td>
 						</tr>
 					</c:forEach>

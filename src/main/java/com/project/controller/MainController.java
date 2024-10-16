@@ -72,7 +72,7 @@ public class MainController {
 			model.addAttribute("menu", "main");
 			return viewPath;
 		} catch (Exception e) {
-			return "redirect: /login";
+			return "redirect:/login";
 		}
 	}
 
@@ -103,7 +103,7 @@ public class MainController {
 			model.addAttribute("menu", "checkin");
 			return viewPath;
 		} catch (Exception e) {
-			return "redirect: /login";
+			return "redirect:/login";
 		}
 	}
 
