@@ -1,7 +1,12 @@
 
 package com.project.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.project.model.CourseItem;
 import com.project.model.MessageItem;
 import com.project.model.NoticeItem;
 import com.project.model.response.LoginResponse;
 import com.project.service.MainSO;
+import com.project.service.QrCodeSO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,7 +37,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	@Autowired
 	MainSO mainSO;
-	String viewPath;
+	@Autowired
+	QrCodeSO qrSO;
+
+	private String viewPath;
 
 	@GetMapping("/goCourseHome")
 	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
@@ -92,13 +107,14 @@ public class MainController {
 		}
 	}
 
-	@GetMapping("/checkin/createQR")
-	public String createQR(Model model, HttpSession session) {
-		int memberId;
+	@ResponseBody
+	@GetMapping("/api/checkin/getQRImage")
+	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "id") String id)
+			throws WriterException, IOException {
+		CourseItem qrData = mainSO.getQrCode(Integer.parseInt(id), new CourseItem());
+		return qrSO.generateQRCodeImage(qrData.getQrCode());
+	}
 
-<<<<<<< HEAD
-		return "redirect:/checkin";
-=======
 	@ResponseBody
 	@GetMapping("/api/checkin/createQR")
 	public MessageItem createQR(Model model, HttpSession session) {
@@ -129,7 +145,6 @@ public class MainController {
 			response.setMsg("잘못된 접근입니다.");
 		}
 		return response;
->>>>>>> 0497dbd (기타: 로그인 기능 연결)
 	}
 
 	@ResponseBody
@@ -180,6 +195,29 @@ public class MainController {
 		model.addAttribute("menu", "register");
 		model.addAttribute("keyword", keyword);
 		return "main/register_search";
+	}
+
+	@ResponseBody
+	@RequestMapping("/api/course/register")
+	public MessageItem register(@RequestParam(name = "courseId") String courseId, HttpSession session) {
+		int memberId;
+		MessageItem messageItem = new MessageItem();
+
+		memberId = ((LoginResponse) session.getAttribute("auth")).getMember_id();
+
+		if (mainSO.checkCourseConflicts(memberId, Integer.parseInt(courseId))) {
+			messageItem.setRes(false);
+			messageItem.setMsg("동일한 시간대에 수강 중인 강의가 있거나, 이미 수강 중인 강의입니다.");
+		} else if (mainSO.checkAlreadyRegistered(memberId, memberId)) {
+			messageItem.setRes(false);
+			messageItem.setMsg("이미 수강 신청을 요청한 강의입니다.");
+		} else {
+			messageItem.setRes(mainSO.register(memberId, memberId));
+			if (!messageItem.isRes()) {
+				messageItem.setMsg("수강 신청 요청이 처리되지 않았습니다.");
+			}
+		}
+		return messageItem;
 	}
 
 	@GetMapping("/notification")
