@@ -1,28 +1,90 @@
 let today;
-let downDate;
 
-function dialogHandler(a_status, req_type, r_status){
+function dialogHandler(a_status, req_type, r_status, date){
 	let dialog = document.querySelector('#modal');
 	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
-
+	let yearMonth = document.querySelector('#yearMonth');
+	
 	if(a_status==2 || a_status==3){
-		if(req_type==1){
-			dialog.open=true;	
-		}else if(req_type==2){
+		if(req_type==2){
 			if(r_status==2){
+				dialog.children[0].children[0].innerText='공가 요청';
+				dialog.open=true;
+			}else if(r_status==0){
+				alert('공가 요청이 진행 중입니다.');
+			}
+			
+		}else{
+			if(r_status==0 && req_type==1){
+				alert('정정 요청이 진행 중입니다.');
+			}else{
+				dialog.children[0].children[0].innerText='출결 정정 요청';
+				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=date value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				if(a_status==2){
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				}else if(a_status==3){
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="지각" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				}
+				
+				
 				dialog.open=true;
 			}
-		}else{
-			dialog.open=true;
+			
 		}		
-	}	
+	}		
 	
 }
+
 
 function dialogHandler2(){
 	let dialog = document.querySelector('#modal');
 	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
-
+	let approvedOptions = [
+	        {
+	            num: 1,
+	            text: '훈련'
+	        },
+			{
+	            num: 2,
+	            text: '시험'
+	        },
+			{
+	            num: 3,
+	            text: '면접'
+	        },
+			{
+			    num: 4,
+			    text: '예비군'
+			},
+			{
+			    num: 5,
+			    text: '결혼'
+			},
+			{
+			    num: 6,
+			    text: '시험'
+			},
+			{
+			    num: 7,
+			    text: '사망'
+			},
+			{
+			    num: 8,
+			    text: '질병'
+			},
+			{
+			    num: 8,
+			    text: '입원'
+			},
+			{
+			    num: 9,
+			    text: '개인 사정'
+			}
+	    ];
+	dialog.children[1].children[0].children[0].children[1].innerHTML
+	='공가 사유: <select style="width:200px;height:22px;border-radius:5px;font-size:16px"><option value="훈련">훈련</option><option value="시험">시험</option><option value="면접">면접</option><option value="예비군">예비군</option><option value="결혼">결혼</option><option value="사망">사망</option><option value="질병">질병</option><option value="입원">입원</option><option value="개인사유">개인사유</option></select>';
+	dialog.children[0].children[0].innerText='공가 요청';
+	dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type="date" value="" />~ <input type="date" value="" />';
 	dialog.open=true;
 }
 
@@ -64,7 +126,7 @@ function getDateText(req_type, r_status){
 }
 
 function getCalender(number){
-    const yearMonth = document.querySelector('#yearMonth');
+    let yearMonth = document.querySelector('#yearMonth');
     const calendarBox = document.querySelector('#calendarBox');
 	let dateTime=new Date();
 	let c_sdate = new Date(document.querySelector('#c_sdate').value);
@@ -111,7 +173,7 @@ function getCalender(number){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	            	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	            	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 				}else{
 					firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 				}
@@ -127,7 +189,7 @@ function getCalender(number){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
 					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	                	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	                	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 					}else{
 						firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 					}
@@ -146,7 +208,7 @@ function getCalender(number){
 	            lastWeekBox += '<td class="monthDate-w">'+ (lastDate.getDate()) +'</td>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
-					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status+ ','+ obj[lastDate.getDate()-i-1].req_type+ ','+ obj[lastDate.getDate()-i-1].r_status+ ','+ (lastDate.getDate()-i-1) +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
 				}else{
 					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
 				}
@@ -170,7 +232,7 @@ function getCalender(number){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
-					weekBoxs += '<td class="' + (obj.length>=j ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+					weekBoxs += '<td class="' + (obj.length>=j ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status+ ','+ obj[j-1].req_type+ ','+ obj[j-1].r_status+ ','+ (j-1) +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
 	        	}else{
 					weekBoxs += '<td class="' + (obj.length>=j ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
 				}

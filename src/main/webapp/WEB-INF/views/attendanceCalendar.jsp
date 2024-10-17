@@ -36,45 +36,29 @@
 			        <span class="f24 exit">✕</span>
 			    </div>
 			    <div class="modal-bottom req">
-					     <div>
-							<!--공가요청이면 일자 시작일~마지막일-->
-			                <div class="modalFont">일자 : &nbsp&nbsp <span class="modalFont"></span></div>
-							<!--공가요청이면 공가 사유-->
-							<div class="modalFont">출결 : &nbsp&nbsp <span class="modalFont"></span></div>
-
-			                <label for="textBox" id="textBoxLabel">내용 :</label>
-			                <textarea id="textBox" disabled>일전에 있던 3월 23일 수업에 교통사고로 인해 불가피하게 지각하였습니다.</textarea> 
-							
-			                <div class="modalFont"> 증명서류: &nbsp&nbsp <a class="file" href="">파일</a></div>
-		                <hr />
+					
 				<form class="requestForm" method="POST" action="/attResponse">
-		            <input type="hidden" name="date" value="2024.03.21" />
-					<input type="hidden" name="reqType" value="1" />
-					<input type="hidden" name="student_id" value="${studentAtt.student_id}" />
-					
-	                <label id="radioLabel" for="radioBox">응답 상태:</label>
-	                <div id="radioBox">
-	                    <div>
-	                        <input type="radio" name="r_status" id="approved" value="1">
-	                        <label for="approved" class="modalFont">승인</label>
-	                    </div>
-	                    <div>
-	                        <input type="radio" name="r_status" id="denied" value="2">
-	                        <label for="denied" class="modalFont">거부</label>
-	                    </div>
-	                </div>
-					
-	                <div class="hidden" id="reqCheckRow">
-	                    <label class="modalFont">응답 사유:</label>
-						<select name="r_details" id="r_details"></select>
-		            </div>
+					<div>
+					<!--공가요청이면 일자 시작일~마지막일-->
+	                <div class="modalFont">일자 : &nbsp <input type="date" value="2024-03-12"/> </div>
+					<!--공가요청이면 공가 사유-->
+					<div class="modalFont">상태 : &nbsp <span class="modalFont"></span></div>
 
-		            <div class="btnBox">
-					                <input type="submit" class="modalBtn" id="submitBtn" value="요청처리" />
-					                <input type="button" class="modalBtn" id="cancleModal" value="취소" />
-					            </div>
-					        </form>
-						    </div>
+	                <label for="textBox" id="textBoxLabel">내용 :</label>
+	                <textarea id="textBox" placeholder="내용을 입력해 주세요."></textarea> 
+					
+	                <div id="fileBox" class="modalFont"> <div id="fileFont">증명서류: &nbsp </div>
+						<label for="file">
+						  <div class="btn-upload">이미지/문서 첨부</div>
+						</label>					
+						<input type="file" name="file" id="file">
+					</div>
+                	
+					<div id="btnBox">
+						<input type="submit" value="요청하기" />
+					</div>
+		        </form>
+			    </div>
 			</dialog>
         </div>
         
