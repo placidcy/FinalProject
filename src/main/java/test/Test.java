@@ -37,9 +37,10 @@ public class Test {
 		MemberSO memberSo = new MemberSO();
 		
 		LocalDateTime dateTime = LocalDateTime.now();
-		LocalDateTime c_sdate = courseDao.getCourseDatebyStd(6).getC_sdate();
-		LocalDateTime c_edate =courseDao.getCourseDatebyStd(6).getC_edate();
-		System.out.print(dateTime.getYear()==c_sdate.getYear());
+		LocalDateTime c_sdate = courseDao.getCourseDatebyStd(13).getC_sdate();
+		LocalDateTime c_edate =courseDao.getCourseDatebyStd(13).getC_edate();
+		
+		System.out.print(courseDao.getCourseDatebyStd(13));
 
 	}
 

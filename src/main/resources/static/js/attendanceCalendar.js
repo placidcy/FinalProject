@@ -1,14 +1,33 @@
 let today;
+let downDate;
 
-function dialogHandler(a_status){
+function dialogHandler(a_status, req_type, r_status){
 	let dialog = document.querySelector('#modal');
+	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
+
 	if(a_status==2 || a_status==3){
-		dialog.open=true;
-	}
+		if(req_type==1){
+			dialog.open=true;	
+		}else if(req_type==2){
+			if(r_status==2){
+				dialog.open=true;
+			}
+		}else{
+			dialog.open=true;
+		}		
+	}	
 	
 }
 
+function dialogHandler2(){
+	let dialog = document.querySelector('#modal');
+	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
+
+	dialog.open=true;
+}
+
 function getDateColor(a_status){
+	let c_edate = new Date(document.querySelector('#c_edate').value);
 	if(a_status==1){
 		return 'monthDate-a';
 	}else if(a_status==2){
@@ -19,6 +38,7 @@ function getDateColor(a_status){
 		return 'monthDate-nc';
 	}
 }
+
 
 function getDateText(req_type, r_status){
 	if(req_type==1){
@@ -75,7 +95,6 @@ function getCalender(number){
 	    let weekCount = (lastDate.getDate()-(7-firstDay + lastDay+1))/7+2
 
 	    yearMonth.innerText = today.getFullYear() + '.' + ('0'+(today.getMonth()+1)).slice(-2);
-	    
 	 
 	    let firstWeekBox = '<tr class="weekBox">';
 	    if(firstDay!=0){
@@ -91,7 +110,12 @@ function getCalender(number){
 	        if(i==6-prevLastDay){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
-	            firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')">'+i+ '<div class="attReq">' + getDateText(obj[i-1].req_type, obj[i-1].r_status) + '</div></td>';
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
+	            	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+				}else{
+					firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+				}
+	            
 	        }
 	        
 	    }
@@ -102,8 +126,12 @@ function getCalender(number){
 	            }else if(i==7){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
-	                firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')">'+i+'<div class="attReq">' + getDateText(obj[i-1].req_type, obj[i-1].r_status) + '</div></td>';
-	            }
+					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
+	                	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					}else{
+						firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					}
+				}
 	        }
 	    }
 	    firstWeekBox +='</tr>';
@@ -117,7 +145,12 @@ function getCalender(number){
 	        }else if(lastDay==6 && i==0){
 	            lastWeekBox += '<td class="monthDate-w">'+ (lastDate.getDate()) +'</td>';
 	        }else{
-	            lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+				}else{
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+				}
+	            
 	        }
 	    }
 
@@ -136,8 +169,12 @@ function getCalender(number){
 	        }else if(j%7==(14-firstDay)%7){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
-				weekBoxs += '<td class="' + getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status +')">'+ j + '<div class="attReq">' + getDateText(obj[j-1].req_type, obj[j-1].r_status) + '</div></td>';
-	        }
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
+					weekBoxs += '<td class="' + (obj.length>=j ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+	        	}else{
+					weekBoxs += '<td class="' + (obj.length>=j ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+				}
+			}
 	        
 	    }  
 		
@@ -171,7 +208,6 @@ function init() {
     document.querySelector('#leftMonth').addEventListener('click', (event) =>{today.getFullYear()==c_sdate.getFullYear() && today.getMonth() == c_sdate.getMonth()? event.preventDefault() : getCalender(--num)});
     document.querySelector('#rightMonth').addEventListener('click', (event) =>{today.getFullYear()==c_edate.getFullYear() && today.getMonth() == c_edate.getMonth() ? event.preventDefault() : getCalender(++num)});
     document.querySelector('#todayBox').addEventListener('click', () =>{num=0; getCalender(num)});
-	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
 	getCalender(num);
     mobileHandler();
 }

@@ -21,54 +21,61 @@
     <div id="container">
         <jsp:include page="common/sidebar_course.jsp" />
         <main> 
-            <dialog id="modal">
-                <div class="modal-top flex cen">
-                    <span class="bold" id="reqType">출결 정정 요청</span>
-                    <span class="f24 exit">✕</span>
-                </div>
-                <div class="modal-bottom req">
-                    <form class="grid g10" action="">
-                        <input type="hidden" name="date" value="2024.03.21">
-                        <table>
-                            <tr>
-                                <td>일자:</td>
-                                <td id="reqDate"></td>
-                            </tr>
-                            <tr>
-                                <td>상태:</td>
-                                <td>지각</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">사유:</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <textarea class="textarea" name="" id=""></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>증명서류:</td>
-                                <td><input type="file"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="message">
-                                    * 증명서류가 여러 개인 경우 하나의 파일(.zip)로 압축하여 제출하세요.
-                                </td>
-                            </tr>
-                        </table>
-                        <input class="btn f20" type="button" value="요청하기">
-                    </form>
-                </div>
-            </dialog>
+
          <div id="calendarHeader">
             <div id="dateBox"><button class="switchBox" id="leftMonth">◀</button><span id="yearMonth"></span><button class="switchBox" id="rightMonth">▶</button><button id="todayBox">오늘</button></div>
             <div>
             <span id="notice">* 출결 정정 요청 또는 공가 요청은 3회까지 재요청 가능합니다.</span>
             <span id="fontBox"><span id="attendFont">출석</span>, <span id="lateFont">지각</span>, <span id="absenceFont">결석</span></span>
             </div> 
+			
+			<dialog id="modal">
+			    <div class="modal-top flex cen">
+					<!--공가요청이면 공가 요청-->
+			        <span class="bold">출결 정정 요청</span>
+			        <span class="f24 exit">✕</span>
+			    </div>
+			    <div class="modal-bottom req">
+					     <div>
+							<!--공가요청이면 일자 시작일~마지막일-->
+			                <div class="modalFont">일자 : &nbsp&nbsp <span class="modalFont"></span></div>
+							<!--공가요청이면 공가 사유-->
+							<div class="modalFont">출결 : &nbsp&nbsp <span class="modalFont"></span></div>
+
+			                <label for="textBox" id="textBoxLabel">내용 :</label>
+			                <textarea id="textBox" disabled>일전에 있던 3월 23일 수업에 교통사고로 인해 불가피하게 지각하였습니다.</textarea> 
+							
+			                <div class="modalFont"> 증명서류: &nbsp&nbsp <a class="file" href="">파일</a></div>
+		                <hr />
+				<form class="requestForm" method="POST" action="/attResponse">
+		            <input type="hidden" name="date" value="2024.03.21" />
+					<input type="hidden" name="reqType" value="1" />
+					<input type="hidden" name="student_id" value="${studentAtt.student_id}" />
+					
+	                <label id="radioLabel" for="radioBox">응답 상태:</label>
+	                <div id="radioBox">
+	                    <div>
+	                        <input type="radio" name="r_status" id="approved" value="1">
+	                        <label for="approved" class="modalFont">승인</label>
+	                    </div>
+	                    <div>
+	                        <input type="radio" name="r_status" id="denied" value="2">
+	                        <label for="denied" class="modalFont">거부</label>
+	                    </div>
+	                </div>
+					
+	                <div class="hidden" id="reqCheckRow">
+	                    <label class="modalFont">응답 사유:</label>
+						<select name="r_details" id="r_details"></select>
+		            </div>
+
+		            <div class="btnBox">
+					                <input type="submit" class="modalBtn" id="submitBtn" value="요청처리" />
+					                <input type="button" class="modalBtn" id="cancleModal" value="취소" />
+					            </div>
+					        </form>
+						    </div>
+			</dialog>
         </div>
         
             <div id="dayBox">

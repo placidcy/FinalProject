@@ -1,3 +1,27 @@
+.modal-top {
+    position: relative;
+    padding: 10px;
+    background-color: #87C791;
+	margin-bottom:10px;
+	font-weight:bold;
+	text-align:center;
+	font-size:18px;
+}
+
+.exit {
+    position: absolute;
+    right: 20px;
+}
+
+.exit:hover {
+    cursor: pointer;
+}
+
+.modal-bottom {
+    background-color: white;
+    padding: 10px 30px;
+}
+
 .textarea {
     width: 100%;
     height: 150px;
@@ -24,6 +48,33 @@
     border-spacing: 10px 10px;
 }
 
-.hidden {
-    display: none;
+
+@media (min-width: 550px){
+dialog {
+    position:fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 550px;
+    height: 550px;
+    padding: 0;
+    border: 1px solid gainsboro;
+    overflow: hidden;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+}
+
+@media (max-width: 550px){
+    dialog {
+        position:fixed;
+        width: 100%;
+        height:550px;
+        padding: 0;
+        border: 1px solid gainsboro;
+        overflow: hidden;
+        border-radius: 20px;
+        z-index: 1;
+
+    }
 }
