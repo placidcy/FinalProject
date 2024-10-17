@@ -27,10 +27,8 @@ public class AttendanceRestController {
 		List<AttendanceCalendar> attCal=null;
 		if(auth.getM_role()==1) {
 		
-		//int course_id = (int) session.getAttribute("course_id");
-		/*나중에 삭제할 것*/
-			
-		int course_id = 2;
+		int course_id = (int) session.getAttribute("currentId");
+
 		
 		attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id), c_year, c_month);
 		
