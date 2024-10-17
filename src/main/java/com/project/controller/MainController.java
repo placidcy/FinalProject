@@ -65,13 +65,16 @@ public class MainController {
 				model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 				viewPath = "main/index";
 			} else {
+				model.addAttribute("course", mainSO.selectByInstructorId(memberId, Integer.parseInt(page)));
 				model.addAttribute("notice", mainSO.selectList(1, 5));
+				model.addAttribute("size", mainSO.getSizeByInstructorId(memberId));
 				viewPath = "main/index_i";
 			}
 			model.addAttribute("page", page);
 			model.addAttribute("menu", "main");
 			return viewPath;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "redirect:/login";
 		}
 	}

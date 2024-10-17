@@ -11,6 +11,7 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/resources/js/main/mobile.js"></script>
+<script src="/resources/js/main/course.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,6 @@
 				<table class="tab notice">
 					<c:forEach items="${notice }" var="item">
 						<tr class="item">
-							<th>공지</th>
 							<td>${item.noticeTitle }</td>
 						</tr>
 					</c:forEach>
@@ -39,7 +39,7 @@
 				<p class="c87c791">강의 시작 14일 전, 강의 종료 14일 후까지 표시됩니다.</p>
 				<table class="tab course">
 					<c:forEach items="${course }" var="item">
-						<tr class="item">
+						<tr class="item" data-id="${item.courseId }">
 							<td class="deco"></td>
 							<td class="category">${item.categoryName }</td>
 							<td class="name">${item.courseName }</td>

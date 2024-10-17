@@ -112,7 +112,25 @@ public class CourseItemDAO extends ItemDAO {
 
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
 		this.sql = query.get("selectByMemberId");
-//		and sysdate between c_sdate-14 and c_edate+14""";
+		this.sql = setPaging(sql, startNum, endNum);
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setCategoryName(rs.getString("c_title"));
+
+				return courseItem;
+			}
+		}, memberId);
+
+		return courseItems;
+	}
+
+	public List<CourseItem> selectByInstructorId(int memberId, int startNum, int endNum) {
+		this.sql = query.get("selectByInstructorId");
 		this.sql = setPaging(sql, startNum, endNum);
 		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
 			@Override
@@ -132,6 +150,12 @@ public class CourseItemDAO extends ItemDAO {
 
 	public int getCountByMemberId(int memberId) {
 		this.sql = query.get("getCountByMemberId");
+
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
+	}
+
+	public int getCountByInstructorId(int memberId) {
+		this.sql = query.get("getCountByInstructorId");
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
@@ -316,7 +340,6 @@ public class CourseItemDAO extends ItemDAO {
 		}, studentId);
 
 		return statsItem;
-
 	}
 
 	private void init() {
@@ -347,9 +370,7 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  -- and sysdate between c_sdate-14 and c_edate+14
 				order by
 				  c_sdate,
 				  c_edate desc
@@ -368,10 +389,25 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  and sysdate between c_sdate-14 and c_edate+14
 				 """);
+		/*
+		 * 담당 중인 강의 목록 조회
+		 */
+		this.query.put("selectByInstructorId", """
+				select
+					fc.course_id,
+					c_title,
+					c_name
+				from
+					final_course fc
+					inner join final_course_category fcc on fc.category_id = fcc.category_id
+					inner join final_course_instructor fci on fc.course_id = fci.course_id
+				where
+					member_id = ?
+					and sysdate between c_sdate-14 and c_edate+14
+				""");
+
 		/*
 		 * 수강 신청 목록 총 갯수 반환 쿼리
 		 */
@@ -396,7 +432,7 @@ public class CourseItemDAO extends ItemDAO {
 				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
-		 * 수강 중인 강의 목록 총 갯수 반환 쿼리
+		 * 학생으로 로그인했을 때, 수강 중인 강의 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByMemberId", """
 				select
@@ -406,10 +442,22 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  and sysdate between c_sdate-14 and c_edate+14
 				""");
+		/*
+		 * 강사로 로그인하였을 때, 담당 중인 강의 목록 총 갯수 반환 쿼리
+		 */
+		this.query.put("getCountByInstructorId", """
+				select
+					count(*) as cnt
+				from
+					final_course fc
+					inner join final_course_instructor fci on fc.course_id = fci.course_id
+				where
+				  	member_id = ?
+				  	and sysdate between c_sdate-14 and c_edate+14
+				""");
+
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
