@@ -126,3 +126,6 @@ gradle-app.setting
 *.bin
 *.lock
 *.probe
+
+# AWS 프로퍼티 파일 제외
+aws.properties
