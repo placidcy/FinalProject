@@ -112,7 +112,25 @@ public class CourseItemDAO extends ItemDAO {
 
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
 		this.sql = query.get("selectByMemberId");
-//		and sysdate between c_sdate-14 and c_edate+14""";
+		this.sql = setPaging(sql, startNum, endNum);
+		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setCategoryName(rs.getString("c_title"));
+
+				return courseItem;
+			}
+		}, memberId);
+
+		return courseItems;
+	}
+
+	public List<CourseItem> selectByInstructorId(int memberId, int startNum, int endNum) {
+		this.sql = query.get("selectByInstructorId");
 		this.sql = setPaging(sql, startNum, endNum);
 		List<CourseItem> courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
 			@Override
@@ -132,6 +150,12 @@ public class CourseItemDAO extends ItemDAO {
 
 	public int getCountByMemberId(int memberId) {
 		this.sql = query.get("getCountByMemberId");
+
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
+	}
+
+	public int getCountByInstructorId(int memberId) {
+		this.sql = query.get("getCountByInstructorId");
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
@@ -316,7 +340,29 @@ public class CourseItemDAO extends ItemDAO {
 		}, studentId);
 
 		return statsItem;
+	}
 
+	public StatsItem getStatsByCourseId(int course_id) {
+		this.sql = query.get("getStatsByCourseId");
+		StatsItem statsItem = null;
+
+		statsItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<StatsItem>() {
+			@Override
+			public StatsItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				StatsItem statsItem = new StatsItem();
+				statsItem.setPresentCnt(rs.getInt("출석"));
+				statsItem.setTardyCnt(rs.getInt("지각"));
+				statsItem.setLeaveCnt(rs.getInt("조퇴"));
+				statsItem.setAbsentCnt(rs.getInt("결석"));
+				statsItem.setTotalCnt(rs.getInt("total_count"));
+				statsItem.setAvgCnt(rs.getInt("avg_count"));
+				statsItem.setMyCnt(rs.getInt("today_count"));
+
+				return statsItem;
+			}
+		}, course_id);
+
+		return statsItem;
 	}
 
 	private void init() {
@@ -347,9 +393,7 @@ public class CourseItemDAO extends ItemDAO {
 				  ) fcs on fcs.course_id = fc.course_id
 				where
 				  c_count < c_limits
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  -- and sysdate between c_sdate-14 and c_edate+14
 				order by
 				  c_sdate,
 				  c_edate desc
@@ -368,10 +412,25 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  and sysdate between c_sdate-14 and c_edate+14
 				 """);
+		/*
+		 * 담당 중인 강의 목록 조회
+		 */
+		this.query.put("selectByInstructorId", """
+				select
+					fc.course_id,
+					c_title,
+					c_name
+				from
+					final_course fc
+					inner join final_course_category fcc on fc.category_id = fcc.category_id
+					inner join final_course_instructor fci on fc.course_id = fci.course_id
+				where
+					member_id = ?
+					and sysdate between c_sdate-14 and c_edate+14
+				""");
+
 		/*
 		 * 수강 신청 목록 총 갯수 반환 쿼리
 		 */
@@ -396,7 +455,7 @@ public class CourseItemDAO extends ItemDAO {
 				-- and sysdate between c_sdate-14 and c_edate+14
 				""");
 		/*
-		 * 수강 중인 강의 목록 총 갯수 반환 쿼리
+		 * 학생으로 로그인했을 때, 수강 중인 강의 목록 총 갯수 반환 쿼리
 		 */
 		this.query.put("getCountByMemberId", """
 				select
@@ -406,10 +465,22 @@ public class CourseItemDAO extends ItemDAO {
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
 				where
 				  member_id = ?
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
+				  and sysdate between c_sdate-14 and c_edate+14
 				""");
+		/*
+		 * 강사로 로그인하였을 때, 담당 중인 강의 목록 총 갯수 반환 쿼리
+		 */
+		this.query.put("getCountByInstructorId", """
+				select
+					count(*) as cnt
+				from
+					final_course fc
+					inner join final_course_instructor fci on fc.course_id = fci.course_id
+				where
+				  	member_id = ?
+				  	and sysdate between c_sdate-14 and c_edate+14
+				""");
+
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
@@ -652,6 +723,51 @@ public class CourseItemDAO extends ItemDAO {
 						  ) c2 ON c1.student_id = c2.student_id
 						  WHERE c1.student_id = ?
 												  """);
+		this.query.put("getStatsByCourseId",
+				"""
+						WITH stats AS (
+						    SELECT *
+						    FROM (
+						        SELECT
+						            fcs.course_id,
+						            a_status
+						        FROM final_student_attend fsa
+						        INNER JOIN final_course_student fcs ON fcs.student_id = fsa.student_id
+						        INNER JOIN final_course fc ON fc.course_id = fcs.course_id
+						        WHERE a_date BETWEEN fc.c_sdate AND TRUNC(SYSDATE - 1)
+						    )
+						    PIVOT (
+						        COUNT(a_status) FOR a_status IN (1 AS "출석", 2 AS "결석", 3 AS "지각", 4 AS "조퇴")
+						    )
+						),
+						cnt AS (
+						    SELECT
+						        fst.*,
+						        fcs.total_count
+						    FROM (
+						        SELECT
+						            fcs.course_id,
+						            fsa.a_date,
+						            COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END) AS today_count,
+						            TRUNC(AVG(COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END)) OVER (PARTITION BY fcs.course_id)) AS avg_count
+						        FROM final_course_student fcs
+						        LEFT JOIN final_student_attend fsa ON fcs.student_id = fsa.student_id
+						        GROUP BY fcs.course_id, fsa.a_date
+						        ORDER BY fcs.course_id, fsa.a_date
+						    ) fst
+						    INNER JOIN (
+						        SELECT
+						            course_id,
+						            COUNT(student_id) AS total_count
+						        FROM final_course_student
+						        GROUP BY course_id
+						    ) fcs ON fst.course_id = fcs.course_id
+						)
+						SELECT stats.*, a_date, total_count, avg_count, today_count
+						FROM stats
+						INNER JOIN cnt ON stats.course_id = cnt.course_id
+						WHERE stats.course_id = ? AND a_date = trunc(sysdate)
+										""");
 		this.query.put("createQR", """
 				insert into final_course_qr
 				values(?, sysdate, ?, default)

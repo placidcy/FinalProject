@@ -44,7 +44,8 @@
 						</p>
 					</div>
 					<p>
-						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
+						종료일까지 남은 기간: <span class="bold" id="dday"
+							data-value="${info.dDay }"></span>
 					</p>
 					<a class="f20 bold h end self"
 						href="/goCourseHome?courseId=${info.courseId }">📖 강의 홈으로 이동하기</a>
@@ -98,7 +99,7 @@
 							<span class="bold">금일 출석률</span> <span> <fmt:formatNumber
 									value="${stats.myCnt/stats.totalCnt }" type="percent"
 									pattern="0.0%"></fmt:formatNumber>
-							</span> <span> (${stats.myCnt }0/${stats.totalCnt }일)</span>
+							</span> <span> (${stats.myCnt }/${stats.totalCnt }명)</span>
 						</p>
 						<!-- 차트 라이브러리 연결 후 수정-->
 						<div class="chart grid cen v">

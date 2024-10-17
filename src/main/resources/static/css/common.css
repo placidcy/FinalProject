@@ -364,7 +364,7 @@ a {
 @media screen and (max-width: 768px) {
 	.container {
 		width: 100%;
-		height: 100vh;
+		height: 100%;
 		display: block !important;
 	}
 	.modal {
@@ -402,8 +402,10 @@ a {
 	.menulist.show {
 		display: inherit;
 	}
-	.contents {
+	.container > .contents {
+		min-height: 100vh;
 		padding: 30px;
+		margin: 0 !important;
 	}
 	.search.box {
 		width: 100%;

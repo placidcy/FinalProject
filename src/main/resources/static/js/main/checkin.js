@@ -180,14 +180,26 @@ function setFloatingIcon() {
 	})
 }
 
+function setDday() {
+	const dday = document.querySelector('#dday');
+	const dValue = dday.dataset.value;
+
+	dday.innerHTML = dValue > 0 ? `D-${Math.abs(dValue)}` : `D+${Math.abs(dValue)}`;
+}
+
 function init() {
+	setDday();
 	setChart();
 	setButtons();
 	try {
 		setTimer();
+	} catch (e) {
+		console.error('타이머를 불러오는 과정에서 오류가 발생하였습니다.');
+	}
+	try {
 		setFloatingIcon();
 	} catch (e) {
-		console.log('플로팅 아이콘 오류');
+		console.error('플로팅 아이콘을 불러오는 과정에서 오류가 발생하였습니다.');
 	}
 }
 

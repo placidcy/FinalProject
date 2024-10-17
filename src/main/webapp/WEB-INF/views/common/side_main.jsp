@@ -2,9 +2,11 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <aside class="sidebar main cffffff">
 	<div class="flex cen v h logo p50">
-		<h1 class="f32">
-			<a href="/">CHECK</a>
-		</h1>
+		<div class="logoText">
+			<a href="/">
+				<h1 class="f32">CHECK</h1>
+			</a>
+		</div>
 		<div class="mobile" id="hamburger">
 			<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30px"
 				height="30px" viewBox="0 0 24 24" fill="none">
@@ -37,7 +39,8 @@
 		<a href="/mypage"><c:set var="mypage" value="mypage"></c:set>
 			<li
 			class="menu <c:if test="${menu eq mypage}">selected</c:if>
-				cffffff">마이페이지</li> </a>
+				cffffff">마이페이지</li>
+		</a>
 		<a href="/logout">
 			<li class="menu cffffff">로그아웃</li>
 		</a>

@@ -16,66 +16,45 @@ public class MainSO extends ItemSO {
 	@Autowired
 	private NoticeItemDAO noticeItemDAO;
 
+	private int limit;
+
+	public MainSO() {
+		super();
+		this.limit = 10;
+	}
+
 	/* 강의 관련 메소드 정의 */
 
 	public List<CourseItem> selectByMemberId(int memberId, int page) {
-		int limit = 10;
 		return courseItemDAO.selectByMemberId(memberId, this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
 
+	public List<CourseItem> selectByInstructorId(int memberId, int page) {
+		return courseItemDAO.selectByInstructorId(memberId, this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
 	public int getSizeByMemberId(int memberId) {
-		int limit = 10;
 		return this.getSize(courseItemDAO.getCountByMemberId(memberId), limit);
 	}
 
+	public int getSizeByInstructorId(int memberId) {
+		return this.getSize(courseItemDAO.getCountByInstructorId(memberId), limit);
+	}
+
 	public List<CourseItem> selectByDates(int page) {
-		int limit = 10;
 		return courseItemDAO.selectByDates(this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
 
 	public List<CourseItem> selectByDates(String keyword, int page) {
-		int limit = 10;
 		return courseItemDAO.selectByDates(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
 
 	public int getSizeByDates() {
-		int limit = 10;
 		return this.getSize(courseItemDAO.getCountByDates(), limit);
 	}
 
 	public int getSizeByDates(String keyword) {
-		int limit = 10;
 		return this.getSize(courseItemDAO.getCountByDates(keyword), limit);
-	}
-
-	/* 공지사항 관련 DAO 메소드 정의 */
-
-	public List<NoticeItem> selectNoticeItems(int page) {
-		int limit = 10;
-		return noticeItemDAO.selectAll(this.getStartNum(page, limit), this.getEndNum(page, limit));
-	}
-
-	public List<NoticeItem> selectNoticeItems(int page, String keyword) {
-		int limit = 10;
-		return noticeItemDAO.selectByKeyword(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
-	}
-
-	public List<NoticeItem> selectNoticeItems(int startNum, int endNum) {
-		return noticeItemDAO.selectAll(startNum, endNum);
-	}
-
-	public NoticeItem selectOne(int noticeId) {
-		return noticeItemDAO.selectOne(noticeId);
-	}
-
-	public int getSize() {
-		int limit = 10;
-		return this.getSize(noticeItemDAO.getCount(), limit);
-	}
-
-	public int getSize(String keyword) {
-		int limit = 10;
-		return this.getSize(noticeItemDAO.getCount(keyword), limit);
 	}
 
 	public int checkCourseForStudentId(int memberId) {
@@ -135,6 +114,10 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.getStats(studentId);
 	}
 
+	public StatsItem getStatsByCourseId(int courseId) {
+		return courseItemDAO.getStatsByCourseId(courseId);
+	}
+
 	public boolean createQR(int courseId, String qrCode) {
 		return courseItemDAO.createQR(courseId, qrCode) > 0;
 	}
@@ -149,5 +132,47 @@ public class MainSO extends ItemSO {
 
 	public boolean checkAlreadyRegistered(int memberId, int courseId) {
 		return courseItemDAO.checkAlreadyRegistered(courseId, memberId) > 0;
+	}
+
+	/* 공지사항 관련 DAO 메소드 정의 */
+
+	public List<NoticeItem> selectList(int page) {
+		return noticeItemDAO.selectList(this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectList(int page, String keyword) {
+		return noticeItemDAO.selectByKeyword(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectAll(int page) {
+		return noticeItemDAO.selectAll(this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectAll(int page, String keyword) {
+		return noticeItemDAO.selectAllByKeyword(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
+	}
+
+	public List<NoticeItem> selectList(int startNum, int endNum) {
+		return noticeItemDAO.selectList(startNum, endNum);
+	}
+
+	public NoticeItem selectOne(int noticeId) {
+		return noticeItemDAO.selectOne(noticeId);
+	}
+
+	public int getSize() {
+		return this.getSize(noticeItemDAO.getCount(), limit);
+	}
+
+	public int getSize(String keyword) {
+		return this.getSize(noticeItemDAO.getCount(keyword), limit);
+	}
+
+	public int getTotalSize() {
+		return this.getSize(noticeItemDAO.getTotalCount(), limit);
+	}
+
+	public int getTotalSize(String keyword) {
+		return this.getSize(noticeItemDAO.getTotalCount(keyword), limit);
 	}
 }
