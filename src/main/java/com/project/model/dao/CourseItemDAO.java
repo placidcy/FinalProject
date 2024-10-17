@@ -342,6 +342,29 @@ public class CourseItemDAO extends ItemDAO {
 		return statsItem;
 	}
 
+	public StatsItem getStatsByCourseId(int course_id) {
+		this.sql = query.get("getStatsByCourseId");
+		StatsItem statsItem = null;
+
+		statsItem = this.getJdbcTemplate().queryForObject(sql, new RowMapper<StatsItem>() {
+			@Override
+			public StatsItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				StatsItem statsItem = new StatsItem();
+				statsItem.setPresentCnt(rs.getInt("출석"));
+				statsItem.setTardyCnt(rs.getInt("지각"));
+				statsItem.setLeaveCnt(rs.getInt("조퇴"));
+				statsItem.setAbsentCnt(rs.getInt("결석"));
+				statsItem.setTotalCnt(rs.getInt("total_count"));
+				statsItem.setAvgCnt(rs.getInt("avg_count"));
+				statsItem.setMyCnt(rs.getInt("today_count"));
+
+				return statsItem;
+			}
+		}, course_id);
+
+		return statsItem;
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
@@ -700,6 +723,51 @@ public class CourseItemDAO extends ItemDAO {
 						  ) c2 ON c1.student_id = c2.student_id
 						  WHERE c1.student_id = ?
 												  """);
+		this.query.put("getStatsByCourseId",
+				"""
+						WITH stats AS (
+						    SELECT *
+						    FROM (
+						        SELECT
+						            fcs.course_id,
+						            a_status
+						        FROM final_student_attend fsa
+						        INNER JOIN final_course_student fcs ON fcs.student_id = fsa.student_id
+						        INNER JOIN final_course fc ON fc.course_id = fcs.course_id
+						        WHERE a_date BETWEEN fc.c_sdate AND TRUNC(SYSDATE - 1)
+						    )
+						    PIVOT (
+						        COUNT(a_status) FOR a_status IN (1 AS "출석", 2 AS "결석", 3 AS "지각", 4 AS "조퇴")
+						    )
+						),
+						cnt AS (
+						    SELECT
+						        fst.*,
+						        fcs.total_count
+						    FROM (
+						        SELECT
+						            fcs.course_id,
+						            fsa.a_date,
+						            COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END) AS today_count,
+						            TRUNC(AVG(COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END)) OVER (PARTITION BY fcs.course_id)) AS avg_count
+						        FROM final_course_student fcs
+						        LEFT JOIN final_student_attend fsa ON fcs.student_id = fsa.student_id
+						        GROUP BY fcs.course_id, fsa.a_date
+						        ORDER BY fcs.course_id, fsa.a_date
+						    ) fst
+						    INNER JOIN (
+						        SELECT
+						            course_id,
+						            COUNT(student_id) AS total_count
+						        FROM final_course_student
+						        GROUP BY course_id
+						    ) fcs ON fst.course_id = fcs.course_id
+						)
+						SELECT stats.*, a_date, total_count, avg_count, today_count
+						FROM stats
+						INNER JOIN cnt ON stats.course_id = cnt.course_id
+						WHERE stats.course_id = ? AND a_date = trunc(sysdate)
+										""");
 		this.query.put("createQR", """
 				insert into final_course_qr
 				values(?, sysdate, ?, default)

@@ -100,6 +100,7 @@ public class MainController {
 				courseId = mainSO.checkCourseForCourseId(memberId);
 				if (courseId > 0) {
 					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
 					viewPath = "main/checkin_i";
 				}
 			}

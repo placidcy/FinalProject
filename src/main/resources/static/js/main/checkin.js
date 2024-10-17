@@ -180,7 +180,15 @@ function setFloatingIcon() {
 	})
 }
 
+function setDday() {
+	const dday = document.querySelector('#dday');
+	const dValue = dday.dataset.value;
+
+	dday.innerHTML = dValue > 0 ? `D-${Math.abs(dValue)}` : `D+${Math.abs(dValue)}`;
+}
+
 function init() {
+	setDday();
 	setChart();
 	setButtons();
 	try {

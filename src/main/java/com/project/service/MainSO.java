@@ -114,6 +114,10 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.getStats(studentId);
 	}
 
+	public StatsItem getStatsByCourseId(int courseId) {
+		return courseItemDAO.getStatsByCourseId(courseId);
+	}
+
 	public boolean createQR(int courseId, String qrCode) {
 		return courseItemDAO.createQR(courseId, qrCode) > 0;
 	}
