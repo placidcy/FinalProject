@@ -91,7 +91,7 @@ public class CourseDAO {
 			}
 		});
 	}
-=======
+
 	public CourseDO getCourseDatebyStd(int student_id) {
 		this.sql="select c_sdate, c_edate from final_course fc inner join (select * from final_course_student where student_id=?) fcs on fc.course_id=fcs.course_id";
 		return this.jdbcTemplate.queryForObject(sql,new RowMapper<CourseDO>() {
@@ -105,5 +105,4 @@ public class CourseDAO {
 		}, student_id);
 	}
 
->>>>>>> branch 'main' of https://github.com/ches409/FinalProject.git
 }
