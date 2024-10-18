@@ -70,7 +70,6 @@ public class CourseDAO {
 		this.jdbcTemplate.update(sql, course_id, member_id);
 	}
 
-<<<<<<< HEAD
 	public List<CourseDO> selectAllCourses() {
 		this.sql = "select * from final_course";
 		return this.jdbcTemplate.query(this.sql, new RowMapper<CourseDO>() {
