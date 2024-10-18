@@ -20,7 +20,8 @@ function dialogHandler(a_status, req_type, r_status, date){
 				alert('정정 요청이 진행 중입니다.');
 			}else{
 				dialog.children[0].children[0].innerText='출결 정정 요청';
-				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=text name="a_date" value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=date disabled value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[0].innerHTML += '<input type=hidden name="a_date" value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2) +'"/>';
 				dialog.children[1].children[0].children[0].children[5].value="1";
 				if(a_status==2){
 					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text name="a_status" value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';

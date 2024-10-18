@@ -7,7 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AttReq {
 	private int student_id;
-	private String a_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate a_date;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate l_sdate;
@@ -17,6 +18,7 @@ public class AttReq {
 	private String contents;
 	private String l_reason;
 	private MultipartFile attm;
+	private String fileURL;
 	private int req_type;
 	
 	public AttReq() {
@@ -58,11 +60,11 @@ public class AttReq {
 		this.req_type = req_type;
 	}
 
-	public String getA_date() {
+	public LocalDate getA_date() {
 		return a_date;
 	}
 
-	public void setA_date(String a_date) {
+	public void setA_date(LocalDate a_date) {
 		this.a_date = a_date;
 	}
 
@@ -81,6 +83,16 @@ public class AttReq {
 	public void setL_edate(LocalDate l_edate) {
 		this.l_edate = l_edate;
 	}
+
+	public String getFileURL() {
+		return fileURL;
+	}
+
+	public void setFileURL(String fileURL) {
+		this.fileURL = fileURL;
+	}
+	
+	
 
 	
 	
