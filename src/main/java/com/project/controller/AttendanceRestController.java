@@ -31,7 +31,7 @@ public class AttendanceRestController {
 
 		
 		attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id), c_year, c_month);
-		
+
 		model.addAttribute("menu", "attendanceCalendar");
 
 		}

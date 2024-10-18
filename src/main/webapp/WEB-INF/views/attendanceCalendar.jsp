@@ -55,7 +55,7 @@
 					</div>
                 	<input type="hidden" name="req_type" />
 					<div id="btnBox">
-						<input type="submit" value="요청하기" />
+						<input type="submit" id="submitBtn" value="요청하기" />
 					</div>
 		        </form>
 			    </div>
@@ -74,6 +74,11 @@
 			
             <input type="hidden" id="c_sdate" value="${courseDate.c_sdate}" />
             <input type="hidden" id="c_edate" value="${courseDate.c_edate}" />
+			<input type="hidden" id="d_mon" value="${courseDay.d_mon}" />
+			<input type="hidden" id="d_tue" value="${courseDay.d_tue}" />
+			<input type="hidden" id="d_wed" value="${courseDay.d_wed}" />
+			<input type="hidden" id="d_thu" value="${courseDay.d_thu}" />
+			<input type="hidden" id="d_fri" value="${courseDay.d_fri}" />
 			
             <table id="calendarBox">
                           

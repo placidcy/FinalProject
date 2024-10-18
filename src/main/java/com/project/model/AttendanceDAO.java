@@ -246,6 +246,23 @@ public class AttendanceDAO {
 
 	}
 	
+	public CourseDay getCourseDay(int course_id) {
+		this.sql="select d_mon, d_tue, d_wed, d_thu, d_fri from final_course_day where course_id=?";
+		return this.jdbcTemplate.queryForObject(sql, new RowMapper<CourseDay>() {
+			@Override
+			public CourseDay mapRow(ResultSet rs, int rownum) throws SQLException{
+				CourseDay courseDay = new CourseDay();
+				courseDay.setD_mon(rs.getInt("d_mon"));	
+				courseDay.setD_tue(rs.getInt("d_tue"));	
+				courseDay.setD_wed(rs.getInt("d_wed"));	
+				courseDay.setD_thu(rs.getInt("d_thu"));	
+				courseDay.setD_fri(rs.getInt("d_fri"));	
+				
+				return courseDay;
+			}
+		},course_id);
+	}
+	
 	
 	
 	
