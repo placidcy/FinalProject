@@ -28,7 +28,10 @@
 				<table class="tab notice mbe30">
 					<c:forEach items="${list }" var="item">
 						<tr class="item" data-id="${item.noticeId }">
-							<td class="prefix">공지</td>
+							<td class="prefix"><c:choose>
+									<c:when test="${item.target eq 0 }">전체</c:when>
+									<c:otherwise>강사</c:otherwise>
+								</c:choose></td>
 							<td class="title">${item.noticeTitle }</td>
 							<td class="date">등록일: ${item.regdate }</td>
 						</tr>

@@ -70,6 +70,28 @@ public class CourseDAO {
 		this.jdbcTemplate.update(sql, course_id, member_id);
 	}
 
+<<<<<<< HEAD
+	public List<CourseDO> selectAllCourses() {
+		this.sql = "select * from final_course";
+		return this.jdbcTemplate.query(this.sql, new RowMapper<CourseDO>() {
+			@Override
+			public CourseDO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseDO course = new CourseDO();
+				course.setCourse_id(rs.getInt("course_id"));
+				course.setCategory_id(rs.getInt("category_id"));
+				course.setC_name(rs.getString("c_name"));
+				course.setC_desc(rs.getString("c_desc"));
+				course.setC_sdate(rs.getTimestamp("c_sdate").toLocalDateTime());
+				course.setC_edate(rs.getTimestamp("c_edate").toLocalDateTime());
+				course.setC_limits(rs.getInt("c_limits"));
+				course.setC_prsscore(rs.getInt("c_prsscore"));
+				course.setC_absscore(rs.getInt("c_absscore"));
+				course.setC_trdscore(rs.getInt("c_trdscore"));
+				return course;
+			}
+		});
+	}
+
 	public CourseDO getCourseDatebyStd(int student_id) {
 		this.sql="select c_sdate, c_edate from final_course fc inner join (select * from final_course_student where student_id=?) fcs on fc.course_id=fcs.course_id";
 		return this.jdbcTemplate.queryForObject(sql,new RowMapper<CourseDO>() {

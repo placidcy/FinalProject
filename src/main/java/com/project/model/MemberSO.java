@@ -39,8 +39,8 @@ public class MemberSO {
 		memberDao.insertMember(newMember);
 	}
 	
-	public MemberDO selectedByM_acctid(String m_acctid) {
-		return memberDao.selectedByM_acctid(m_acctid);
+	public MemberDO selectedByMember_id(int member_id) {
+		return memberDao.selectedByMember_id(member_id);
 	}
 	
 	// 로그인

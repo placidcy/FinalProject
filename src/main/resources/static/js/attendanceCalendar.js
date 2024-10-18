@@ -1,39 +1,95 @@
 let today;
 
-function dialogHandler() {
-    let dialog = document.querySelector('#modal');
-    let dateBoxArr = document.querySelectorAll('.weekBox>td');
-    let reqType = document.querySelector('#reqType');
-    let reqDate = document.querySelector('#reqDate');
-    let exit = document.querySelector('.exit');
-    let yearMonth = document.querySelector('#yearMonth');
+function dialogHandler(a_status, req_type, r_status, date){
+	let dialog = document.querySelector('#modal');
+	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
+	let yearMonth = document.querySelector('#yearMonth');
+	
+	if(a_status==2 || a_status==3){
+		if(req_type==2){
+			if(r_status==2){
+				dialog.children[0].children[0].innerText='공가 요청';
+				dialog.open=true;
+			}else if(r_status==0){
+				alert('공가 요청이 진행 중입니다.');
+			}
+			
+		}else{
+			if(r_status==0 && req_type==1){
+				alert('정정 요청이 진행 중입니다.');
+			}else{
+				dialog.children[0].children[0].innerText='출결 정정 요청';
+				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=date value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				if(a_status==2){
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				}else if(a_status==3){
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="지각" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				}
+				
+				
+				dialog.open=true;
+			}
+			
+		}		
+	}		
+	
+}
 
-    for(let dateBox of dateBoxArr){
-        dateBox.addEventListener('mousedown', () => {
-            console.log(dateBox.innerHTML);
-        }
-        );
-        dateBox.addEventListener('mouseup', (event) => {
-            console.log(dateBox.innerHTML);
-            if(dateBox.getAttribute('class') === 'monthDate-l' || dateBox.getAttribute('class') === 'monthDate-ab'){
-                dialog.open=true ;
-                reqType.innerHTML='출결 정정 요청';
-                reqDate.innerHTML= yearMonth.innerText + '.' + dateBox.firstChild.innerText;
-            } 
-        }
-        );
-    }
-    
-    
 
-    exit.addEventListener('click', () => {
-        dialog.open = false;
-    });
-
-
+function dialogHandler2(){
+	let dialog = document.querySelector('#modal');
+	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
+	let approvedOptions = [
+	        {
+	            num: 1,
+	            text: '훈련'
+	        },
+			{
+	            num: 2,
+	            text: '시험'
+	        },
+			{
+	            num: 3,
+	            text: '면접'
+	        },
+			{
+			    num: 4,
+			    text: '예비군'
+			},
+			{
+			    num: 5,
+			    text: '결혼'
+			},
+			{
+			    num: 6,
+			    text: '시험'
+			},
+			{
+			    num: 7,
+			    text: '사망'
+			},
+			{
+			    num: 8,
+			    text: '질병'
+			},
+			{
+			    num: 8,
+			    text: '입원'
+			},
+			{
+			    num: 9,
+			    text: '개인 사정'
+			}
+	    ];
+	dialog.children[1].children[0].children[0].children[1].innerHTML
+	='공가 사유: <select style="width:200px;height:22px;border-radius:5px;font-size:16px"><option value="훈련">훈련</option><option value="시험">시험</option><option value="면접">면접</option><option value="예비군">예비군</option><option value="결혼">결혼</option><option value="사망">사망</option><option value="질병">질병</option><option value="입원">입원</option><option value="개인사유">개인사유</option></select>';
+	dialog.children[0].children[0].innerText='공가 요청';
+	dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type="date" value="" />~ <input type="date" value="" />';
+	dialog.open=true;
 }
 
 function getDateColor(a_status){
+	let c_edate = new Date(document.querySelector('#c_edate').value);
 	if(a_status==1){
 		return 'monthDate-a';
 	}else if(a_status==2){
@@ -45,22 +101,23 @@ function getDateColor(a_status){
 	}
 }
 
+
 function getDateText(req_type, r_status){
 	if(req_type==1){
-		if(r_status == 0){
-			return '정정요청중';
-		}else if(r_status == 1){
-			return '정정요청승낙';
+		if(r_status == 1){
+			return '정정 요청 승인';
+		}else if(r_status == 2){
+			return '정정 요청 거절';
 		}else{
-			return '정정요청거절';
+			return '정정 요청 진행 중';
 		}
 	}else if(req_type==2){
-		if(r_status == 0){
-			return '공가요청중';
-		}else if(r_status == 1){
-			return '공가요청승낙';
-		}else{
-			return '공가요청거절';
+		if(r_status == 1){
+			return '공가 요청 승인';
+		}else if(r_status == 2){
+			return '공가 요청 거절';
+		}else{ 
+			return '공가 요청 진행 중';
 		}
 	}else{
 		return '';
@@ -69,9 +126,8 @@ function getDateText(req_type, r_status){
 }
 
 function getCalender(number){
-    const yearMonth = document.querySelector('#yearMonth');
+    let yearMonth = document.querySelector('#yearMonth');
     const calendarBox = document.querySelector('#calendarBox');
-	
 	let dateTime=new Date();
 	let c_sdate = new Date(document.querySelector('#c_sdate').value);
 	let c_edate = new Date(document.querySelector('#c_edate').value);
@@ -99,17 +155,16 @@ function getCalender(number){
 	    let lastDay = lastDate.getDay();
 	    let prevLastDay = prevLastDate.getDay();
 	    let weekCount = (lastDate.getDate()-(7-firstDay + lastDay+1))/7+2
-	    
+
 	    yearMonth.innerText = today.getFullYear() + '.' + ('0'+(today.getMonth()+1)).slice(-2);
-	    
 	 
 	    let firstWeekBox = '<tr class="weekBox">';
 	    if(firstDay!=0){
 	    for(let i = prevLastDay; i >= 0; i--){
 	        if(i==prevLastDay){
-	            firstWeekBox += '<td class="preMonthDate-ww">'+ (prevLastDate.getDate()-i) +'</td>';
+	            firstWeekBox += '<td class="preMonthDate-ww" >'+ (prevLastDate.getDate()-i) +'</td>';
 	        }else{
-	            firstWeekBox += '<td class="preMonthDate">'+ (prevLastDate.getDate()-i) +'</td>';
+	            firstWeekBox += '<td class="preMonthDate" >'+ (prevLastDate.getDate()-i) +'</td>';
 	        }
 	    }
 
@@ -117,7 +172,12 @@ function getCalender(number){
 	        if(i==6-prevLastDay){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
-	            firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '">'+i+'</td>';
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
+	            	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+				}else{
+					firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+				}
+	            
 	        }
 	        
 	    }
@@ -128,8 +188,12 @@ function getCalender(number){
 	            }else if(i==7){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
-	                firstWeekBox += '<td class="' + getDateColor(obj[i-1].a_status) + '">'+i+'</td>';
-	            }
+					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
+	                	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					}else{
+						firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					}
+				}
 	        }
 	    }
 	    firstWeekBox +='</tr>';
@@ -143,7 +207,12 @@ function getCalender(number){
 	        }else if(lastDay==6 && i==0){
 	            lastWeekBox += '<td class="monthDate-w">'+ (lastDate.getDate()) +'</td>';
 	        }else{
-	            lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? getDateColor(obj[lastDate.getDate()-i-1].a_status) : 'monthDate-nc') + '">'+ (lastDate.getDate()-i) +'</td>';
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status+ ','+ obj[lastDate.getDate()-i-1].req_type+ ','+ obj[lastDate.getDate()-i-1].r_status+ ','+ (lastDate.getDate()-i-1) +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+				}else{
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+				}
+	            
 	        }
 	    }
 
@@ -162,15 +231,18 @@ function getCalender(number){
 	        }else if(j%7==(14-firstDay)%7){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
-	            weekBoxs += '<td class="' + getDateColor(obj[j-1].a_status) + '">'+ j +'</td>';
-	        }
+				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
+					weekBoxs += '<td class="' + (obj.length>=j ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status+ ','+ obj[j-1].req_type+ ','+ obj[j-1].r_status+ ','+ (j-1) +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+	        	}else{
+					weekBoxs += '<td class="' + (obj.length>=j ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+				}
+			}
 	        
 	    }  
 		
 		
 								
 		calendarBox.innerHTML=firstWeekBox + weekBoxs + lastWeekBox;
-			
 	}) // 변환된 자바스크립트 객체 obj == response.json()
 	.catch(error => console.log(error));
 		
@@ -200,7 +272,6 @@ function init() {
     document.querySelector('#todayBox').addEventListener('click', () =>{num=0; getCalender(num)});
 	getCalender(num);
     mobileHandler();
-    dialogHandler();
 }
 
 window.addEventListener('load', init);

@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <aside class="sidebar main cffffff">
 	<div class="flex cen v h logo p50">
-		<div>
-			<h1 class="f32">
-				<a href="/">CHECK</a>
-			</h1>
-			<p class="inst">FOR INSTRUCTORS</p>
+		<div class="logoText">
+			<a href="/">
+				<h1 class="f32">CHECK</h1>
+				<p class="inst">FOR INSTRUCTORS</p>
+			</a>
 		</div>
 		<div class="mobile" id="hamburger">
 			<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30px"
@@ -27,7 +27,7 @@
 			class="menu <c:if test="${menu eq checkin}">selected</c:if>
 				cffffff">출석
 				체크</li> </a>
-		<a href="/notice?t=2"><c:set var="notice" value="notice"></c:set>
+		<a href="/notice"><c:set var="notice" value="notice"></c:set>
 			<li
 			class="menu <c:if test="${menu eq notice}">selected</c:if>
 				cffffff">공지사항

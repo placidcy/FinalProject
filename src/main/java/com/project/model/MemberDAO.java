@@ -14,13 +14,13 @@ public class MemberDAO {
 		this.jdbcTemplate = new JdbcTemplate(ds);
 	}
 	
-	public MemberDO selectedByM_acctid(String m_acctid) {
+	public MemberDO selectedByMember_id(int member_id) {
 		MemberDO member = null;
 		this.sql = "select member_id, m_name, m_acctid, m_acctpwd, m_email, m_tel, m_dept, m_pfp, m_status, m_role "
 				+ "from final_member "
-				+ "where m_acctid=?";
+				+ "where member_id=?";
 		
-		member = this.jdbcTemplate.queryForObject(sql, new MemberRowMapper(), m_acctid);
+		member = this.jdbcTemplate.queryForObject(sql, new MemberRowMapper(), member_id);
 		return member;
 	}
 	

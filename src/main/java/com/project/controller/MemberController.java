@@ -285,6 +285,8 @@ public class MemberController {
 		model.addAttribute("m_role", roleName);
 		model.addAttribute("m_acctid", member.getM_acctid());
 		model.addAttribute("m_email", member.getM_email());
+		
+		model.addAttribute("menu", "mypage");
 		return "mypage";
 	}
 	

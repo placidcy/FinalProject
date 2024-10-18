@@ -61,18 +61,21 @@ public class MainController {
 
 			if (memberRole == 1) {
 				model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
-				model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
+				model.addAttribute("notice", mainSO.selectList(1, 5));
 				model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 				viewPath = "main/index";
 			} else {
-				model.addAttribute("notice", mainSO.selectNoticeItems(1, 5));
+				model.addAttribute("course", mainSO.selectByInstructorId(memberId, Integer.parseInt(page)));
+				model.addAttribute("notice", mainSO.selectList(1, 5));
+				model.addAttribute("size", mainSO.getSizeByInstructorId(memberId));
 				viewPath = "main/index_i";
 			}
 			model.addAttribute("page", page);
 			model.addAttribute("menu", "main");
 			return viewPath;
 		} catch (Exception e) {
-			return "redirect: /login";
+			e.printStackTrace();
+			return "redirect:/login";
 		}
 	}
 
@@ -97,13 +100,14 @@ public class MainController {
 				courseId = mainSO.checkCourseForCourseId(memberId);
 				if (courseId > 0) {
 					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
 					viewPath = "main/checkin_i";
 				}
 			}
 			model.addAttribute("menu", "checkin");
 			return viewPath;
 		} catch (Exception e) {
-			return "redirect: /login";
+			return "redirect:/login";
 		}
 	}
 
@@ -128,7 +132,7 @@ public class MainController {
 
 			if (courseItem.getQrCode() == null) {
 				try {
-					String encryptedText = qrSO.getEncryptedText("test");
+					String encryptedText = qrSO.getEncryptedText(courseItem.toString());
 					mainSO.createQR(courseId, encryptedText);
 					response.setRes(true);
 					response.setMsg("QR코드가 성공적으로 생성되었습니다.");
@@ -220,27 +224,41 @@ public class MainController {
 		return messageItem;
 	}
 
-	@GetMapping("/notification")
-	public String getNotifications(Model model) {
-		model.addAttribute("menu", "alert");
-		return "main/alert";
-	}
-
 	@GetMapping("/notice")
-	public String getNotice(Model model,
-			@RequestParam(required = false, defaultValue = "1", name = "page") String page) {
-		model.addAttribute("list", mainSO.selectNoticeItems(Integer.parseInt(page)));
-		model.addAttribute("size", mainSO.getSize());
-		model.addAttribute("page", page);
-		model.addAttribute("menu", "notice");
-		return "main/notice";
+	public String getNotice(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
+			HttpSession session) {
+		int memberRole;
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+
+		try {
+			memberRole = auth.getM_role();
+
+			if (memberRole == 1) {
+				model.addAttribute("list", mainSO.selectList(Integer.parseInt(page)));
+				model.addAttribute("size", mainSO.getSize());
+				model.addAttribute("page", page);
+
+				viewPath = "main/notice";
+			} else {
+				model.addAttribute("list", mainSO.selectAll(Integer.parseInt(page)));
+				model.addAttribute("size", mainSO.getTotalSize());
+				model.addAttribute("page", page);
+
+				viewPath = "main/notice_i";
+			}
+			model.addAttribute("menu", "notice");
+		} catch (Exception e) {
+			return "redirect:/login";
+		}
+
+		return viewPath;
 	}
 
 	@RequestMapping("/notice/search")
 	public String searchNotice(Model model,
 			@RequestParam(required = false, defaultValue = "1", name = "page") String page,
 			@RequestParam(required = true, name = "keyword") String keyword) {
-		model.addAttribute("list", mainSO.selectNoticeItems(Integer.parseInt(page), keyword));
+		model.addAttribute("list", mainSO.selectList(Integer.parseInt(page), keyword));
 		model.addAttribute("size", mainSO.getSize(keyword));
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "notice");
