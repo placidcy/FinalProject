@@ -7,12 +7,14 @@ public class CourseDO {
 	private int category_id;
 	private String c_name;
 	private String c_desc;
+	private String categoryTitle;
 	private LocalDateTime c_sdate;
 	private LocalDateTime c_edate;
 	private int c_limits;
 	private int c_prsscore;
 	private int c_absscore;
 	private int c_trdscore;
+	
 	
 	public CourseDO() {	
 	}
@@ -87,8 +89,10 @@ public class CourseDO {
 	public void setC_trdscore(int c_trdscore) {
 		this.c_trdscore = c_trdscore;
 	}
-	
-	
-	
-
-}
+	 public String getCategoryTitle() {
+	     return categoryTitle;
+	}
+	 public void setCategoryTitle(String categoryTitle) {
+	    this.categoryTitle = categoryTitle;
+	    }
+	}
