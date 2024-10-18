@@ -72,11 +72,11 @@ public class MainController {
 			}
 			model.addAttribute("page", page);
 			model.addAttribute("menu", "main");
-			return viewPath;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/login";
 		}
+		return viewPath;
 	}
 
 	@GetMapping("/checkin")

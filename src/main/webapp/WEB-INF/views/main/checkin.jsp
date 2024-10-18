@@ -54,7 +54,8 @@
 						</p>
 					</div>
 					<p>
-						종료일까지 남은 기간: <span class="bold">${info.dDay }</span>
+						종료일까지 남은 기간: <span class="bold" id="dday"
+							data-value="${info.dDay }"></span>
 					</p>
 					<a class="f20 bold h end self"
 						href="/goCourseHome?courseId=${info.courseId }">📖 강의 홈으로 이동하기</a>
