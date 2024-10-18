@@ -37,23 +37,23 @@
 			    </div>
 			    <div class="modal-bottom req">
 					
-				<form class="requestForm" method="POST" action="/attResponse">
+				<form class="requestForm" method="POST" action="/attRequest" enctype="multipart/form-data">
 					<div>
 					<!--공가요청이면 일자 시작일~마지막일-->
-	                <div class="modalFont">일자 : &nbsp <input type="date" value="2024-03-12"/> </div>
+	                <div class="modalFont">일자 : &nbsp <input type="date" name="date" value="2024-03-12"/> </div>
 					<!--공가요청이면 공가 사유-->
 					<div class="modalFont">상태 : &nbsp <span class="modalFont"></span></div>
 
 	                <label for="textBox" id="textBoxLabel">내용 :</label>
-	                <textarea id="textBox" placeholder="내용을 입력해 주세요."></textarea> 
+	                <textarea id="textBox" name="contents" placeholder="내용을 입력해 주세요." required></textarea> 
 					
 	                <div id="fileBox" class="modalFont"> <div id="fileFont">증명서류: &nbsp </div>
 						<label for="file">
 						  <div class="btn-upload">이미지/문서 첨부</div>
 						</label>					
-						<input type="file" name="file" id="file">
+						<input type="file" name="attm" id="file" />
 					</div>
-                	
+                	<input type="hidden" name="req_type" />
 					<div id="btnBox">
 						<input type="submit" value="요청하기" />
 					</div>
