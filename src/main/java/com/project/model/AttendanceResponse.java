@@ -1,7 +1,5 @@
 package com.project.model;
 
-import java.time.LocalDateTime;
-
 public class AttendanceResponse {
 	private int r_status;
 	private String r_details;

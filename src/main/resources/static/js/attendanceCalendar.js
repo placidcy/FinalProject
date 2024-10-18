@@ -9,6 +9,7 @@ function dialogHandler(a_status, req_type, r_status, date){
 		if(req_type==2){
 			if(r_status==2){
 				dialog.children[0].children[0].innerText='공가 요청';
+				dialog.children[1].children[0].children[0].children[5].value="2";
 				dialog.open=true;
 			}else if(r_status==0){
 				alert('공가 요청이 진행 중입니다.');
@@ -19,11 +20,12 @@ function dialogHandler(a_status, req_type, r_status, date){
 				alert('정정 요청이 진행 중입니다.');
 			}else{
 				dialog.children[0].children[0].innerText='출결 정정 요청';
-				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=date value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=text name="a_date" value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[5].value="1";
 				if(a_status==2){
-					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text name="a_status" value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
 				}else if(a_status==3){
-					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text value="지각" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text name="a_status" value="지각" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
 				}
 				
 				
@@ -82,9 +84,10 @@ function dialogHandler2(){
 			}
 	    ];
 	dialog.children[1].children[0].children[0].children[1].innerHTML
-	='공가 사유: <select style="width:200px;height:22px;border-radius:5px;font-size:16px"><option value="훈련">훈련</option><option value="시험">시험</option><option value="면접">면접</option><option value="예비군">예비군</option><option value="결혼">결혼</option><option value="사망">사망</option><option value="질병">질병</option><option value="입원">입원</option><option value="개인사유">개인사유</option></select>';
+	='공가 사유: <select style="width:200px;height:22px;border-radius:5px;font-size:16px" name="l_reason"><option value="훈련">훈련</option><option value="시험">시험</option><option value="면접">면접</option><option value="예비군">예비군</option><option value="결혼">결혼</option><option value="사망">사망</option><option value="질병">질병</option><option value="입원">입원</option><option value="개인사유">개인사유</option></select>';
 	dialog.children[0].children[0].innerText='공가 요청';
-	dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type="date" value="" />~ <input type="date" value="" />';
+	dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type="date" name="l_sdate" value="" required/>~ <input type="date" name="l_edate" value="" required/>';
+	dialog.children[1].children[0].children[0].children[5].value="2";
 	dialog.open=true;
 }
 
