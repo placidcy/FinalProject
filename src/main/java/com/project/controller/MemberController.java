@@ -1,20 +1,29 @@
 package com.project.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.model.MemberDO;
 import com.project.model.MemberSO;
+import com.project.model.JWT.JwtUtil;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
+import com.project.model.response.ErrorResponse;
 import com.project.model.response.LoginResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -23,15 +32,34 @@ public class MemberController {
 	
 	@Autowired
 	private MemberSO memberSo;
-	
-	public MemberController(MemberSO memberSo) {
-		this.memberSo = memberSo;
-	}
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	@GetMapping("/login")
 	public String loginHandler() {
 		return "login";
 	}
+	
+	/*
+	 * // 토큰 구현 중단
+	 * 
+	 * @PostMapping("/loginProcess") public ResponseEntity<?>
+	 * loginProcessHandler(@RequestBody LoginRequest req) { try { LoginResponse auth
+	 * = memberSo.login(req.getM_acctid(), req.getM_acctpwd());
+	 * 
+	 * if(auth != null) { String token = jwtUtil.generateToken(auth.getM_acctid());
+	 * 
+	 * int m_role = memberSo.checkM_role(auth.getMember_id());
+	 * 
+	 * Map<String, Object> response = new HashMap<>(); response.put("token", token);
+	 * response.put("m_role", m_role); response.put("message", "로그인 성공");
+	 * 
+	 * return ResponseEntity.ok(response); } else { return
+	 * ResponseEntity.status(HttpStatus.UNAUTHORIZED) .body(new
+	 * ErrorResponse("로그인에 실패했습니다.")); } } catch(EmptyResultDataAccessException e) {
+	 * return ResponseEntity.status(HttpStatus.UNAUTHORIZED) .body(new
+	 * ErrorResponse("일치하는 정보가 없습니다.")); } }
+	 */
 	
 	@PostMapping("/loginProcess")
 	public String loginProcessHandler(LoginRequest req, HttpSession session) {
@@ -44,12 +72,12 @@ public class MemberController {
 				int m_role = memberSo.checkM_role(auth.getMember_id());
 				
 				switch(m_role) { //리턴주소 추후 변경
-					case 1:
-						return "redirect:/";
-					case 2:
-						return "redirect:/";
-					default:
-						return "redirect:/adminMain";
+				case 1:
+					return "redirect:/";
+				case 2:
+					return "redirect:/";
+				default:
+					return "redirect:/adminMain";
 				}
 			}
 			else {
@@ -198,7 +226,36 @@ public class MemberController {
 			return "changepwd";
 		}
 	}
- 	
+	
+	/*
+	 * // 토큰 구현 중단
+	 * 
+	 * @GetMapping("/mypage") public String mypageHandler(HttpServletRequest
+	 * request, Model model) { String auth = request.getHeader("Authorization");
+	 * 
+	 * if (auth == null || !auth.startsWith("Bearer ")) {
+	 * System.out.println("Authorization is null."); }
+	 * 
+	 * String token = auth.substring(7); String m_acctid;
+	 * 
+	 * try { m_acctid = jwtUtil.extractUsername(token); } catch (Exception e) {
+	 * return "redirect:/login"; }
+	 * 
+	 * MemberDO member = memberSo.selectedByM_acctid(m_acctid);
+	 * 
+	 * String roleName; if(member.getM_role() == 1) { roleName = "학생"; } else
+	 * if(member.getM_role() == 2) { roleName = "강사"; } else { roleName = "사용자 오류";
+	 * }
+	 * 
+	 * model.addAttribute("member_id", member.getMember_id());
+	 * model.addAttribute("m_pfp", member.getM_pfp()); model.addAttribute("m_name",
+	 * member.getM_name()); model.addAttribute("m_dept", member.getM_dept());
+	 * model.addAttribute("m_role", roleName); model.addAttribute("m_acctid",
+	 * member.getM_acctid()); model.addAttribute("m_email", member.getM_email());
+	 * 
+	 * model.addAttribute("menu", "mypage"); // 사이드바 색변경 return "mypage"; }
+	 */
+	
 	@GetMapping("/mypage")
 	public String mypageHandler(HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
