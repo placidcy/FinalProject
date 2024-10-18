@@ -34,13 +34,13 @@
                 </div>
 				
                 <ul class="course-notice white f20">
+					<c:if test="${empty noticeList}">
+					    <li>공지사항이 없습니다.</li>
+					</c:if>
 					<c:forEach items="${noticeList}" var="notice">
-	                    <li><a href="/notice/${notice.id}">${notice.p_title}</a></li>
+					    <li>공지사항: ${notice.p_title}</li>
 					</c:forEach>
-					<li>2024 1학기 LMS 강사님 오프라인 안내</li>
-					<li>홈페이지 점검 안내 ( 2024.08.12(월) 19:00~24:00 )</li>
-					<li>일반 로그인 장애 안내 (조치완료)</li>
-					<li>근로자의 날 (5월 1일) 휴무 안내</li>
+
                 </ul>
 			</div>
 			
@@ -52,7 +52,7 @@
 					<c:forEach items="${courseList}" var="course">
 					    <tr class="course-item">
 					        <td class="course-decoration grayscale"></td>
-					        <td class="course-category">${course.category_id}</td>
+					        <td class="course-category">${course.categoryTitle}</td>
 					        <td class="course-name">${course.c_name}</td>
 					    </tr>
 					</c:forEach>

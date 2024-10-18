@@ -28,13 +28,14 @@ public class AdminController {
         if (auth == null || auth.getM_role() != 0) {
             return "redirect:/login";
         }
-        model.addAttribute("noticeList", noticeDao.selectAll(0, 3));
+        model.addAttribute("noticeList", noticeDao.selectAll(1, 3));
         
         List<CourseDO> courseList = courseDao.selectAllCourses();
         model.addAttribute("courseList", courseList);
         
         model.addAttribute("menu", "adminMain");
         return "adminMain";
+        
     }
 
     @GetMapping("/instructorManagement")
