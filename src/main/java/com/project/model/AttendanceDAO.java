@@ -4,8 +4,10 @@ import java.sql.*;
 import java.util.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+
 
 
 public class AttendanceDAO {
@@ -216,6 +218,18 @@ public class AttendanceDAO {
 		
 	}
 	
+	
+	public void insertAttendanceReq(AttReq attReq){
+		if(attReq.getReq_type() == 1) {
+			this.sql = "insert into final_attend_correq (student_id, a_date, c_contents, c_attm) values (?, ?, ?, ?)";	
+			this.jdbcTemplate.update(this.sql, attReq.getStudent_id(), attReq.getA_date(), attReq.getContents(), "");
+		}else if(attReq.getReq_type() == 2) {
+			this.sql = "insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents, l_attm) values (?, ?, ?, ?, ?, ?)";	
+			this.jdbcTemplate.update(this.sql, attReq.getStudent_id(), attReq.getL_sdate(), attReq.getL_edate(), attReq.getL_reason(), attReq.getContents(), "");
+		}
+		
+
+	}
 	
 	
 	

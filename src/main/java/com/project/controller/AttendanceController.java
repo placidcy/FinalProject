@@ -149,6 +149,25 @@ public class AttendanceController {
 		
 	}
 	
+	@PostMapping("/attRequest")
+	public String attRequestHandler(HttpSession session, AttReq attReq) {
+		
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==1) {
+		int course_id = (int) session.getAttribute("currentId");
+		attReq.setStudent_id(attendanceDAO.getStudentId(auth.getMember_id(), course_id));
+		System.out.printf(attReq.getA_date(), attReq.getStudent_id(), attReq.getContents());
+		
+		//attendanceDAO.insertAttendanceReq(attReq);
+		
+		return "redirect:/attendanceCalendar";
+		}
+		
+		return "redirect:/" ;
+
+		
+	}
+	
 	
 	
 		
