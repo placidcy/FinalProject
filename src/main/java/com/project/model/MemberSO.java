@@ -1,6 +1,7 @@
 package com.project.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,8 @@ public class MemberSO {
 	
 	@Autowired
 	private MemberDAO memberDao;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public MemberSO() {
 		
@@ -23,7 +26,7 @@ public class MemberSO {
 		
 		newMember.setMember_id(req.getMember_id());
 		newMember.setM_acctid(req.getM_acctid());
-		newMember.setM_acctpwd(req.getM_acctpwd());
+		newMember.setM_acctpwd(bCryptPasswordEncoder.encode(req.getM_acctpwd())); // 비밀번호 해싱
 		newMember.setM_name(req.getM_name());
 		newMember.setM_email(req.getM_email());
 		newMember.setM_tel(req.getM_tel());
@@ -46,8 +49,19 @@ public class MemberSO {
 		if(member == null) {
 			return null;
 		}
-		if(!m_acctpwd.equals(member.getM_acctpwd())) {
-			return null;
+		if(member.getM_acctpwd().length() < 60) {
+			if(!m_acctpwd.equals(member.getM_acctpwd())) {
+				return null;
+			}
+			String hassedPwd = bCryptPasswordEncoder.encode(m_acctpwd);
+			member.setM_acctpwd(hassedPwd);
+			memberDao.updatePassword(member);
+			
+		}
+		else {
+			if(!bCryptPasswordEncoder.matches(m_acctpwd, member.getM_acctpwd())) {
+				return null;
+			}
 		}
 		return new LoginResponse(member.getMember_id(), member.getM_name(), member.getM_acctid(), member.getM_email(), member.getM_tel(), member.getM_dept(), member.getM_pfp(), member.getM_role());
 	}

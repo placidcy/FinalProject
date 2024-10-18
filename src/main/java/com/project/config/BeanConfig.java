@@ -1,6 +1,8 @@
 package com.project.config;
 
 import com.project.model.*;
+//import com.project.model.JWT.JwtUtil;
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,4 +46,9 @@ public class BeanConfig {
 	public CourseDAO courseDAO(DataSource dataSource){
 		return new CourseDAO(dataSource);
 	}
+	
+//	@Bean
+//	public JwtUtil jwtUtil() {
+//		return new JwtUtil();
+//	}
 }
