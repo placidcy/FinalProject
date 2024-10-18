@@ -1,0 +1,121 @@
+main h3 {
+    font-size: 24px;
+}
+
+.course-notice-title {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: end;
+}
+
+.course-notice-title>a {
+    font-weight: bold;
+    justify-self: end;
+    text-decoration: none;
+    color: black;
+}
+
+.course-notice {
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: #FFF5DD;
+    font-size: 20px;
+}
+
+.course-notice th {
+    width: 50px;
+    padding-right: 30px;
+}
+
+.course-message {
+    color: #87C791;
+    font-weight: bold;
+}
+
+.course-list,
+.course-item {
+    width: 100%;
+}
+
+.course-list {
+    border-collapse: collapse;
+    border: 1px solid gainsboro;
+}
+
+.course-item {
+    position: relative;
+    display: flex;
+    padding: 40px 50px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-bottom: 1px solid gainsboro;
+}
+
+.course-decoration {
+    position: absolute;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #87C791;
+}
+
+.course-category {
+    width: 120px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #D9D9D9;
+    margin-right: 30px;
+}
+
+.course-name {
+    flex: 1;
+    text-align: start;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.course-info {
+    flex: 1;
+    text-align: start;
+}
+
+.course-last {
+    display: flex;
+    width: 150px;
+    justify-content: end;
+}
+
+.course-button {
+    padding: 15px 40px;
+    font-size: 16px;
+    color: white;
+    background-color: #87C791;
+    border: 1px solid gainsboro;
+}
+
+.pagination {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination>li {
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.page-disabled {
+    color: #D9D9D9;
+}
+
+.page-selected {
+    color: #87C791;
+}
