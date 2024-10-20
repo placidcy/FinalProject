@@ -99,8 +99,16 @@ public class MainController {
 			} else {
 				courseId = mainSO.checkCourseForCourseId(memberId);
 				if (courseId > 0) {
-					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
-					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+					try {
+						model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+					} catch (Exception e) {
+						System.out.println("정보 오류");
+					}
+					try {
+						model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+					} catch (Exception e) {
+						System.out.println("통계 오류");
+					}
 					viewPath = "main/checkin_i";
 				}
 			}
