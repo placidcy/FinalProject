@@ -21,7 +21,15 @@
 
 <body>
     <div class="container flex">
-    	<jsp:include page="common/side_main.jsp" />
+    	<c:choose>
+		    <c:when test="${m_role == '학생'}">
+		    	<jsp:include page="common/side_main.jsp" />
+		    </c:when>
+		    
+		    <c:when test="${m_role == '강사'}">
+		    	<jsp:include page="common/side_main_i.jsp" />
+		    </c:when>
+		</c:choose>
         <main class="contents bgf2f2f2">
             <div id="header">
                 <span class="title">마이페이지</span>
