@@ -11,7 +11,7 @@ public class MemberCleanSO {
     @Autowired
     private MemberDAO memberDao;
 
-    @Scheduled(cron = "0 0 01 * * ?") // "초 분 시각 일 월 요일 연도"
+    @Scheduled(cron = "0 0/5 * * * ?") // 5분마다 작동
     public void deleteInactiveMembers() {
         memberDao.deleteMemberInfo();
     }
