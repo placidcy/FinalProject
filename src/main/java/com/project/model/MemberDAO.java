@@ -1,5 +1,7 @@
 package com.project.model;
 
+import java.util.List;
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -132,4 +134,9 @@ public class MemberDAO {
 		return this.jdbcTemplate.update(sql, member.getMember_id());
 	}
 
+	
+	public List<MemberDO> getAllInstructors() {
+	    this.sql = this.sql = "select * from final_member where m_role = 1";
+	    return this.jdbcTemplate.query(sql, new MemberRowMapper());
+	}	
 }
