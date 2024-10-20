@@ -20,7 +20,8 @@ function dialogHandler(a_status, req_type, r_status, date){
 				alert('정정 요청이 진행 중입니다.');
 			}else{
 				dialog.children[0].children[0].innerText='출결 정정 요청';
-				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=text name="a_date" value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type=date disabled value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2)+'" style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
+				dialog.children[1].children[0].children[0].children[0].innerHTML += '<input type=hidden name="a_date" value="'+ yearMonth.innerText.slice(0,4) +'-'+ yearMonth.innerText.slice(-2)+'-' +('0'+(date+1)).slice(-2) +'"/>';
 				dialog.children[1].children[0].children[0].children[5].value="1";
 				if(a_status==2){
 					dialog.children[1].children[0].children[0].children[1].innerHTML='상태: <input type=text name="a_status" value="결석" disabled style="border:none; border-width:0px;background:transparent;font-size:18px;color:black;"/>';
@@ -37,9 +38,38 @@ function dialogHandler(a_status, req_type, r_status, date){
 	
 }
 
+function submitHandler(){
+
+	
+
+	
+
+
+}
 
 function dialogHandler2(){
 	let dialog = document.querySelector('#modal');
+	let submitBtn = document.querySelector('#submitBtn');
+	let now = new Date();	
+	let avlDate = new Date(now.setDate(now.getDate() + 14));	
+	let c_edate = new Date(document.querySelector('#c_edate').value);
+
+	submitBtn.addEventListener('click', (event)=>{
+		let l_sdate= new Date(dialog.children[1].children[0].children[0].children[0].children[0].value);
+		let l_edate= new Date(dialog.children[1].children[0].children[0].children[0].children[1].value);
+		
+		if(l_sdate > l_edate){
+			event.preventDefault();
+			alert('공가 요청 시작일을 수정해 주세요.');
+		}else if(l_sdate < avlDate){
+			event.preventDefault();
+			alert('공가 요청은 14일 후부터 가능합니다.');
+		}else if(l_edate > c_edate){
+			event.preventDefault();
+			alert('공가 요청 마지막일을 수정해 주세요.');
+		}
+	});
+	
 	document.querySelector('.exit').addEventListener('click', () => {dialog.open = false});
 	let approvedOptions = [
 	        {
@@ -88,7 +118,9 @@ function dialogHandler2(){
 	dialog.children[0].children[0].innerText='공가 요청';
 	dialog.children[1].children[0].children[0].children[0].innerHTML = '일자: <input type="date" name="l_sdate" value="" required/>~ <input type="date" name="l_edate" value="" required/>';
 	dialog.children[1].children[0].children[0].children[5].value="2";
+	
 	dialog.open=true;
+	
 }
 
 function getDateColor(a_status){
@@ -134,6 +166,7 @@ function getCalender(number){
 	let dateTime=new Date();
 	let c_sdate = new Date(document.querySelector('#c_sdate').value);
 	let c_edate = new Date(document.querySelector('#c_edate').value);
+	let courseDay = [document.querySelector('#d_mon').value*2, document.querySelector('#d_tue').value*3, document.querySelector('#d_wed').value*4, document.querySelector('#d_thu').value*5, document.querySelector('#d_fri').value*6]
 	
 	if(dateTime.getFullYear() < c_sdate.getFullYear()) {
 		dateTime=c_sdate;
@@ -176,9 +209,9 @@ function getCalender(number){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	            	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	            	firstWeekBox += '<td class="' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 				}else{
-					firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					firstWeekBox += '<td class="' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 				}
 	            
 	        }
@@ -192,9 +225,9 @@ function getCalender(number){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
 					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	                	firstWeekBox += '<td class="' + (obj.length>=i ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	                	firstWeekBox += '<td class="' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 					}else{
-						firstWeekBox += '<td class="' + (obj.length>=i ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+						firstWeekBox += '<td class="' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
 					}
 				}
 	        }
@@ -210,10 +243,11 @@ function getCalender(number){
 	        }else if(lastDay==6 && i==0){
 	            lastWeekBox += '<td class="monthDate-w">'+ (lastDate.getDate()) +'</td>';
 	        }else{
+				
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
-					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status+ ','+ obj[lastDate.getDate()-i-1].req_type+ ','+ obj[lastDate.getDate()-i-1].r_status+ ','+ (lastDate.getDate()-i-1) +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status+ ','+ obj[lastDate.getDate()-i-1].req_type+ ','+ obj[lastDate.getDate()-i-1].r_status+ ','+ (lastDate.getDate()-i-1) +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i  && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
 				}else{
-					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i  && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
 				}
 	            
 	        }
@@ -235,9 +269,9 @@ function getCalender(number){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
-					weekBoxs += '<td class="' + (obj.length>=j ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status+ ','+ obj[j-1].req_type+ ','+ obj[j-1].r_status+ ','+ (j-1) +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+					weekBoxs += '<td class="' + (obj.length>=j && courseDay.includes(obj[j-1].d*1) ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status+ ','+ obj[j-1].req_type+ ','+ obj[j-1].r_status+ ','+ (j-1) +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j  && courseDay.includes(obj[j-1].d*1) ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
 	        	}else{
-					weekBoxs += '<td class="' + (obj.length>=j ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+					weekBoxs += '<td class="' + (obj.length>=j && courseDay.includes(obj[j-1].d*1)  ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j  && courseDay.includes(obj[j-1].d*1) ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
 				}
 			}
 	        
@@ -275,6 +309,8 @@ function init() {
     document.querySelector('#todayBox').addEventListener('click', () =>{num=0; getCalender(num)});
 	getCalender(num);
     mobileHandler();
+
+	
 }
 
 window.addEventListener('load', init);

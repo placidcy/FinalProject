@@ -38,7 +38,7 @@
 					    <li>공지사항이 없습니다.</li>
 					</c:if>
 					<c:forEach items="${noticeList}" var="notice">
-					    <li>공지사항: ${notice.p_title}</li>
+					    <li>공지사항: ${notice.noticeTitle}</li>
 					</c:forEach>
 
                 </ul>
