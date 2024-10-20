@@ -14,6 +14,8 @@
     <link rel="stylesheet" as="style" crossorigin
 		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 	<script src="/resources/js/main/mobile.js"></script>
+	<script src="/resources/js/main/mobile.js"></script>
+	<script src="/resources/js/findDialog.js"></script>
 	<!--<script src="/resources/js/main/token.js"></script>-->
 </head>
 
@@ -23,8 +25,6 @@
         <main class="contents bgf2f2f2">
             <div id="header">
                 <span class="title">마이페이지</span>
-                <button id="profile-cancel">취소</button>
-                <button id="profile-save" type="submit">저장</button>
                 <hr>
             </div>
             <div>
@@ -58,10 +58,11 @@
                     <tr>
                         <th>이메일</th>
                         <td>
-                        	<form action="<c:url value='/change-mail' />" method="GET">
+                        	<form action="<c:url value='/changeM_email' />" method="GET">
 	                        	${m_email} 
 	                            <button type="submit" id="change-mail" class="a">변경</button>
 	                            <input type="hidden" name="member_id" value="${member_id}" required />
+	                            
                         	</form>
                         </td>
                     </tr>

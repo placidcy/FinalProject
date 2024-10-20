@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import java.time.LocalDateTime;
+
 //import java.util.HashMap;
 //import java.util.Map;
 
@@ -67,6 +69,11 @@ public class MemberController {
 			LoginResponse auth = memberSo.login(req.getM_acctid(), req.getM_acctpwd());
 			
 			if(auth != null) {
+				
+				if (memberSo.checkM_status(auth.getMember_id()) == 0) { 
+	                memberSo.updateMemberStatusToActive(auth.getMember_id());
+	            }
+				
 				session.setAttribute("auth", auth);
 				
 				int m_role = memberSo.checkM_role(auth.getMember_id());
@@ -290,5 +297,40 @@ public class MemberController {
 		return "mypage";
 	}
 	
+	@GetMapping("/changeM_email")
+	public String changeEmailHandler() {
+		return "changeEmail";
+	}
+	
+	@PostMapping("/changeEmailProcess")
+	public String changeEmailProcessHandler(
+			HttpSession session,
+			@RequestParam(value="member_id") int member_id,
+			@RequestParam("newM_email") String newM_email,
+			Model model) {
+		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
+		
+		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
+		member.setM_email(newM_email);
+		memberSo.updateM_email(member);
+		
+		return "redirect:/mypage";
+	}
+	
+	@GetMapping("/leave")
+	public String changeM_statusProcessHandler(
+			HttpSession session,
+			@RequestParam(value="member_id") int member_id,
+			Model model) {
+		
+		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
+		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
+		member.setM_status(0);
+		member.setDeactivationDate(LocalDateTime.now());
+		memberSo.updateM_statusAndDate(member);
+		session.invalidate();
+		return "redirect:/login";
+		
+	}
 	
 }
