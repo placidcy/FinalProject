@@ -3,6 +3,7 @@ package com.project.model.dao;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -342,7 +343,7 @@ public class CourseItemDAO extends ItemDAO {
 		return statsItem;
 	}
 
-	public StatsItem getStatsByCourseId(int course_id) {
+	public StatsItem getStatsByCourseId(int courseId) {
 		this.sql = query.get("getStatsByCourseId");
 		StatsItem statsItem = null;
 
@@ -360,9 +361,25 @@ public class CourseItemDAO extends ItemDAO {
 
 				return statsItem;
 			}
-		}, course_id);
+		}, courseId);
 
 		return statsItem;
+	}
+
+	public int checkAttendStatus(int courseId) {
+		this.sql = query.get("checkAttendStatus");
+
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, courseId);
+	}
+
+	public void initAttendance(int courseId) {
+		this.sql = query.get("initAttendance");
+
+		try {
+			this.getJdbcTemplate().update(sql, courseId);
+		} catch (Exception e) {
+			System.out.println("출석 데이터 초기화 실패");
+		}
 	}
 
 	private void init() {
@@ -748,7 +765,7 @@ public class CourseItemDAO extends ItemDAO {
 						        SELECT
 						            fcs.course_id,
 						            fsa.a_date,
-						            COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END) AS today_count,
+						            COUNT(CASE WHEN fsa.a_status <> 2 and fsa.a_cintime is not null THEN fsa.student_id END) AS today_count,
 						            TRUNC(AVG(COUNT(CASE WHEN fsa.a_status NOT IN (0, 2) THEN fsa.student_id END)) OVER (PARTITION BY fcs.course_id)) AS avg_count
 						        FROM final_course_student fcs
 						        LEFT JOIN final_student_attend fsa ON fcs.student_id = fsa.student_id
@@ -825,6 +842,23 @@ public class CourseItemDAO extends ItemDAO {
 				SELECT count(*)
 				FROM FINAL_COURSE_REGISTER fcr
 				WHERE fcr.COURSE_ID = ? AND fcr.MEMBER_ID = ? AND fcr.C_REGSTATUS = 0
+				""");
+		this.query.put("checkAttendStatus", """
+				SELECT
+					count(fcs.student_id)
+				FROM
+					final_course_student fcs
+				INNER JOIN FINAL_STUDENT_ATTEND fsa ON
+					fcs.student_id = fsa.student_id
+				WHERE
+					course_id = ? AND a_date = trunc(sysdate)
+					""");
+		this.query.put("initAttendance", """
+				insert into final_student_attend(student_id, a_date, a_status)
+				select student_id, trunc(sysdate) a_date, '0' as a_status
+				from final_course_student
+				where course_id = ?
+				and student_id not in (select student_id from final_student_attend where a_date = trunc(sysdate))
 				""");
 	}
 }
