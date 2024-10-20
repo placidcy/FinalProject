@@ -4,10 +4,8 @@ function cancelHandler() {
 	location.href='/findcheck';
 }
 function submitHandler() {
-	let findidProcess = document.querySelector('#findidProcess');
 	let findpwdProcess = document.querySelector('#findpwdProcess');
 	
-	//findidProcess.submit();
 	findpwdProcess.submit();
 }
 

@@ -188,7 +188,7 @@ public class MemberController {
 		try {
 			if(member_id != null) {
 				rttr.addFlashAttribute("member_id", member_id);
-				return "redirect:/changepwd";
+				return "redirect:/changepwd2";
 			}
 			else {
 				model.addAttribute("result", "일치하는 정보가 없습니다.");
@@ -204,6 +204,10 @@ public class MemberController {
 	@GetMapping("/changepwd")
 	public String changePwdHandler() {
 		return "changepwd";
+	}
+	@GetMapping("/changepwd2")
+	public String changePwd2Handler() {
+		return "changepwd2";
 	}
 	
 	@PostMapping("/changepwdProcess")
