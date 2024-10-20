@@ -1,5 +1,7 @@
 package com.project.model;
 
+import java.time.LocalDateTime;
+
 public class MemberDO {
 	
 	private int member_id;
@@ -12,6 +14,7 @@ public class MemberDO {
 	private String m_pfp;
 	private int m_status;
 	private int m_role;
+	private LocalDateTime deactivationDate;
 	
 	public MemberDO() {		
 
@@ -90,6 +93,14 @@ public class MemberDO {
 	}
 	public void setM_role(int m_role) {
 		this.m_role = m_role;
+	}
+
+	public LocalDateTime getDeactivationDate() {
+		return deactivationDate;
+	}
+
+	public void setDeactivationDate(LocalDateTime deactivationDate) {
+		this.deactivationDate = deactivationDate;
 	}
 
 }
