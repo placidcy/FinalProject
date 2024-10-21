@@ -2,22 +2,21 @@ import { Link } from "react-router-dom";
 import "../css/course_notice.css";
 import Sidebar_course from "./Sidebar_course";
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
 function CourseNotice_Main() {
 	const [data, setData] = useState("");
 	
-	
     fetch('http://localhost:8080/getCourseNoticePosts', {
-			method: "get", 
+			method: "GET",
 			headers: {
-				 "Content-Type": "application/json"
-			}
+				 "Content-Type": "application/json",
+				 "Origin" : "http://localhost:3000"
+				 
+			},
 		}
 	).then((result) => {setData(result.json())})
 	.catch(error => console.log(error));
-	
-	
-	console.log(data);
 	
 	return (
 		<div id="container">
