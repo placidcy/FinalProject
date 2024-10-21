@@ -158,7 +158,7 @@ public class CourseDAO {
 		this.sql = "select c_name from final_course where course_id=?";
 		return this.jdbcTemplate.queryForObject(sql,String.class, course_id);
 	}
-}
+
 
 	/* 페이징용 메서드 추가 */
 	public String setPaging(String sql, int startNum, int endNum) {
