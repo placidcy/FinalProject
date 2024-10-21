@@ -18,8 +18,22 @@
     <link rel="stylesheet" href="/resources/css/request.css" />
     <link rel="stylesheet" href="/resources/css/member.css" />
     <!-- 자바스크립트 -->
-    <script src="/resources/js/findDialog.js"></script>
     <script src="/resources/js/buttonLocation.js"></script>
+    <script>
+    // 페이지 로딩 시 result 값이 있을 경우 모달 열기
+    window.onload = function() {
+        var result = "${result}"; // 서버에서 받은 result 값
+        if (result) {
+            // 모달 열기
+            document.getElementById('resultModal').showModal();
+        }
+    };
+
+    // 모달 닫기 버튼
+    document.querySelector(".exit").onclick = function() {
+        document.getElementById('resultModal').close();
+    };
+</script>
 </head>
 <body>
     <div id="container">
@@ -40,7 +54,7 @@
 				</div>
 				<div id="bottom">
 					<button type="submit" id="submitBtn">찾기</button>
-					<button id="cancelBtn">취소</button>
+					<button type="button" id="cancelBtn">취소</button>
 				</div>
 			</form>
 			<dialog>

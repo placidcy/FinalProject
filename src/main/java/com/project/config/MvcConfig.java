@@ -14,9 +14,24 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authCheckInterceptor()).excludePathPatterns("/login", "/loginProcess", "/agreement",
-				"/agreementForm", "/signupForm", "/signupProcess", "/findcheck", "/findid", "findidProcess", "/findpwd",
-				"/findpwdProcess", "/changepwd", "/resources/**", "/checkM_acctidDuplicate", "/checkM_emailDuplicate");
+		registry.addInterceptor(authCheckInterceptor())
+		.excludePathPatterns(
+				"/login",
+				"/loginProcess",
+				"/agreement",
+				"/agreementForm",
+				"/signupForm",
+				"/signupProcess",
+				"/findcheck",
+				"/findid",
+				"findidProcess",
+				"/findpwd",
+				"/findpwdProcess",
+				"/changepwd",
+				"/changepwdProcess",
+				"/resources/**",
+				"/checkM_acctidDuplicate", 
+				"/checkM_emailDuplicate");
 	}
 
 	@Bean
