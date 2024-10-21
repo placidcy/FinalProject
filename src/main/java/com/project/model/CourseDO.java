@@ -15,6 +15,9 @@ public class CourseDO {
 	private int c_absscore;
 	private int c_trdscore;
 	
+	private String c_sdateFormatted;
+    private String c_edateFormatted;
+	
 	
 	public CourseDO() {	
 	}
@@ -89,10 +92,24 @@ public class CourseDO {
 	public void setC_trdscore(int c_trdscore) {
 		this.c_trdscore = c_trdscore;
 	}
-	 public String getCategoryTitle() {
-	     return categoryTitle;
+	public String getCategoryTitle() {
+		return categoryTitle;
 	}
-	 public void setCategoryTitle(String categoryTitle) {
+	public void setCategoryTitle(String categoryTitle) {
 	    this.categoryTitle = categoryTitle;
-	    }
+    }
+
+
+	public String getC_sdateFormatted() {
+		return c_sdateFormatted;
 	}
+	public void setC_sdateFormatted(String c_sdateFormatted) {
+		this.c_sdateFormatted = c_sdateFormatted;
+	}
+	public String getC_edateFormatted() {
+		return c_edateFormatted;
+	}
+	public void setC_edateFormatted(String c_edateFormatted) {
+		this.c_edateFormatted = c_edateFormatted;
+	}
+}
