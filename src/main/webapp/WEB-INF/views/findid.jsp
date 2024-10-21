@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/resources/css/member.css" />
     <!-- 자바스크립트 -->
     <script src="/resources/js/findDialog.js"></script>
+    <script src="/resources/js/buttonLocation.js"></script>
 </head>
 <body>
     <div id="container">
@@ -34,8 +35,8 @@
 				</div>
 				<div id="middle">
 					<input type="hidden" name="m_role" value="${param.m_role}"/>
-					<input type="text" name="m_name" id="m_name" placeholder="이름 입력" required/>
-					<input type="email" name="m_email" id="m_email" placeholder="이메일 입력" required/>
+					<input type="text" name="m_name" id="m_name" placeholder="이름 입력" />
+					<input type="email" name="m_email" id="m_email" placeholder="이메일 입력" />
 				</div>
 				<div id="bottom">
 					<button type="submit" id="submitBtn">찾기</button>

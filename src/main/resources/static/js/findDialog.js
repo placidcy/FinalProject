@@ -22,9 +22,11 @@ function dialogHandler() {
 			event.preventDefault();
 			dialog.showModal();
 			
+			/*
 			impleBtn.addEventListener('click', ()=>{
 				form.submit();
 			});
+			*/
 		}
 	});
 	

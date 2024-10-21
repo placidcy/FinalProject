@@ -26,7 +26,8 @@ public class MemberSO {
 		
 		newMember.setMember_id(req.getMember_id());
 		newMember.setM_acctid(req.getM_acctid());
-		newMember.setM_acctpwd(bCryptPasswordEncoder.encode(req.getM_acctpwd())); // 비밀번호 해싱
+//		newMember.setM_acctpwd(bCryptPasswordEncoder.encode(req.getM_acctpwd())); // 비밀번호 해싱
+		newMember.setM_acctpwd(req.getM_acctpwd()); //테스트용
 		newMember.setM_name(req.getM_name());
 		newMember.setM_email(req.getM_email());
 		newMember.setM_tel(req.getM_tel());
@@ -90,5 +91,22 @@ public class MemberSO {
 	public int updateM_acctpwd(MemberDO member) {
 		return memberDao.updatePassword(member);
 	}
+	
+	public int updateM_email(MemberDO member) {
+		return memberDao.updateEmail(member);
+	}
+	
+	public int updateM_statusAndDate(MemberDO member) {
+		return memberDao.updateMemberStatus(member);
+	}
+
+	public int checkM_status(int member_id) {
+		return memberDao.checkM_status(member_id);
+	}
+
+	public void updateMemberStatusToActive(int member_id) {
+		memberDao.updateStatus(member_id, 1);
+	}
+
 	
 }

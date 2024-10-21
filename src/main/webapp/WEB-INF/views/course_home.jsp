@@ -24,7 +24,7 @@
             <div id="homeBox">
                 <div class="course-notice-title">
                     <h3>공지 목록</h3>
-                    <a href="">
+                    <a href="<c:url value='/' />">
                         <span>더보기</span>
                     </a>
                 </div>
@@ -46,9 +46,9 @@
                 <h3>강의 링크</h3>
                 <div id="courseLinkBox">
                     <div id="linkContent">
-                        <h3>HTML의 기초</h3>
-                        <h4>설명: </h4>
-                        <h4>기간: 2024.03.12~2024.06.30</h4>
+                        <h3>${c_name}</h3>
+                        <h4>설명: ${c_desc}</h4>
+                        <h4>기간: ${c_sdate} ~ ${c_edate}</h4>
                     </div>
 
                     <div id="linkBtnBox">

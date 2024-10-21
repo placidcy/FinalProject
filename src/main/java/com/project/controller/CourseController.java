@@ -39,14 +39,21 @@ public class CourseController {
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
 		
+		CourseDO course= courseDAO.getCourseScore(3); //추후변경
+		
+		model.addAttribute("c_name", course.getC_name());
+		model.addAttribute("c_desc", course.getC_edate());
+		model.addAttribute("c_sdate", course.getC_sdate());
+		model.addAttribute("c_edate", course.getC_edate());
+		
 		model.addAttribute("menu", "home");
 		return "course_home";
 	}
 
-	@GetMapping("/alert")
-	public String alertHandler() {
-		return "alert";
-	}
+//	@GetMapping("/alert")
+//	public String alertHandler() {
+//		return "alert";
+//	}
 	
 	@GetMapping("acceptanceManagement")
 	public String acceptance_managementHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage, HttpSession session, Model model) {
