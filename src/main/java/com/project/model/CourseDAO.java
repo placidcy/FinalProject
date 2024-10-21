@@ -108,4 +108,8 @@ public class CourseDAO {
 		}, student_id);
 	}
 
+	public String getCourseName(int course_id) {
+		this.sql = "select c_name from final_course where course_id=?";
+		return this.jdbcTemplate.queryForObject(sql,String.class, course_id);
+	}
 }
