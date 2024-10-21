@@ -1,0 +1,159 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	font-family: Inter, sans-serif;
+}
+
+.header {
+	display: flex;
+	position: absolute;
+	top: 22px;
+}
+
+.button {
+	width: 146px;
+	height: 90px;
+	background: #fff;
+	border: 1px solid #d9d9d9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #97999c;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.button.active {
+	background: #87c689;
+	color: #fff;
+}
+
+.notice_write_button {
+	width: 150px;
+	height: 60px;
+	padding: 15px;
+	background: #fff;
+	font-weight: bold;
+	font-size: 24px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: auto;
+	color: #000;
+}
+
+main>* {
+	margin-block-end: 30px;
+}
+
+main {
+	position: relative;
+	width: 75%;
+	padding: 25px;
+	background-color: #f2f2f2;
+}
+
+a {
+	text-decoration: none;
+}
+
+.announcement {
+	background: #fff;
+}
+
+.item {
+	border: 1px solid #d9d9d9;
+	padding: 20px;
+}
+
+.title {
+	display: block;
+	margin-bottom: 15px;
+	font-weight: bold;
+	font-size: 20px;
+	color: #000;
+}
+
+.date, .content {
+	display: block;
+	margin-bottom: 15px;
+	font-size: 16px;
+	color: #000;
+}
+
+.attachment {
+	position: absolute;
+	bottom: 20px;
+	left: 401px;
+	width: 985px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.label {
+	color: #000;
+	font-size: 16px;
+}
+
+.count {
+	color: #87c689;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+#course {
+	width: 18%;
+}
+
+.notice_write_button_mobile {
+	height: 60px;
+	padding: 15px;
+	background: #fff;
+	font-weight: bold;
+	font-size: 24px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: auto;
+	margin-top: -8%;
+	color: #000;
+	margin-top: 7%;
+}
+
+@media ( min-width : 769px) {
+	.notice_write_button_mobile {
+		display: none;
+	}
+	h3 {
+		margin-top: 20px;
+	}
+}
+
+@media ( max-width : 768px) {
+	.notice_write_button {
+		display: none;
+	}
+	.header {
+		margin-top: -22px;
+		width: 100%;
+	}
+	.header>.button {
+		width: 25%;
+	}
+	.announcement {
+		top: 89px;
+		width: 100%;
+	}
+	.notice_write_button_mobile {
+		position: fixed;
+		bottom: 5px;
+		left: 11px;
+		width: 97%;
+	}
+}
