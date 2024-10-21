@@ -102,6 +102,9 @@ public class MemberDAO {
 	}
 	
 	public int insertMember(MemberDO member) {
+	    if (member.getM_acctpwd() == null || member.getM_acctpwd().isEmpty()) {
+	        member.setM_acctpwd("defaultPassword"); 
+	    }
 		this.sql = "insert into final_member (member_id, m_acctid, m_acctpwd, m_name, m_email, m_tel, m_dept, m_status, m_role) "
 				+ "values (seq_member_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {

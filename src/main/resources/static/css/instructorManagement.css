@@ -63,8 +63,16 @@
 }
 
 .issueBtn {
-	width: 90px;
-	height: 40px;
+    background-color: #87C791;
+    width: 90px;
+    height: 40px;
+    border: none;
+    border-radius: 10px; 
+    transition: background-color 0.3s;
+}
+
+.issueBtn:hover {
+    background-color: #76b682; 
 }
 
 .inputArea {

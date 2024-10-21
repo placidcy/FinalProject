@@ -79,13 +79,16 @@ public class AdminController {
             newInstructor.setM_dept(department);
             newInstructor.setM_tel(tel);
             newInstructor.setM_role(1); 
+            newInstructor.setM_acctid("null");
+            newInstructor.setM_acctpwd("null");
 
             memberDao.insertMember(newInstructor);
 
             return "{\"success\": true}";
         } catch (Exception e) {
+            e.printStackTrace();  // 예외 발생 시 오류 원인 출력
             return "{\"success\": false}";
         }
     }
 
-}        
+}      
