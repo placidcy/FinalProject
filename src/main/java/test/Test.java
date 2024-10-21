@@ -37,10 +37,10 @@ public class Test {
 		MemberSO memberSo = new MemberSO();
 		
 		LocalDateTime dateTime = LocalDateTime.now();
-		LocalDateTime c_sdate = courseDao.getCourseDatebyStd(13).getC_sdate();
-		LocalDateTime c_edate =courseDao.getCourseDatebyStd(13).getC_edate();
+		LocalDateTime c_sdate = courseDao.getCourseDate(3).getC_sdate();
+		LocalDateTime c_edate =courseDao.getCourseDate(3).getC_edate();
 		
-		System.out.print(courseDao.getCourseDatebyStd(13));
+		System.out.print(courseDao.getCourseDate(3));
 
 	}
 
