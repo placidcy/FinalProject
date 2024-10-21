@@ -48,10 +48,31 @@
 }
 
 /* 게시글 관련 CSS 정의 */
-.post>.contents {
-	width: 100%;
-	padding: 0;
+.post {
+	display: grid;
+	justify-items: start;
+	padding: 20px;
+}
+
+.content {
+	display: grid;
+	justify-items: start;
+	font-size: 16px;
+	margin-bottom: 10px;
 	white-space: pre-wrap;
+}
+
+.attms li {
+	list-style-type: none;
+}
+
+.attms li a {
+	color: #3498db;
+	text-decoration: none;
+}
+
+.attms li a:hover {
+	text-decoration: underline;
 }
 
 @media screen and (max-width: 768px) {

@@ -7,7 +7,7 @@ public class PostItem {
 	private String postTitle;
 	private String postContents;
 	private String regdate;
-	private Array attachments;
+	private String attachments;
 
 	public PostItem() {
 	}
@@ -44,11 +44,11 @@ public class PostItem {
 		this.regdate = regdate;
 	}
 
-	public Array getAttachments() {
+	public String getAttachments() {
 		return attachments;
 	}
 
-	public void setAttachments(Array attachments) {
-		this.attachments = attachments;
+	public void setAttachments(String string) {
+		this.attachments = string;
 	}
 }

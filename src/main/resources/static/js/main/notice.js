@@ -4,20 +4,44 @@
 
 let currentId = -1;
 
+function getFileNameFromUrl(url) {
+	// URL의 마지막 부분을 추출하여 파일 이름을 반환합니다.
+	return url.substring(url.lastIndexOf('/') + 1);
+}
+
 function createPost(item) {
-	let post = document.createElement('div');
-	let contents = document.createElement('pre');
+	const post = document.createElement('div');
+	const contents = document.createElement('pre');
+	const attms = document.createElement('ul');
 
 	post.classList.add('post');
-	contents.classList.add('contents');
+	contents.classList.add('content');
+	attms.classList.add('attms');
 
 	if (item.postContents === null) {
 		item.postContents = '';
 	}
 
-	contents.innerHTML = item.postContents.trim() !== '' ? item.postContents : '(내용 없음)';
+	if (item.attachments != null) {
+		let attachments = item.attachments.split(',');
+		for (let attm of attachments) {
+			let li = document.createElement('li');
+			let a = document.createElement('a');
+
+			a.innerHTML = '[첨부파일] ' + getFileNameFromUrl(attm);
+			a.href = attm;
+			a.download = getFileNameFromUrl(attm);
+
+			li.appendChild(a);
+			attms.appendChild(li);
+		}
+	}
+
+	contents.innerHTML = item.postContents.trim() !== '' ? item.postContents : item.postTitle;
 
 	post.appendChild(contents);
+	post.appendChild(document.createElement('hr'));
+	post.appendChild(attms);
 
 	return post;
 }

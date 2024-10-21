@@ -29,7 +29,7 @@ public class NoticeItemDAO extends ItemDAO {
 				noticeItem.setNoticeTitle(rs.getString("p_title"));
 				noticeItem.setRegdate(rs.getString("p_regdate"));
 				noticeItem.setNoticeContents(rs.getString("p_contents"));
-				noticeItem.setAttachments(rs.getArray("p_attms"));
+				noticeItem.setAttachments(rs.getString("p_attms"));
 
 				return noticeItem;
 			}
