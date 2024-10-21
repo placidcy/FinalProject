@@ -14,7 +14,7 @@ function Sidebar_course() {
 
 	return (
 		<>
-			<aside>
+			<aside class="sidebar">
 				<div className="course-sidebar-left">
 					<ul className="sidebar-menu">
 						<li>
