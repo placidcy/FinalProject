@@ -26,11 +26,6 @@
                 </a>
             </li>
             <li>
-                <a href="/alert">
-                    <img class="sidebar-icon" src="/resources/img/alert.png" alt="">
-                </a>
-            </li>
-            <li>
                 <a href="/notice">
                     <img class="sidebar-icon" src="/resources/img/notice.png" alt="">
                 </a>
@@ -85,7 +80,6 @@
 	            <li><a href="/">코스</a></li>
 	            <li>출석 체크</li>
 	            <li><a href="register">수강 신청</a></li>
-	            <li><a href="/alert">알림</a></li>
 	            <li><a href="/mypage">마이 페이지</a></li>
 				<li><a href="/notice">공지사항</a></li>
 	            <li><a href="/logout">로그아웃</a></li>
@@ -121,12 +115,10 @@
 				<li>강의 일정 관리</li></a>
 	        </ul>
 			
-
 			
 	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
-	            <li>출석 체크</li>
-	            <li><a href="/alert">알림</a></li>
+	            <li><a href="/main/checkin_i">출석 체크</a></li>
 				<li><a href="/mypage">마이 페이지</a></li>
 	            <li><a href="/notice">공지사항</a></li>
 	            <li><a href="/logout">로그아웃</a></li>
