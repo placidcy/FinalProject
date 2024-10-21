@@ -38,13 +38,20 @@ public class CourseController {
 
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		
-		CourseDO course= courseDAO.getCourseScore(3); //추후변경
+		Integer course_id = (Integer) session.getAttribute("currentId");  // 세션에서 course_id 가져옴
+	    if (course_id == null) {
+	        model.addAttribute("error", "강의 ID가 존재하지 않습니다.");
+	        return "error";
+	    }
+	    
+		CourseDO course= courseSO.getCourseDetails(course_id);
 		
 		model.addAttribute("c_name", course.getC_name());
-		model.addAttribute("c_desc", course.getC_edate());
-		model.addAttribute("c_sdate", course.getC_sdate());
-		model.addAttribute("c_edate", course.getC_edate());
+		model.addAttribute("c_desc", course.getC_desc());
+		model.addAttribute("c_sdate", course.getC_sdateFormatted());
+		model.addAttribute("c_edate", course.getC_edateFormatted());
 		
 		model.addAttribute("menu", "home");
 		return "course_home";
