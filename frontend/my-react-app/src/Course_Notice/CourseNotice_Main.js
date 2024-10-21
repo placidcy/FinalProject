@@ -23,7 +23,7 @@ function CourseNotice_Main() {
     }, []); // 빈 배열을 두 번째 인자로 사용하여 컴포넌트가 처음 렌더링될 때 한 번만 실행
 
     return (
-        <div class="container" id="container">
+        <div className="container" id="container">
             <Sidebar_course />
             <main class="contents">
                 <div className="header">
