@@ -39,4 +39,24 @@ public class AttendanceRestController {
 		
 	}
 	
+	@GetMapping("/getInstructorCalendar")
+	public List<AttendanceCalendar> getInstructorCalendarHandler(HttpSession session, Model model, @RequestParam(value="c_year") int c_year, @RequestParam(value="c_month") int c_month) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		List<AttendanceCalendar> attCal=null;
+		if(auth.getM_role()==2) {
+		
+		int course_id = (int) session.getAttribute("currentId");
+
+		
+		attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id), c_year, c_month);
+
+		model.addAttribute("menu", "courseAttend");
+
+		}
+		return attCal; 
+		
+	}
+	
+	
+	
 }

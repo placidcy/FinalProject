@@ -9,9 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.project.interceptor.*;
 
-
 @Configuration
-public class MvcConfig implements WebMvcConfigurer{
+public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -34,7 +33,7 @@ public class MvcConfig implements WebMvcConfigurer{
 				"/checkM_acctidDuplicate", 
 				"/checkM_emailDuplicate");
 	}
-	
+
 	@Bean
 	public AuthCheckInterceptor authCheckInterceptor() {
 		return new AuthCheckInterceptor();
@@ -43,10 +42,8 @@ public class MvcConfig implements WebMvcConfigurer{
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-		.allowedOrigins("http://localhost:3000")
-		.allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
-		.allowedHeaders("*")
-		.allowCredentials(true)
-		.maxAge(3600);
+				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000", "https://localhost:3000")
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS").allowedHeaders("*")
+				.allowCredentials(true).maxAge(3600);
 	}
 }
