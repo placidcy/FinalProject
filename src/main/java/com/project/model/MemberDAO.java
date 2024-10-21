@@ -1,5 +1,9 @@
 package com.project.model;
 
+import java.sql.Timestamp;
+
+import java.util.List;
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,9 +37,19 @@ public class MemberDAO {
 		return member;
 	}
 	
+	public int updateStatus(int member_id, int m_status) {
+	    String sql = "UPDATE FINAL_MEMBER SET M_STATUS = ? WHERE MEMBER_ID = ?";
+	    return this.jdbcTemplate.update(sql, m_status, member_id);
+	}
+	
 	public int checkM_role(int member_id) {
 		this.sql = "select m_role from final_member where member_id=?";
 		return this.jdbcTemplate.queryForObject(sql, int.class, member_id);
+	}
+	
+	public int checkM_status(int member_id) {
+	    String sql = "select m_status from final_member where member_id = ?";
+	    return this.jdbcTemplate.queryForObject(sql, Integer.class, member_id);
 	}
 	
 	// 중복된 아이디가 존재하면 true, 없으면 false
@@ -114,9 +128,10 @@ public class MemberDAO {
 	
 	public int updateMemberStatus(MemberDO member) {
 		this.sql = "update final_member "
-				+ "set m_status=?"
+				+ "set m_status=?, m_deactivation_date = ? "
 				+ "where member_id=?";
-		return this.jdbcTemplate.update(sql, member.getM_status(), member.getMember_id());
+		Timestamp timestamp = (member.getDeactivationDate() != null) ? Timestamp.valueOf(member.getDeactivationDate()) : null;
+		return this.jdbcTemplate.update(sql, member.getM_status(), timestamp, member.getMember_id());
 	}
 	
 	public int updateMemberProfileImg(MemberDO member) {
@@ -126,10 +141,15 @@ public class MemberDAO {
 		return this.jdbcTemplate.update(sql, member.getM_pfp());
 	}
 	
-	public int deleteMemberInfo(MemberDO member) {
-		this.sql = "delete from final_member "
-				+ "where member_id=?";
-		return this.jdbcTemplate.update(sql, member.getMember_id());
+	public int deleteMemberInfo() {
+		String sql = "delete from final_member "
+	               + "where m_status=0 and m_deactivation_date<sysdate-interval '5' MINUTE";
+	    return this.jdbcTemplate.update(sql);
 	}
 
+	
+	public List<MemberDO> getAllInstructors() {
+	    this.sql = this.sql = "select * from final_member where m_role = 1";
+	    return this.jdbcTemplate.query(sql, new MemberRowMapper());
+	}	
 }
