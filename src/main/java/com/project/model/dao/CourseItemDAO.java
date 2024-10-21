@@ -382,6 +382,16 @@ public class CourseItemDAO extends ItemDAO {
 		}
 	}
 
+	public int insertDailyRecords() {
+		this.sql = query.get("insertDailyRecords");
+		return this.getJdbcTemplate().update(sql, Integer.class);
+	}
+
+	public int updateDailyRecords() {
+		this.sql = query.get("updateDailyRecords");
+		return this.getJdbcTemplate().update(sql, Integer.class);
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
@@ -860,5 +870,46 @@ public class CourseItemDAO extends ItemDAO {
 				where course_id = ?
 				and student_id not in (select student_id from final_student_attend where a_date = trunc(sysdate))
 				""");
+
+		/* PL/SQL 대신 CRON을 이용하여 정오마다 실행되는 프로시져 */
+		this.query.put("updateDailyRecords", """
+				UPDATE final_student_attend
+				SET a_status =
+				  CASE
+				    WHEN (student_id, a_date) in (
+				      SELECT student_id, a_yesdate
+				      FROM final_schedule_yesterday fsy
+				      INNER JOIN final_course_student fcs ON fsy.course_id = fcs.course_id
+				      WHERE (nvl(a_couttime - a_cintime, 0) - nvl(a_rettime - a_souttime, 0)) * 24 < 4
+				    ) THEN 2
+				    WHEN (student_id, a_date) in (
+				      SELECT fcs.student_id, a_yesdate
+				      FROM final_schedule_yesterday fsy
+				      INNER JOIN final_course_student fcs ON fsy.course_id = fcs.course_id
+				      WHERE a_cintime <= s_cindatetime AND a_couttime >= s_coutdatetime
+				    ) THEN 1
+				    WHEN (student_id, a_date) in (
+				      SELECT student_id, a_yesdate
+				      FROM final_schedule_yesterday fsy
+				      INNER JOIN final_course_student fcs ON fsy.course_id = fcs.course_id
+				      WHERE a_cintime IS NOT NULL AND a_couttime < s_coutdatetime
+				    ) THEN 4
+				    WHEN (student_id, a_date) in (
+				      SELECT student_id, a_yesdate
+				      FROM final_schedule_yesterday fsy
+				      INNER JOIN final_course_student fcs ON fsy.course_id = fcs.course_id
+				      WHERE a_couttime IS NOT NULL AND a_cintime > s_cindatetime
+				    ) THEN 3
+				    ELSE 2
+				  END
+				WHERE a_date = TRUNC(SYSDATE-1)
+						""");
+		this.query.put("insertDailyRecords", """
+				INSERT INTO final_student_attend(student_id, a_date)
+				SELECT fcs.student_id AS student_id, trunc(sysdate)
+				FROM final_course_student fcs
+				INNER JOIN final_course fc ON fcs.course_id = fc.course_id
+				WHERE sysdate BETWEEN c_sdate AND c_edate AND fc.course_id IN (SELECT * FROM final_course_today)
+				  """);
 	}
 }
