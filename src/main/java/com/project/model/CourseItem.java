@@ -16,6 +16,7 @@ public class CourseItem {
 	private String qrCode;
 	private String qrRegdate;
 	private String qrEffdate;
+	private int qrEfftime;
 
 	public CourseItem() {
 
@@ -116,4 +117,18 @@ public class CourseItem {
 	public void setQrEffdate(String qrEffdate) {
 		this.qrEffdate = qrEffdate;
 	}
+
+	public int getQrEfftime() {
+		System.out.println(qrEfftime);
+		return qrEfftime;
+	}
+
+	public void setQrEfftime(int qrEfftime) {
+		this.qrEfftime = qrEfftime;
+	}
+
+	public void setInstList(List<String> instList) {
+		this.instList = instList;
+	}
+
 }

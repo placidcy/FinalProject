@@ -295,7 +295,7 @@ public class CourseItemDAO extends ItemDAO {
 
 					courseItem.setQrCode(rs.getString("q_code"));
 					courseItem.setQrRegdate(rs.getString("q_regdate"));
-					courseItem.setQrEffdate(rs.getString("q_effdate"));
+					courseItem.setQrEfftime(rs.getInt("q_efftime"));
 
 					return courseItem;
 				}
@@ -303,7 +303,7 @@ public class CourseItemDAO extends ItemDAO {
 
 			courseItem.setQrCode(qrData.getQrCode());
 			courseItem.setQrRegdate(qrData.getQrRegdate());
-			courseItem.setQrEffdate(qrData.getQrEffdate());
+			courseItem.setQrEfftime(qrData.getQrEfftime());
 		} catch (Exception e) {
 			System.out.println("예외: 현재 유효한 QR코드 없음");
 		}
@@ -809,19 +809,19 @@ public class CourseItemDAO extends ItemDAO {
 					fcq.COURSE_ID = fcs.COURSE_ID
 				WHERE
 					fcq.Q_CODE = ? AND fcs.STUDENT_ID = ?
-					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + NUMTODSINTERVAL(fcq.Q_EFFTIME, 'MINUTE')
 					""");
 
 		this.query.put("getQrCode", """
 				SELECT
 					q_code,
 					to_char(q_regdate, 'yyyy-mm-dd hh24:mi') q_regdate,
-					to_char(q_regdate + q_efftime/24/60, 'yyyy-mm-dd hh24:mi') q_effdate
+					q_efftime
 				FROM
 					FINAL_COURSE_QR fcq
 				WHERE
 					course_id = ?
-					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + fcq.Q_EFFTIME / 24 / 60
+					AND sysdate BETWEEN fcq.Q_REGDATE AND fcq.Q_REGDATE + NUMTODSINTERVAL(fcq.Q_EFFTIME, 'MINUTE')
 				""");
 		this.query.put("checkCourseConflicts", """
 				SELECT DISTINCT count(fcs.COURSE_ID)
