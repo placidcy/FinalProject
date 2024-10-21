@@ -20,6 +20,14 @@
  		</jsp:include>
         <main>
             <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="POST">
+            	<c:choose>
+            		<c:when test="${not empty member_id}">
+				        <c:set var="member_id" value="${member_id}" />
+				    </c:when>
+            		<c:when test="${not empty param.member_id}">
+				        <c:set var="member_id" value="${param.member_id}" />
+				    </c:when>
+            	</c:choose>
             	<input type="hidden" name="member_id" value="${member_id}" required />
                 <table>
                     <tr>

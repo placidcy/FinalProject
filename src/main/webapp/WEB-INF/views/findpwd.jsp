@@ -43,7 +43,6 @@
             	<div id="middle">
 	                <form id="findpwdProcess" action="<c:url value='/findpwdProcess' />" method="POST">
 	                	<input type="hidden" name="m_role" value="${param.m_role}"/>
-	                	<input type="hidden" name="member_id" value="${member_id}">
 	                    <input type="text" name="m_acctid" id="m_acctid" placeholder="아이디 입력" required />
 	                    <input type="email" name="m_email" id="m_email" placeholder="이메일 입력" required />
 	                </form>
