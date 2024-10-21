@@ -20,6 +20,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.project.model.CourseDAO;
 import com.project.model.CourseItem;
 import com.project.model.MessageItem;
 import com.project.model.NoticeItem;
@@ -39,12 +40,15 @@ public class MainController {
 	MainSO mainSO;
 	@Autowired
 	QrCodeSO qrSO;
+	@Autowired
+	CourseDAO courseDAO;
 
 	private String viewPath;
 
 	@GetMapping("/goCourseHome")
 	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
 		session.setAttribute("currentId", courseId);
+		session.setAttribute("courseName", courseDAO.getCourseName(courseId));
 
 		return "redirect:/home";
 	}
@@ -61,12 +65,12 @@ public class MainController {
 
 			if (memberRole == 1) {
 				model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
-				model.addAttribute("notice", mainSO.selectList(1, 5));
+				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 				viewPath = "main/index";
 			} else {
 				model.addAttribute("course", mainSO.selectByInstructorId(memberId, Integer.parseInt(page)));
-				model.addAttribute("notice", mainSO.selectList(1, 5));
+				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByInstructorId(memberId));
 				viewPath = "main/index_i";
 			}
@@ -99,8 +103,16 @@ public class MainController {
 			} else {
 				courseId = mainSO.checkCourseForCourseId(memberId);
 				if (courseId > 0) {
-					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
-					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+					try {
+						model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+					} catch (Exception e) {
+						System.out.println("정보 오류");
+					}
+					try {
+						model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+					} catch (Exception e) {
+						System.out.println("통계 오류");
+					}
 					viewPath = "main/checkin_i";
 				}
 			}

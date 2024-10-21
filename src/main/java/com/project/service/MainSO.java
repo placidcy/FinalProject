@@ -115,6 +115,12 @@ public class MainSO extends ItemSO {
 	}
 
 	public StatsItem getStatsByCourseId(int courseId) {
+		boolean attended = courseItemDAO.checkAttendStatus(courseId) > 0;
+		System.out.println(attended);
+		if (!attended) {
+			/* 만일 출석 데이터가 존재하지 않다면 */
+			courseItemDAO.initAttendance(courseId);
+		}
 		return courseItemDAO.getStatsByCourseId(courseId);
 	}
 

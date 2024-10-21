@@ -39,23 +39,31 @@ public class CourseController {
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
 		
+		int course_id = (int) session.getAttribute("currentId");
+		
+		CourseDO course= courseDAO.getCourseScore(course_id); 
+		
+		model.addAttribute("c_name", course.getC_name());
+		model.addAttribute("c_desc", course.getC_edate());
+		model.addAttribute("c_sdate", course.getC_sdate());
+		model.addAttribute("c_edate", course.getC_edate());
+		
 		model.addAttribute("menu", "home");
 		return "course_home";
 	}
 
-	@GetMapping("/alert")
-	public String alertHandler() {
-		return "alert";
-	}
+//	@GetMapping("/alert")
+//	public String alertHandler() {
+//		return "alert";
+//	}
 	
 	@GetMapping("acceptanceManagement")
 	public String acceptance_managementHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage, HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if(auth.getM_role()==2) {
 		
-		//int course_id = (int) session.getAttribute("course_id");
-		/*나중에 삭제할 것*/
-		int course_id=3;
+		int course_id = (int) session.getAttribute("currentId");
+
 		List<CourseReg> courseRegList = courseDAO.getCourseReg(course_id);
 		model.addAttribute("courseRegList", courseRegList);
 		model.addAttribute("acceptPage",acceptPage);
@@ -71,10 +79,8 @@ public class CourseController {
 	public String currentAttSearchHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage, HttpSession session, @RequestParam(value="searchType") String searchType, @RequestParam(value="searchText") String searchText, Model model) {
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-			//int course_id = (int) session.getAttribute("course_id");
-			/*나중에 삭제할 것*/
-				
-			int course_id = 3;
+			int course_id = (int) session.getAttribute("currentId");
+
 		
 			List<CourseReg> courseRegList = courseDAO.searchMemberReg(course_id, searchType, searchText);
 			model.addAttribute("courseRegList", courseRegList);
@@ -91,10 +97,8 @@ public class CourseController {
 	public String courseRegApproveHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage,@RequestParam(value="member_id") int member_id, HttpSession session){
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-			//int course_id = (int) session.getAttribute("course_id");
-			/*나중에 삭제할 것*/
-				
-			int course_id = 3;
+			int course_id = (int) session.getAttribute("currentId");
+
 			courseSO.approveStudent(course_id, member_id);
 			
 			return "redirect:/acceptanceManagement";
@@ -107,10 +111,8 @@ public class CourseController {
 	public String courseRegRejectHandler(@RequestParam(value="acceptPage", defaultValue="0") int acceptPage,@RequestParam(value="member_id") int member_id, HttpSession session){
 		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-			//int course_id = (int) session.getAttribute("course_id");
-			/*나중에 삭제할 것*/
-				
-			int course_id = 3;
+			int course_id = (int) session.getAttribute("currentId");
+;
 			courseDAO.rejectCourseReg(course_id, member_id);
 			
 			return "redirect:/acceptanceManagement";
@@ -128,9 +130,13 @@ public class CourseController {
 	public String courseAttendHandler(HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if(auth.getM_role()==2) {
-		model.addAttribute("menu", "courseAttend");
+			int course_id = (int) session.getAttribute("currentId");
+			
+			model.addAttribute("courseDay", attendanceDAO.getCourseDay(course_id));
+			model.addAttribute("courseDate", courseDAO.getCourseDate(course_id));
+			model.addAttribute("menu", "courseAttend");
 		
-		return "course_attend";
+			return "course_attend";
 		}
 		return "redirect:/" ;
 	}

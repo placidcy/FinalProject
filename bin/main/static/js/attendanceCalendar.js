@@ -47,6 +47,7 @@ function submitHandler(){
 
 }
 
+
 function dialogHandler2(){
 	let dialog = document.querySelector('#modal');
 	let submitBtn = document.querySelector('#submitBtn');

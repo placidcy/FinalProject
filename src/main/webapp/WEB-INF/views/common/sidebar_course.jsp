@@ -10,26 +10,25 @@
                     <img class="sidebar-icon" src="/resources/img/mypage.png" alt="">
                 </a>
             </li>
-            <li>
+			<li>
                 <a href="/">
                     <img class="sidebar-icon" src="/resources/img/course.png" alt="">
                 </a>
             </li>
-            <li>
-                <a href="">
-                    <img class="sidebar-icon" src="/resources/img/attend.png" alt="">
-                </a>
-            </li>
-            <li>
-                <a href="/register">
-                    <img class="sidebar-icon" src="/resources/img/register.png" alt="">
-                </a>
-            </li>
-            <li>
-                <a href="/alert">
-                    <img class="sidebar-icon" src="/resources/img/alert.png" alt="">
-                </a>
-            </li>
+			<li>
+			    <a href="/checkin">
+			        <img class="sidebar-icon" src="/resources/img/attend.png" alt="">
+			    </a>
+			</li>
+
+			<c:if test="${auth.m_role==1}">
+	            <li>
+	                <a href="/register">
+	                    <img class="sidebar-icon" src="/resources/img/register.png" alt="">
+	                </a>
+	            </li>
+			</c:if>
+
             <li>
                 <a href="/notice">
                     <img class="sidebar-icon" src="/resources/img/notice.png" alt="">
@@ -45,14 +44,16 @@
 
     <div class="course-sidebar-right">
         <div class="sidebar-logo">
-            <a href="home"><h1>CHECK</h1></a>
-            <h3>HTML의 기초</h3>
+            <a href="/"><h1>CHECK</h1></a>
+            <h3>${courseName}</h3>
+
                 <hr>
         </div>
 
         <div id="mobile-menu">
             <h1 id="backBtn">◀</h1>
-            <p class="menuName" >HTML의 기초</p>
+            <p class="menuName" >${courseName}</p>
+
             <div id="mobile-menu-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                     <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round"
@@ -83,7 +84,6 @@
 	            <li><a href="/">코스</a></li>
 	            <li>출석 체크</li>
 	            <li><a href="register">수강 신청</a></li>
-	            <li><a href="/alert">알림</a></li>
 	            <li><a href="/mypage">마이 페이지</a></li>
 				<li><a href="/notice">공지사항</a></li>
 	            <li><a href="/logout">로그아웃</a></li>
@@ -119,12 +119,10 @@
 				<li>강의 일정 관리</li></a>
 	        </ul>
 			
-
 			
 	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
-	            <li>출석 체크</li>
-	            <li><a href="/alert">알림</a></li>
+	            <li><a href="/main/checkin_i">출석 체크</a></li>
 				<li><a href="/mypage">마이 페이지</a></li>
 	            <li><a href="/notice">공지사항</a></li>
 	            <li><a href="/logout">로그아웃</a></li>

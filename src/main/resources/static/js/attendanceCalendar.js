@@ -38,14 +38,7 @@ function dialogHandler(a_status, req_type, r_status, date){
 	
 }
 
-function submitHandler(){
 
-	
-
-	
-
-
-}
 
 function dialogHandler2(){
 	let dialog = document.querySelector('#modal');

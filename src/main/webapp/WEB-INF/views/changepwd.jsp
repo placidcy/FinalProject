@@ -13,30 +13,13 @@
 </head>
 <body>
     <div id="container">
-<!--     
-        <header>
-            <div id="header1">
-                <a href="#">
-                    <h1>CHECK</h1>
-                </a>
-            </div>
-            <div id="header2">
-                <p>비밀번호 재설정</p>
-                <hr>
-                <div id="header2msg">
-                    <img class="lockImg" src="resources/img/lock.png" />
-                    <span>비밀번호를 변경할 수 있습니다.</span>
-                </div>
-            </div>
-        </header>
- -->
  		<jsp:include page="common/find_header.jsp">
  			<jsp:param name="headerType" value="content" />
  			<jsp:param name="pageTitle" value="비밀번호 재설정"/>
         	<jsp:param name="pageContent" value="비밀번호를 변경할 수 있습니다."/>
  		</jsp:include>
         <main>
-            <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="Post">
+            <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="POST">
             	<input type="hidden" name="member_id" value="${member_id}" required />
                 <table>
                     <tr>

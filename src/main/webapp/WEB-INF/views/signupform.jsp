@@ -14,19 +14,6 @@
 </head>
 <body>
     <div id="container">
-<!--     
-        <header>
-            <div id="header1">
-                <a href="#">
-                    <h1>CHECK</h1>
-                </a>
-            </div>
-            <div id="header3">
-                <p>회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span></p>
-                <hr>
-            </div>
-        </header>
- -->
 		<jsp:include page="common/find_header.jsp">
  			<jsp:param name="headerType" value="noContent" />
  			<jsp:param name="pageTitle" value="회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span>"/>

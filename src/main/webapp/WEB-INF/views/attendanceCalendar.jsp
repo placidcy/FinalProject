@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>출결 캘린더</title>
     <link rel="stylesheet" href="/resources/css/course_mu.css">
     <link rel="stylesheet" href="/resources/css/attendanceCalendar.css">
     <link rel="stylesheet" href="/resources/css/requestDialog.css">
@@ -85,7 +85,7 @@
             </table>
 			
             <div id="calendarExplain">
-                출결 정정 요청 또는 공가 요청 날짜를 클릭/드래그 해 주세요.
+                출결 정정 요청 또는 공가 요청 날짜를 클릭해 주세요.
             </div>  
             
         </main>
