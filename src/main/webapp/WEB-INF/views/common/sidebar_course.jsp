@@ -10,21 +10,25 @@
                     <img class="sidebar-icon" src="/resources/img/mypage.png" alt="">
                 </a>
             </li>
-            <li>
+			<li>
                 <a href="/">
                     <img class="sidebar-icon" src="/resources/img/course.png" alt="">
                 </a>
             </li>
-            <li>
-                <a href="">
-                    <img class="sidebar-icon" src="/resources/img/attend.png" alt="">
-                </a>
-            </li>
-            <li>
-                <a href="/register">
-                    <img class="sidebar-icon" src="/resources/img/register.png" alt="">
-                </a>
-            </li>
+			<li>
+			    <a href="/checkin">
+			        <img class="sidebar-icon" src="/resources/img/attend.png" alt="">
+			    </a>
+			</li>
+
+			<c:if test="${auth.m_role==1}">
+	            <li>
+	                <a href="/register">
+	                    <img class="sidebar-icon" src="/resources/img/register.png" alt="">
+	                </a>
+	            </li>
+			</c:if>
+
             <li>
                 <a href="/notice">
                     <img class="sidebar-icon" src="/resources/img/notice.png" alt="">
