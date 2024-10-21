@@ -126,30 +126,44 @@ function setButtons() {
 
 function calculateTimer(duration, display) {
 	let timer = duration, hours, minutes, seconds;
-	setInterval(function() {
-		hours = Math.floor(timer / 3600);
-		minutes = Math.floor((timer % 3600) / 60);
-		seconds = Math.floor(timer % 60);
 
-		hours = hours < 10 ? "0" + hours : hours;
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? "0" + seconds : seconds;
+	const timerPromise = new Promise((resolve) => {
+		const interval = setInterval(() => {
+			hours = Math.floor(timer / 3600);
+			minutes = Math.floor((timer % 3600) / 60);
+			seconds = Math.floor(timer % 60);
 
-		display.textContent = hours + "시 " + minutes + "분 " + seconds + "초";
+			hours = hours < 10 ? "0" + hours : hours;
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
 
-		if (--timer < 0) {
-			timer = 0;
-		}
-	}, 1000);
+			display.textContent = hours + "시 " + minutes + "분 " + seconds + "초";
+
+			if (--timer < 0) {
+				clearInterval(interval);
+				resolve();
+			}
+		}, 1000);
+	});
+
+	timerPromise.then(() => {
+		alert('QR코드 유효기간이 만료되어 페이지를 새로고침 합니다.');
+		window.location.reload();
+	});
 }
 
 function setTimer() {
 	const display = document.querySelector('#timeLimit');
+
 	const startTime = new Date();
-	const endTime = new Date(display.dataset.end);
+
+	const endDate = new Date(display.dataset.date);
+	const endLimitMillis = parseInt(display.dataset.limit) * 60 * 1000;
+
+	const endTime = new Date(endDate.getTime() + endLimitMillis);
 	const duration = (endTime - startTime) / 1000;
 
-	calculateTimer(duration, display)
+	calculateTimer(duration, display);
 }
 
 function setFloatingIcon() {
@@ -188,9 +202,21 @@ function setDday() {
 }
 
 function init() {
-	setDday();
-	setChart();
-	setButtons();
+	try {
+		setDday();
+	} catch (e) {
+		console.error('디데이 설정 과정에서 오류가 발생하였습니다.');
+	}
+	try {
+		setChart();
+	} catch (e) {
+		console.error('출석 차트 설정 과정에서 오류가 발생하였습니다.');
+	}
+	try {
+		setButtons();
+	} catch (e) {
+		console.error('버튼 설정 과정에서 오류가 발생하였습니다.');
+	}
 	try {
 		setTimer();
 	} catch (e) {

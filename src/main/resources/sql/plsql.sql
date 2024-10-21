@@ -1,3 +1,7 @@
+/* 프로시져 제거 구문 */
+DROP PROCEDURE pro_s_attend_autocreate;
+DROP PROCEDURE pro_s_attend_autoupdate;
+
 -- 데이터 유형을 변형시키기 위해 관련 데이터 삭제
 UPDATE FINAL_STUDENT_ATTEND
 SET A_CINTIME = NULL, A_COUTTIME = NULL, A_RETTIME = NULL, A_SOUTTIME = NULL;
@@ -38,6 +42,7 @@ WHERE
 		WHEN TO_CHAR(SYSDATE, 'D') = 7 THEN d_sat
 	END = 1;
 	
+/*
 -- 자정이 되면 금일 출석 데이터를 새로 추가하는 프로시져 생성문
 CREATE OR REPLACE PROCEDURE pro_s_attend_autocreate AS
 BEGIN
@@ -110,3 +115,4 @@ BEGIN
   /
   
  COMMIT;
+ * */
