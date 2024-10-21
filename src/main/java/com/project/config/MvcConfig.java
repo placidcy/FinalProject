@@ -29,7 +29,6 @@ public class MvcConfig implements WebMvcConfigurer{
 				"/findpwd",
 				"/findpwdProcess",
 				"/changepwd",
-				"/changepwd2",
 				"/changepwdProcess",
 				"/resources/**",
 				"/checkM_acctidDuplicate", 
