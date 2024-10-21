@@ -1,25 +1,7 @@
 let today;
 
-function getDateText(req_type, r_status){
-	if(req_type==1){
-		if(r_status == 1){
-			return '정정 요청 승인';
-		}else if(r_status == 2){
-			return '정정 요청 거절';
-		}else{
-			return '정정 요청 진행 중';
-		}
-	}else if(req_type==2){
-		if(r_status == 1){
-			return '공가 요청 승인';
-		}else if(r_status == 2){
-			return '공가 요청 거절';
-		}else{ 
-			return '공가 요청 진행 중';
-		}
-	}else{
-		return '';
-	}
+function getDateText(){
+	
 	
 }
 

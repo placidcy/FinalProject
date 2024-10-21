@@ -21,48 +21,38 @@
        <jsp:include page="common/sidebar_course.jsp" />
 
         <main>
-            <div class="calendar">
-                <div class="calendar-header">
-                    <span class="prev-month">◀</span>
-                    <span class="current_month">2024.08</span>
-                    <span class="next-month">▶</span>
-                    <span class="today">오늘</span>
-                </div>
-                <div class="calendar-body">
-                    <div class="day-names">
-                        <span class="day-name">일</span>
-                        <span class="day-name">월</span>
-                        <span class="day-name">화</span>
-                        <span class="day-name">수</span>
-                        <span class="day-name">목</span>
-                        <span class="day-name">금</span>
-                        <span class="day-name">토</span>
-                    </div>
-                    <div class="month">
-                        <div class="weeks">
-                            <span class="prev-day sun">28</span>
-                            <span class="prev-day">29</span>
-                            <span class="prev-day">30</span>
-                            <span class="prev-day">31</span>
-                            <span class="day">1</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">3</span>
-                        </div>
+			<div id="calendarHeader">
+	            <div id="dateBox">
+					<button class="switchBox" id="leftMonth">◀</button><span id="yearMonth"></span><button class="switchBox" id="rightMonth">▶</button><button id="todayBox">오늘</button>
+				</div>
+			</div>
 
-                        <div class="weeks">
-                            <span class="day sun">4</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                                <span class="students">손흥민, 이영자</span>
-                            </div>
-						</div>
+
+			<div id="dayBox">
+				<div class="day">일</div>
+				<div class="day">월</div>
+				<div class="day">화</div>
+				<div class="day">수</div>
+				<div class="day">목</div>
+				<div class="day">금</div>
+				<div id="saturday">토</div>
+			</div>
+			
+			<input type="hidden" id="c_sdate" value="${courseDate.c_sdate}" />
+            <input type="hidden" id="c_edate" value="${courseDate.c_edate}" />
+			<input type="hidden" id="d_mon" value="${courseDay.d_mon}" />
+			<input type="hidden" id="d_tue" value="${courseDay.d_tue}" />
+			<input type="hidden" id="d_wed" value="${courseDay.d_wed}" />
+			<input type="hidden" id="d_thu" value="${courseDay.d_thu}" />
+			<input type="hidden" id="d_fri" value="${courseDay.d_fri}" />
+			
+            <table id="calendarBox">
+                          
+            </table>
+					
                          
-                    </div>
-                </div>
-            </div>
-            <div class="attend_write_button">일정 등록 날짜를 클릭해 주세요.</div>
+                    
+            <div id="calendarExplain">일정 등록 날짜를 클릭해 주세요.</div>
         </main>
     </div>
 
