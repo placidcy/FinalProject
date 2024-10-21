@@ -10,6 +10,7 @@
     <title>CHECK-비밀번호 재설정</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/changepwd.css" />
+    <script src="resources/js/changepwdValid.js"></script>
 </head>
 <body>
     <div id="container">
@@ -35,8 +36,9 @@
                             <label for="newpwd">새 비밀번호</label>
                         </th>
                         <td>
-                            <input type="password" name="newpwd" id="newpwd" required />
+                            <input type="password" name="newpwd" id="newpwd" />
                             <p>새 비밀번호를 영문(대/소문자)과 숫자, 특수문자 중 3가지의 조합 8~24자로 입력하세요.</p>
+                            <p id="passerr"></p>
                         </td>
                     </tr>
                     <tr>
@@ -44,14 +46,15 @@
                             <label for="confirmpwd">새 비밀번호 확인</label>
                         </th>
                         <td>
-                            <input type="password" name="confirmpwd" id="confirmpwd" required />
-                            <p>새 비밀번호를 다시 입력하세요.</p>
+                            <input type="password" name="confirmpwd" id="confirmpwd" />
+                            <p id="cfmmsg">새 비밀번호를 다시 입력하세요.</p>
+                            <p id="cfmerr"></p>
                         </td>
                     </tr>
                 </table>
 	            <hr />
 	            <div class="btn">
-	                <button id="cancelBtn">취소</button>
+	                <button type="button" id="cancelBtn">취소</button>
 	                <button type="submit" id="submitBtn">변경</button>
 	            </div>
             </form>
