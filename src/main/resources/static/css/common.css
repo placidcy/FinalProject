@@ -262,6 +262,7 @@ a {
 /* 본문 관련 스타일 정의 */
 .contents {
 	padding: 50px;
+	overflow: auto; /* 높이가 넘칠 때 스크롤바 추가 */
 }
 
 /* 버튼 관련 스타일 정의 */
@@ -402,7 +403,7 @@ a {
 	.menulist.show {
 		display: inherit;
 	}
-	.container > .contents {
+	.container>.contents {
 		min-height: 100vh;
 		padding: 30px;
 		margin: 0 !important;
