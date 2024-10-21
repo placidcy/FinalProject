@@ -17,15 +17,7 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
-<style>
-.container {
-	gap: 0;
-}
 
-.contents {
-	overflow-y: auto; /* 내용이 넘어가면 세로 스크롤바 추가 */
-}
-</style>
 </head>
 
 <body>

@@ -68,10 +68,10 @@ public class AdminController {
     @PostMapping("/issueInstructorId")
     @ResponseBody
     public String issueInstructorHandler(
-            @RequestParam("name") String name,
-            @RequestParam("email") String email,
-            @RequestParam("department") String department,
-            @RequestParam("tel") String tel) {
+    		@RequestParam("name") String name,
+    		@RequestParam("email") String email,
+    		@RequestParam("department") String department,
+    		@RequestParam("tel") String tel) {
         try {
             MemberDO newInstructor = new MemberDO();
             newInstructor.setM_name(name);

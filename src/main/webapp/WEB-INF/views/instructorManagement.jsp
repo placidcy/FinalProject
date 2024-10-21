@@ -6,11 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>강사 관리 페이지</title>
-
-<link rel="stylesheet" href="/resources/css/dialog.css">
 <link rel="stylesheet" href="/resources/css/admin_aside.css">
 <link rel="stylesheet" href="/resources/css/instructorManagement.css">
-
+<link rel="stylesheet" href="/resources/css/instructorDialog.css">
+<link rel="stylesheet" href="/resources/css/search.css">
 <link rel="stylesheet" as="style" crossorigin
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/resources/js/instructorManagement.js" defer></script> 
@@ -64,7 +63,7 @@
                                     <td>${instructor.m_name}</td>
                                     <td>${instructor.m_dept}</td>
                                     <td>${instructor.courseName}</td> 
-                                    <td><a href="mailto:${instructor.m_email}">${instructor.m_email}</a></td>
+                                    <td>${instructor.m_email}</td>
                                     <td>${instructor.m_acctid}</td>
                                 </tr>
                             </c:forEach>
@@ -76,27 +75,32 @@
 				<dialog id="issueInstructorModal">
 				    <div class="modal-top flex cen">
 				        <span class="close-button exit" id="closeIssueModal">✕</span>
-						<h2>강사 승인</h2>
+				        <h2>강사 세부 정보</h2>
 				    </div>
 				    <div class="modal-bottom">
 				        <form id="issueInstructorForm">
-				            <label>이름: <input type="text" name="name" id="name" required></label><br>
-				            <label>이메일: <input type="email" name="email" id="email" required></label><br>
-				            <label>소속: <input type="text" name="department" id="department"></label><br>
-				            <label>전화번호: <input type="text" name="tel" id="phone"></label><br>
+				            <label>
+				                <span>이름:</span>
+				                <input type="text" name="name" id="name" required>
+				            </label>
+				            <label>
+				                <span>이메일:</span>
+				                <input type="email" name="email" id="email" required>
+				            </label>
+				            <label>
+				                <span>소속:</span>
+				                <input type="text" name="department" id="department">
+				            </label>
+				            <label>
+				                <span>전화번호:</span>
+				                <input type="text" name="tel" id="phone">
+				            </label>
 				            <button type="submit" class="impleBtn">발급</button>
 				        </form>
 				    </div>
 				</dialog>
-
-                <div class="pagenation">
-                    <ul>
-                        <li><a href="#">이전</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">다음</a></li>
-                    </ul>
+				    </div>
+				</dialog>
                 </div>
             </div>
         </main>
