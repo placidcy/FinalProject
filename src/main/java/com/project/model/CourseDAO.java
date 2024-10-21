@@ -140,8 +140,8 @@ public class CourseDAO {
 		});
 	}
 
-	public CourseDO getCourseDatebyStd(int student_id) {
-		this.sql = "select c_sdate, c_edate from final_course fc inner join (select * from final_course_student where student_id=?) fcs on fc.course_id=fcs.course_id";
+	public CourseDO getCourseDate(int course_id) {
+		this.sql = "select c_sdate, c_edate from final_course where course_id=?";
 		return this.jdbcTemplate.queryForObject(sql, new RowMapper<CourseDO>() {
 			@Override
 			public CourseDO mapRow(ResultSet rs, int rownum) throws SQLException {
@@ -150,7 +150,7 @@ public class CourseDAO {
 				courseDO.setC_edate(rs.getTimestamp("c_edate").toLocalDateTime());
 				return courseDO;
 			}
-		}, student_id);
+		}, course_id);
 	}
 
 

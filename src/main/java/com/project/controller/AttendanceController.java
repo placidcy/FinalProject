@@ -140,7 +140,7 @@ public class AttendanceController {
 			int course_id = (int) session.getAttribute("currentId");
 
 			model.addAttribute("courseDay", attendanceDAO.getCourseDay(course_id));
-			model.addAttribute("courseDate", courseDAO.getCourseDatebyStd(attendanceDAO.getStudentId(auth.getMember_id(), course_id)));
+			model.addAttribute("courseDate", courseDAO.getCourseDate(course_id));
 			model.addAttribute("menu", "attendanceCalendar");
 			return "attendanceCalendar";
 		}
