@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/changepwd.css" />
     <script src="resources/js/changepwdValid.js"></script>
+    <script src="/resources/js/buttonLocation.js"></script>
 </head>
 <body>
     <div id="container">
@@ -55,7 +56,7 @@
 	            <hr />
 	            <div class="btn">
 	                <button type="button" id="cancelBtn">취소</button>
-	                <button type="submit" id="submitBtn">변경</button>
+	                <button type="button" id="submitBtn">변경</button>
 	            </div>
             </form>
         </main>
