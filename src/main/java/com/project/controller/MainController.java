@@ -20,6 +20,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.project.model.CourseDAO;
 import com.project.model.CourseItem;
 import com.project.model.MessageItem;
 import com.project.model.NoticeItem;
@@ -39,12 +40,15 @@ public class MainController {
 	MainSO mainSO;
 	@Autowired
 	QrCodeSO qrSO;
+	@Autowired
+	CourseDAO courseDAO;
 
 	private String viewPath;
 
 	@GetMapping("/goCourseHome")
 	public String goCourseHome(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
 		session.setAttribute("currentId", courseId);
+		session.setAttribute("courseName", courseDAO.getCourseName(courseId));
 
 		return "redirect:/home";
 	}
