@@ -1,191 +1,200 @@
-/* 기본 설정 */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-size: 14px;
-  font-family: Inter, sans-serif;
-}
-
-/* 컨테이너 */
-.container {
-  width: 100%;
-  height: 1080px;
-  background: #f2f2f2;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 헤더 */
-.header {
-  display: flex;
-  top: 22px;
-}
-
-main {
-  width: 75%;
-  height:100vh;
-  padding: 25px;
-  display: inline-block;
-  background-color: #f2f2f2;
-}
-
-#course_instructor {
-  width: 18%;
-}
-
-.prev-month, .next-month {
-  border: 2px solid #d9d9d9;
-  padding: 2px;
-  margin: 10px;
-}
-
-
-.calendar-header {
+#dateBox{
+  width:100%;
   text-align: center;
-  font-size: 24px;
-  padding: 10px;
-  margin-top: 6%;
+  margin-bottom:10px;
 }
 
-.calendar-header h2 {
-  margin: 0;
+button:hover{
+  background-color:#d8d8d8;
 }
 
-.calendar-body {
-  background-color: #fff;
+table{
+  border-collapse:collapse;
 }
 
-.day-names {
-  display: flex;
+#calendarBox{
+  width:100%;
+  font-size:16px;
+  margin-bottom:30px;
 }
 
-.day-name {
-  text-align: center;
-  padding: 10px;
-  width: 15%;
-  border: 1px solid #fff;
-  background-color: #000;
-  font-size: 24px;
-  color: #fff;
+
+.preMonthDate{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#888;
 }
 
-.weeks {
-  display: flex;
+.preMonthDate-w{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#7ACDF1;
 }
 
-.day {
-  padding: 10px;
-  border: 1px solid #979A9D;
-  box-sizing: border-box;
-  font-size: 16px;
-  width: 15%;
-  height: 140px;
-  background-color: #D9D9D9;
+.preMonthDate-ww{
+  border:1px solid #979A9D;
+  background-color: #f5f5f5;
+  color:#d86c6c;
 }
 
-.prev-day {
-  padding: 10px;
-  border: 1px solid #979A9D;
-  box-sizing: border-box;
-  font-size: 16px;
-  width: 15%;
-  height: 140px;
-  background-color: #F5F5F5;
+.monthDate-nc{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
 }
 
-.day.class {
-  background-color: #fff;
-  display: grid;
+.monthDate-c{
+  border:1px solid #979A9D;
+  background-color: white;
 }
 
-.prev-day {
-  color: #d9d9d9;
+.monthDate-w{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
+  color:#149ad3;
 }
 
-.day.sat {
-  color: #2493C2;
+.monthDate-ww{
+  border:1px solid #979A9D;
+  background-color: #d9d9d9;
+  color:rgb(204, 35, 35);
 }
+ 
 
-.day.sun {
-  color: #FF0000;
-}
-
-.prev-day.sat {
-  color: #7ACDF1;
-}
-
-.prev-day.sun {
-  color: #C8787D;
-}
-
-.times {
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 15%;
-}
-
-.students {
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 15%;
-  margin-top: -15%;
-}
-
-.attend_write_button {
-  margin-top: 30px;
-  width: 100%;
-  height: 60px;
-  padding: 15px;
-  background: #fff;
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
-  border: 1px solid #d9d9d9;
-  border-radius: 12px;
-}
 
 @media (min-width: 769px) {
-  .header>span {
-    display: none;
-  }
+	.switchBox{
+	  width:34px;
+	  height:31px;
+	  border:1px solid #d9d9d9;
+	  font-size:20px;
+	}
+	
+	#yearMonth{
+	  font-size:24px;
+	  margin:7px;
+	}
+	
 
-  .sidebar-menu-right-header>li {
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 24px;
-    font-weight: bold;
-  }
+	#todayBox{
+	  width:60px;
+	  height:30px;
+	  border:1px solid #d9d9d9;
+	  font-size:20px;
+	  margin:10px
+	}
+
+	#dayBox{
+	  display: flex;
+	  width:100%;
+	  height:50px;
+	  margin-top:10px;
+	  background-color: #1e1e1e;
+	  color:white;
+	  font-size:24px;
+	}
+
+	.day{
+	  width:calc(100%/7);
+	  border-right: 1px solid white;
+	  text-align:center;
+	  padding-top:10px;
+	}
+
+	#saturday{
+	  width:calc(100%/7);
+	  padding-top:10px;
+	  text-align:center;
+	}
+
+	td{
+	  width:146px;
+	  height:128px;
+	  margin:0;
+	  padding-left:10px;
+	  padding-top:5px;
+	  vertical-align: text-top;
+	}
+	
+	#calendarExplain{
+	  padding-top:15px;
+	  margin:auto;
+	  width:80%;
+	  height:56px;
+	  border:1px solid #d9d9d9;
+	  border-radius: 5px;
+	  background-color: white;
+	  font-size:20px;
+	  font-weight:bold;
+	  text-align: center;
+	}
+
 }
 
+
 @media (max-width: 768px) {
-  .sidebar-menu-right-header {
-    display: flex;
-    height: 65px;
-    text-align: center;
-    font-size: 17px;
-    font-weight: bold;
-  }
+	.switchBox{
+	  width:30px;
+	  height:25px;
+	  border:1px solid #d9d9d9;
+	  font-size:20px;
+	}
+	#dateBox{
+	  margin-left:10px;
+	}
 
-  .sidebar-menu-right-header>li {
-    display: grid;
-    width: 20%;
-    padding: 13px;
-  }
+	#yearMonth{
+	  font-size:20px;
+	  margin:10px;
+	}
 
-  .times, .students {
-    font-size: 11px;
-  }
+	#todayBox{
+	  width:50px;
+	  height:25px;
+	  border:1px solid #d9d9d9;
+	  font-size:20px;
+	  margin:10px
+	}
+	
+	#dayBox{
+	  display: flex;
+	  width:100%;
+	  height:20px;
+	  align-items: center;
+	  text-align: center;
+	  background-color: #1e1e1e;
+	  color:white;
+	  font-size:20px;
+	}
+	.day{
+	  width:calc(100%/7);
+	  border-right: 1px solid white;
+	}
 
-  .prev-day, .day {
-    width: 120px;
-  }
+	#saturday{
+	  width:calc(100%/7);
+	}
 
-  .attend_write_button {
-    width: 95%;
-    margin-left: 15px;
-  }
+	td{
+	  width:calc(100%/7);
+	  height:105px;
+	  padding-left:10px;
+	  padding-right:5px;
+	  padding-top:5px;
+	  vertical-align: text-top;
+	}
+
+	#calendarExplain{
+	  padding:15px;
+	  margin-top:20px;
+	  margin-left:30px;
+	  width:90%;
+	  border:1px solid #d9d9d9;
+	  border-radius: 5px;
+	  background-color: white;
+	  font-size:16px;
+	  font-weight:bold;
+	  text-align: center;
+	}
+
+
 }
