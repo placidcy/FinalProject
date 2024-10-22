@@ -39,6 +39,8 @@
 						<tr class="item" data-id="${item.noticeId }">
 							<td class="prefix">공지</td>
 							<td class="title">${item.noticeTitle }</td>
+							<td class="date">등록일: ${item.regdate }</td>
+							<td class="toggle"></td>
 						</tr>
 					</c:forEach>
 				</table>

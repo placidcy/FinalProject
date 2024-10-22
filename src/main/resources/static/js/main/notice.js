@@ -58,6 +58,8 @@ function createRow(item) {
 	td.appendChild(createPost(item));
 	tr.append(td);
 
+	td.classList.add('fade-in');
+
 	return tr;
 }
 
@@ -69,6 +71,7 @@ let parentNode, currentNode;
 
 function responseHandler(error, response) {
 	if (error === null) {
+		currentNode.querySelector('.toggle').classList.add('selected');
 		insertAfter(parentNode, createRow(response), currentNode);
 	} else {
 		console.error(error);
@@ -95,15 +98,18 @@ function sendRequest(url, method, callback) {
 
 function clickHandler(item) {
 	const itemId = item.dataset.id;
-
+	const details = document.querySelector('tr.details');
+	if (currentNode != null) {
+		currentNode.querySelector('.toggle').classList.remove('selected');
+	}
 	currentNode = item;
 	parentNode = item.parentNode;
 
 	if (currentId === itemId) {
-		return false;
+		currentId = -1;
+		parentNode.removeChild(details);
 	} else {
 		currentId = itemId;
-		const details = document.querySelector('tr.details');
 		if (details !== null) {
 			parentNode.removeChild(details);
 		}
