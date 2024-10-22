@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.project.model.dao.CourseItemDAO;
 
 @Service
-public class SchedulingService {
+public class SchedulingSO {
 	@Autowired
 	CourseItemDAO dao;
 
