@@ -30,7 +30,7 @@
             <div id="homeBox">
                 <div class="course-notice-title">
                     <h3>공지 목록</h3>
-                    <a href="<c:url value='/' />">
+                    <a href="/">
                         <span>더보기</span>
                     </a>
                 </div>
