@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/resources/css/mypage.css" />
     <link rel="stylesheet" as="style" crossorigin
 		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-	<!--<script src="/resources/js/main/token.js"></script>-->
+	<script src="/resources/js/main/mobile.js"></script>
 </head>
 
 <body>

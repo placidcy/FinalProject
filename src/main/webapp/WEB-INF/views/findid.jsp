@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="resources/css/find.css" />
     <!-- 모달 -->
     <link rel="stylesheet" href="/resources/css/main/checkin.css" />
-    <link rel="stylesheet" href="/resources/css/admin-form.css" />
     <link rel="stylesheet" href="/resources/css/dialog.css" />
     <link rel="stylesheet" href="/resources/css/request.css" />
     <link rel="stylesheet" href="/resources/css/member.css" />
+    <link rel="stylesheet" href="/resources/css/requestDialog.css">
     <!-- 자바스크립트 -->
     <script src="/resources/js/buttonLocation.js"></script>
     <script>
