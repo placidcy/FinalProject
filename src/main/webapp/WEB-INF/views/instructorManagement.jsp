@@ -75,20 +75,21 @@
                         <form id="issueInstructorForm">
                             <label>
                                 <span>이름:</span>
-                                <input type="text" name="name" id="name" required>
+                                <input type="text" name="name" id="name" required placeholder="홍길동">
                             </label>
                             <label>
                                 <span>이메일:</span>
-                                <input type="email" name="email" id="email" required>
+                                <input type="email" name="email" id="email" required placeholder="abc@example.com">
                             </label>
                             <label>
                                 <span>소속:</span>
-                                <input type="text" name="department" id="department">
+                                <input type="text" name="department" id="department" required placeholder="소속">
                             </label>
                             <label>
                                 <span>전화번호:</span>
-                                <input type="text" name="tel" id="phone">
+                                <input type="text" name="tel" id="phone" required placeholder="010-0000-0000">
                             </label>
+
                             <button type="submit" class="impleBtn">발급</button>
                         </form>
                     </div>
