@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,14 +92,14 @@ public class AdminController {
             newInstructor.setM_dept(department);
             newInstructor.setM_tel(tel);
             newInstructor.setM_role(1);
-            newInstructor.setM_acctid("null");
-            newInstructor.setM_acctpwd("null");
+            newInstructor.setM_acctid("inst_user_" + UUID.randomUUID().toString());
+            newInstructor.setM_acctpwd("");
 
             memberDao.insertMember(newInstructor);
 
             return "{\"success\": true}";
         } catch (Exception e) {
-            e.printStackTrace(); // 예외 발생 시 오류 원인 출력
+            e.printStackTrace(); 
             return "{\"success\": false}";
         }
     }
