@@ -72,36 +72,49 @@
                 </div>
 
                 <!-- 발급 모달창 -->
-				<dialog id="issueInstructorModal">
-				    <div class="modal-top flex cen">
-				        <span class="close-button exit" id="closeIssueModal">✕</span>
-				        <h2>강사 세부 정보</h2>
-				    </div>
-				    <div class="modal-bottom">
-				        <form id="issueInstructorForm">
-				            <label>
-				                <span>이름:</span>
-				                <input type="text" name="name" id="name" required>
-				            </label>
-				            <label>
-				                <span>이메일:</span>
-				                <input type="email" name="email" id="email" required>
-				            </label>
-				            <label>
-				                <span>소속:</span>
-				                <input type="text" name="department" id="department">
-				            </label>
-				            <label>
-				                <span>전화번호:</span>
-				                <input type="text" name="tel" id="phone">
-				            </label>
-				            <button type="submit" class="impleBtn">발급</button>
-				        </form>
-				    </div>
-				</dialog>
-				    </div>
-				</dialog>
-                </div>
+                <dialog id="issueInstructorModal">
+                    <div class="modal-top flex cen">
+                        <span class="close-button exit" id="closeIssueModal">✕</span>
+                        <h2>강사 세부 정보</h2>
+                    </div>
+                    <div class="modal-bottom">
+                        <form id="issueInstructorForm">
+                            <label>
+                                <span>이름:</span>
+                                <input type="text" name="name" id="name" required>
+                            </label>
+                            <label>
+                                <span>이메일:</span>
+                                <input type="email" name="email" id="email" required>
+                            </label>
+                            <label>
+                                <span>소속:</span>
+                                <input type="text" name="department" id="department">
+                            </label>
+                            <label>
+                                <span>전화번호:</span>
+                                <input type="text" name="tel" id="phone">
+                            </label>
+                            <button type="submit" class="impleBtn">발급</button>
+                        </form>
+                    </div>
+                </dialog>
+
+				<ul class="pagination">
+				    <c:if test="${currentPage ne 1}">
+				        <li onclick="location.href='/instructorManagement?page=${currentPage - 1}'">이전</li>
+				    </c:if>
+					<c:forEach var="i" begin="1" end="${totalPages}">
+					    <li class="${i eq currentPage ? 'selected' : ''}" 
+					        onclick="location.href='/instructorManagement?page=${i}'">
+					        ${i}
+					    </li>
+					</c:forEach>
+					    <c:if test="${currentPage ne totalPages}">
+					        <li onclick="location.href='/instructorManagement?page=${currentPage + 1}'">다음</li>
+					    </c:if>
+					</ul>
+
             </div>
         </main>
     </div>
