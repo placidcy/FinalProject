@@ -102,4 +102,12 @@ public class AdminController {
             return "{\"success\": false}";
         }
     }
+    @GetMapping("/instructor/search")
+    public String searchInstructor(@RequestParam(value = "keyword") String keyword, Model model) {
+        List<MemberDO> instructorList = memberDao.searchInstructors(keyword);
+        model.addAttribute("instructorList", instructorList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("menu", "instructorManagement");
+        return "instructorManagement";
+    }
 }
