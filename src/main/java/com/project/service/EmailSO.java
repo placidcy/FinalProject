@@ -3,14 +3,18 @@ package com.project.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.*;
+import com.amazonaws.services.simpleemail.model.Body;
 import com.project.model.MessageItem;
 import com.project.model.dao.EmailDAO;
+
+import kong.unirest.*;
 
 @Service
 public class EmailSO {
@@ -37,7 +41,39 @@ public class EmailSO {
 		subject = this.setSubject();
 		body = this.setBody(code);
 
-		this.sendVerificationEmail(code, subject, body);
+		this.sendVerificationEmail(email, subject, body);
+		isSend = true;
+
+		return isSend;
+	}
+
+	@Value("maligun.api.key")
+	private String apiKey;
+	@Value("maligun.api.id")
+	private String id;
+	@Value("maligun.api.pwd")
+	private String pwd;
+
+	public JsonNode sendSimpleMessage(String to, String subject, String body) throws UnirestException {
+		HttpResponse<JsonNode> request = Unirest
+				.post("https://api.mailgun.net/v3/" + "sandbox646590804eb744febd1a32f52662d754.mailgun.org"
+						+ "/messages")
+				.basicAuth("api", apiKey)
+				.queryString("from", "Excited User <USER@sandbox646590804eb744febd1a32f52662d754.mailgun.org>")
+				.queryString("to", to).queryString("subject", subject).queryString("text", body).asJson();
+		return request.getBody();
+	}
+
+	@Transactional
+	public boolean sendEmailByMaligun(String email) {
+		boolean isSend = false;
+		String code, subject, body;
+
+		code = this.createCode(email);
+		subject = this.setSubject();
+		body = this.setBody(code);
+
+		this.sendSimpleMessage(email, subject, body);
 		isSend = true;
 
 		return isSend;
