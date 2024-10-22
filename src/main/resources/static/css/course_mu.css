@@ -6,6 +6,7 @@
 	box-sizing: border-box;
 }
 
+
 ul {
     list-style: none;
     padding: 0;
@@ -37,22 +38,19 @@ ul {
     #container {
         box-sizing: border-box;
         display: flex;
-        width: 1440px;
-		height:100%;
+		width: 100vw;
+		height: 100vh;
     }
-
 	
     aside {
-		position: sticky;
-		top: 0px;
-        width: 360px;
-		height:100%;
+		width: 25%;
+		height: 100%;
         text-align: center;
         display: flex;
     }
 
     .course-sidebar-left {
-        width: 80px;
+        width: 20%;
         background-color: #2F2A2A;
     }
 
@@ -71,7 +69,7 @@ ul {
     }
 
     .course-sidebar-right {
-        width: 320px;
+        width: 80%;
     }
 
 
@@ -94,7 +92,7 @@ ul {
 
     main {
         margin-block-end: 30px;
-        width: 100%;
+        width: 75%;
 		height:100vh;
         padding: 30px;
         background-color: #f2f2f2;
