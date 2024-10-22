@@ -159,11 +159,11 @@ public class MemberController {
 		try {
 			if(result != null) {
 				model.addAttribute("result", result);
-				return "findid";
+				return "findid2";
 			}
 			else {
 				model.addAttribute("result", "일치하는 아이디가 없습니다.");
-				return "findid";
+				return "findid2";
 			}
 		}
 		catch (Exception e) {

@@ -57,6 +57,7 @@
 					<button type="button" id="cancelBtn">취소</button>
 				</div>
 			</form>
+			<%-- 
 			<dialog>
 				<div class="modal-top flex cen">
 					<span class="bold">CHECK</span>
@@ -80,6 +81,7 @@
 					</div>
 				</div>
 			</dialog>
+			 --%>
 		</main>
 		</div>
 </body>
