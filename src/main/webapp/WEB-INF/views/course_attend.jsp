@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,81 +40,24 @@
                     </div>
                     <div class="month">
                         <div class="weeks">
-                            <span class="prev-day sun">28</span>
-                            <span class="prev-day">29</span>
-                            <span class="prev-day">30</span>
-                            <span class="prev-day">31</span>
-                            <span class="day">1</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">3</span>
-                        </div>
-
-                        <div class="weeks">
-                            <span class="day sun">4</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                                <span class="students">손흥민, 이영자</span>
-                            </div>
-                            <span class="day">6</span>
-                            <div class="day class">7
-                                <span class="times">12:00 ~ 14:30</span>
-                                <span class="students">박재범</span>
-                            </div>
-                            <span class="day">8</span>
-                            <div class="day class">9
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">10</span>
-                        </div>
-
-                        <div class="weeks">
-                            <span class="day sun">11</span>
-                            <div class="day class">12
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day">13</span>
-                            <div class="day class">14
-                                <span class="times">15:00 ~ 17:30</span>
-                            </div>
-                            <span class="day">15</span>
-                            <div class="day class">16
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">17</span>
-                        </div>
-
-                        <div class="weeks">
-                            <span class="day sun">18</span>
-                            <div class="day class">19
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day">20</span>
-                            <div class="day class">21
-                                <span class="times">15:00 ~ 17:30</span>
-                            </div>
-                            <span class="day">22</span>
-                            <div class="day class">23
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">24</span>
-                        </div>
-
-                        <div class="weeks">
-                            <span class="day sun">25</span>
-                            <div class="day class">26
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day">27</span>
-                            <div class="day class">28
-                                <span class="times">15:00 ~ 17:30</span>
-                            </div>
-                            <span class="day">29</span>
-                            <div class="day class">30
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">31</span>
+                            <% 
+                                Calendar calendar = new GregorianCalendar();
+                                int year = 2024; 
+                                int month = 7; 
+                                calendar.set(year, month, 1);
+                                int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                                int lastDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                
+                                for (int i = 1; i < firstDayOfWeek; i++) {
+                                    out.print("<span class='prev-day'></span>");
+                                }
+                                for (int date = 1; date <= lastDate; date++) {
+                                    if ((firstDayOfWeek + date - 1) % 7 == 0 && date != 1) {
+                                        out.print("</div><div class='weeks'>");
+                                    }
+                                    out.print("<span class='day'>" + date + "</span>");
+                                }
+                            %>
                         </div>
                     </div>
                 </div>

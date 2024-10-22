@@ -167,9 +167,9 @@
 			<a href="">
 				<li class="menu selected">홈</li>
 			</a>
-			<a href="">
-				<li class="menu">강의 게시판</li>
-			</a>
+			<a href="/CourseBoard?courseId=${sessionScope.currentId}">
+            	<li class="menu">강의 게시판</li>
+        	</a>
 			<a href="">
 				<li class="menu">출결 확인</li>
 			</a>
