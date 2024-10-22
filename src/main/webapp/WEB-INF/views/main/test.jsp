@@ -19,6 +19,6 @@
 			value="submit" />
 	</form>
 	<input type="text" name="code" required>
-	<input type="button" value="confirm">
+	<input type="button" id="confirmButton" value="confirm">
 </body>
 </html>
