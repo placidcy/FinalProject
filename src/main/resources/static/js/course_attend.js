@@ -26,7 +26,7 @@ function getCalender(number){
 	
     today.setMonth(today.getMonth() + number);
 //자바스크립트에서 promise 객체란 비동기 방식을 처리하기위한 객체
-	fetch('getStudentCalendar?c_year='+today.getFullYear()+'&c_month='+ (today.getMonth()+1)) // url만 지정하면 get 방식, 2번째 매개변수는 option객체
+	fetch('getInstructorCalendar?c_year='+today.getFullYear()+'&c_month='+ (today.getMonth()+1)) // url만 지정하면 get 방식, 2번째 매개변수는 option객체
 	.then(response => response.json()) // 비동기 처리의 결과를 then이 받는다.
 	.then(obj => {
 		let firstDate = new Date(new Date(obj[0].dt).getFullYear(), new Date(obj[0].dt).getMonth(), 1);
@@ -38,7 +38,7 @@ function getCalender(number){
 	    let weekCount = (lastDate.getDate()-(7-firstDay + lastDay+1))/7+2
 
 	    yearMonth.innerText = today.getFullYear() + '.' + ('0'+(today.getMonth()+1)).slice(-2);
-	 
+
 	    let firstWeekBox = '<tr class="weekBox">';
 	    if(firstDay!=0){
 	    for(let i = prevLastDay; i >= 0; i--){
@@ -54,9 +54,9 @@ function getCalender(number){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	            	firstWeekBox += '<td class="' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	            	firstWeekBox += '<td class="monthDate-nc">'+ i +'<div class="attReq"></div></td>';
 				}else{
-					firstWeekBox += '<td class="' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i  && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+					firstWeekBox += '<td class="monthDate-c">'+ i +'<div class="attReq"></div></td>';
 				}
 	            
 	        }
@@ -70,9 +70,9 @@ function getCalender(number){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
 					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	                	firstWeekBox += '<td class="' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? (getDateColor(obj[i-1].a_status) + '" onclick="dialogHandler('+ obj[i-1].a_status+ ','+ obj[i-1].req_type+ ','+ obj[i-1].r_status+ ','+ (i-1) +')') :'monthDate-nc') + '">'+ i +'<div class="attReq">' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+	                	firstWeekBox += '<td class="monthDate-nc">'+ i +'<div class="attReq"></div></td>';
 					}else{
-						firstWeekBox += '<td class="' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ?'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') + '>'+ i +'<div class="attReq">' + (obj.length>=i && courseDay.includes(obj[i-1].d*1) ? getDateText(obj[i-1].req_type, obj[i-1].r_status): '') + '</div></td>';
+						firstWeekBox += '<td class="monthDate-c">'+ i +'<div class="attReq"></div></td>';
 					}
 				}
 	        }
@@ -90,9 +90,9 @@ function getCalender(number){
 	        }else{
 				
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
-					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? (getDateColor(obj[lastDate.getDate()-i-1].a_status) + '"onclick="dialogHandler('+ obj[lastDate.getDate()-i-1].a_status+ ','+ obj[lastDate.getDate()-i-1].req_type+ ','+ obj[lastDate.getDate()-i-1].r_status+ ','+ (lastDate.getDate()-i-1) +')') : 'monthDate-nc') +'">'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i  && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+					lastWeekBox += '<td class="monthDate-nc">' + (lastDate.getDate()-i) +'<div class="attReq"></div></td>';
 				}else{
-					lastWeekBox += '<td class="' + (obj.length>=lastDate.getDate()-i && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ (lastDate.getDate()-i) +'<div class="attReq">' + (obj.length>=lastDate.getDate()-i  && courseDay.includes(obj[lastDate.getDate()-i-1].d*1) ? getDateText(obj[lastDate.getDate()-i-1].req_type, obj[lastDate.getDate()-i-1].r_status) : '') + '</div></td>';
+					lastWeekBox += '<td class="monthDate-c">'+ (lastDate.getDate()-i) +'<div class="attReq"></div></td>';
 				}
 	            
 	        }
@@ -114,9 +114,9 @@ function getCalender(number){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
-					weekBoxs += '<td class="' + (obj.length>=j && courseDay.includes(obj[j-1].d*1) ? (getDateColor(obj[j-1].a_status) + '" onclick="dialogHandler('+ obj[j-1].a_status+ ','+ obj[j-1].req_type+ ','+ obj[j-1].r_status+ ','+ (j-1) +')') : 'monthDate-nc') + '">'+ j + '<div class="attReq">' + (obj.length>=j  && courseDay.includes(obj[j-1].d*1) ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+					weekBoxs += '<td class="monthDate-nc">'+ j + '<div class="attReq"></div></td>';
 	        	}else{
-					weekBoxs += '<td class="' + (obj.length>=j && courseDay.includes(obj[j-1].d*1)  ? 'monthDate-c" onclick="dialogHandler2()"' : 'monthDate-nc"') +'>'+ j + '<div class="attReq">' + (obj.length>=j  && courseDay.includes(obj[j-1].d*1) ? getDateText(obj[j-1].req_type, obj[j-1].r_status) : '') + '</div></td>';
+					weekBoxs += '<td class="monthDate-c">'+ j + '<div class="attReq"></div></td>';
 				}
 			}
 	    }  

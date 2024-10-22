@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.model.AttendanceCalendar;
 import com.project.model.AttendanceDAO;
 import com.project.model.AttendanceSO;
+import com.project.model.InstructorCalendarTrans;
 import com.project.model.response.LoginResponse;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ public class AttendanceRestController {
 	
 	@Autowired
 	AttendanceDAO attendanceDAO;
+	
+	@Autowired
+	AttendanceSO attendanceSO;
 	
 	@GetMapping("/getStudentCalendar")
 	public List<AttendanceCalendar> getStudentCalendarHandler(HttpSession session, Model model, @RequestParam(value="c_year") int c_year, @RequestParam(value="c_month") int c_month) {
@@ -40,20 +44,20 @@ public class AttendanceRestController {
 	}
 	
 	@GetMapping("/getInstructorCalendar")
-	public List<AttendanceCalendar> getInstructorCalendarHandler(HttpSession session, Model model, @RequestParam(value="c_year") int c_year, @RequestParam(value="c_month") int c_month) {
+	public List<InstructorCalendarTrans> getInstructorCalendarHandler(HttpSession session, Model model, @RequestParam(value="c_year") int c_year, @RequestParam(value="c_month") int c_month) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
-		List<AttendanceCalendar> attCal=null;
+		List<InstructorCalendarTrans> insCal=null;
 		if(auth.getM_role()==2) {
 		
 		int course_id = (int) session.getAttribute("currentId");
 
 		
-		attCal = attendanceDAO.getStudentAttendanceCalendar(attendanceDAO.getStudentId(auth.getMember_id(), course_id), c_year, c_month);
+		insCal = attendanceSO.getTransInsCalendar(course_id, c_year, c_month);
 
 		model.addAttribute("menu", "courseAttend");
 
 		}
-		return attCal; 
+		return insCal; 
 		
 	}
 	
