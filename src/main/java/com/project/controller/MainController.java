@@ -67,12 +67,10 @@ public class MainController {
 				model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
 				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
-				viewPath = "main/index";
 			} else {
 				model.addAttribute("course", mainSO.selectByInstructorId(memberId, Integer.parseInt(page)));
 				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByInstructorId(memberId));
-				viewPath = "main/index_i";
 			}
 			model.addAttribute("page", page);
 			model.addAttribute("menu", "main");
@@ -80,7 +78,7 @@ public class MainController {
 			e.printStackTrace();
 			return "redirect:/login";
 		}
-		return viewPath;
+		return "main/index";
 	}
 
 	@GetMapping("/checkin")
@@ -249,21 +247,17 @@ public class MainController {
 				model.addAttribute("list", mainSO.selectList(Integer.parseInt(page)));
 				model.addAttribute("size", mainSO.getSize());
 				model.addAttribute("page", page);
-
-				viewPath = "main/notice";
 			} else {
 				model.addAttribute("list", mainSO.selectAll(Integer.parseInt(page)));
 				model.addAttribute("size", mainSO.getTotalSize());
 				model.addAttribute("page", page);
-
-				viewPath = "main/notice_i";
 			}
 			model.addAttribute("menu", "notice");
 		} catch (Exception e) {
 			return "redirect:/login";
 		}
 
-		return viewPath;
+		return "main/notice";
 	}
 
 	@RequestMapping("/notice/search")
