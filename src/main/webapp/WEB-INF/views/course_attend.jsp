@@ -13,7 +13,7 @@
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="/resources/css/course_attend.css" rel="stylesheet" />
     <link rel="stylesheet" href="/resources/css/course_mu.css">
-    <script src="/resources/js/course.js"></script>
+    <script src="/resources/js/course_attend.js"></script>
 </head>
 
 <body>
