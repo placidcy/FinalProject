@@ -17,11 +17,11 @@ public class EmailDAO extends ItemDAO {
 
 	public int createAuth(String email, String code) {
 		this.sql = this.query.get("createAuth");
-		return this.getJdbcTemplate().update(sql, Integer.class, email, code);
+		return this.getJdbcTemplate().update(sql, email, code);
 	}
 
 	public int checkAuth(String email, String code) {
-		this.sql = this.query.get("checkAuth") + " and e_code = ?";
+		this.sql = this.query.get("checkAuth") + " AND e_code = ?";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, email, code);
 	}
 
@@ -33,14 +33,18 @@ public class EmailDAO extends ItemDAO {
 	public void init() {
 		this.query = new HashMap<String, String>();
 		this.query.put("createAuth", """
-				insert into final_email
-				values(?, ?, sysdate)
+				INSERT INTO final_email
+				VALUES(?, ?, sysdate)
 				""");
 
 		this.query.put("checkAuth", """
-				select count(*)
-				from final_email
-				where e_email = ? and sysdate between e_date and e_date + 3/24/60
-				""");
+				SELECT
+					count(*)
+				FROM
+					final_email
+				WHERE
+					e_email = ?
+					AND sysdate BETWEEN e_date AND e_date + 3 / 24 / 60
+					""");
 	}
 }
