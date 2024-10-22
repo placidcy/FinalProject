@@ -1,7 +1,26 @@
 let today;
 
-function getDateText(){
-	
+function getDateText(object, date, type){
+	result='';
+	if(type){
+		if(object[date-1].insCalendar) {
+			for(let cal of object[date-1].insCalendar){
+				cal.s_title.length <= 7 ?
+				result += '<a href="/calendarForm?i_schedule=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title + '</div></a>'
+				: result += '<a href="/calendarForm?i_schedule=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title.slice(0,7) + '..</div></a>';
+			}
+		}
+	}else{
+		if(object[date-1].insCalendar) {
+			for(let cal of object[date-1].insCalendar){
+				cal.s_title.length <= 7 ?
+				result += '<div style="font-weight:bold">' + cal.s_title + '</div>'
+				: result += '<div style="font-weight:bold">' + cal.s_title.slice(0,7) + '..</div>';
+			}
+		}
+	}
+
+	return result;
 	
 }
 
@@ -54,9 +73,9 @@ function getCalender(number){
 	            firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	            	firstWeekBox += '<td class="monthDate-nc">'+ i +'<div class="attReq"></div></td>';
+	            	firstWeekBox += '<td class="monthDate-nc">'+ i + getDateText(obj, i, 0) +'</td>';
 				}else{
-					firstWeekBox += '<td class="monthDate-c">'+ i +'<div class="attReq"></div></td>';
+					firstWeekBox += '<td class="monthDate-c">'+ i + getDateText(obj, i, 1) + '</td>';
 				}
 	            
 	        }
@@ -70,9 +89,9 @@ function getCalender(number){
 	                firstWeekBox += '<td class="monthDate-w">'+i+'</td>';
 	            }else{
 					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
-	                	firstWeekBox += '<td class="monthDate-nc">'+ i +'<div class="attReq"></div></td>';
+	                	firstWeekBox += '<td class="monthDate-nc">'+ i + getDateText(obj, i, 0) +'</td>';
 					}else{
-						firstWeekBox += '<td class="monthDate-c">'+ i +'<div class="attReq"></div></td>';
+						firstWeekBox += '<td class="monthDate-c">'+ i + getDateText(obj, i, 1) + '</td>';
 					}
 				}
 	        }
@@ -90,9 +109,9 @@ function getCalender(number){
 	        }else{
 				
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
-					lastWeekBox += '<td class="monthDate-nc">' + (lastDate.getDate()-i) +'<div class="attReq"></div></td>';
+					lastWeekBox += '<td class="monthDate-nc">' + (lastDate.getDate()-i) + getDateText(obj, lastDate.getDate()-i, 0) + '</td>';
 				}else{
-					lastWeekBox += '<td class="monthDate-c">'+ (lastDate.getDate()-i) +'<div class="attReq"></div></td>';
+					lastWeekBox += '<td class="monthDate-c">'+ (lastDate.getDate()-i) + getDateText(obj, lastDate.getDate()-i, 1) + '</td>';
 				}
 	            
 	        }
@@ -114,9 +133,9 @@ function getCalender(number){
 	            weekBoxs += '<td class="monthDate-w">'+ j +'</td></tr>';
 	        }else{
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
-					weekBoxs += '<td class="monthDate-nc">'+ j + '<div class="attReq"></div></td>';
+					weekBoxs += '<td class="monthDate-nc">'+ j + getDateText(obj, j, 0) + '</td>';
 	        	}else{
-					weekBoxs += '<td class="monthDate-c">'+ j + '<div class="attReq"></div></td>';
+					weekBoxs += '<td class="monthDate-c">'+ j + getDateText(obj, j, 1) + '</td>';
 				}
 			}
 	    }  
@@ -134,6 +153,7 @@ function mobileHandler(){
     let menuName = document.querySelector('.menuName');
     let mobileMenu = document.querySelector('#mobile-menu');
     let className = menuName.innerHTML;
+	let backBtn = document.querySelector('#backBtn').addEventListener('click',()=>{window.history.back()});
     menuIcon.addEventListener('click', () => {
         menuList.style.getPropertyValue('visibility') ==='hidden'? menuList.style.setProperty('visibility', 'visible') : menuList.style.setProperty('visibility', 'hidden');       
         menuList.style.getPropertyValue('visibility') ==='hidden'? menuName.innerHTML=className : menuName.innerHTML='CHECK';
