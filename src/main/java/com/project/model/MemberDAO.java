@@ -168,4 +168,9 @@ public class MemberDAO {
         this.sql = "select count(*) from final_member where m_role = 1";
         return this.jdbcTemplate.queryForObject(sql, Integer.class);
     }
+
+    public List<MemberDO> searchInstructors(String keyword) {
+        String sql = "SELECT * from final_member where m_name LIKE ?";
+        return jdbcTemplate.query(sql, new Object[]{"%" + keyword + "%"}, new MemberRowMapper());
+    }
 }

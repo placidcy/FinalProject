@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script src="/resources/js/main/search.js"></script>
-<form class="search box" action="/register/search" method="POST">
-	<input type="text" name="keyword" placeholder="강사명을 입력하세요.">
-	<button class="iconBtn">
+<script src="/resources/js/main/instructorSearch.js"></script>
+<form class="search box" action="/instructor/search" method="GET">
+    <input type="text" name="keyword" placeholder="강사명을 입력하세요.">
+    <button class="iconBtn">
+</form>
+
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 			width="20px" height="20px">
                                 <path
