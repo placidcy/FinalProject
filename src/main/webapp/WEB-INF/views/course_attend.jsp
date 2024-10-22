@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 
 <!DOCTYPE html>
 <html>
@@ -21,6 +23,7 @@
        <jsp:include page="common/sidebar_course.jsp" />
 
         <main>
+<<<<<<< HEAD
 			<div id="calendarHeader">
 	            <div id="dateBox">
 					<button class="switchBox" id="leftMonth">◀</button><span id="yearMonth"></span><button class="switchBox" id="rightMonth">▶</button><button id="todayBox">오늘</button>
@@ -53,6 +56,50 @@
                          
                     
             <div id="calendarExplain">일정 등록 날짜를 클릭해 주세요.</div>
+=======
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span class="prev-month">◀</span>
+                    <span class="current_month">2024.08</span>
+                    <span class="next-month">▶</span>
+                    <span class="today">오늘</span>
+                </div>
+                <div class="calendar-body">
+                    <div class="day-names">
+                        <span class="day-name">일</span>
+                        <span class="day-name">월</span>
+                        <span class="day-name">화</span>
+                        <span class="day-name">수</span>
+                        <span class="day-name">목</span>
+                        <span class="day-name">금</span>
+                        <span class="day-name">토</span>
+                    </div>
+                    <div class="month">
+                        <div class="weeks">
+                            <% 
+                                Calendar calendar = new GregorianCalendar();
+                                int year = 2024; 
+                                int month = 7; 
+                                calendar.set(year, month, 1);
+                                int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                                int lastDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                
+                                for (int i = 1; i < firstDayOfWeek; i++) {
+                                    out.print("<span class='prev-day'></span>");
+                                }
+                                for (int date = 1; date <= lastDate; date++) {
+                                    if ((firstDayOfWeek + date - 1) % 7 == 0 && date != 1) {
+                                        out.print("</div><div class='weeks'>");
+                                    }
+                                    out.print("<span class='day'>" + date + "</span>");
+                                }
+                            %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="attend_write_button">일정 등록 날짜를 클릭/드래그 해 주세요.</div>
+>>>>>>> ksh
         </main>
     </div>
 

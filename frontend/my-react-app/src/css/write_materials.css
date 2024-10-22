@@ -1,0 +1,167 @@
+/* 기본 설정 */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 14px;
+	font-family: 'Inter', sans-serif;
+	background-color: #f2f2f2;
+}
+
+/* 컨테이너 */
+.container {
+	width: 100%;
+	height: 100vh;
+	background: #f2f2f2;
+}
+
+h1 {
+	margin-top: 20px;
+}
+
+hr {
+	margin-top: 20px;
+}
+
+.write-material {
+	border: 1px solid #d9d9d9;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.course-title {
+	margin-top: 50px;
+	font-size: 24px;
+}
+
+.coruse-day {
+	margin-top: 20px;
+}
+
+.course-content {
+	display: flex;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.title {
+	font-weight: bold;
+	margin-right: 20px;
+}
+
+.course_write {
+	width: 100%;
+	border: 2px solid #d9d9d9;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.times, .days {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	border: 2px solid #d9d9d9;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.text {
+	margin-left: -8px;
+}
+
+.content {
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 24px;
+	width: 85%;
+	height: 200px;
+	padding: 10px;
+	border: 2px solid #d9d9d9;
+	resize: none;
+}
+
+.wt_buttons {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -40px;
+}
+
+.buttons-mobile {
+	display: none; /* 기본적으로 모바일 버튼 숨김 */
+}
+
+.save_button, .cancel_button {
+	width: 76px;
+	height: 42px;
+	padding: 7px;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	color: #fff;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.save_button {
+	background: #87C791; /* Green */
+}
+
+.cancel_button {
+	background: #D9D9D9; /* Gray */
+}
+
+.all-day {
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.all-day>span {
+	margin-left: 5px;
+}
+
+.course-title-wt, .file_input {
+	display: flex;
+}
+
+.course-write {
+	margin-top: 30px;
+}
+
+@media ( max-width : 768px) {
+	main {
+		width: 100%;
+		display: inline-block;
+		background-color: #f2f2f2;
+	}
+	.wt_buttons {
+		display: none;
+	}
+	.buttons-mobile {
+		display: flex;
+		justify-content: center;
+		margin-top: 20px;
+	}
+}
+
+@media ( min-width : 769px) {
+	main {
+		width: 75%;
+		padding: 25px;
+		display: inline-block;
+		background-color: #f2f2f2;
+	}
+	.buttons-mobile {
+		display: none;
+	}
+}
