@@ -1,0 +1,5 @@
+CREATE TABLE final_email (
+	e_email VARCHAR2(200) NOT NULL,
+	e_code VARCHAR2(4000) NOT NULL,
+	e_date DATE NOT NULL
+);
