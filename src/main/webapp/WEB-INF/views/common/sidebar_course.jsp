@@ -1,6 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
+
+<script>
+    function getBaseUrl() {
+        const { protocol, host } = window.location;
+        return `${protocol}//${host}:3000`;
+    }
+
+    function redirectToCourseBoard(courseId) {
+        const baseUrl = getBaseUrl();
+        window.location.href = `${baseUrl}/CourseBoard?courseId=${courseId}`;
+    }
+</script>
+
 <!-- 강의 사이드바 -->
 <aside>
     <div class="course-sidebar-left">
@@ -71,18 +84,20 @@
 				style="width:33.3%">
 				<li>홈</li></a>
 				
-	            <a href="" class="sidebar-menu-unselected" style="width:33.3%"><li>강의 게시판</li></a>
+	            <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+                	<li>강의 게시판</li>
+                </a>
 				
 				<c:set var="attendanceCalendar" value="attendanceCalendar"></c:set>
 				<a href="/attendanceCalendar" 
 				class="menu <c:if test="${menu eq attendanceCalendar}">clicked</c:if>"
 				style="width:33.3%">
-				<li>출결 확인</li></a>     
+				<li>출결 확인</li></a>
 	        </ul>
 			
 	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
-	            <li>출석 체크</li>
+	            <li><a href="/checkin">출석 체크</a></li>
 	            <li><a href="register">수강 신청</a></li>
 	            <li><a href="/mypage">마이 페이지</a></li>
 				<li><a href="/notice">공지사항</a></li>
@@ -98,7 +113,9 @@
 				style="width:25%">
 				<li>홈</li></a>
 
-	            <a href="" class="sidebar-menu-unselected" style="width:25%"><li>강의 게시판</li></a>
+                <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+                	<li>강의 게시판</li>
+                </a>
 				
 				<c:set var="currentAttendance" value="currentAttendance"></c:set>
 				<a href="/currentAttendance" 
@@ -122,7 +139,7 @@
 			
 	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
-	            <li><a href="/main/checkin_i">출석 체크</a></li>
+	            <li><a href="/checkin">출석 체크</a></li>
 				<li><a href="/mypage">마이 페이지</a></li>
 	            <li><a href="/notice">공지사항</a></li>
 	            <li><a href="/logout">로그아웃</a></li>

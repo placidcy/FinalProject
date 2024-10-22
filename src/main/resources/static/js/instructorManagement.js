@@ -52,21 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('서버 오류 발생');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert('강사 승인 완료되었습니다.');
-                document.getElementById('issueInstructorModal').close();
-                location.reload(); 
-            } else {
-                alert('발급 중 오류가 발생했습니다.');
-            }
-        })
+		.then(response => {
+		    console.log('응답 상태 코드:', response.status); // 상태 코드 출력
+		    return response.json();
+		})
+		.then(data => {
+		    console.log('서버 응답 데이터:', data); // 서버에서 받은 응답 데이터 출력
+		    if (data.success) {
+		        alert('강사 승인 완료되었습니다.');
+		        document.getElementById('issueInstructorModal').close();
+		        location.reload();
+		    } else {
+		        alert('발급 중 오류가 발생했습니다.');
+		    }
+		})
+
         .catch(error => {
             console.error('Error:', error);
             alert('서버와의 통신 중 문제가 발생했습니다.');

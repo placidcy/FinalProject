@@ -1,12 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-main{
-  height:100vh;
-  padding:10px;
-}
-
 #dateBox{
   width:100%;
   text-align: center;
@@ -30,6 +21,7 @@ table{
 #calendarBox{
   width:100%;
   font-size:16px;
+  margin-bottom:30px;
   
 }
 
@@ -93,11 +85,6 @@ table{
 
 
 @media (min-width: 769px){
-main{
-  width:1022px;
-  height:100vh;
-}
-
 .switchBox{
   width:34px;
   height:31px;
@@ -119,7 +106,7 @@ main{
 }
 
 #fontBox{
-  margin-left:420px;
+ float:right;
 }
 
 #attendFont{
@@ -148,17 +135,18 @@ main{
   color:white;
   font-size:24px;
 }
+
 .day{
-  width:146px;
+  width:calc(100%/7);
   border-right: 1px solid white;
-  padding-left:56px;
+  text-align:center;
   padding-top:10px;
 }
 
 #saturday{
-  width:146px;
+  width:calc(100%/7);
   padding-top:10px;
-  padding-left:56px;
+  text-align:center;
 }
 
 td{
@@ -172,9 +160,8 @@ td{
 
 #calendarExplain{
   padding-top:15px;
-  margin-top:20px;
-  margin-left:30px;
-  width:900px;
+  margin:auto;
+  width:80%;
   height:56px;
   border:1px solid #d9d9d9;
   border-radius: 5px;
@@ -185,7 +172,8 @@ td{
 }
 
 .attReq{
-margin-top:22%;
+padding-top:30px;
+margin:auto;
 vertical-align: center;
 font-weight:bold;
 color:black;

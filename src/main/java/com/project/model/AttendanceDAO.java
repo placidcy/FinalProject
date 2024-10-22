@@ -263,6 +263,24 @@ public class AttendanceDAO {
 		},course_id);
 	}
 	
+	public List<InstructorCalendar> getInstructorCalendar(int course_id, int c_year, int c_month) {
+		this.sql="select i_schedule_id, s_sdate, s_edate, s_title, s_attm, s_memo from final_instructor_schedule where course_id=? and to_char(s_sdate,'YYYY-MM')='" +c_year+ "-"+c_month +"'";
+		return this.jdbcTemplate.query(sql, new RowMapper<InstructorCalendar>() {
+			@Override
+			public InstructorCalendar mapRow(ResultSet rs, int rownum) throws SQLException{
+				InstructorCalendar insCalendar = new InstructorCalendar();
+				insCalendar.setI_schedule_id(rs.getInt("i_schedule_id"));
+				insCalendar.setS_sdate(rs.getTimestamp("s_sdate").toLocalDateTime());
+				insCalendar.setS_edate(rs.getTimestamp("s_edate").toLocalDateTime());
+				insCalendar.setS_title(rs.getString("s_title"));	
+				insCalendar.setS_attm(rs.getString("s_attm"));	
+				insCalendar.setS_memo(rs.getString("s_memo"));	
+				
+				return insCalendar;
+			}
+		},course_id);
+	}
+	
 	
 	
 	

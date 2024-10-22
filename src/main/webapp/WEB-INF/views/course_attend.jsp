@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,7 @@
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="/resources/css/course_attend.css" rel="stylesheet" />
     <link rel="stylesheet" href="/resources/css/course_mu.css">
-    <script src="/resources/js/course.js"></script>
+    <script src="/resources/js/course_attend.js"></script>
 </head>
 
 <body>
@@ -21,6 +23,40 @@
        <jsp:include page="common/sidebar_course.jsp" />
 
         <main>
+<<<<<<< HEAD
+			<div id="calendarHeader">
+	            <div id="dateBox">
+					<button class="switchBox" id="leftMonth">◀</button><span id="yearMonth"></span><button class="switchBox" id="rightMonth">▶</button><button id="todayBox">오늘</button>
+				</div>
+			</div>
+
+
+			<div id="dayBox">
+				<div class="day">일</div>
+				<div class="day">월</div>
+				<div class="day">화</div>
+				<div class="day">수</div>
+				<div class="day">목</div>
+				<div class="day">금</div>
+				<div id="saturday">토</div>
+			</div>
+			
+			<input type="hidden" id="c_sdate" value="${courseDate.c_sdate}" />
+            <input type="hidden" id="c_edate" value="${courseDate.c_edate}" />
+			<input type="hidden" id="d_mon" value="${courseDay.d_mon}" />
+			<input type="hidden" id="d_tue" value="${courseDay.d_tue}" />
+			<input type="hidden" id="d_wed" value="${courseDay.d_wed}" />
+			<input type="hidden" id="d_thu" value="${courseDay.d_thu}" />
+			<input type="hidden" id="d_fri" value="${courseDay.d_fri}" />
+			
+            <table id="calendarBox">
+                          
+            </table>
+					
+                         
+                    
+            <div id="calendarExplain">일정 등록 날짜를 클릭해 주세요.</div>
+=======
             <div class="calendar">
                 <div class="calendar-header">
                     <span class="prev-month">◀</span>
@@ -40,29 +76,30 @@
                     </div>
                     <div class="month">
                         <div class="weeks">
-                            <span class="prev-day sun">28</span>
-                            <span class="prev-day">29</span>
-                            <span class="prev-day">30</span>
-                            <span class="prev-day">31</span>
-                            <span class="day">1</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                            </div>
-                            <span class="day sat">3</span>
+                            <% 
+                                Calendar calendar = new GregorianCalendar();
+                                int year = 2024; 
+                                int month = 7; 
+                                calendar.set(year, month, 1);
+                                int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                                int lastDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                
+                                for (int i = 1; i < firstDayOfWeek; i++) {
+                                    out.print("<span class='prev-day'></span>");
+                                }
+                                for (int date = 1; date <= lastDate; date++) {
+                                    if ((firstDayOfWeek + date - 1) % 7 == 0 && date != 1) {
+                                        out.print("</div><div class='weeks'>");
+                                    }
+                                    out.print("<span class='day'>" + date + "</span>");
+                                }
+                            %>
                         </div>
-
-                        <div class="weeks">
-                            <span class="day sun">4</span>
-                            <div class="day class">2
-                                <span class="times">12:00 ~ 14:30</span>
-                                <span class="students">손흥민, 이영자</span>
-                            </div>
-						</div>
-                         
                     </div>
                 </div>
             </div>
-            <div class="attend_write_button">일정 등록 날짜를 클릭해 주세요.</div>
+            <div class="attend_write_button">일정 등록 날짜를 클릭/드래그 해 주세요.</div>
+>>>>>>> ksh
         </main>
     </div>
 

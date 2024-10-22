@@ -285,6 +285,7 @@ function mobileHandler(){
     let menuName = document.querySelector('.menuName');
     let mobileMenu = document.querySelector('#mobile-menu');
     let className = menuName.innerHTML;
+	let backBtn = document.querySelector('#backBtn').addEventListener('click',()=>{window.history.back()});
     menuIcon.addEventListener('click', () => {
         menuList.style.getPropertyValue('visibility') ==='hidden'? menuList.style.setProperty('visibility', 'visible') : menuList.style.setProperty('visibility', 'hidden');       
         menuList.style.getPropertyValue('visibility') ==='hidden'? menuName.innerHTML=className : menuName.innerHTML='CHECK';
