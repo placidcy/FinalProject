@@ -10,6 +10,7 @@
     <title>CHECK-이메일 변경</title>
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/changepwd.css" />
+    <script src="/resources/js/changemailVaild.js"></script>
 </head>
 <body>
     <div id="container">

@@ -26,8 +26,8 @@ public class MemberSO {
 		
 		newMember.setMember_id(req.getMember_id());
 		newMember.setM_acctid(req.getM_acctid());
-//		newMember.setM_acctpwd(bCryptPasswordEncoder.encode(req.getM_acctpwd())); // 비밀번호 해싱
-		newMember.setM_acctpwd(req.getM_acctpwd()); //테스트용
+		newMember.setM_acctpwd(bCryptPasswordEncoder.encode(req.getM_acctpwd())); // 비밀번호 해싱
+//		newMember.setM_acctpwd(req.getM_acctpwd()); //테스트용
 		newMember.setM_name(req.getM_name());
 		newMember.setM_email(req.getM_email());
 		newMember.setM_tel(req.getM_tel());
@@ -89,6 +89,7 @@ public class MemberSO {
 	
 	// 비밀번호 재설정
 	public int updateM_acctpwd(MemberDO member) {
+		member.setM_acctpwd(bCryptPasswordEncoder.encode(member.getM_acctpwd())); //비밀번호 해싱
 		return memberDao.updatePassword(member);
 	}
 	

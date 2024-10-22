@@ -1,9 +1,10 @@
-* {
-  box-sizing: border-box;
+main{
+	padding-top:0px!important;
 }
 
 #attBox{
   display: flex;
+  width:100%;
 }
 
 #allAtt{
@@ -119,13 +120,6 @@
 }
 
 @media (min-width: 769px){
-main{
-  width:1022px;
-  height:100vh;
-  padding-left:30px;
-  padding-right:30px;
-  padding-top:0;
-}
 
 #contentBox{
   background-color: white;
@@ -153,7 +147,7 @@ main{
 }
 
 #setAttScore{  
-  margin-left:300px;
+margin-left: auto;
   width:180px;
   height:45px;
   border:1px solid #d9d9d9;
