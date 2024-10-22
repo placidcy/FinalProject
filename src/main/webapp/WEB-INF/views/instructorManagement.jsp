@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/resources/css/admin_aside.css">
 <link rel="stylesheet" href="/resources/css/instructorManagement.css">
 <link rel="stylesheet" href="/resources/css/instructorDialog.css">
-<link rel="stylesheet" href="/resources/css/search.css">
+<link rel="stylesheet" href="/resources/css/common.css">
 <link rel="stylesheet" as="style" crossorigin
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <script src="/resources/js/instructorManagement.js" defer></script> 
@@ -28,19 +28,13 @@
                         </div>
                     </nav>
                 </div>
-                <div class="subtitleInput">
-                    <div class="inputArea">
-                        <select id="searchType">
-                            <option value="name">이름</option>
-                            <option value="department">소속</option>
-                            <option value="email">이메일</option>
-                            <option value="id">아이디</option>
-                        </select> 
-                        <input type="text" placeholder="검색어를 입력하세요" id="searchText" class="researchTag" />
-                        <button class="researchBtn" onclick="searchInstructor()">검색</button>
-                    </div>
-                    <button class="impleBtn issueBtn" id="openIssueModalBtn">발급</button>
-                </div>
+				<div class="search-and-button">
+				    <div class="buttonContainer">
+				        <button class="impleBtn issueBtn" id="openIssueModalBtn">발급</button>
+				    </div>
+				    <jsp:include page="./instructor_searchbar.jsp"></jsp:include>
+				</div>
+
 
                 <div class="instructorTable">
                     <table>

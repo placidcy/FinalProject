@@ -89,8 +89,8 @@
 }
 
 #manageTableArea {
-	margin: 50px 50px;
-	width: 100%;
+	margin-top: 0;
+	padding-top: 0;
 }
 
 .subtitleInput {
@@ -219,6 +219,32 @@
 .pagination .selected {
     color: #87C791;
 }
+.search-and-button {
+    display: flex;
+    align-items: center;       
+    justify-content: space-between; 
+    width: 100%;  
+	margin-bottom: 10px;             
+}
+
+.buttonContainer {
+    margin-left: 0;  
+	display: flex;
+	align-items: center;      
+}
+
+.instructor_searchbar {
+    flex-grow: 1;              
+    display: flex;
+    justify-content: flex-end;     
+}
+.h1_Title {
+    margin-top: 0; 
+    padding-top: 0; 
+    position: relative; 
+    top: -20px; 
+}
+
 
 
 
