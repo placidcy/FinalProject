@@ -283,7 +283,8 @@ public class MainController {
 		}
 
 		try {
-			messageItem.setRes(emailSO.sendEmail(email));
+			emailSO.sendEmail(email);
+			messageItem.setRes(true);
 			messageItem.setMsg("이메일이 발송되었습니다! 메일함을 확인하세요.");
 		} catch (Exception e) {
 			messageItem.setRes(false);

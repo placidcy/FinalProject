@@ -47,38 +47,6 @@ public class EmailSO {
 		return isSend;
 	}
 
-	@Value("maligun.api.key")
-	private String apiKey;
-	@Value("maligun.api.id")
-	private String id;
-	@Value("maligun.api.pwd")
-	private String pwd;
-
-	public JsonNode sendSimpleMessage(String to, String subject, String body) throws UnirestException {
-		HttpResponse<JsonNode> request = Unirest
-				.post("https://api.mailgun.net/v3/" + "sandbox646590804eb744febd1a32f52662d754.mailgun.org"
-						+ "/messages")
-				.basicAuth("api", apiKey)
-				.queryString("from", "Excited User <USER@sandbox646590804eb744febd1a32f52662d754.mailgun.org>")
-				.queryString("to", to).queryString("subject", subject).queryString("text", body).asJson();
-		return request.getBody();
-	}
-
-	@Transactional
-	public boolean sendEmailByMaligun(String email) {
-		boolean isSend = false;
-		String code, subject, body;
-
-		code = this.createCode(email);
-		subject = this.setSubject();
-		body = this.setBody(code);
-
-		this.sendSimpleMessage(email, subject, body);
-		isSend = true;
-
-		return isSend;
-	}
-
 	public String setSubject() {
 		return "CHECK: 이메일 인증을 완료하세요.";
 	}
