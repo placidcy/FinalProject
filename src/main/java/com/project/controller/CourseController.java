@@ -22,6 +22,8 @@ import com.project.model.CourseMaterialWriteDO;
 import com.project.model.CourseReg;
 import com.project.model.CourseSO;
 import com.project.model.InstructorCalendar;
+import com.project.model.PostDAO;
+import com.project.model.PostDO;
 import com.project.model.dao.CourseBoardDAO;
 import com.project.model.dao.CourseMaterialWriteDAO;
 import com.project.model.response.LoginResponse;
@@ -36,23 +38,20 @@ public class CourseController {
 
 	@Autowired
 	private CourseBoardService courseBoardService;
-
 	@Autowired
 	private CourseMaterialWriteDAO courseMaterialWriteDAO;
-
 	@Autowired
 	private UserRoleService userRoleService;
-
 	@Autowired
 	private CourseSO courseSO;
 	@Autowired
 	private CourseDAO courseDAO;
-
 	@Autowired
 	private AttendanceDAO attendanceDAO;
-
 	@Autowired
 	private CourseBoardDAO courseBoardDAO;
+	@Autowired
+    private PostDAO postDAO;
 
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
@@ -63,6 +62,14 @@ public class CourseController {
 			model.addAttribute("error", "강의 ID가 존재하지 않습니다.");
 			return "error";
 		}
+		
+		List<PostDO> notice = postDAO.getRecentNoticeByCourse_id(course_id);
+		if (notice.size() > 0) {
+            model.addAttribute("notice1", notice.get(0).getP_title());
+        }
+        if (notice.size() > 1) {
+            model.addAttribute("notice2", notice.get(1).getP_title());
+        }
 
 		CourseDO course = courseSO.getCourseDetails(course_id);
 
