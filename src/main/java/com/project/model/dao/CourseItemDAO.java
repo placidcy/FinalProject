@@ -815,7 +815,7 @@ public class CourseItemDAO extends ItemDAO {
 		this.query.put("getQrCode", """
 				SELECT
 					q_code,
-					to_char(q_regdate, 'yyyy-mm-dd hh24:mi') q_regdate,
+					to_char(q_regdate, 'yyyy-mm-dd hh24:mi:ss') q_regdate,
 					q_efftime
 				FROM
 					FINAL_COURSE_QR fcq
