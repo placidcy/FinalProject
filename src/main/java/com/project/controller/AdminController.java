@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -162,13 +164,14 @@ public class AdminController {
 
 	@RequestMapping("/admin/notice/addPost")
 	public String addPost(@RequestParam("files") MultipartFile[] files, @RequestParam("title") String title,
-			@RequestParam("content") String content, @RequestParam("target") int target, HttpSession session) {
+			@RequestParam("content") String content, @RequestParam("target") int target, HttpSession session)
+			throws UnsupportedEncodingException {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		int memberId = auth.getMember_id();
 		if (uploadSO.insertNewPost(title, content, files, target, memberId)) {
 			return "redirect:/admin/notice";
 		} else {
-			return "redirect:/admin/error?msg=게시글 작성에 실패하였습니다.&redirect=write";
+			return this.redirectErrorPage("게시글 작성에 실패하였습니다.", "write");
 		}
 	}
 
@@ -180,6 +183,25 @@ public class AdminController {
 			model.addAttribute("attms", uploadSO.getFiles(post.getAttachments()));
 		}
 		model.addAttribute("page", page);
+		model.addAttribute("menu", "adminNotice");
 		return "admin/notice_details";
+	}
+
+	@RequestMapping("/admin/notice/delete")
+	@ResponseBody
+	public MessageItem deletePost(@RequestParam("postId") int postId) {
+		MessageItem messageItem = new MessageItem();
+		messageItem.setRes(uploadSO.deletePost(postId));
+		if (messageItem.isRes()) {
+			messageItem.setMsg("게시글이 삭제되었습니다.");
+		} else {
+			messageItem.setMsg("게시글이 삭제되지 않았습니다.");
+		}
+		return messageItem;
+	}
+
+	private String redirectErrorPage(String errorMessage, String redirectKeyword) throws UnsupportedEncodingException {
+		return "redirect:/admin/error?msg=" + URLEncoder.encode(errorMessage, "UTF-8") + ".&redirect="
+				+ redirectKeyword;
 	}
 }

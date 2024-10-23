@@ -153,7 +153,7 @@ public class NoticeItemDAO extends ItemDAO {
 	}
 
 	public int[] batchInsert(int postId, List<String> files) {
-		String sql = this.query.get("batchInsert");
+		this.sql = this.query.get("batchInsert");
 
 		return this.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
@@ -167,6 +167,16 @@ public class NoticeItemDAO extends ItemDAO {
 				return files.size();
 			}
 		});
+	}
+
+	public int deleteAttm(int postId) {
+		this.sql = this.query.get("deleteAttm");
+		return this.getJdbcTemplate().update(this.sql, postId);
+	}
+
+	public int deletePost(int postId) {
+		this.sql = this.query.get("deletePost");
+		return this.getJdbcTemplate().update(this.sql, postId);
 	}
 
 	private void init() {
@@ -212,5 +222,11 @@ public class NoticeItemDAO extends ItemDAO {
 		this.query.put("batchInsert", """
 				INSERT INTO final_post_attm VALUES (?, ?)
 								""");
+		this.query.put("deletePost", """
+				delete from final_course_post where post_id = ?
+				""");
+		this.query.put("deleteAttm", """
+				delete from final_post_attm where post_id = ?
+				""");
 	}
 }

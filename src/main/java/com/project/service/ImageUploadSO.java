@@ -151,4 +151,12 @@ public class ImageUploadSO {
 	public String getFileURL(String fileName) {
 		return "/api/file/get?fileName=" + fileName;
 	}
+
+	@Transactional
+	public boolean deletePost(int postId) {
+		int res;
+		res = dao.deleteAttm(postId);
+		res = dao.deletePost(postId);
+		return res > 0;
+	}
 }

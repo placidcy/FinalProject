@@ -1,3 +1,35 @@
+function responseHandler(error, response) {
+	if (error === null) {
+		if (response.res) {
+			alert(response.msg)
+			window.location.href = "/admin/notice";
+		} else {
+			alert(response.msg);
+			return false;
+		}
+	} else {
+		console.error(error);
+	}
+}
+
+function sendRequest(url, method, callback) {
+	const xhr = new XMLHttpRequest();
+	xhr.open(method, url, true);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				const response = JSON.parse(xhr.responseText);
+				callback(null, response);
+			} else {
+				callback(new Error(`AJAX 요청 실패: ${xhr.status}`));
+			}
+		}
+	};
+
+	xhr.send();
+}
+
 function clickButtonHandler(event) {
 	const id = event.target.id;
 	switch (id) {
@@ -5,10 +37,15 @@ function clickButtonHandler(event) {
 			window.location.href = "/admin/notice/write";
 			break;
 		case 'delete':
-			console.log('delete');
+			if (confirm('게시글을 삭제하시겠습니까?')) {
+				const postId = event.target.dataset.id;
+				const url = "/admin/notice/delete?postId=" + postId;
+				sendRequest(url, 'GET', responseHandler);
+			}
 			break;
 		case 'list':
 			window.location.href = `/admin/notice?page=${event.target.dataset.page}`;
+			break;
 	}
 }
 
@@ -50,20 +87,18 @@ function init() {
 			});
 		}
 	} catch (e) {
-		console.error(e);
 	}
-
 	try {
-		const btns = document.querySelector('.btn');
-		btns.addEventListener('click', clickButtonHandler);
+		const btns = document.querySelectorAll('.btn');
+		for (const btn of btns) {
+			btn.addEventListener('click', clickButtonHandler);
+		}
 	} catch (e) {
-		console.error(e);
 	}
 	try {
 		const cancelBtn = document.querySelector('#cancel');
 		cancelBtn.addEventListener('click', cancelHandler);
 	} catch (e) {
-		console.error(e);
 	}
 }
 
