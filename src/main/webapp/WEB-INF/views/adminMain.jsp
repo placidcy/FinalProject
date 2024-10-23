@@ -17,7 +17,7 @@
 		<main class="bg-f2f2f2 contents">
 			<div class="grid g20 mb30">
 				<div class="course-notice-title">
-					<h3>공지사항</h3>
+					<h3>최근 공지사항</h3>
 					<a href="/admin/notice"><span>더보기</span></a>
 				</div>
 				<ul class="course-notice white f20">
@@ -25,7 +25,7 @@
 						<li>공지사항이 없습니다.</li>
 					</c:if>
 					<c:forEach items="${noticeList}" var="notice">
-						<li>공지사항: ${notice.noticeTitle}</li>
+						<li>${notice.noticeTitle}</li>
 					</c:forEach>
 				</ul>
 			</div>
