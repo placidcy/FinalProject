@@ -43,13 +43,13 @@
                     <tr>
                         <th>공지</th>
                         <a href="">
-                            <td>일정 안내</td>
+                            <td>${notice1}</td>
                         </a>
                     </tr>
                     <tr>
                         <th>공지</th>
                         <a href="">
-                            <td>12일 피드백 사인업</td>
+                            <td>${notice2}</td>
                         </a>
                     </tr>
                 </table>

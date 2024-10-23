@@ -47,6 +47,11 @@ public class BeanConfig {
 		return new CourseDAO(dataSource);
 	}
 	
+	@Bean
+	public PostDAO postDAO(DataSource dataSource){
+		return new PostDAO(dataSource);
+	}
+	
 //	@Bean
 //	public JwtUtil jwtUtil() {
 //		return new JwtUtil();
