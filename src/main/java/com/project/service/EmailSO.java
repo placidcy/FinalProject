@@ -48,23 +48,25 @@ public class EmailSO {
 
 	public String setBody(String code) {
 		return String.format("""
-				<html>
-
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+				    <meta charset="UTF-8">
+				    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+				    <title>Email Verification</title>
+				    <style>
+						%s
+				    </style>
+				</head>
 				<body>
-				    <h1>
-				        이메일 인증을 완료하세요
-				    </h1>
-				    <table>
-				        <tr>
-				            <td>
-				                인증코드: %s
-				            </td>
-				        </tr>
-				    </table>
+				    <div class="container">
+				        <div class="logo">CHECK</div>
+				        <h1>이메일 인증을 완료하세요</h1>
+				        <p class="verification-code">인증코드: <span>%s</span></p>
+				    </div>
 				</body>
-
 				</html>
-				""", code);
+				""", this.setStyle(), code);
 	}
 
 	public String createCode(String email) {
@@ -82,4 +84,51 @@ public class EmailSO {
 		return emailDAO.checkAuth(email) > 0;
 	}
 
+	public String setStyle() {
+		return """
+				body {
+				    font-family: Arial, sans-serif;
+				    display: flex;
+				    justify-content: center;
+				    align-items: center;
+				    height: 100vh;
+				    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+				    margin: 0;
+				}
+
+				.container {
+				    text-align: center;
+				    background-color: white;
+				    padding: 30px;
+				    border-radius: 10px;
+				    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+				}
+
+				.logo {
+				    font-size: 28px;
+				    font-weight: bold;
+				    color: #007bff;
+				    margin-bottom: 20px;
+				}
+
+				h1 {
+				    font-size: 24px;
+				    color: #333;
+				    margin-bottom: 20px;
+				}
+
+				.verification-code {
+				    font-size: 16px;
+				    color: #666;
+				}
+
+				.verification-code span {
+				    font-weight: bold;
+				    color: #007bff;
+				    background-color: #f0f0f0;
+				    padding: 5px 10px;
+				    border-radius: 5px;
+				}
+				""";
+	}
 }
