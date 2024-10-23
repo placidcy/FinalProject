@@ -24,112 +24,147 @@
 }
 
 @media (min-width: 769px){
-main{
-    padding-left:55px;
-}
+	main{
+	    padding:50px;
+	}
+	
+	#homeBox{
+	    width:100%;
+	}
+	
+	
+	.course-notice-title {
+	    display: grid;
+	    grid-template-columns: repeat(2, 1fr);
+	    align-items: end;
+	}
+	
+	.course-notice-title>a {
+	    font-weight: bold;
+	    justify-self: end;
+	    text-decoration: none;
+	    color: black;
+	}
+	
+	.course-notice {
+	    width: 100%;
+	    padding: 30px;
+	    box-sizing: border-box;
+	    background-color: #FFF5DD;
+	    font-size: 20px;
+	    margin-bottom:40px;
+	    margin-top:20px;
+	}
+	
+	.course-notice th {
+	    width: auto;
+	    padding: 0;
+	    margin: 0;
+	    text-align: center;
+	}
+	
+	.course-notice td {
+	    width: 90%;
+	    padding: 0;
+	    margin: 0;
+	    text-align: left;
+	}
+	
+	
+	#courseLinkBox{
+	    display: flex;
+	    position: relative;
+	    width:100%;
+	    min-height:180px;
+	    background-color: white;
+	    border:1px solid #d9d9d9;
+	    margin-top:20px;
+	    margin-bottom:40px;
+	    align-items: center;
+    	justify-content: center;
+	}
+	
+	#linkContent{
+		width: 60%;
+		position:absolute;
+		left: 0;
+	    text-align:left;
+	    padding: 0 20px;
+	}
+	
+	#linkContent>h4{
+	    margin-top:17px;
+	}
+	
+	#linkBtnBox {
+		width: auto;
+		height: auto;
+		position: absolute;
+		right: 0;
+		display: flex;
+		flex-direction: column;
+    	align-items: center;
+    	justify-content: center;
+    	padding: 20px;
+	}
+	
+	#linkBtnBox>div>button{
+	    width:140px;
+	    height:50px;
+	    font-size:20px;
+	    font-weight:bold;
+	    border-radius:5px;
+	    cursor: pointer;
+	}
+	
+	#classBtn {
+	    margin-bottom:15px;
+	}
+	
+	#noteListBox{
+	    width:100%;
+	    min-height:150px;
+	    max-height: 440px;
+	    background-color: white;
+	    margin-top:20px;
+	    border:1px solid #d9d9d9;
+	    overflow-y: scroll;
+	}
+	
+	#noteListBox>h3{
+	    margin-top:55px;
+	    text-align: center;
+	}
+	
+	#noteBox{
+	    width:90%;
+	    border:1px solid #d9d9d9;
+	    margin-left:25px;
+	    margin-top:20px;
+	    margin-bottom:20px;
+	    padding-left:30px;
+	    padding-right:30px;
+	    padding-bottom:30px;
+	}
+	
+	.noteDate{
+	    margin-top:20px;
+	    margin-bottom:20px;
+	}
+	
+	#deleteBtn {
+	    border: 0;
+		width: auto;
+		height: auto;
+		cursor: pointer;
+		color: red;
+	    text-decoration: underline;
+	    background-color: rgba(0, 0, 0, 0);
+	    box-shadow: none;
+	    margin: 0;
+	    padding: 0;
+	}
 
-#homeBox{
-    width:985px;
-}
-
-
-.course-notice-title {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: end;
-}
-
-.course-notice-title>a {
-    font-weight: bold;
-    justify-self: end;
-    text-decoration: none;
-    color: black;
-}
-
-.course-notice {
-    width: 100%;
-    padding: 30px;
-    box-sizing: border-box;
-    background-color: #FFF5DD;
-    font-size: 20px;
-    margin-bottom:40px;
-    margin-top:10px;
-}
-
-.course-notice th {
-    width: 50px;
-    padding-right: 30px;
-}
-
-
-#courseLinkBox{
-    display: flex;
-    width:100%;
-    height:180px;
-    background-color: white;
-    border:1px solid #d9d9d9;
-    margin-top:20px;
-    margin-bottom:40px;
-}
-
-#linkContent{
-    text-align:left;
-    margin-left:30px;
-    margin-top:15px;
-}
-
-#linkContent>h4{
-    margin-top:17px;
-}
-
-#linkBtnBox{
-    margin-left:550px;
-}
-
-#linkBtnBox>div>button{
-    width:140px;
-    height:50px;
-    font-size:20px;
-    font-weight:bold;
-    border-radius:5px;
-    cursor: pointer;
-}
-
-#memoBtnBox{
-    margin-top:30px;
-    margin-bottom:15px;
-}
-
-#noteListBox{
-    width:100%;
-    min-height:150px;
-    max-height: 440px;
-    background-color: white;
-    margin-top:20px;
-    border:1px solid #d9d9d9;
-    overflow-y: scroll;
-}
-
-#noteListBox>h3{
-    margin-top:55px;
-    text-align: center;
-}
-
-#noteBox{
-    width:90%;
-    border:1px solid #d9d9d9;
-    margin-left:25px;
-    margin-top:20px;
-    margin-bottom:20px;
-    padding-left:30px;
-    padding-right:30px;
-    padding-bottom:30px;
-}
-
-.noteDate{
-    margin-top:20px;
-    margin-bottom:20px;
-}
 }
 
 @media (max-width:768px){

@@ -58,12 +58,11 @@
                     </div>
 
                     <div id="linkBtnBox">
-                        <div id="memoBtnBox">
-                        <button id="memoBtn">필기하기</button>
-                        </div>
-
                         <div>
-                        <button id="classBtn">입장하기</button>
+                        	<button id="classBtn">입장하기</button>
+                        </div>
+                        <div id="memoBtnBox">
+                        	<button id="memoBtn">필기하기</button>
                         </div>
                     </div>
 
