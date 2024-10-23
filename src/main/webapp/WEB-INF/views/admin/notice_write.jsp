@@ -24,13 +24,12 @@
 					method="POST" enctype="multipart/form-data">
 					<div class="flex">
 						<label class="f20 bold w120" for="title">공지 제목</label> <input
-							class="w800 border" type="text" id="title" name="title"
-							required>
+							class="w800 border" type="text" id="title" name="title" required>
 					</div>
 					<div class="flex">
 						<label class="f20 bold w120" for="content">공지 내용</label>
-						<textarea class="w800 h400 border" name="content"
-							id="content" required></textarea>
+						<textarea class="w800 h400 border" name="content" id="content"
+							required></textarea>
 					</div>
 					<div class="flex">
 						<label class="f20 bold w120" for="target">분류</label> <select
@@ -46,7 +45,7 @@
 					</div>
 					<div class="flex g20 je mb20">
 						<input class="impleBtn" type="submit" value="등록"> <input
-							class="cancelBtn" type="button" value="취소">
+							class="cancelBtn" type="button" id="cancel" value="취소">
 					</div>
 				</form>
 			</div>

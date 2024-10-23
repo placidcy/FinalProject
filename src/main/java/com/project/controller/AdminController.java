@@ -33,14 +33,14 @@ public class AdminController {
 	private NoticeItemDAO noticeDao;
 
 	@Autowired
-	private MainSO mainSo;
-
-	@Autowired
 	private CourseDAO courseDao;
 
 	@Autowired
 	private MemberDAO memberDao;
 
+	/**/
+	@Autowired
+	private MainSO mainSo;
 	@Autowired
 	private ImageUploadSO uploadSO;
 
@@ -123,6 +123,7 @@ public class AdminController {
 		return "instructorManagement";
 	}
 
+	/**/
 	@RequestMapping("/admin/error")
 	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
 			Model model) {
@@ -169,5 +170,16 @@ public class AdminController {
 		} else {
 			return "redirect:/admin/error?msg=게시글 작성에 실패하였습니다.&redirect=write";
 		}
+	}
+
+	@RequestMapping("/admin/notice/details")
+	public String getDetails(Model model, @RequestParam("postId") int postId, @RequestParam("page") int page) {
+		NoticeItem post = mainSo.selectOne(postId);
+		model.addAttribute("notice", post);
+		if (post.getAttachments() != null) {
+			model.addAttribute("attms", uploadSO.getFiles(post.getAttachments()));
+		}
+		model.addAttribute("page", page);
+		return "admin/notice_details";
 	}
 }

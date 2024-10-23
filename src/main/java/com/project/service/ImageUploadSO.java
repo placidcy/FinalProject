@@ -1,6 +1,10 @@
 package com.project.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,8 +12,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +28,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.project.model.FileItem;
 import com.project.model.NoticeItem;
 import com.project.model.dao.NoticeItemDAO;
 
@@ -85,5 +95,55 @@ public class ImageUploadSO {
 			return dao.batchInsert(noticeId, attms).length == files.length && noticeId > 0;
 		}
 		return false;
+	}
+
+	public ResponseEntity<InputStreamResource> getFile(String fileName) {
+		S3Object s3object = amazonS3.getObject(bucketName, fileName);
+
+		S3ObjectInputStream inputStream = s3object.getObjectContent();
+		try {
+			File tempFile = File.createTempFile("s3file-", null);
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			byte[] read_buf = new byte[1024];
+			int read_len;
+			while ((read_len = inputStream.read(read_buf)) > 0) {
+				fos.write(read_buf, 0, read_len);
+			}
+			fos.close();
+			inputStream.close();
+
+			String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()).replaceAll("\\+",
+					"%20");
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName);
+
+			InputStreamResource resource = new InputStreamResource(new java.io.FileInputStream(tempFile));
+			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.contentLength(tempFile.length()).body(resource);
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	public List<FileItem> getFiles(String fileString) {
+		String[] files = fileString.split(",");
+		List<FileItem> fileList = new ArrayList<FileItem>();
+		FileItem fileItem;
+		for (String file : files) {
+			fileItem = new FileItem();
+			fileItem.setFileName(this.getFileName(file));
+			fileItem.setUrl(this.getFileURL(fileItem.getFileName()));
+			fileList.add(fileItem);
+		}
+		return fileList;
+	}
+
+	public String getFileName(String url) {
+		return url.substring(url.lastIndexOf('/') + 1);
+	}
+
+	public String getFileURL(String fileName) {
+		return "/api/file/get?fileName=" + fileName;
 	}
 }
