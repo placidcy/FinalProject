@@ -1,13 +1,17 @@
 let today;
 
+function goCalendarForm(){
+	document.querySelector('#writeBtn').click();
+}
+
 function getDateText(object, date, type){
 	result='';
 	if(type){
 		if(object[date-1].insCalendar) {
 			for(let cal of object[date-1].insCalendar){
 				cal.s_title.length <= 7 ?
-				result += '<a href="/calendarForm?i_schedule=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title + '</div></a>'
-				: result += '<a href="/calendarForm?i_schedule=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title.slice(0,7) + '..</div></a>';
+				result += '<a href="/calendarForm?i_schedule_id=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title + '</div></a>'
+				: result += '<a href="/calendarForm?i_schedule_id=' + cal.i_schedule_id +'"style="text-decoration:none;color:black"><div style="font-weight:bold">' + cal.s_title.slice(0,7) + '..</div></a>';
 			}
 		}
 	}else{
@@ -75,7 +79,7 @@ function getCalender(number){
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
 	            	firstWeekBox += '<td class="monthDate-nc">'+ i + getDateText(obj, i, 0) +'</td>';
 				}else{
-					firstWeekBox += '<td class="monthDate-c">'+ i + getDateText(obj, i, 1) + '</td>';
+					firstWeekBox += '<td class="monthDate-c" onclick="goCalendarForm()">'+ i + getDateText(obj, i, 1) + '</td>';
 				}
 	            
 	        }
@@ -91,7 +95,7 @@ function getCalender(number){
 					if(new Date() - new Date(today.getFullYear(), today.getMonth(), i) >=0){
 	                	firstWeekBox += '<td class="monthDate-nc">'+ i + getDateText(obj, i, 0) +'</td>';
 					}else{
-						firstWeekBox += '<td class="monthDate-c">'+ i + getDateText(obj, i, 1) + '</td>';
+						firstWeekBox += '<td class="monthDate-c" onclick="goCalendarForm()">'+ i + getDateText(obj, i, 1) + '</td>';
 					}
 				}
 	        }
@@ -111,7 +115,7 @@ function getCalender(number){
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), lastDate.getDate()-i) >=0){
 					lastWeekBox += '<td class="monthDate-nc">' + (lastDate.getDate()-i) + getDateText(obj, lastDate.getDate()-i, 0) + '</td>';
 				}else{
-					lastWeekBox += '<td class="monthDate-c">'+ (lastDate.getDate()-i) + getDateText(obj, lastDate.getDate()-i, 1) + '</td>';
+					lastWeekBox += '<td class="monthDate-c" onclick="goCalendarForm()">'+ (lastDate.getDate()-i) + getDateText(obj, lastDate.getDate()-i, 1) + '</td>';
 				}
 	            
 	        }
@@ -135,7 +139,7 @@ function getCalender(number){
 				if(new Date() - new Date(today.getFullYear(), today.getMonth(), j) >=0){
 					weekBoxs += '<td class="monthDate-nc">'+ j + getDateText(obj, j, 0) + '</td>';
 	        	}else{
-					weekBoxs += '<td class="monthDate-c">'+ j + getDateText(obj, j, 1) + '</td>';
+					weekBoxs += '<td class="monthDate-c" onclick="goCalendarForm()">'+ j + getDateText(obj, j, 1) + '</td>';
 				}
 			}
 	    }  

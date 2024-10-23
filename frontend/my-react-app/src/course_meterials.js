@@ -23,7 +23,7 @@ const CourseMaterials = () => {
 			setCourseId(id);
 			fetchMaterials(id);
 		}
-		
+
 		const storedUserRole = sessionStorage.getItem('userRole');
 		setUserRole(storedUserRole);
 	}, [location, baseURL]);
@@ -64,7 +64,7 @@ const CourseMaterials = () => {
 						<a href={`/WriteMaterials?courseId=${courseId}`} className="material_write_button">강의 자료 작성</a>
 					)}
 				</div>
-				
+
 				<div className="course-board-list">
 					{materials.length > 0 ? (
 						materials.map((material) => (
@@ -89,7 +89,15 @@ const CourseMaterials = () => {
 							</div>
 						))
 					) : (
-						<span>업로드된 자료가 없습니다.</span>
+						<div className="course-note">
+							<div className="item-mt">
+								<div className="file-list">
+									<div className="file-info">
+										<span className='noFile'>업로드된 자료가 없습니다.</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					)}
 				</div>
 

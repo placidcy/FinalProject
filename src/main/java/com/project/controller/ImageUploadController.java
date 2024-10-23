@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.SdkClientException;
 import com.project.model.AttReq;
 import com.project.model.AttendanceDAO;
+import com.project.model.CourseDAO;
+import com.project.model.InstructorCalendar;
 import com.project.model.response.LoginResponse;
 import com.project.service.*;
 
@@ -23,6 +25,9 @@ public class ImageUploadController {
 	
 	@Autowired
 	AttendanceDAO attendanceDAO;
+	
+	@Autowired
+	CourseDAO courseDAO;
 	
 	@RequestMapping("/upload/testPage")
 	public String test() {
@@ -53,7 +58,37 @@ public class ImageUploadController {
 		}
 		
 		return "redirect:/" ;
+	
+	}
+	
+	@RequestMapping("attendWriteProcess")
+	public String attendWriteProcessHandler(InstructorCalendar insCal, HttpSession session) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			int course_id = (int) session.getAttribute("currentId");
+			
+			insCal.setSdate(insCal.getSdate().substring(0,10) + ' ' + insCal.getSdate().substring(11));
+			insCal.setEdate(insCal.getEdate().substring(0,10) + ' ' +  insCal.getEdate().substring(11));
 
+			courseDAO.insertInsSchedule(insCal, course_id, auth.getMember_id());
+			return "redirect:/courseAttend" ;
+		}
 		
+		return "redirect:/" ;
+	}
+
+	@RequestMapping("attendUpdateProcess")
+	public String attendUpdateProcessHandler(InstructorCalendar insCal, HttpSession session) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			insCal.setSdate(insCal.getSdate().substring(0,10) + ' ' + insCal.getSdate().substring(11));
+			insCal.setEdate(insCal.getEdate().substring(0,10) + ' ' +  insCal.getEdate().substring(11));
+			
+
+			courseDAO.updateInsSchedule(insCal);
+			return "redirect:/courseAttend" ;
+		}
+		
+		return "redirect:/" ;
 	}
 }

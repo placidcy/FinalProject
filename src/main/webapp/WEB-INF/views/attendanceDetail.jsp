@@ -211,6 +211,7 @@
                     <div class="requestArea8">${correq.a_date.getYear()}.${correq.getZero(correq.a_date.getMonthValue())}.${correq.getZero(correq.a_date.getDayOfMonth())}</div>
 					<input type="hidden" data-text="${correq.contents}" />
 					<input type="hidden" data-text="${correq.attm}" />
+					<input type="hidden" data-text="${correq.a_status}" />
                     <div class="requestArea9">${correq.getZero(correq.req_date.getMonthValue())}.${correq.getZero(correq.req_date.getDayOfMonth())}</div>
 					
 					<c:choose>	
