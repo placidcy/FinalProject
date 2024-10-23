@@ -16,7 +16,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authCheckInterceptor()).excludePathPatterns("/login", "/loginProcess",
 				"/agreement", "/agreementForm", "/signupForm", "/signupProcess",
-				"/findcheck", "/findid", "/findid2", "findidProcess", "/findpwd", "/findpwdProcess",
+				"/findcheck", "/findid", "/findid2", "/findidProcess", "/findpwd", "/findpwdProcess",
 				"/changepwd", "/changepwdProcess",
 				"/resources/**",
 				"/checkM_acctidDuplicate", "/checkM_emailDuplicate",
