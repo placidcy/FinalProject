@@ -5,14 +5,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 | 오류 페이지</title>
+<title>오류 알림</title>
 </head>
 <body>
 	<c:set var="write" value="write"></c:set>
+	<c:set var="courseNotFound" value="courseNotFound"></c:set>
 	<script>
 		alert("${msg}");
 		<c:if test="${redirect eq write}">
 		window.location.href = "/admin/notice/write";
+		</c:if>
+		<c:if test="${redirect eq courseNotFound}">
+		window.location.href = "/";
 		</c:if>
 	</script>
 </body>
