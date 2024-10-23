@@ -30,7 +30,7 @@
             <div id="homeBox">
                 <div class="course-notice-title">
                     <h3>공지 목록</h3>
-                    <a href="/">
+                    <a href="localhost:3000" class="sidebar-menu-unselected" style="width:33.333%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                         <span>더보기</span>
                     </a>
                 </div>

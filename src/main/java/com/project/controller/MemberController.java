@@ -19,13 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.model.MemberDO;
 import com.project.model.MemberSO;
-import com.project.model.JWT.JwtUtil;
+//import com.project.model.JWT.JwtUtil;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
-import com.project.model.response.ErrorResponse;
+//import com.project.model.response.ErrorResponse;
 import com.project.model.response.LoginResponse;
 
-import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
