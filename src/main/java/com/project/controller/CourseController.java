@@ -19,7 +19,13 @@ import com.project.model.CourseMaterialDO;
 import com.project.model.CourseMaterialWriteDO;
 import com.project.model.CourseReg;
 import com.project.model.CourseSO;
+
+import com.project.model.InstructorCalendar;
+import com.project.model.StudentAttendanceDO;
+import com.project.model.dao.CourseNoticeDAO;
+
 import com.project.model.dao.CourseMaterialWriteDAO;
+
 import com.project.model.response.LoginResponse;
 import com.project.service.CourseBoardService;
 import com.project.service.UserRoleService;
@@ -129,7 +135,7 @@ public class CourseController {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if (auth.getM_role() == 2) {
 			int course_id = (int) session.getAttribute("currentId");
-			;
+
 			courseDAO.rejectCourseReg(course_id, member_id);
 
 			return "redirect:/acceptanceManagement";
@@ -139,9 +145,38 @@ public class CourseController {
 	}
 
 	@GetMapping("calendarForm")
-	public String calendarFormHandler() {
-		return "calendarForm";
+	public String calendarFormHandler(@RequestParam(value="i_schedule_id", defaultValue="0") int i_schedule_id, HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			if(i_schedule_id !=0) {
+				InstructorCalendar formText = courseDAO.getCalendarFormText(i_schedule_id);
+				formText.setSdate(formText.getSdate().substring(0,10) + "T"+ formText.getSdate().substring(11));
+				formText.setEdate(formText.getEdate().substring(0,10) + "T"+ formText.getEdate().substring(11));
+				model.addAttribute("formText", formText);
+			}
+			
+			model.addAttribute("menu", "courseAttend");
+			return "calendarForm";
+			}
+			
+			return "redirect:/" ;
 	}
+	
+	
+	@GetMapping("attendDeleteProcess")
+	public String attendDeleteProcessHandler(InstructorCalendar insCal, HttpSession session) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			
+			courseDAO.deleteInsSchedule(insCal.getI_schedule_id());
+			return "redirect:/courseAttend" ;
+		}
+		
+		return "redirect:/" ;
+	}
+	
+	
+	
 
 	// 리액트 테스트
 //	@GetMapping("/reactTest")

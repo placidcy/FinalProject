@@ -1,0 +1,152 @@
+main{
+	padding-top:0px!important;
+}
+
+a{
+	text-decoration:none;
+}
+
+#attend_write{
+	background-color: #fff;
+	height: 100vh;
+	padding:10px;
+}
+
+#formTitle{
+	font-weight:bold;
+	font-size:32px;
+}
+
+#buttonBox {
+  width:100%;
+  display: flex;
+  margin-top:60px;
+  margin-left:7%;
+  padding:20px;
+}
+
+.save_button {
+	width:40%;
+  height: 50px;
+  padding: 6px;
+  background: #87C791;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  cursor:pointer;
+  margin-right:30px;
+}
+
+.cancel_button {
+	width:40%;
+  height: 50px;
+  padding: 10px;
+  background: #D9D9D9;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+}
+
+.delete_button {
+  width:25%;
+  height: 50px;
+  padding: 10px;
+  background: #C20F0F;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  margin-right:30px;
+}
+
+
+
+#topLine{
+  margin-top: 50px;
+}
+
+.course-title {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+#s_title{
+	width:85%;
+	font-size: 20px;
+}
+
+.coruse-day {
+  margin-top: 5%;
+}
+
+.dateInput{
+	width:200px;
+	height:40px;
+	border: 1px solid #d9d9d9;
+	font-size: 16px;
+}
+
+.course-content {
+  display: inline-flex;
+  width: 98%;
+  margin-top: 30px;
+}
+
+.course-title, .course-day, .course-content {
+  font-size: 24px;
+  margin-left: 20px;
+}
+
+.title {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.course_write, .text {
+  border: 2px solid #d9d9d9;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+.content {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  width: 85%;
+  height: 300px;
+  padding: 10px;
+  resize: none;
+  border: 1px solid #d9d9d9;
+}
+
+
+
+
+
+
+
+@media (min-width: 769px) {
+	#formHeader{
+		padding-top:50px;
+	}
+}
+
+@media (max-width: 768px) {
+
+	#formHeader{
+		padding-top:30px;
+	}
+
+
+}
