@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.project.model.AttendanceDAO;
 import com.project.model.CourseBoardDO;
 import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
@@ -49,6 +51,9 @@ public class CourseController {
     private CourseSO courseSO;
     @Autowired
     private CourseDAO courseDAO;
+    
+    @Autowired
+    private AttendanceDAO attendanceDAO;
     
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
@@ -142,6 +147,21 @@ public class CourseController {
 		}
 
 		return "redirect:/";
+	}
+	
+	@GetMapping("courseAttend")
+	public String courseAttendHandler(HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
+		if(auth.getM_role()==2) {
+			int course_id = (int) session.getAttribute("currentId");
+			
+			model.addAttribute("menu", "courseAttend");
+			model.addAttribute("courseDay", attendanceDAO.getCourseDay(course_id));
+			model.addAttribute("courseDate", courseDAO.getCourseDate(course_id));
+			return "course_attend";
+		}
+			
+		return "redirect:/" ;
 	}
 
 	@GetMapping("calendarForm")
