@@ -120,6 +120,8 @@ public class AdminController {
 		model.addAttribute("list", mainSo.selectAll(page));
 		model.addAttribute("size", mainSo.getTotalSize());
 		model.addAttribute("page", page);
+
+		model.addAttribute("menu", "adminNotice");
 		return "admin/notice";
 	}
 
@@ -130,6 +132,8 @@ public class AdminController {
 		model.addAttribute("size", mainSo.getTotalSize(keyword));
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
+
+		model.addAttribute("menu", "adminNotice");
 		return "admin/notice_search";
 	}
 }

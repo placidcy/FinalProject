@@ -15,7 +15,9 @@
 				<li
 				class="menu <c:if test="${menu eq instructorManagement}">clicked</c:if>">강사
 					관리</li></a>
-			<a href="/admin/notice"><li class="menu">공지사항</li></a>
+			<a href="/admin/notice"><c:set var="adminNotice"
+					value="adminNotice"></c:set>
+				<li class="menu <c:if test="${menu eq adminNotice}">clicked</c:if>">공지사항</li></a>
 		</ul>
 	</div>
 
