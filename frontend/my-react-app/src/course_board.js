@@ -92,7 +92,7 @@ const CourseBoard = () => {
                                     </a>
                                 ))
                             ) : (
-                                <span>작성된 공지 사항이 없습니다.</span>
+                                <span className='noFile'>작성된 공지 사항이 없습니다.</span>
                             )}
                         </div>
                     </div>
@@ -102,7 +102,7 @@ const CourseBoard = () => {
                         <div className="item">
                             {materials.length > 0 ? (
                                 materials.map((material) => (
-                                    <div key={material.postId}>
+                                    <div className='material-list' key={material.postId}>
                                         <a href="#" className="title">{material.title}</a>
                                         <div className="file-list">
                                             <div className="file-info">
@@ -120,7 +120,7 @@ const CourseBoard = () => {
                                     </div>
                                 ))
                             ) : (
-                                <span>업로드된 자료가 없습니다.</span>
+                                <span className='noFile'>업로드된 자료가 없습니다.</span>
                             )}
                         </div>
                     </div>
@@ -136,7 +136,7 @@ const CourseBoard = () => {
                                     </a>
                                 ))
                             ) : (
-                                <span>작성된 질문 게시글이 없습니다.</span>
+                                <span className='noFile'>작성된 질문 게시글이 없습니다.</span>
                             )}
                         </div>
                     </div>

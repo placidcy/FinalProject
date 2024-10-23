@@ -43,4 +43,10 @@ public class CourseBoardDAO {
         
         return this.jdbcTemplate.queryForObject(sql, new CourseBoardRowMapper(), courseId, postId);
     }
+    
+    // 리액트 사이드바 연동
+    public String getCourseNameById(int courseId) {
+        String sql = "SELECT c_name FROM final_course WHERE course_id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{courseId}, String.class);
+    }
 }

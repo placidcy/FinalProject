@@ -21,13 +21,9 @@ import com.project.model.CourseMaterialDO;
 import com.project.model.CourseMaterialWriteDO;
 import com.project.model.CourseReg;
 import com.project.model.CourseSO;
-
 import com.project.model.InstructorCalendar;
-import com.project.model.StudentAttendanceDO;
-import com.project.model.dao.CourseNoticeDAO;
-
+import com.project.model.dao.CourseBoardDAO;
 import com.project.model.dao.CourseMaterialWriteDAO;
-
 import com.project.model.response.LoginResponse;
 import com.project.service.CourseBoardService;
 import com.project.service.UserRoleService;
@@ -43,18 +39,21 @@ public class CourseController {
 
 	@Autowired
 	private CourseMaterialWriteDAO courseMaterialWriteDAO;
-	
-    @Autowired
-    private UserRoleService userRoleService;
-    
-    @Autowired
-    private CourseSO courseSO;
-    @Autowired
-    private CourseDAO courseDAO;
-    
-    @Autowired
-    private AttendanceDAO attendanceDAO;
-    
+
+	@Autowired
+	private UserRoleService userRoleService;
+
+	@Autowired
+	private CourseSO courseSO;
+	@Autowired
+	private CourseDAO courseDAO;
+
+	@Autowired
+	private AttendanceDAO attendanceDAO;
+
+	@Autowired
+	private CourseBoardDAO courseBoardDAO;
+
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
@@ -148,55 +147,52 @@ public class CourseController {
 
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("courseAttend")
 	public String courseAttendHandler(HttpSession session, Model model) {
-		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
-		if(auth.getM_role()==2) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		if (auth.getM_role() == 2) {
 			int course_id = (int) session.getAttribute("currentId");
-			
+
 			model.addAttribute("menu", "courseAttend");
 			model.addAttribute("courseDay", attendanceDAO.getCourseDay(course_id));
 			model.addAttribute("courseDate", courseDAO.getCourseDate(course_id));
 			return "course_attend";
 		}
-			
-		return "redirect:/" ;
+
+		return "redirect:/";
 	}
 
 	@GetMapping("calendarForm")
-	public String calendarFormHandler(@RequestParam(value="i_schedule_id", defaultValue="0") int i_schedule_id, HttpSession session, Model model) {
-		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
-		if(auth.getM_role()==2) {
-			if(i_schedule_id !=0) {
+	public String calendarFormHandler(@RequestParam(value = "i_schedule_id", defaultValue = "0") int i_schedule_id,
+			HttpSession session, Model model) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		if (auth.getM_role() == 2) {
+			if (i_schedule_id != 0) {
 				InstructorCalendar formText = courseDAO.getCalendarFormText(i_schedule_id);
-				formText.setSdate(formText.getSdate().substring(0,10) + "T"+ formText.getSdate().substring(11));
-				formText.setEdate(formText.getEdate().substring(0,10) + "T"+ formText.getEdate().substring(11));
+				formText.setSdate(formText.getSdate().substring(0, 10) + "T" + formText.getSdate().substring(11));
+				formText.setEdate(formText.getEdate().substring(0, 10) + "T" + formText.getEdate().substring(11));
 				model.addAttribute("formText", formText);
 			}
-			
+
 			model.addAttribute("menu", "courseAttend");
 			return "calendarForm";
-			}
-			
-			return "redirect:/" ;
+		}
+
+		return "redirect:/";
 	}
-	
-	
+
 	@GetMapping("attendDeleteProcess")
 	public String attendDeleteProcessHandler(InstructorCalendar insCal, HttpSession session) {
-		LoginResponse auth = (LoginResponse )session.getAttribute("auth");
-		if(auth.getM_role()==2) {
-			
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		if (auth.getM_role() == 2) {
+
 			courseDAO.deleteInsSchedule(insCal.getI_schedule_id());
-			return "redirect:/courseAttend" ;
+			return "redirect:/courseAttend";
 		}
-		
-		return "redirect:/" ;
+
+		return "redirect:/";
 	}
-	
-	
-	
 
 	// 리액트 테스트
 //	@GetMapping("/reactTest")
@@ -219,6 +215,18 @@ public class CourseController {
 					+ userRole;
 		}
 		return "redirect:/error";
+	}
+
+	// 사이드바 연동
+	@GetMapping("/api/courseName/{courseId}")
+	@ResponseBody
+	public ResponseEntity<String> getCourseName(@PathVariable("courseId") int courseId) {
+		String courseName = courseBoardDAO.getCourseNameById(courseId);
+		if (courseName != null) {
+			return ResponseEntity.ok(courseName);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/api/coursesBoard/{courseId}")

@@ -149,7 +149,17 @@ public class AttendanceController {
 		
 	}
 	
+	// 리액트 사이드바 연동
+	@GetMapping("/goAttendanceCalendar")
+	public String goAttendanceCalendar(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
+	    session.setAttribute("currentId", courseId);
+	    return "redirect:/attendanceCalendar";
+	}
 	
-	
+	@GetMapping("/goCurrentAttendance")
+	public String goCurrentAttSearch(@RequestParam(required = true, name = "courseId") int courseId, HttpSession session) {
+	    session.setAttribute("currentId", courseId);
+	    return "redirect:/currentAttendance";
+	}
 		
 }
