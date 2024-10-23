@@ -1,7 +1,9 @@
+let interval;
+
 function setTimer(duration) {
 	let timer = duration, minutes, seconds;
 	const timerElement = document.getElementById('timer');
-	const interval = setInterval(function() {
+	interval = setInterval(function() {
 		minutes = parseInt(timer / 60, 10);
 		seconds = parseInt(timer % 60, 10);
 
@@ -38,6 +40,7 @@ function verifyCodeResponseHandler(error, response) {
 			document.querySelector('#confirm-msg').innerText = '이메일 인증 완료';
 			document.querySelector('#auth').remove();
 			document.querySelector('#verification-section').remove();
+			clearInterval(interval);
 		}
 	} else {
 		responseHandler(error, response);

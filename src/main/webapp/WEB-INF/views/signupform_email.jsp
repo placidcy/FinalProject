@@ -25,7 +25,7 @@
 				value="회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span>" />
 		</jsp:include>
 		<main>
-			<form action="/signUpProcess2" method="POST" id="form">
+			<form action="/signupProcess" method="POST" id="form">
 				<table>
 					<tr>
 						<th><label for="m_acctid">아이디 <span>*</span></label></th>

@@ -33,7 +33,7 @@ public class EmailAuthController {
 
 		if (emailSO.checkIfEmailExists(email)) {
 			messageItem.setRes(false);
-			messageItem.setMsg("검증 코드가 이미 발송되었습니다. 이메일을 확인하세요.");
+			messageItem.setMsg("동일한 이메일로 인증 코드가 발송되었습니다. 3분 뒤에 다시 시도하세요.");
 
 			return messageItem;
 		}
@@ -71,7 +71,7 @@ public class EmailAuthController {
 	@PostMapping("/signUpProcess2")
 	public String signupProcessHandler(SignupRequest req, HttpSession session) {
 		try {
-			if (req.getM_email().equals(session.getAttribute("verifiedEMail"))) {
+			if (req.getM_email().equals((String) session.getAttribute("verifiedEmail"))) {
 				memberSO.signupStudent(req);
 				return "redirect:/login";
 			} else {
