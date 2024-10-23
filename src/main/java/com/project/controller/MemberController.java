@@ -148,6 +148,10 @@ public class MemberController {
 	public String findidHandler() {
 		return "findid";
 	}
+	@GetMapping("/findid2")
+	public String findid2Handler() {
+		return "findid2";
+	}
 	
 	@PostMapping("/findidProcess")
 	public String findProcessHandler(

@@ -24,6 +24,7 @@ public class MvcConfig implements WebMvcConfigurer {
 				"/signupProcess",
 				"/findcheck",
 				"/findid",
+				"/findid2",
 				"findidProcess",
 				"/findpwd",
 				"/findpwdProcess",
