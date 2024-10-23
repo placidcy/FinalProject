@@ -22,7 +22,7 @@
 				<h3 class="f24">공지사항</h3>
 				<!-- 서치바 -->
 				<jsp:include page="./notice_searchbar.jsp"></jsp:include>
-				<table class="tab notice mbe30">
+				<table class="tab notice">
 					<c:forEach items="${list }" var="item">
 						<tr class="item" data-id="${item.noticeId }">
 							<td class="prefix"><c:choose>

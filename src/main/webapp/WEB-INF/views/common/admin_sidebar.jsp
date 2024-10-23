@@ -8,16 +8,16 @@
 	<div>
 		<ul>
 			<a href="/adminMain"><c:set var="adminMain" value="adminMain"></c:set>
-				<li class="menu <c:if test="${menu eq adminMain}">clicked</c:if>">강의
+				<li class="menu <c:if test="${menu eq adminMain}">selected</c:if>">강의
 					목록</li></a>
 			<a href="/instructorManagement"><c:set var="instructorManagement"
 					value="instructorManagement"></c:set>
 				<li
-				class="menu <c:if test="${menu eq instructorManagement}">clicked</c:if>">강사
+				class="menu <c:if test="${menu eq instructorManagement}">selected</c:if>">강사
 					관리</li></a>
 			<a href="/admin/notice"><c:set var="adminNotice"
 					value="adminNotice"></c:set>
-				<li class="menu <c:if test="${menu eq adminNotice}">clicked</c:if>">공지사항</li></a>
+				<li class="menu <c:if test="${menu eq adminNotice}">selected</c:if>">공지사항</li></a>
 		</ul>
 	</div>
 

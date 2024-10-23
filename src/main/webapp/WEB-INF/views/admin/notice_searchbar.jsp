@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/resources/css/admin/notice.css">
 <script src="/resources/js/main/search.js"></script>
-<div class="flex">
+<div class="grid bar notice">
+	<button class="btn" id="write">작성</button>
 	<form class="search box flex" action="/admin/notice/search"
 		method="POST">
 		<input type="search" name="keyword" placeholder="검색어를 입력하세요." required>
@@ -13,5 +15,4 @@
                             </svg>
 		</button>
 	</form>
-	<button></button>
 </div>
