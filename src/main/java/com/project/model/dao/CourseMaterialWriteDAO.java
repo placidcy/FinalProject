@@ -19,7 +19,7 @@ public class CourseMaterialWriteDAO {
     }
 
     public int savePost(CourseMaterialWriteDO courseMaterial) {
-        String sql = "INSERT INTO FINAL_COURSE_POST (POST_ID, TYPE_ID, USER_ID, COURSE_ID, P_TITLE) VALUES (SEQ_POST_ID.NEXTVAL, 2, ?, ?, ?)";
+        String sql = "INSERT INTO FINAL_COURSE_POST (POST_ID, TYPE_ID, MEMBER_ID, COURSE_ID, P_TITLE) VALUES (SEQ_POST_ID.NEXTVAL, 2, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
