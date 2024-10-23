@@ -25,7 +25,7 @@
 				value="회원 정보 입력 <span>(필수 입력은 *로 표시됩니다.)</span>" />
 		</jsp:include>
 		<main>
-			<form action="signupProcess" method="POST" id="form">
+			<form action="/signUpProcess2" method="POST" id="form">
 				<table>
 					<tr>
 						<th><label for="m_acctid">아이디 <span>*</span></label></th>
@@ -56,9 +56,12 @@
 					<tr>
 						<th><label for="m_email">이메일 <span>*</span></label></th>
 						<td>
-							<div class="flex g10">
-								<input type="email" name="m_email" id="m_email" required />
-								<div class="btn" id="auth">인증</div>
+							<div id="emailSection">
+								<div class="flex g10 cen">
+									<input type="email" name="m_email" id="m_email" required />
+									<div class="btn" id="auth">인증</div>
+									<div id="confirm-msg"></div>
+								</div>
 							</div>
 							<p>example@example.com 형식으로 입력하세요.</p>
 							<p id="emailmsg"></p>

@@ -65,7 +65,7 @@ public class EmailSO {
 						    <div class="container">
 						        <div class="logo">CHECK</div>
 						        <h1>이메일 인증을 완료하세요</h1>
-						        <p class="verification-code">인증코드: <span id="code">8afd427a-e0e9-4c53-92f8-1b0d6898f820</span></p>
+						        <p class="verification-code">인증코드: <span id="code">%s</span></p>
 						    </div>
 						</body>
 						</html>
