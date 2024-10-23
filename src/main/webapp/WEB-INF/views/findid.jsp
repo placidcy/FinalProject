@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/resources/css/requestDialog.css">
     <!-- 자바스크립트 -->
     <script src="/resources/js/buttonLocation.js"></script>
+    <script src="/resources/js/findidValid.js"></script>
 </head>
 <body>
     <div id="container">
