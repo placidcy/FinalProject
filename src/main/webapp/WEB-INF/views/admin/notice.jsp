@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지-공지사항</title>
+<title>관리자 | 공지사항 페이지</title>
 <link rel="stylesheet" href="/resources/css/common.css">
 <link rel="stylesheet" href="/resources/css/main/notice.css">
 <link rel="stylesheet" as="style" crossorigin

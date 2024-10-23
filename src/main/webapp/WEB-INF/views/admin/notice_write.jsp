@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지-공지사항: 게시글 작성</title>
+<title>관리자 | 공지사항 - 게시글 작성</title>
 <link rel="stylesheet" href="/resources/css/common.css">
 <link rel="stylesheet" href="/resources/css/admin-form.css">
 <link rel="stylesheet" href="/resources/css/admin/notice.css">
@@ -19,7 +19,7 @@
 		<!-- 본문 -->
 		<main class="contents bgf2f2f2">
 			<div class="grid g20">
-				<h3 class="f24">공지사항: 게시글 작성</h3>
+				<h3 class="f24">게시글 작성</h3>
 				<form class="courseForm grid g20" action="/admin/notice/addPost"
 					method="POST" enctype="multipart/form-data">
 					<div class="flex">

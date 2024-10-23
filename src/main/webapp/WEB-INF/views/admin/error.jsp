@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 | 오류 페이지</title>
 </head>
 <body>
 	<c:set var="write" value="write"></c:set>

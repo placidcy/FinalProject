@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지-공지사항: ${notice.noticeTitle }</title>
+<title>관리자 | 공지사항 - ${notice.noticeTitle }</title>
 <link rel="stylesheet" href="/resources/css/common.css">
 <link rel="stylesheet" href="/resources/css/admin/notice.css">
 <link rel="stylesheet" as="style" crossorigin
@@ -20,7 +20,7 @@
 		<!-- 본문 -->
 		<main class="contents bgf2f2f2">
 			<div class="grid g20">
-				<h3 class="f24">공지사항: 게시글 상세 조회</h3>
+				<h3 class="f24">게시글 상세 조회</h3>
 				<table class="post details">
 					<tr>
 						<th>제목</th>
