@@ -28,8 +28,12 @@
 					${result}
 				</div>
 				<div id="bottom">
+					<a href="/login">
 					<button id="submitBtn">로그인하러 가기</button>
+					</a>
+					<a href="/findcheck">
 					<button id="cancelBtn">비밀번호 찾기</button>
+					</a>
 				</div>
 			</div>
 		</main>
