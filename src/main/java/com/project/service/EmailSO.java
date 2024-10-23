@@ -14,8 +14,6 @@ import com.amazonaws.services.simpleemail.model.Body;
 import com.project.model.MessageItem;
 import com.project.model.dao.EmailDAO;
 
-import kong.unirest.*;
-
 @Service
 public class EmailSO {
 	@Autowired
