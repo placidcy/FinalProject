@@ -132,16 +132,22 @@ public class ImageUploadSO {
 	}
 
 	public List<FileItem> getFiles(String fileString) {
-		String[] files = fileString.split(",");
-		List<FileItem> fileList = new ArrayList<FileItem>();
+		String[] files;
+		List<FileItem> fileList;
 		FileItem fileItem;
-		for (String file : files) {
-			fileItem = new FileItem();
-			fileItem.setFileName(this.getFileName(file));
-			fileItem.setUrl(this.getFileURL(fileItem.getFileName()));
-			fileList.add(fileItem);
+		if (fileString != null) {
+			files = fileString.split(",");
+			fileList = new ArrayList<FileItem>();
+			for (String file : files) {
+				fileItem = new FileItem();
+				fileItem.setFileName(this.getFileName(file));
+				fileItem.setUrl(this.getFileURL(fileItem.getFileName()));
+				fileList.add(fileItem);
+			}
+			return fileList;
+		} else {
+			return null;
 		}
-		return fileList;
 	}
 
 	public String getFileName(String url) {
