@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.project.model.CourseBoardDO;
 import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
@@ -19,6 +20,7 @@ import com.project.model.CourseMaterialDO;
 import com.project.model.CourseMaterialWriteDO;
 import com.project.model.CourseReg;
 import com.project.model.CourseSO;
+import com.project.model.dao.CourseBoardDAO;
 import com.project.model.dao.CourseMaterialWriteDAO;
 import com.project.model.response.LoginResponse;
 import com.project.service.CourseBoardService;
@@ -43,6 +45,9 @@ public class CourseController {
 	private CourseSO courseSO;
 	@Autowired
 	private CourseDAO courseDAO;
+	
+	@Autowired
+    private CourseBoardDAO courseBoardDAO;
 
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
@@ -164,6 +169,18 @@ public class CourseController {
 					+ userRole;
 		}
 		return "redirect:/error";
+	}
+	
+	// 사이드바 연동
+	@GetMapping("/api/courseName/{courseId}")
+	@ResponseBody
+	public ResponseEntity<String> getCourseName(@PathVariable("courseId") int courseId) {
+	    String courseName = courseBoardDAO.getCourseNameById(courseId);
+	    if (courseName != null) {
+	        return ResponseEntity.ok(courseName);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 	@GetMapping("/api/coursesBoard/{courseId}")

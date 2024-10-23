@@ -52,7 +52,7 @@ a {
 /* 강의노트, 강의 자료 */
 .course-note, .course-materials {
 	background-color: #ffffff;
-	padding: 40px;
+	padding: 20px;
 	border: 1px solid #dddddd;
 }
 
@@ -69,10 +69,6 @@ a {
 	font-weight: bold;
 	margin-bottom: 10px;
 	color: #333333;
-}
-
-.item-mt {
-	margin-bottom: -20px;
 }
 
 .title {
@@ -114,6 +110,16 @@ a {
 
 .files a:hover {
 	text-decoration: underline;
+}
+
+.noFile {
+	padding: 20px;
+	margin-bottom: 30px;
+	font-size: 20px;
+}
+
+.material-list {
+	margin-bottom: 20px;
 }
 
 #course {
