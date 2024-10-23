@@ -123,6 +123,14 @@ public class AdminController {
 		return "instructorManagement";
 	}
 
+	@RequestMapping("/admin/error")
+	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
+			Model model) {
+		model.addAttribute("msg", msg);
+		model.addAttribute("redirect", redirect);
+		return "admin/error";
+	}
+
 	@RequestMapping("/admin/notice")
 	public String getAmdinNotice(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
 		model.addAttribute("list", mainSo.selectAll(page));
@@ -156,7 +164,10 @@ public class AdminController {
 			@RequestParam("content") String content, @RequestParam("target") int target, HttpSession session) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		int memberId = auth.getMember_id();
-
-		return "admin/notice";
+		if (uploadSO.insertNewPost(title, content, files, target, memberId)) {
+			return "redirect:/admin/notice";
+		} else {
+			return "redirect:/admin/error?msg=게시글 작성에 실패하였습니다.&redirect=write";
+		}
 	}
 }

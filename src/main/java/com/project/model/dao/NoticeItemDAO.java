@@ -3,7 +3,10 @@ package com.project.model.dao;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.project.model.NoticeItem;
@@ -135,6 +138,37 @@ public class NoticeItemDAO extends ItemDAO {
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%", "%" + keyword + "%");
 	}
 
+	public int insertNewPost(String title, String content, int target, int memberId) {
+		this.sql = query.get("insertNewPost");
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		this.getJdbcTemplate().update(connection -> {
+			PreparedStatement ps = connection.prepareStatement(sql, new String[] { "post_id" });
+			ps.setInt(1, memberId);
+			ps.setString(2, title);
+			ps.setString(3, content);
+			ps.setInt(4, target);
+			return ps;
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public int[] batchInsert(int postId, List<String> files) {
+		String sql = this.query.get("batchInsert");
+
+		return this.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, postId);
+				ps.setString(2, files.get(i));
+			}
+
+			@Override
+			public int getBatchSize() {
+				return files.size();
+			}
+		});
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		this.query.put("getCount", """
@@ -170,5 +204,13 @@ public class NoticeItemDAO extends ItemDAO {
 					) fpa on fcp.post_id = fpa.post_id
 				where fcp.post_id = ?
 				""");
+		this.query.put("insertNewPost",
+				"""
+						INSERT INTO FINAL_COURSE_POST(post_id, type_id, member_id, course_id, p_title, p_contents, p_regdate, p_target, p_status)
+						VALUES(seq_post_id.nextval, 0, ?, NULL, ?, ?, sysdate, ?, DEFAULT)
+						""");
+		this.query.put("batchInsert", """
+				INSERT INTO final_post_attm VALUES (?, ?)
+								""");
 	}
 }

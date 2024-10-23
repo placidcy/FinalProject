@@ -24,12 +24,12 @@
 					method="POST" enctype="multipart/form-data">
 					<div class="flex">
 						<label class="f20 bold w120" for="title">공지 제목</label> <input
-							class="w800 border" type="text" id="title" name="noticeTitle"
+							class="w800 border" type="text" id="title" name="title"
 							required>
 					</div>
 					<div class="flex">
 						<label class="f20 bold w120" for="content">공지 내용</label>
-						<textarea class="w800 h400 border" name="noticeContents"
+						<textarea class="w800 h400 border" name="content"
 							id="content" required></textarea>
 					</div>
 					<div class="flex">
