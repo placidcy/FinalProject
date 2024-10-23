@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.bar.notice {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.btn#write {
+	background-color: #87C791;
+	border-radius: 10px;
+}
