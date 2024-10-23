@@ -112,7 +112,7 @@ public class MemberController {
 			@RequestParam(value = "memberagree", required = true) boolean memberagree,
 			@RequestParam(value = "personalagree", required = true) boolean personalagree) {
 		if (memberagree && personalagree) {
-			return "/signupform";
+			return "/signupform_email";
 		} else {
 			return "redirect:/agreement";
 		}

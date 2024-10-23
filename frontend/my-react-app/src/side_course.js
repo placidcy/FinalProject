@@ -4,20 +4,33 @@ import './css/course_mu.css';
 const Sidebar = ({ courseId }) => {
 	const [baseUrl, setBaseUrl] = useState('');
 	const [menuVisible, setMenuVisible] = useState(false);
-	const [menuName, setMenuName] = useState('HTML의 기초');
+	const [menuName, setMenuName] = useState('');
 	const [userRole, setUserRole] = useState(null);
 
 	useEffect(() => {
 		const { protocol, hostname } = window.location;
 		setBaseUrl(`${protocol}//${hostname}:8080`);
-		
+
 		const role = sessionStorage.getItem('userRole');
 		setUserRole(role ? Number(role) : null);
-	}, []);
+
+		if (courseId) {
+			fetch(`${baseUrl}/api/courseName/${courseId}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.text();
+				})
+				.then(data => {
+					setMenuName(data);
+				})
+				.catch(error => console.error('Error fetching course name:', error));
+		}
+	}, [courseId, baseUrl]);
 
 	const toggleMenu = () => {
 		setMenuVisible(prev => !prev);
-		setMenuName(prev => (prev === 'HTML의 기초' ? 'CHECK' : 'HTML의 기초'));
 	};
 
 	const handleBackButtonClick = () => {
@@ -71,7 +84,7 @@ const Sidebar = ({ courseId }) => {
 					<a href="home">
 						<h1>CHECK</h1>
 					</a>
-					<h3>HTML의 기초</h3>
+					<h3>{menuName}</h3>
 					<hr />
 				</div>
 
@@ -102,11 +115,18 @@ const Sidebar = ({ courseId }) => {
 					<a href={`/CourseBoard?courseId=${courseId}`} className="sidebar-menu-selected" style={{ width: '33.333%' }}>
 						<li>강의 게시판</li>
 					</a>
-					<a href={`${baseUrl}/currentAttendance`} className="sidebar-menu-unselected" style={{ width: '33.333%' }}>
-						<li>출결 확인</li>
-					</a>
+					{(userRole === 1) && (
+						<>
+							<a href={`${baseUrl}/goAttendanceCalendar?courseId=${courseId}`} className="sidebar-menu-unselected" style={{ width: '33.333%' }}>
+								<li>출결 확인</li>
+							</a>
+						</>
+					)}
 					{(userRole === 0 || userRole === 2) && (
 						<>
+							<a href={`${baseUrl}/goCurrentAttendance?courseId=${courseId}`} className="sidebar-menu-unselected" style={{ width: '33.333%' }}>
+								<li>출결 확인</li>
+							</a>
 							<a href={`${baseUrl}/acceptanceManagement`} className="sidebar-menu-unselected" style={{ width: '33.333%' }}>
 								<li>수강 신청 관리</li>
 							</a>

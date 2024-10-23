@@ -902,7 +902,7 @@ public class CourseItemDAO extends ItemDAO {
 				    ) THEN 3
 				    ELSE 2
 				  END
-				WHERE a_date = TRUNC(SYSDATE-1)
+				WHERE a_date = TRUNC(SYSDATE-1) and a_status = 0
 						""");
 		this.query.put("insertDailyRecords", """
 				INSERT INTO final_student_attend(student_id, a_date)

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<link rel="stylesheet" href="/resources/css/common.css">
 <aside class="sidebar main cffffff">
 	<div class="flex cen v h logo p50">
 		<div class="logoText">

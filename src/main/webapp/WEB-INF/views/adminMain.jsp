@@ -1,25 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자 메인 페이지</title>
-<link rel="stylesheet" href="/resources/css/common.css">
-<link rel="stylesheet" href="/resources/css/adminMain.css">
-<link rel="stylesheet" href="/resources/css/admin_aside.css">
-<link rel="stylesheet" href="/resources/css/admin-form.css">
 <link rel="stylesheet" href="/resources/css/admin-course.css">
-
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-
 </head>
-
 <body>
 	<div class="container flex">
 		<jsp:include page="common/admin_sidebar.jsp" />
@@ -27,19 +17,16 @@
 		<main class="bg-f2f2f2 contents">
 			<div class="grid g20 mb30">
 				<div class="course-notice-title">
-					<h3>공지사항</h3>
-					<a href="/notice"> <span>더보기</span>
-					</a>
+					<h3>최근 공지사항</h3>
+					<a href="/admin/notice"><span>더보기</span></a>
 				</div>
-
 				<ul class="course-notice white f20">
 					<c:if test="${empty noticeList}">
 						<li>공지사항이 없습니다.</li>
 					</c:if>
 					<c:forEach items="${noticeList}" var="notice">
-						<li>공지사항: ${notice.noticeTitle}</li>
+						<li>${notice.noticeTitle}</li>
 					</c:forEach>
-
 				</ul>
 			</div>
 

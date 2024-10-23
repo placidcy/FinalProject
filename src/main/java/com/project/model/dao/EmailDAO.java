@@ -30,6 +30,11 @@ public class EmailDAO extends ItemDAO {
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, email);
 	}
 
+	public int deleteAuth(String email) {
+		this.sql = this.query.get("deleteAuth");
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, email);
+	}
+
 	public void init() {
 		this.query = new HashMap<String, String>();
 		this.query.put("createAuth", """
@@ -46,5 +51,9 @@ public class EmailDAO extends ItemDAO {
 					e_email = ?
 					AND sysdate BETWEEN e_date AND e_date + 3 / 24 / 60
 					""");
+		this.query.put("deleteAuth", """
+				DELETE FROM FINAL_EMAIL
+				WHERE E_EMAIL = ?
+				""");
 	}
 }
