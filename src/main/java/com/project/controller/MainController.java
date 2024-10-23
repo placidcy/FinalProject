@@ -265,32 +265,33 @@ public class MainController {
 		return mainSO.selectOne(noticeId);
 	}
 
-	@RequestMapping("/email/testPage")
-	public String testEmail() {
-		return "main/test";
-	}
-
-	@ResponseBody
-	@RequestMapping("/sendEmail")
-	public MessageItem sendEmail(@RequestParam(name = "email", required = true) String email) {
-		MessageItem messageItem = new MessageItem();
-
-		if (emailSO.checkIfEmailExists(email)) {
-			messageItem.setRes(false);
-			messageItem.setMsg("검증 코드가 이미 발송되었습니다. 이메일을 확인하세요.");
-
-			return messageItem;
-		}
-
-		try {
-			emailSO.sendEmail(email);
-			messageItem.setRes(true);
-			messageItem.setMsg("이메일이 발송되었습니다! 메일함을 확인하세요.");
-		} catch (Exception e) {
-			messageItem.setRes(false);
-			messageItem.setMsg("이메일이 발송 과정에서 오류가 발생하였습니다. 다시 시도하세요.");
-		}
-
-		return messageItem;
-	}
+	// 기능 구현 중단으로 주석 처리
+//	@RequestMapping("/email/testPage")
+//	public String testEmail() {
+//		return "main/test";
+//	}
+//
+//	@ResponseBody
+//	@RequestMapping("/sendEmail")
+//	public MessageItem sendEmail(@RequestParam(name = "email", required = true) String email) {
+//		MessageItem messageItem = new MessageItem();
+//
+//		if (emailSO.checkIfEmailExists(email)) {
+//			messageItem.setRes(false);
+//			messageItem.setMsg("검증 코드가 이미 발송되었습니다. 이메일을 확인하세요.");
+//
+//			return messageItem;
+//		}
+//
+//		try {
+//			emailSO.sendEmail(email);
+//			messageItem.setRes(true);
+//			messageItem.setMsg("이메일이 발송되었습니다! 메일함을 확인하세요.");
+//		} catch (Exception e) {
+//			messageItem.setRes(false);
+//			messageItem.setMsg("이메일이 발송 과정에서 오류가 발생하였습니다. 다시 시도하세요.");
+//		}
+//
+//		return messageItem;
+//	}
 }
