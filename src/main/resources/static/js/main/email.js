@@ -1,11 +1,10 @@
 function responseHandler(error, response) {
 	if (error === null) {
 		if (response.res) {
-			alert('요청이 정상적으로 처리되었습니다.')
+			alert(response.msg)
 		} else {
 			alert(response.msg);
 		}
-		window.location.reload();
 	} else {
 		console.error(error);
 	}
@@ -29,17 +28,34 @@ function sendRequest(url, method, callback) {
 	xhr.send();
 }
 
-function sendEmail() {
-	const email = document.querySelector('input[name="email"]');
-	const code = document.querySelector('input[name="code"]');
+function sendEmail(email) {
+	const url = `/api/signup/sendEmail?email=${email}`;
+	sendRequest(url, 'GET', responseHandler);
+}
 
-	const url = `/checkEmail?email=${email}&code=${code}`;
-	sendRequest(url, POST, responseHandler);
+function verifyCode(email) {
+	const url = `/api/signup/check?email=${email}&code=${code}`;
+	sendRequest(url, 'GET', responseHandler);
+}
+
+function checkInput(event) {
+	// submit 이벤트 방지
+	event.preventDefault();
+	const emailInput = document.querySelector('#m_email');
+	const emailValue = emailInput.value;
+
+	// 이메일 형식 검사
+	const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	if (emailPattern.test(emailValue)) {
+		sendEmail(emailValue);
+	} else {
+		alert('잘못된 이메일 형식입니다. 다시 입력해주세요.');
+	}
 }
 
 function init() {
-	const confirmButton = document.querySelector('#confirmButton');
-	confirmButton.addEventListener('click', sendEmail);
+	const authBtn = document.querySelector('#auth');
+	authBtn.addEventListener('click', checkInput);
 }
 
 window.addEventListener('load', init);

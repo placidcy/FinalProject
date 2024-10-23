@@ -1,5 +1,6 @@
 package com.project.service;
 
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,33 +48,42 @@ public class EmailSO {
 	}
 
 	public String setBody(String code) {
-		return String.format("""
-				<!DOCTYPE html>
-				<html lang="en">
-				<head>
-				    <meta charset="UTF-8">
-				    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-				    <title>Email Verification</title>
-				    <style>
-						%s
-				    </style>
-				</head>
-				<body>
-				    <div class="container">
-				        <div class="logo">CHECK</div>
-				        <h1>이메일 인증을 완료하세요</h1>
-				        <p class="verification-code">인증코드: <span>%s</span></p>
-				    </div>
-				</body>
-				</html>
-				""", this.setStyle(), code);
+		return String.format(
+				"""
+						<!DOCTYPE html>
+						<html lang="en">
+						<head>
+						    <meta charset="UTF-8">
+						    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+						    <title>Email Verification</title>
+						    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+						    <style>
+								%s
+						    </style>
+						</head>
+						<body>
+						    <div class="container">
+						        <div class="logo">CHECK</div>
+						        <h1>이메일 인증을 완료하세요</h1>
+						        <p class="verification-code">인증코드: <span id="code">8afd427a-e0e9-4c53-92f8-1b0d6898f820</span></p>
+						    </div>
+						</body>
+						</html>
+						""",
+				this.setStyle(), code);
 	}
 
 	public String createCode(String email) {
-		String code = UUID.randomUUID().toString();
+		String code = this.generateCode();
 		int res = emailDAO.createAuth(email, code);
 
 		return res > 0 ? code : null;
+	}
+
+	public String generateCode() {
+		Random random = new Random();
+		int code = random.nextInt(900000) + 100000; // 100000 ~ 999999 범위의 숫자 생성
+		return String.valueOf(code);
 	}
 
 	public boolean verifyCode(String email, String code) {
@@ -87,7 +97,6 @@ public class EmailSO {
 	public String setStyle() {
 		return """
 				body {
-				    font-family: Arial, sans-serif;
 				    display: flex;
 				    justify-content: center;
 				    align-items: center;
@@ -97,6 +106,7 @@ public class EmailSO {
 				}
 
 				.container {
+				    font-family: 'Pretendard' !important;
 				    text-align: center;
 				    background-color: white;
 				    padding: 30px;
@@ -107,7 +117,7 @@ public class EmailSO {
 				.logo {
 				    font-size: 28px;
 				    font-weight: bold;
-				    color: #007bff;
+				    color: #87C791;
 				    margin-bottom: 20px;
 				}
 
@@ -124,10 +134,23 @@ public class EmailSO {
 
 				.verification-code span {
 				    font-weight: bold;
-				    color: #007bff;
+				    color: #87C791;
 				    background-color: #f0f0f0;
 				    padding: 5px 10px;
 				    border-radius: 5px;
+				}
+
+				button {
+				    padding: 10px 20px;
+				    background-color: #b7b7b7;
+				    color: white;
+				    border: none;
+				    border-radius: 4px;
+				    cursor: pointer;
+				}
+
+				button:hover {
+				    background-color: #88b98e;
 				}
 				""";
 	}
