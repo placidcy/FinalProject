@@ -34,8 +34,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberSO memberSo;
-	@Autowired
-	private JwtUtil jwtUtil;
+//	@Autowired
+//	private JwtUtil jwtUtil;
 	
 	@GetMapping("/login")
 	public String loginHandler() {
