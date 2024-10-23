@@ -20,21 +20,41 @@
         	<jsp:param name="pageContent" value="아이디를 잊으셨다면, 이름과 이메일을 통해 아이디를 찾을 수 있습니다." />
  		</jsp:include>
         <main>
+        
 			<div class="formBox">
-				<div id="top">
+				<div id="top" >
 					<p>고객님의 정보와 일치하는 아이디입니다.</p>
 				</div>
-				<div id="middle">
-					${result}
-				</div>
-				<div id="bottom">
-					<a href="/login">
-					<button id="submitBtn">로그인하러 가기</button>
-					</a>
-					<a href="/findcheck">
-					<button id="cancelBtn">비밀번호 찾기</button>
-					</a>
-				</div>
+				
+			    <c:choose>
+			        <c:when test="${not empty result}">
+						<div id="middle">
+							${result}
+						</div>
+						<div id="bottom">
+							<a href="/login">
+							<button id="submitBtn">로그인하러 가기</button>
+							</a>
+							<a href="/findpwd">
+							<button id="cancelBtn">비밀번호 찾기</button>
+							</a>
+						</div>
+			        </c:when>
+			        <c:otherwise>
+						<div id="middle">
+							${error}
+						</div>
+						<div id="bottom">
+							<a href="/login">
+							<button id="submitBtn">로그인하러 가기</button>
+							</a>
+							<a href="/findcheck">
+							<button id="cancelBtn">아이디/비밀번호 찾기</button>
+							</a>
+						</div>
+			        </c:otherwise>
+			    </c:choose>
+			    
 			</div>
 		</main>
 		</div>

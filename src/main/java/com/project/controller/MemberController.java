@@ -166,7 +166,7 @@ public class MemberController {
 				return "findid2";
 			}
 			else {
-				model.addAttribute("result", "일치하는 아이디가 없습니다.");
+				model.addAttribute("error", "일치하는 아이디가 없습니다.");
 				return "findid2";
 			}
 		}
