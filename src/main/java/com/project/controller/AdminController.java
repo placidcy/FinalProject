@@ -8,16 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
 import com.project.model.MemberDAO;
 import com.project.model.MemberDO;
+import com.project.model.MessageItem;
+import com.project.model.NoticeItem;
 import com.project.model.dao.NoticeItemDAO;
 import com.project.model.response.LoginResponse;
+import com.project.service.ImageUploadSO;
 import com.project.service.MainSO;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +40,9 @@ public class AdminController {
 
 	@Autowired
 	private MemberDAO memberDao;
+
+	@Autowired
+	private ImageUploadSO uploadSO;
 
 	@GetMapping("/adminMain")
 	public String adminMainHandler(HttpSession session, Model model,
@@ -135,5 +143,20 @@ public class AdminController {
 
 		model.addAttribute("menu", "adminNotice");
 		return "admin/notice_search";
+	}
+
+	@RequestMapping("/admin/notice/write")
+	public String write(Model model) {
+		model.addAttribute("menu", "adminNotice");
+		return "admin/notice_write";
+	}
+
+	@RequestMapping("/admin/notice/addPost")
+	public String addPost(@RequestParam("files") MultipartFile[] files, @RequestParam("title") String title,
+			@RequestParam("content") String content, @RequestParam("target") int target, HttpSession session) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		int memberId = auth.getMember_id();
+
+		return "admin/notice";
 	}
 }
