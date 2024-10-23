@@ -29,7 +29,8 @@ function dialogHandler() {
 		corText[index] = {"date": v.children[1].innerText, 
 						  "contents": v.children[2].getAttribute("data-text"), 
 						  "attm": v.children[3].getAttribute("data-text"),
-						  "r_status":v.children[6].innerText
+						  "a_status": (v.children[4].getAttribute("data-text") ==1 ? '출석' : v.children[4].getAttribute("data-text") ==2 ? '결석' : '지각'),
+						  "r_status":v.children[7].innerText
 		}
 	}
 	);
@@ -51,13 +52,12 @@ function dialogHandler() {
 			}else{
 	        dialog.open ? dialog.open = true : dialog.open = true;
 			dialog.children[1].children[0].children[0].children[0].innerText=corText[index]['date'];
-			dialog.children[1].children[0].children[1].innerHTML= '출결 : &nbsp&nbsp' + corText[index]['status'];
+			dialog.children[1].children[0].children[1].innerHTML= '출결 : &nbsp&nbsp' + corText[index]['a_status'] ;
 			dialog.children[1].children[0].children[3].innerText=corText[index]['contents'];
-			if(corText[index]['attm']){
-			dialog.children[1].children[0].children[4].children[0].innerText=corText[index]['attm'];
-			}else{
-			dialog.children[1].children[0].children[4].innerText='증명서류 :  미제출';
-			}
+			console.log(dialog.children[1].children[0].children[4].children[0])
+			dialog.children[1].children[0].children[4].children[0].href=corText[index]['attm'];
+			dialog.children[1].children[0].children[4].children[0].innerText=corText[index]['attm'].split('/').at(-1);
+
 			date.value=corText[index]['date'].replaceAll('.','-');
 			reqType.value=1;
 			}
@@ -74,11 +74,9 @@ function dialogHandler() {
 				dialog.children[1].children[0].children[0].children[0].innerText=lvText[index]['date'];
 				dialog.children[1].children[0].children[1].innerHTML= '사유 : &nbsp&nbsp ' + lvText[index]['reason'];
 				dialog.children[1].children[0].children[3].innerText=lvText[index]['contents'];
-				if(lvText[index]['attm']){
-				dialog.children[1].children[0].children[4].children[0].innerText=lvText[index]['attm'];
-				}else{
-				dialog.children[1].children[0].children[4].innerText='증명서류 :  미제출';
-				}
+				dialog.children[1].children[0].children[4].children[0].href=lvText[index]['attm'];
+				dialog.children[1].children[0].children[4].children[0].innerText=lvText[index]['attm'].split('/').at(-1);
+
 				date.value=lvText[index]['date'].substr(0,10).replaceAll('.','-');
 				reqType.value=2;
 				}

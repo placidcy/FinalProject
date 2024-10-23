@@ -160,7 +160,7 @@ public class AttendanceDAO {
 	}
 	
 	public List<AttendanceRequest> getStudentCorreq(int student_id){
-		this.sql = "select fsa.a_date, a_status , req_date, r_status, c_contents as contents, c_attm as attm, res_date from (select a_date, a_status from final_student_attend where student_id=?) fsa inner join (select fac.a_date, req_date, r_status, c_contents, c_attm, res_date from (select * from final_attend_correq where student_id=?) fac left outer join final_attend_corres far on far.student_id = fac.student_id) crq on fsa.a_date=crq.a_date";
+		this.sql = "select a_date, a_status, c_contents as contents, c_attm as attm, req_date, r_status, res_date from (select fs.a_date, fs.a_status, c_contents, c_attm, req_date, r_status ,res_date, row_number() over(partition by fs.a_date order by res_date desc) AS rn from (select fsa.student_id, fsa.a_date, fsa.a_status, c_contents, c_attm, req_date from final_student_attend fsa inner join final_attend_correq fac on fsa.student_id=fac.student_id and fsa.a_date=fac.a_date where fsa.student_id=?) fs left outer join final_attend_corres facr on fs.student_id=facr.student_id and fs.a_date=facr.a_date) where rn = 1";
 		
 		return this.jdbcTemplate.query(this.sql, new RowMapper<AttendanceRequest>() {
 			@Override
@@ -180,7 +180,7 @@ public class AttendanceDAO {
 				
 				return attReq;
 			}
-		},student_id, student_id);
+		},student_id);
 	}
 	
 	
@@ -225,10 +225,6 @@ public class AttendanceDAO {
 				this.sql = "insert into final_attend_correq (student_id, a_date, c_contents) values (?, ?, ?)";	
 				this.jdbcTemplate.update(this.sql, attReq.getStudent_id(), attReq.getA_date().toString(), attReq.getContents());
 			}else if(attReq.getReq_type() == 2) {
-				/*
-				this.sql = "insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (?, ?, ?, ?, ?)";	
-				this.jdbcTemplate.update(this.sql, attReq.getStudent_id(), attReq.getL_sdate(), attReq.getL_edate(), attReq.getL_reason(), attReq.getContents());
-				 */
 				this.sql = "insert into final_attend_lvreq (student_id, l_sdate, l_edate, l_reason, l_contents) values (?, ?, ?, ?, ?)";	
 				this.jdbcTemplate.update(this.sql, attReq.getStudent_id(), attReq.getL_sdate().toString(), attReq.getL_edate().toString(), attReq.getL_reason(), attReq.getContents());
 			}

@@ -50,7 +50,7 @@
                           
             </table>
 					
-                         
+            <a href="/calendarForm" id="writeBtn" style="display:none"></a>             
                     
             <div id="calendarExplain">일정 등록 날짜를 클릭해 주세요.</div>
         </main>

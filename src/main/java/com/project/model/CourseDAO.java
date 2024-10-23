@@ -192,5 +192,38 @@ public class CourseDAO {
 	public String setCount(String targetSQL) {
 		return "select count(*) as cnt from (" + targetSQL + ")";
 	}
+	
+	public InstructorCalendar getCalendarFormText(int i_schedule_id) {
+		this.sql="select i_schedule_id, to_char(s_sdate, 'YYYY-MM-DD HH24:MI:SS') sdate, to_char(s_edate, 'YYYY-MM-DD HH24:MI:SS') edate, s_title, s_attm, s_memo from final_instructor_schedule where i_schedule_id=?";
+		return this.jdbcTemplate.queryForObject(sql, new RowMapper<InstructorCalendar>() {
+			@Override
+			public InstructorCalendar mapRow(ResultSet rs, int rownum) throws SQLException{
+				InstructorCalendar insCalendar = new InstructorCalendar();
+				insCalendar.setI_schedule_id(rs.getInt("i_schedule_id"));
+				insCalendar.setSdate(rs.getString("sdate"));
+				insCalendar.setEdate(rs.getString("edate"));
+				insCalendar.setS_title(rs.getString("s_title"));	
+				insCalendar.setS_attm(rs.getString("s_attm"));	
+				insCalendar.setS_memo(rs.getString("s_memo"));	
+				
+				return insCalendar;
+			}
+		},i_schedule_id);
+	}
+	
+	public void insertInsSchedule(InstructorCalendar insCal, int course_id, int member_id) {
+		this.sql="insert into final_instructor_schedule (i_schedule_id, course_id, member_id, s_sdate, s_edate, s_title, s_attm, s_memo) values (seq_i_schdule_id.nextval, ?, ?, to_date(?, 'YYYY-MM-DD HH24:MI'), to_date(?, 'YYYY-MM-DD HH24:MI'), ?, ?, ?)";
+		this.jdbcTemplate.update(sql, course_id, member_id, insCal.getSdate(), insCal.getEdate(),  insCal.getS_title(), insCal.getS_attm(),  insCal.getS_memo());
+	}
+	
+	public void updateInsSchedule(InstructorCalendar insCal) {
+		this.sql="update final_instructor_schedule set s_sdate = to_date(?, 'YYYY-MM-DD HH24:MI'), s_edate =to_date(?, 'YYYY-MM-DD HH24:MI'), s_title =?, s_attm =?, s_memo=? where i_schedule_id= ?";
+		this.jdbcTemplate.update(sql, insCal.getSdate(), insCal.getEdate(),  insCal.getS_title(), insCal.getS_attm(),  insCal.getS_memo(), insCal.getI_schedule_id());
+	}
+	
+	public void deleteInsSchedule(int i_schedule_id) {
+		this.sql="delete from final_instructor_schedule where i_schedule_id=?";
+		this.jdbcTemplate.update(sql, i_schedule_id);
+	}
 }
 
