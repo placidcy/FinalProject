@@ -18,6 +18,10 @@ bootWar {
 	archiveFileName = 'final.war'
 }
 
+tasks.withType(org.gradle.api.tasks.bundling.War) {
+    duplicatesStrategy = 'exclude'
+}
+
 repositories {
 	mavenCentral()
 }

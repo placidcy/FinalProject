@@ -3,18 +3,13 @@ package com.project.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.*;
 import com.amazonaws.services.simpleemail.model.Body;
-import com.project.model.MessageItem;
 import com.project.model.dao.EmailDAO;
-
-import kong.unirest.*;
 
 @Service
 public class EmailSO {
