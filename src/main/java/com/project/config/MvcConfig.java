@@ -14,46 +14,22 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authCheckInterceptor())
-		.excludePathPatterns(
-				"/login",
-				"/loginProcess",
-				"/agreement",
-				"/agreementForm",
-				"/signupForm",
-				"/signupProcess",
-				"/findcheck",
-				"/findid",
-				"findidProcess",
-				"/findpwd",
-				"/findpwdProcess",
-				"/changepwd",
-				"/changepwdProcess",
-				"/resources/**",
-				"/checkM_acctidDuplicate", 
-				"/checkM_emailDuplicate",
-				"/api/**");
+		registry.addInterceptor(authCheckInterceptor()).excludePathPatterns("/login", "/loginProcess", "/agreement",
+				"/agreementForm", "/signupForm", "/signupProcess", "/findcheck", "/findid", "findidProcess", "/findpwd",
+				"/findpwdProcess", "/changepwd", "/changepwdProcess", "/resources/**", "/checkM_acctidDuplicate",
+				"/checkM_emailDuplicate", "/api/**");
 	}
 
 	@Bean
 	public AuthCheckInterceptor authCheckInterceptor() {
 		return new AuthCheckInterceptor();
 	}
-	
-	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000", "https://localhost:3000")
+				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000",
+						"https://localhost:3000")
 				.allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS").allowedHeaders("*")
 				.allowCredentials(true).maxAge(3600);
 	}
