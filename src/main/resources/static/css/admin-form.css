@@ -1,123 +1,110 @@
 .courseForm {
-    width: 100%;
-    box-sizing: border-box;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-.courseForm input,
-select,
-textarea {
-    padding: 10px;
+.courseForm input, select, textarea {
+	padding: 10px;
 }
 
 .grid.g50 {
-    gap: 50px;
-}
-
-.flex {
-    display: flex;
-    gap: 10px;
+	gap: 50px;
 }
 
 .flex.jc {
-    justify-content: center;
+	justify-content: center;
 }
 
 .flex.ac {
-    align-items: center;
+	align-items: center;
 }
 
 .flex.jc.btns {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 .w120 {
-    width: 120px;
-    box-sizing: border-box;
+	width: 120px;
+	box-sizing: border-box;
 }
 
 .w360 {
-    width: 360px;
-    box-sizing: border-box;
+	width: 360px;
+	box-sizing: border-box;
 }
 
 .w800 {
-    width: 800px;
-    box-sizing: border-box;
+	width: 800px;
+	box-sizing: border-box;
 }
 
 .h400 {
-    height: 400px;
+	height: 400px;
 }
 
 .w100p {
-    width: 100%;
-    box-sizing: border-box;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .border {
-    border: 1px solid gainsboro;
-    border-radius: 5px;
+	border: 1px solid gainsboro;
+	border-radius: 5px;
 }
 
 .courseForm textarea {
-    resize: none;
+	resize: none;
 }
 
 .flex.je {
-    justify-content: end;
+	justify-content: end;
 }
 
-.impleBtn,
-.cancelBtn,
-.deleteBtn,
-.modifyBtn {
-    transition: 0.5s;
+.impleBtn, .cancelBtn, .deleteBtn, .modifyBtn {
+	transition: 0.5s;
 }
 
 .impleBtn {
-    width: 110px;
-    height: 50px;
-    background-color: #87C791;
-    color: white;
-    border-radius: 5px;
-    border: none;
+	width: 110px;
+	height: 50px;
+	background-color: #87C791;
+	color: white;
+	border-radius: 5px;
+	border: none;
 }
 
 .cancelBtn {
-    width: 110px;
-    height: 50px;
-    background-color: #D9D9D9;
-    color: white;
-    border-radius: 5px;
-    border: none;
+	width: 110px;
+	height: 50px;
+	background-color: #D9D9D9;
+	color: white;
+	border-radius: 5px;
+	border: none;
 }
 
 .deleteBtn {
-    width: 110px;
-    height: 50px;
-    background-color: #C70000;
-    color: white;
-    border-radius: 5px;
-    border: none;
+	width: 110px;
+	height: 50px;
+	background-color: #C70000;
+	color: white;
+	border-radius: 5px;
+	border: none;
 }
 
 .modifyBtn {
-    width: 110px;
-    height: 50px;
-    background-color: #D9D9D9;
-    color: black;
-    border-radius: 5px;
-    border: none;
+	width: 110px;
+	height: 50px;
+	background-color: #D9D9D9;
+	color: black;
+	border-radius: 5px;
+	border: none;
 }
 
-.impleBtn:hover,
-.cancelBtn:hover,
-.deleteBtn:hover,
-.modifyBtn:hover {
-    cursor: pointer;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+.impleBtn:hover, .cancelBtn:hover, .deleteBtn:hover, .modifyBtn:hover {
+	cursor: pointer;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
 .mb20 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }

@@ -8,4 +8,9 @@
 .btn#write {
 	background-color: #87C791;
 	border-radius: 10px;
+	cursor: pointer;
+}
+
+#files {
+	background-color: white;
 }
