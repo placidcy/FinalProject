@@ -2,6 +2,7 @@
     font-family: "Pretendard", sans-serif;
     font-style: normal;
     margin: 0;
+    box-sizing: border-box;
 }
 
 #memoBtn{
@@ -25,7 +26,7 @@
 
 @media (min-width: 769px){
 	main{
-	    padding:50px;
+	    padding: 50px;
 	}
 	
 	#homeBox{
@@ -70,26 +71,24 @@
 	    text-align: left;
 	}
 	
-	
 	#courseLinkBox{
 	    display: flex;
-	    position: relative;
+	    justify-content: space-between;
+	    align-items: center;
+
 	    width:100%;
 	    min-height:180px;
+	    
 	    background-color: white;
 	    border:1px solid #d9d9d9;
 	    margin-top:20px;
 	    margin-bottom:40px;
-	    align-items: center;
-    	justify-content: center;
 	}
 	
 	#linkContent{
 		width: 60%;
-		position:absolute;
-		left: 0;
 	    text-align:left;
-	    padding: 0 20px;
+	    padding: 0 50px;
 	}
 	
 	#linkContent>h4{
@@ -99,13 +98,15 @@
 	#linkBtnBox {
 		width: auto;
 		height: auto;
-		position: absolute;
-		right: 0;
 		display: flex;
 		flex-direction: column;
-    	align-items: center;
-    	justify-content: center;
-    	padding: 20px;
+	   	align-items: center;
+	   	justify-content: center;
+	   	padding: 50px;
+	}
+	
+	#classBtn {
+	    margin-bottom:15px;
 	}
 	
 	#linkBtnBox>div>button{
@@ -117,10 +118,6 @@
 	    cursor: pointer;
 	}
 	
-	#classBtn {
-	    margin-bottom:15px;
-	}
-	
 	#noteListBox{
 	    width:100%;
 	    min-height:150px;
@@ -129,6 +126,9 @@
 	    margin-top:20px;
 	    border:1px solid #d9d9d9;
 	    overflow-y: scroll;
+	    display: flex;
+    	flex-direction: column;
+    	align-items: center;
 	}
 	
 	#noteListBox>h3{
@@ -139,11 +139,138 @@
 	#noteBox{
 	    width:90%;
 	    border:1px solid #d9d9d9;
-	    margin-left:25px;
+	    margin-top:20px;
+	    margin-bottom: 20px;
+	    padding:30px;
+	}
+	
+	.noteDate{
+	    margin-bottom:20px;
+	}
+	
+	#deleteBtn {
+	    border: 0;
+		width: auto;
+		height: auto;
+		cursor: pointer;
+		color: red;
+	    text-decoration: underline;
+	    background-color: rgba(0, 0, 0, 0);
+	    box-shadow: none;
+	    margin: 0;
+	    padding: 0;
+	}
+}
+
+@media (max-width:768px){
+	main{
+	    background-color: #f2f2f2;
+	}
+	.course-notice-title {
+	    display: none !important;
+	}
+	
+	.course-notice {
+	    width: 100%;
+	    padding: 20px;
+	    box-sizing: border-box;
+	    background-color: #FFF5DD;
+	    font-size: 20px;
+	    margin-bottom:20px;
+	    margin-top:20px;
+	}
+	
+	.course-notice th {
+	    width: auto;
+    	padding: 0;
+    	margin: 0;
+    	text-align: center;
+	}
+	
+	.course-notice td {
+	    width: 80%;
+	    padding: 0;
+	    margin: 0;
+	    text-align: left;
+	}
+	
+	#courseLinkBox{
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	
+	    width:100%;
+	    min-height:130px;
+	    background-color: white;
+	    margin-top:15px;
+	    margin-bottom:40px;
+	    padding: 10px 0;
+	}
+	
+	#linkContent{
+	    width: 60%;
+	    text-align:left;
+	    padding: 0 10px;
+	}
+	
+	#linkContent>h4{
+	    margin-top:20px;
+	}
+	
+	#linkBtnBox{
+	    width: auto;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+	   	align-items: center;
+	   	justify-content: center;
+	   	padding: 10px;
+	}
+	
+	#linkBtnBox>div>button{
+	    width:85px;
+	    height:50px;
+	    font-size:18px;
+	    font-weight:bold;
+	    border-radius:5px;
+	    cursor: pointer;
+	}
+	/* 
+	#memoBtnBox{
+	    margin-top:10px;
+	    margin-bottom:15px;
+	}
+	 */
+	 
+	#classBtn {
+	    margin-bottom:15px;
+	}
+	
+	#noteListBox{
+	    width:100%;
+	    min-height:150px;
+	    max-height: 440px;
+	    background-color: white;
+	    margin-top:20px;
+	    overflow-y: scroll;
+	    display: flex;
+    	flex-direction: column;
+    	align-items: center;
+	}
+	
+	#noteListBox>h3{
+	    margin-top:55px;
+	    text-align: center;
+	}
+	
+	#noteBox{
+	    width:90%;
+	    border:1px solid #d9d9d9;
+	    margin-left:15px;
 	    margin-top:20px;
 	    margin-bottom:20px;
-	    padding-left:30px;
-	    padding-right:30px;
+	    padding-left:10px;
+	    padding-right:10px;
 	    padding-bottom:30px;
 	}
 	
@@ -164,103 +291,5 @@
 	    margin: 0;
 	    padding: 0;
 	}
-
-}
-
-@media (max-width:768px){
-main{
-    background-color: #f2f2f2;
-}
-.course-notice-title {
-    display: none !important;
-}
-
-.course-notice {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #FFF5DD;
-    font-size: 20px;
-    margin-bottom:20px;
-    margin-top:20px;
-}
-
-.course-notice th {
-    width: 50px;
-    padding-right: 20px;
-}
-
-
-#courseLinkBox{
-    position: relative;
-    display: flex;
-    width:100%;
-    height:130px;
-    background-color: white;
-    margin-top:15px;
-    margin-bottom:40px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-#linkContent{
-    text-align:left;
-    margin-left:20px;
-    margin-top:15px;
-}
-
-#linkContent>h4{
-    margin-top:20px;
-}
-
-#linkBtnBox{
-    position:absolute;
-    right:20px;
-}
-
-#linkBtnBox>div>button{
-    width:85px;
-    height:50px;
-    font-size:18px;
-    font-weight:bold;
-    border-radius:5px;
-    cursor: pointer;
-}
-
-#memoBtnBox{
-    margin-top:10px;
-    margin-bottom:15px;
-}
-
-
-#noteListBox{
-    width:100%;
-    min-height:150px;
-    max-height: 440px;
-    background-color: white;
-    margin-top:20px;
-    overflow-y: scroll;
-}
-
-#noteListBox>h3{
-    margin-top:55px;
-    text-align: center;
-}
-
-#noteBox{
-    width:90%;
-    border:1px solid #d9d9d9;
-    margin-left:15px;
-    margin-top:20px;
-    margin-bottom:20px;
-    padding-left:10px;
-    padding-right:10px;
-    padding-bottom:30px;
-}
-
-.noteDate{
-    margin-top:20px;
-    margin-bottom:20px;
-}
 
 }

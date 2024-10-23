@@ -65,7 +65,6 @@
                         	<button id="memoBtn">필기하기</button>
                         </div>
                     </div>
-
                 </div>
                 
                 <dialog id="modal">
