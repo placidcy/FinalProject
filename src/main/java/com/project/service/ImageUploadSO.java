@@ -22,7 +22,7 @@ public class ImageUploadSO {
 	@Autowired
 	private AmazonS3 amazonS3;
 
-	@Value("${aws.bucketName}")
+	@Value("${aws.s3.bucketName}")
 	private String bucketName;
 
 	public ResponseEntity<String> uploadFile(MultipartFile file) throws SdkClientException, IOException {
