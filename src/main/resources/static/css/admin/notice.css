@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+button, .item {
+	cursor: pointer;
+}
+
 .bar.notice {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -8,4 +12,85 @@
 .btn#write {
 	background-color: #87C791;
 	border-radius: 10px;
+	cursor: pointer;
+	color: white;
+}
+
+.buttons {
+	justify-self: end;
+}
+
+.btn#list {
+	background-color: #888888;
+	color: white;
+	border-radius: 10px;
+}
+
+.btn#delete {
+	background-color: #c70000;
+	color: white;
+	border-radius: 10px;
+}
+
+#files {
+	background-color: white;
+}
+
+table.post.details {
+	width: 100%;
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+	background-color: white;
+	box-sizing: border-box;
+}
+
+table.post.details th, table.post.details td {
+	padding: 20px;
+	text-align: left;
+}
+
+table.post.details th {
+	background-color: #f2f2f2;
+	font-weight: bold;
+}
+
+pre {
+	white-space: pre-wrap; /* Add line breaks to long text */
+	word-wrap: break-word;
+}
+
+li {
+	text-align: start;
+}
+
+.attms {
+	display: flex;
+	gap: 10px;
+}
+
+.attm {
+	text-align: start;
+	transition: 1s;
+}
+
+.attm:before {
+	content: "첨부파일: ";
+	color: #3498db;
+	font-weight: bold;
+}
+
+.attm:hover {
+	text-decoration: underline gray 1px;
+}
+
+@media ( max-width : 600px) {
+	.grid.g20 {
+		padding: 10px;
+	}
+	table.post.details th, table.post.details td {
+		padding: 8px;
+	}
+	.post.details tr * {
+		display: grid;
+	}
 }

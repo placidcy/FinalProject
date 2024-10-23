@@ -3,7 +3,10 @@ package com.project.model.dao;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.project.model.NoticeItem;
@@ -135,6 +138,47 @@ public class NoticeItemDAO extends ItemDAO {
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%", "%" + keyword + "%");
 	}
 
+	public int insertNewPost(String title, String content, int target, int memberId) {
+		this.sql = query.get("insertNewPost");
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		this.getJdbcTemplate().update(connection -> {
+			PreparedStatement ps = connection.prepareStatement(sql, new String[] { "post_id" });
+			ps.setInt(1, memberId);
+			ps.setString(2, title);
+			ps.setString(3, content);
+			ps.setInt(4, target);
+			return ps;
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public int[] batchInsert(int postId, List<String> files) {
+		this.sql = this.query.get("batchInsert");
+
+		return this.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, postId);
+				ps.setString(2, files.get(i));
+			}
+
+			@Override
+			public int getBatchSize() {
+				return files.size();
+			}
+		});
+	}
+
+	public int deleteAttm(int postId) {
+		this.sql = this.query.get("deleteAttm");
+		return this.getJdbcTemplate().update(this.sql, postId);
+	}
+
+	public int deletePost(int postId) {
+		this.sql = this.query.get("deletePost");
+		return this.getJdbcTemplate().update(this.sql, postId);
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		this.query.put("getCount", """
@@ -152,13 +196,13 @@ public class NoticeItemDAO extends ItemDAO {
 						p_title, p_contents, post_id, p_target
 				from final_course_post fcp
 				where type_id=0 and p_target = 0
-				order by p_regdate desc
+				order by post_id desc
 				""");
 		this.query.put("selectAll", """
 				select  to_char(p_regdate, 'YYYY-MM-DD') as p_regdate, p_title, p_contents, post_id, p_target
 				from final_course_post fcp
 				where type_id=0
-				order by p_regdate desc
+				order by post_id desc
 				""");
 		this.query.put("selectOne", """
 				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate,
@@ -169,6 +213,20 @@ public class NoticeItemDAO extends ItemDAO {
 					group by post_id
 					) fpa on fcp.post_id = fpa.post_id
 				where fcp.post_id = ?
+				""");
+		this.query.put("insertNewPost",
+				"""
+						INSERT INTO FINAL_COURSE_POST(post_id, type_id, member_id, course_id, p_title, p_contents, p_regdate, p_target, p_status)
+						VALUES(seq_post_id.nextval, 0, ?, NULL, ?, ?, sysdate, ?, DEFAULT)
+						""");
+		this.query.put("batchInsert", """
+				INSERT INTO final_post_attm VALUES (?, ?)
+								""");
+		this.query.put("deletePost", """
+				delete from final_course_post where post_id = ?
+				""");
+		this.query.put("deleteAttm", """
+				delete from final_post_attm where post_id = ?
 				""");
 	}
 }
