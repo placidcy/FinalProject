@@ -1,6 +1,7 @@
 package com.project.model;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import java.util.List;
 
@@ -97,21 +98,46 @@ public class MemberDAO {
         }
     }
 
+    public String generateTemporaryId() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder tempId = new StringBuilder("inst_");
+        for (int i = 0; i < 3; i++) { 
+            int index = (int) (Math.random() * characters.length());
+            tempId.append(characters.charAt(index));
+        }
+        String generatedId = tempId.toString();
+        System.out.println("Generated Temporary ID: " + generatedId);
+        return generatedId;
+    }
+
     public int insertMember(MemberDO member) {
+        System.out.println("insertMember called with m_acctid: " + member.getM_acctid());
+        if (member.getM_acctid() == null || member.getM_acctid().isEmpty()) {
+            member.setM_acctid(generateTemporaryId());
+        }
+
         if (member.getM_acctpwd() == null || member.getM_acctpwd().isEmpty()) {
             member.setM_acctpwd("defaultPassword");
         }
+        if (member.getM_acctid() != null && member.getM_acctid().length() > 15) {
+            member.setM_acctid(member.getM_acctid().substring(0, 15));
+            System.out.println("Trimmed m_acctid to 15 chars: " + member.getM_acctid());
+        }
+
         this.sql = "insert into final_member (member_id, m_acctid, m_acctpwd, "
                 + "m_name, m_email, m_tel, m_dept, m_status, m_role) "
                 + "values (seq_member_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            return this.jdbcTemplate.update(sql, member.getM_acctid(), member.getM_acctpwd(),
+            int result = this.jdbcTemplate.update(sql, member.getM_acctid(), member.getM_acctpwd(),
                     member.getM_name(), member.getM_email(), member.getM_tel(), member.getM_dept(),
                     member.getM_status(), member.getM_role());
+            System.out.println("Insert successful for m_acctid: " + member.getM_acctid());
+            return result;
         } catch (DuplicateKeyException e) {
             throw new RuntimeException("아이디 혹은 이메일이 중복되었습니다.");
         }
     }
+
 
     public int updateEmail(MemberDO member) {
         this.sql = "update final_member "

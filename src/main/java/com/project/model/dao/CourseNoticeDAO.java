@@ -80,30 +80,29 @@ public class CourseNoticeDAO extends C_N_ItemDAO {
 //	}
 
 	private void init() {
-	    this.query = new HashMap<>();
-	    this.query.put("getCount", """
-	            select count(*) as cnt
-	            from final_course_post fcp
-	            where course_id=2 and type_id=1
-	            """);
-	    this.query.put("selectAll", """
-	            select to_char(p_regdate, 'YYYY-MM-DD') as p_regdate, p_title, p_contents, post_id,
-	                   (select listagg(p_attm, ', ') within group (order by p_attm) 
-	                    from final_post_attm 
-	                    where post_id = fcp.post_id) as p_attm
-	            from final_course_post fcp
-	            where course_id=2 and type_id=1
-	            order by p_regdate desc
-	            """);
-	    this.query.put("selectOne", """
-	            select to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id,
-	                   (select listagg(p_attm, ', ') within group (order by p_attm) 
-	                    from final_post_attm 
-	                    where post_id = fcp.post_id) as p_attm
-	            from final_course_post fcp
-	            where post_id = ?
-	            """);
+		this.query = new HashMap<>();
+		this.query.put("getCount", """
+				select count(*) as cnt
+				from final_course_post fcp
+				where course_id=2 and type_id=1
+				""");
+		this.query.put("selectAll", """
+				select to_char(p_regdate, 'YYYY-MM-DD') as p_regdate, p_title, p_contents, post_id,
+				       (select listagg(p_attm, ', ') within group (order by p_attm)
+				        from final_post_attm
+				        where post_id = fcp.post_id) as p_attm
+				from final_course_post fcp
+				where course_id=2 and type_id=1
+				order by p_regdate desc
+				""");
+		this.query.put("selectOne", """
+				select to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate, p_title, p_contents, post_id,
+				       (select listagg(p_attm, ', ') within group (order by p_attm)
+				        from final_post_attm
+				        where post_id = fcp.post_id) as p_attm
+				from final_course_post fcp
+				where post_id = ?
+				""");
 	}
-	
-	
+
 }

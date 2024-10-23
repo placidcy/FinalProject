@@ -18,16 +18,16 @@ import com.project.model.response.ErrorResponse;
 public class CourseNoticeRestController {
 	@Autowired
 	private CourseNoticeDAO noticeDao;
-	
+
 	@GetMapping("/getCourseNoticePosts")
 	public ResponseEntity<Object> getCourseNoticePosts() {
 		List<CourseNoticeItem> noticeList = this.noticeDao.selectAll(1, 10);
-		
-		if(noticeList == null || noticeList.isEmpty() == true) {
-			
+
+		if (noticeList == null || noticeList.isEmpty() == true) {
+
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("empty noticeList"));
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(noticeList);
 	}
 }

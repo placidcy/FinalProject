@@ -17,8 +17,16 @@
 
 <body>
 	<div class="container flex">
+		<c:set var="auth" value="${sessionScope.auth}" />
 		<!-- 메인 사이드바 -->
-		<jsp:include page="../common/side_main.jsp"></jsp:include>
+		<c:choose>
+			<c:when test="${auth.m_role eq 1 }">
+				<jsp:include page="../common/side_main.jsp"></jsp:include>
+			</c:when>
+			<c:otherwise>
+				<jsp:include page="../common/side_main_i.jsp"></jsp:include>
+			</c:otherwise>
+		</c:choose>
 		<!-- 본문 -->
 		<main class="contents bgf2f2f2">
 			<div class="grid g20">
@@ -34,6 +42,7 @@
 								</c:choose></td>
 							<td class="title">${item.noticeTitle }</td>
 							<td class="date">등록일: ${item.regdate }</td>
+							<td class="toggle"></td>
 						</tr>
 					</c:forEach>
 				</table>

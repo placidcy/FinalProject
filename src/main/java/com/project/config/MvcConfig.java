@@ -7,31 +7,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.project.interceptor.*;
+import com.project.interceptor.AuthCheckInterceptor;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authCheckInterceptor())
-		.excludePathPatterns(
-				"/login",
-				"/loginProcess",
-				"/agreement",
-				"/agreementForm",
-				"/signupForm",
-				"/signupProcess",
-				"/findcheck",
-				"/findid",
-				"findidProcess",
-				"/findpwd",
-				"/findpwdProcess",
-				"/changepwd",
-				"/changepwdProcess",
+		registry.addInterceptor(authCheckInterceptor()).excludePathPatterns("/login", "/loginProcess",
+				"/agreement", "/agreementForm", "/signupForm", "/signupProcess",
+				"/findcheck", "/findid", "/findid2", "/findidProcess", "/findpwd", "/findpwdProcess",
+				"/changepwd", "/changepwdProcess",
 				"/resources/**",
-				"/checkM_acctidDuplicate", 
-				"/checkM_emailDuplicate");
+				"/checkM_acctidDuplicate", "/checkM_emailDuplicate",
+				"/api/**");
 	}
 
 	@Bean
@@ -42,7 +31,8 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000", "https://localhost:3000")
+				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000",
+						"https://localhost:3000")
 				.allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS").allowedHeaders("*")
 				.allowCredentials(true).maxAge(3600);
 	}

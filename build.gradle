@@ -18,10 +18,13 @@ bootWar {
 	archiveFileName = 'final.war'
 }
 
+tasks.withType(org.gradle.api.tasks.bundling.War) {
+    duplicatesStrategy = 'exclude'
+}
+
 repositories {
 	mavenCentral()
 }
-
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -62,7 +65,9 @@ dependencies {
     // AWS S3 버킷 생성을 위한 종속성 추가
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.7'
-
+    
+    // AWS SES을 이용한 이메일 인증 구현 관련 종속성 추가
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.12.7'
 }
 
 tasks.named('test') {

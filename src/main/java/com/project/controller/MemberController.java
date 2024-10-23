@@ -13,35 +13,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.model.MemberDO;
 import com.project.model.MemberSO;
-import com.project.model.JWT.JwtUtil;
+//import com.project.model.JWT.JwtUtil;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
-import com.project.model.response.ErrorResponse;
+//import com.project.model.response.ErrorResponse;
 import com.project.model.response.LoginResponse;
 
-import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
 
 @Controller
 public class MemberController {
-	
+
 	@Autowired
 	private MemberSO memberSo;
-	@Autowired
-	private JwtUtil jwtUtil;
-	
+//	@Autowired
+//	private JwtUtil jwtUtil;
+
 	@GetMapping("/login")
 	public String loginHandler() {
 		return "login";
 	}
-	
+
 	/*
 	 * // 토큰 구현 중단
 	 * 
@@ -62,23 +62,23 @@ public class MemberController {
 	 * return ResponseEntity.status(HttpStatus.UNAUTHORIZED) .body(new
 	 * ErrorResponse("일치하는 정보가 없습니다.")); } }
 	 */
-	
+
 	@PostMapping("/loginProcess")
 	public String loginProcessHandler(LoginRequest req, HttpSession session) {
 		try {
 			LoginResponse auth = memberSo.login(req.getM_acctid(), req.getM_acctpwd());
-			
-			if(auth != null) {
-				
-				if (memberSo.checkM_status(auth.getMember_id()) == 0) { 
-	                memberSo.updateMemberStatusToActive(auth.getMember_id());
-	            }
-				
+
+			if (auth != null) {
+
+				if (memberSo.checkM_status(auth.getMember_id()) == 0) {
+					memberSo.updateMemberStatusToActive(auth.getMember_id());
+				}
+
 				session.setAttribute("auth", auth);
-				
+
 				int m_role = memberSo.checkM_role(auth.getMember_id());
-				
-				switch(m_role) { //리턴주소 추후 변경
+
+				switch (m_role) { // 리턴주소 추후 변경
 				case 1:
 					return "redirect:/";
 				case 2:
@@ -86,154 +86,141 @@ public class MemberController {
 				default:
 					return "redirect:/adminMain";
 				}
-			}
-			else {
+			} else {
 				session.setAttribute("loginFailMsg", "로그인에 실패했습니다.");
 				return "redirect:/login?error=loginFailed";
 			}
-		}
-		catch(EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			session.setAttribute("loginFailMsg", "일치하는 정보가 없습니다.");
 			return "redirect:/login?error=loginFailed";
 		}
 	}
-	
+
 	@GetMapping("/logout")
 	public String logoutHandler(HttpSession session) {
 		session.invalidate();
 		return "redirect:/login";
 	}
-	
+
 	@GetMapping("/agreement")
 	public String agreementHandler() {
 		return "agreement";
 	}
-	
+
 	@PostMapping("/agreementForm")
-	public String checkAgreementHandler(
-			@RequestParam(value = "allagree", required = false) boolean allagree,
+	public String checkAgreementHandler(@RequestParam(value = "allagree", required = false) boolean allagree,
 			@RequestParam(value = "memberagree", required = true) boolean memberagree,
 			@RequestParam(value = "personalagree", required = true) boolean personalagree) {
-		if(memberagree && personalagree) {
+		if (memberagree && personalagree) {
 			return "/signupform";
-		}
-		else {
+		} else {
 			return "redirect:/agreement";
 		}
 	}
-	
+
 	@GetMapping("/signupform")
 	public String signupHandler() {
 		return "signupform";
 	}
-	
+
 	@PostMapping("/signupProcess")
 	public String signupProcessHandler(SignupRequest req) {
 		try {
 			memberSo.signupStudent(req);
 			return "redirect:/login";
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/signupform?error=signupFailed";
 		}
 	}
-	
+
 	@GetMapping("/findcheck")
 	public String findHandler() {
 		return "findcheck";
 	}
-	
+
 	@GetMapping("/findid")
 	public String findidHandler() {
 		return "findid";
 	}
-	
-	@PostMapping("/findidProcess")
-	public String findProcessHandler(
-			@RequestParam("m_name") String m_name,
-			@RequestParam("m_email") String m_email,
-			@RequestParam("m_role") int m_role,
-			Model model) {
+
+	@GetMapping("/findid2")
+	public String findid2Handler() {
+		return "findid2";
+	}
+
+	@RequestMapping("/findidProcess")
+	public String findProcessHandler(@RequestParam("m_name") String m_name, @RequestParam("m_email") String m_email,
+			@RequestParam("m_role") int m_role, Model model) {
 		String result = memberSo.findM_acctid(m_name, m_email, m_role);
+		System.out.println(result);
 		try {
-			if(result != null) {
+			if (result != null) {
 				model.addAttribute("result", result);
-				return "findid";
-			}
-			else {
+				return "findid2";
+			} else {
 				model.addAttribute("result", "일치하는 아이디가 없습니다.");
-				return "findid";
+				return "findid2";
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("result", "아이디 찾기 중 오류가 발생했습니다.");
 			return "redirect:/findid?error=findidFailed";
 		}
 	}
-	
+
 	@GetMapping("/findpwd")
 	public String findpwdHandler() {
 		return "findpwd";
 	}
-	
+
 	@PostMapping("/findpwdProcess")
-	public String findpwdProcessHandler(
-			@RequestParam("m_acctid") String m_acctid,
-			@RequestParam("m_email") String m_email,
-			@RequestParam("m_role") int m_role,
-			Model model,
+	public String findpwdProcessHandler(@RequestParam("m_acctid") String m_acctid,
+			@RequestParam("m_email") String m_email, @RequestParam("m_role") int m_role, Model model,
 			RedirectAttributes rttr) {
 		String member_id = memberSo.findM_acctpwd(m_acctid, m_email, m_role);
 		try {
-			if(member_id != null) {
+			if (member_id != null) {
 				rttr.addFlashAttribute("member_id", member_id);
 				return "redirect:/changepwd";
-			}
-			else {
+			} else {
 				model.addAttribute("result", "일치하는 정보가 없습니다.");
 				return "findpwd";
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("result", "비밀번호 찾기 중 오류가 발생했습니다.");
 			return "findpwd?error=findpwdFaild";
 		}
 	}
-	
+
 	@GetMapping("/changepwd")
 	public String changePwdHandler() {
 		return "changepwd";
 	}
-	
+
 	@PostMapping("/changepwdProcess")
-	public String changePwdProcessHandler(
-			@RequestParam(value="member_id") int member_id,
-			@RequestParam("newpwd") String newpwd,
-			@RequestParam("confirmpwd") String confirmpwd,
-			Model model) {
-		
-		if(!newpwd.equals(confirmpwd)) {
+	public String changePwdProcessHandler(@RequestParam(value = "member_id") int member_id,
+			@RequestParam("newpwd") String newpwd, @RequestParam("confirmpwd") String confirmpwd, Model model) {
+
+		if (!newpwd.equals(confirmpwd)) {
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "changepwd";
 		}
-		
+
 		MemberDO memberDo = new MemberDO();
 		memberDo.setMember_id(member_id);
 		memberDo.setM_acctpwd(newpwd);
-		
+
 		int result = memberSo.updateM_acctpwd(memberDo);
-		
-		if(result == 1) {
+
+		if (result == 1) {
 			model.addAttribute("msg", "비밀번호를 변경했습니다.");
 			return "redirect:/login";
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "비밀번호를 변경하지 못했습니다.");
 			return "changepwd";
 		}
 	}
-	
+
 	/*
 	 * // 토큰 구현 중단
 	 * 
@@ -262,26 +249,24 @@ public class MemberController {
 	 * 
 	 * model.addAttribute("menu", "mypage"); // 사이드바 색변경 return "mypage"; }
 	 */
-	
+
 	@GetMapping("/mypage")
 	public String mypageHandler(HttpSession session, Model model) {
-		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
-		
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+
 		// auth가 없으면 로그인 페이지로
-		if(auth == null) {
+		if (auth == null) {
 			return "redirect:/login";
 		}
-		
+
 		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
-		
+
 		String roleName;
-		if(member.getM_role() == 1) {
+		if (member.getM_role() == 1) {
 			roleName = "학생";
-		}
-		else if(member.getM_role() == 2) {
+		} else if (member.getM_role() == 2) {
 			roleName = "강사";
-		}
-		else {
+		} else {
 			roleName = "사용자 오류";
 		}
 
@@ -292,45 +277,40 @@ public class MemberController {
 		model.addAttribute("m_role", roleName);
 		model.addAttribute("m_acctid", member.getM_acctid());
 		model.addAttribute("m_email", member.getM_email());
-		
+
 		model.addAttribute("menu", "mypage");
 		return "mypage";
 	}
-	
+
 	@GetMapping("/changeM_email")
 	public String changeEmailHandler() {
 		return "changeEmail";
 	}
-	
+
 	@PostMapping("/changeEmailProcess")
-	public String changeEmailProcessHandler(
-			HttpSession session,
-			@RequestParam(value="member_id") int member_id,
-			@RequestParam("newM_email") String newM_email,
-			Model model) {
-		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
-		
+	public String changeEmailProcessHandler(HttpSession session, @RequestParam(value = "member_id") int member_id,
+			@RequestParam("newM_email") String newM_email, Model model) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+
 		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
 		member.setM_email(newM_email);
 		memberSo.updateM_email(member);
-		
+
 		return "redirect:/mypage";
 	}
-	
+
 	@GetMapping("/leave")
-	public String changeM_statusProcessHandler(
-			HttpSession session,
-			@RequestParam(value="member_id") int member_id,
+	public String changeM_statusProcessHandler(HttpSession session, @RequestParam(value = "member_id") int member_id,
 			Model model) {
-		
-		LoginResponse auth = (LoginResponse)session.getAttribute("auth");
+
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		MemberDO member = memberSo.selectedByMember_id(auth.getMember_id());
 		member.setM_status(0);
 		member.setDeactivationDate(LocalDateTime.now());
 		memberSo.updateM_statusAndDate(member);
 		session.invalidate();
 		return "redirect:/login";
-		
+
 	}
-	
+
 }

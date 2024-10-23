@@ -12,8 +12,14 @@
     <link rel="stylesheet" href="/resources/css/course_home.css">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- 모달 css -->
+    <link rel="stylesheet" href="/resources/css/dialog.css" />
+    <link rel="stylesheet" href="/resources/css/request.css" />
+    <link rel="stylesheet" href="/resources/css/member.css" />
+    <link rel="stylesheet" href="/resources/css/requestDialog.css">
+    <!-- 자바 스크립트 -->
     <script src="/resources/js/course.js"></script>
-
+    <script src="/resources/js/homeMemo.js"></script>
 </head>
 
 <body>
@@ -24,7 +30,7 @@
             <div id="homeBox">
                 <div class="course-notice-title">
                     <h3>공지 목록</h3>
-                    <a href="<c:url value='/' />">
+                    <a href="localhost:3000" class="sidebar-menu-unselected" style="width:33.333%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                         <span>더보기</span>
                     </a>
                 </div>
@@ -62,39 +68,30 @@
                     </div>
 
                 </div>
+                
+                <dialog id="modal">
+			        <div class="modal-top flex cen">
+			            <span class="bold">CHECK</span>
+			            <span class="f24 exit">✕</span>
+			        </div>
+			        <div class="modal-bottom post">
+			            <textarea class="textarea"></textarea>
+			            <div class="flex cen mtb20">
+				            <input class="btn f20" id="saveNoteBtn" type="button" value="기록하기">
+			            </div>
+			        </div>
+			    </dialog>
 
                 <h3>노트 필기</h3>
                 <div id="noteListBox">
-                    
                     <!-- 등록된 필기가 없다면 다음의 문구를 보여준다.-->
-                    <!--
-                    <h3>현재 등록된 노트 필기가 없습니다.</h3> 
-                    -->
+                	<!-- 
+                    <h3>현재 등록된 노트 필기가 없습니다.</h3>
                     <div id="noteBox">
-                        <div class="noteDate">작성일: 2024-12-30 13:20</div>  
-
-                        <div class="noteContent">
-                            법관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다. 헌법재판소는 법률에 저촉되지 아니하는 범위안에서 심판에 관한 절차, 내부규율과 사무처리에 관한 규칙을 제정할 수 있다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다. 국가유공자·상이군경 및 전몰군경의 유가족은 법률이 정하는 바에 의하여 우선적으로 근로의 기회를 부여받는다.
-                            재판의 심리와 판결은 공개한다. 다만, 심리는 국가의 안전보장 또는 안녕질서를 방해하거나 선량한 풍속을 해할 염려가 있을 때에는 법원의 결정으로 공개하지 아니할 수 있다. 모든 국민은 인간다운 생활을 할 권리를 가진다. 헌법재판소 재판관은 탄핵 또는 금고 이상의 형의 
-                        </div>
+                        <div class="noteDate"><span>작성일: 2024-12-30 13:20</span> <button id="deleteBtn">삭제</button></div>
+                        <div class="noteContent">글 내용</div>
                     </div>
-
-                    <div id="noteBox">
-                        <div class="noteDate">작성일: 2024-12-30 13:20</div>  
-
-                        <div class="noteContent">
-                            법관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다. 헌법재판소는 법률에 저촉되지 아니하는 범위안에서 심판에 관한 절차, 내부규율과 사무처리에 관한 규칙을 제정할 수 있다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다. 국가유공자·상이군경 및 전몰군경의 유가족은 법률이 정하는 바에 의하여 우선적으로 근로의 기회를 부여받는다.
-                            재판의 심리와 판결은 공개한다. 다만, 심리는 국가의 안전보장 또는 안녕질서를 방해하거나 선량한 풍속을 해할 염려가 있을 때에는 법원의 결정으로 공개하지 아니할 수 있다. 모든 국민은 인간다운 생활을 할 권리를 가진다. 헌법재판소 재판관은 탄핵 또는 금고 이상의 형의 
-                        </div>
-                    </div>
-
-                    <div id="noteBox">
-                        <div class="noteDate">작성일: 2024-12-30 13:20</div>  
-
-                        <div class="noteContent">
-                            법관은 리와 판결은 공개한다. 다만, 심리는 국가의 안전보장 또는 안녕질서를 방해하거나 선량한 풍속을 해할 염려가 있을 때에는 법원의 결정으로 공개하지 아니할 수 있다. 모든 국민은 인간다운 생활을 할 권리를 가진다. 헌법재판소 재판관은 탄핵 또는 금고 이상의 형의 
-                        </div>
-                    </div>
+                     -->
                 </div>
             </div>
            
