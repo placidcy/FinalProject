@@ -46,13 +46,13 @@
     <div class="course-sidebar-right">
         <div class="sidebar-logo">
             <a href="home"><h1>CHECK</h1></a>
-            <h3>HTML의 기초</h3>
+            <h3>${c_name}</h3>
                 <hr>
         </div>
 
         <div id="mobile-menu">
             <h1 id="backBtn">◀</h1>
-            <h1 class="menuName">HTML의 기초</h1>
+            <h1 class="menuName">${c_name}</h1>
             <div id="mobile-menu-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                     <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round"

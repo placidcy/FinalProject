@@ -36,11 +36,6 @@ function dialogHandler() {
 	            document.getElementById('resultModal').showModal();
 	        }
 	    };
-
-	    // 모달 닫기 버튼
-	    document.querySelector(".exit").onclick = function() {
-	        document.getElementById('resultModal').close();
-	    };
 	
 }
 
