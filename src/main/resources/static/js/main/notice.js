@@ -22,15 +22,14 @@ function createPost(item) {
 		item.postContents = '';
 	}
 
-	if (item.attachments != null) {
-		let attachments = item.attachments.split(',');
-		for (let attm of attachments) {
+	if (item.attms !== null) {
+		for (let attm of item.attms) {
 			let li = document.createElement('li');
 			let a = document.createElement('a');
 
-			a.innerHTML = '[첨부파일] ' + getFileNameFromUrl(attm);
-			a.href = attm;
-			a.download = getFileNameFromUrl(attm);
+			a.innerHTML = '[첨부파일] ' + attm.fileName;
+			a.href = attm.url;
+			a.download = attm.fileName;
 
 			li.appendChild(a);
 			attms.appendChild(li);

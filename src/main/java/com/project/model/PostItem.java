@@ -1,6 +1,7 @@
 package com.project.model;
 
 import java.sql.Array;
+import java.util.List;
 
 public class PostItem {
 	private int postId;
@@ -8,6 +9,7 @@ public class PostItem {
 	private String postContents;
 	private String regdate;
 	private String attachments;
+	private List<FileItem> attms;
 
 	public PostItem() {
 	}
@@ -50,5 +52,13 @@ public class PostItem {
 
 	public void setAttachments(String string) {
 		this.attachments = string;
+	}
+
+	public List<FileItem> getAttms() {
+		return attms;
+	}
+
+	public void setAttms(List<FileItem> list) {
+		this.attms = list;
 	}
 }

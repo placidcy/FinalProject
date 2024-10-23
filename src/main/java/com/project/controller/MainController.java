@@ -2,6 +2,9 @@
 package com.project.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,8 @@ public class MainController {
 	CourseDAO courseDAO;
 	@Autowired
 	EmailSO emailSO;
+	@Autowired
+	ImageUploadSO uploadSO;
 
 	private String viewPath;
 
@@ -262,6 +267,15 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/notice/getItem")
 	public NoticeItem getNoticeItem(@RequestParam(name = "noticeId") int noticeId) {
-		return mainSO.selectOne(noticeId);
+		NoticeItem noticeItem = mainSO.selectOne(noticeId);
+		List<FileItem> files;
+		try {
+			files = uploadSO.getFiles(noticeItem.getAttachments());
+			noticeItem.setAttms(files);
+			noticeItem.setAttachments("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return noticeItem;
 	}
 }
