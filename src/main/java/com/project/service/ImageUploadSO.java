@@ -84,15 +84,20 @@ public class ImageUploadSO {
 		List<String> attms = new ArrayList<String>();
 		String attm = null;
 		if (noticeId > 0) {
-			for (MultipartFile file : files) {
-				try {
-					attm = this.uploadFile(file).getBody();
-					attms.add(attm);
-				} catch (Exception e) {
-					e.printStackTrace();
+			if (files.length > 0) {
+				for (MultipartFile file : files) {
+					if (file.isEmpty()) {
+						continue;
+					}
+					try {
+						attm = this.uploadFile(file).getBody();
+						attms.add(attm);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+				return dao.batchInsert(noticeId, attms).length > 0 && noticeId > 0;
 			}
-			return dao.batchInsert(noticeId, attms).length == files.length && noticeId > 0;
 		}
 		return false;
 	}

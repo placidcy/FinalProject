@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+button, .item {
+	cursor: pointer;
+}
+
 .bar.notice {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -9,6 +13,23 @@
 	background-color: #87C791;
 	border-radius: 10px;
 	cursor: pointer;
+	color: white;
+}
+
+.buttons {
+	justify-self: end;
+}
+
+.btn#list {
+	background-color: #888888;
+	color: white;
+	border-radius: 10px;
+}
+
+.btn#delete {
+	background-color: #c70000;
+	color: white;
+	border-radius: 10px;
 }
 
 #files {
@@ -36,6 +57,30 @@ table.post.details th {
 pre {
 	white-space: pre-wrap; /* Add line breaks to long text */
 	word-wrap: break-word;
+}
+
+li {
+	text-align: start;
+}
+
+.attms {
+	display: flex;
+	gap: 10px;
+}
+
+.attm {
+	text-align: start;
+	transition: 1s;
+}
+
+.attm:before {
+	content: "첨부파일: ";
+	color: #3498db;
+	font-weight: bold;
+}
+
+.attm:hover {
+	text-decoration: underline gray 1px;
 }
 
 @media ( max-width : 600px) {

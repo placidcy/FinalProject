@@ -34,7 +34,7 @@
 						<tr>
 							<th>첨부파일</th>
 							<td>
-								<ul>
+								<ul class="attms">
 									<c:forEach items="${attms }" var="attm">
 										<li><a class="attm" href="${attm.url }">${attm.fileName }</a></li>
 									</c:forEach>
@@ -47,7 +47,7 @@
 						<td><pre>${notice.noticeContents }</pre></td>
 					</tr>
 				</table>
-				<div>
+				<div class="buttons">
 					<button class="btn" id="list" data-page="${page }">목록</button>
 					<button class="btn" id="delete" data-id="${notice.noticeId }">삭제</button>
 				</div>

@@ -186,13 +186,13 @@ public class NoticeItemDAO extends ItemDAO {
 						p_title, p_contents, post_id, p_target
 				from final_course_post fcp
 				where type_id=0 and p_target = 0
-				order by p_regdate desc
+				order by post_id desc
 				""");
 		this.query.put("selectAll", """
 				select  to_char(p_regdate, 'YYYY-MM-DD') as p_regdate, p_title, p_contents, post_id, p_target
 				from final_course_post fcp
 				where type_id=0
-				order by p_regdate desc
+				order by post_id desc
 				""");
 		this.query.put("selectOne", """
 				select  to_char(p_regdate, 'YYYY-MM-DD HH:MI:SS') as p_regdate,
