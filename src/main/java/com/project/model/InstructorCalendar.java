@@ -2,13 +2,18 @@ package com.project.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class InstructorCalendar {
 
 	private int i_schedule_id;
 	private LocalDateTime s_sdate;
 	private LocalDateTime s_edate;
+	private String sdate;
+	private String edate;
 	private String s_title;
 	private String s_attm;
+	private MultipartFile attm;
 	private String s_memo;
 	
 	public InstructorCalendar() {
@@ -54,6 +59,14 @@ public class InstructorCalendar {
 		this.s_attm = s_attm;
 	}
 
+	public MultipartFile getAttm() {
+		return attm;
+	}
+
+	public void setAttm(MultipartFile attm) {
+		this.attm = attm;
+	}
+
 	public String getS_memo() {
 		return s_memo;
 	}
@@ -61,6 +74,24 @@ public class InstructorCalendar {
 	public void setS_memo(String s_memo) {
 		this.s_memo = s_memo;
 	}
+
+	public String getSdate() {
+		return sdate;
+	}
+
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
+	}
+
+	public String getEdate() {
+		return edate;
+	}
+
+	public void setEdate(String edate) {
+		this.edate = edate;
+	}
+	
+	
 	
 	
 	
