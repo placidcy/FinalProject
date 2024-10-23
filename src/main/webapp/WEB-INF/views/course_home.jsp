@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="/resources/css/request.css" />
     <link rel="stylesheet" href="/resources/css/member.css" />
     <link rel="stylesheet" href="/resources/css/requestDialog.css">
+    <style>
+	   	.textarea {
+	   		height: 300px;
+	   	}
+    </style>
     <!-- 자바 스크립트 -->
     <script src="/resources/js/course.js"></script>
     <script src="/resources/js/homeMemo.js"></script>
