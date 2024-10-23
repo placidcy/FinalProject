@@ -2,6 +2,8 @@
 package com.project.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,19 +93,23 @@ public class MainController {
 					viewPath = "main/checkin";
 				}
 			} else {
-				courseId = mainSO.checkCourseForCourseId(memberId);
-				if (courseId > 0) {
-					try {
-						model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
-					} catch (Exception e) {
-						System.out.println("정보 오류");
+				try {
+					courseId = mainSO.checkCourseForCourseId(memberId);
+					if (courseId > 0) {
+						try {
+							model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+						} catch (Exception e) {
+							System.out.println("정보 오류");
+						}
+						try {
+							model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+						} catch (Exception e) {
+							System.out.println("통계 오류");
+						}
+						viewPath = "main/checkin_i";
 					}
-					try {
-						model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
-					} catch (Exception e) {
-						System.out.println("통계 오류");
-					}
-					viewPath = "main/checkin_i";
+				} catch (Exception e) {
+					return this.redirectErrorPage("금일 해당하는 강의가 없습니다. 관리자에게 문의하세요.", "courseNotFound");
 				}
 			}
 			model.addAttribute("menu", "checkin");
@@ -277,5 +283,17 @@ public class MainController {
 			e.printStackTrace();
 		}
 		return noticeItem;
+	}
+
+	@RequestMapping("/main/error")
+	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
+			Model model) {
+		model.addAttribute("msg", msg);
+		model.addAttribute("redirect", redirect);
+		return "admin/error";
+	}
+
+	private String redirectErrorPage(String errorMessage, String redirectKeyword) throws UnsupportedEncodingException {
+		return "redirect:/main/error?msg=" + URLEncoder.encode(errorMessage, "UTF-8") + ".&redirect=" + redirectKeyword;
 	}
 }

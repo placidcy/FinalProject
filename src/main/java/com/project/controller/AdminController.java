@@ -3,6 +3,7 @@ package com.project.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,15 +98,16 @@ public class AdminController {
 	@ResponseBody
 	public String issueInstructorHandler(@RequestParam("name") String name, @RequestParam("email") String email,
 			@RequestParam("department") String department, @RequestParam("tel") String tel) {
+		String id = this.generateRandomId();
 		try {
 			MemberDO newInstructor = new MemberDO();
 			newInstructor.setM_name(name);
 			newInstructor.setM_email(email);
 			newInstructor.setM_dept(department);
 			newInstructor.setM_tel(tel);
-			newInstructor.setM_role(1);
-			newInstructor.setM_acctid("inst_user_" + UUID.randomUUID().toString());
-			newInstructor.setM_acctpwd("");
+			newInstructor.setM_role(2);
+			newInstructor.setM_acctid(id);
+			newInstructor.setM_acctpwd(id);
 
 			memberDao.insertMember(newInstructor);
 
@@ -126,13 +128,6 @@ public class AdminController {
 	}
 
 	/**/
-	@RequestMapping("/admin/error")
-	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
-			Model model) {
-		model.addAttribute("msg", msg);
-		model.addAttribute("redirect", redirect);
-		return "admin/error";
-	}
 
 	@RequestMapping("/admin/notice")
 	public String getAmdinNotice(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
@@ -200,8 +195,31 @@ public class AdminController {
 		return messageItem;
 	}
 
+	@RequestMapping("/admin/error")
+	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
+			Model model) {
+		model.addAttribute("msg", msg);
+		model.addAttribute("redirect", redirect);
+		return "admin/error";
+	}
+
 	private String redirectErrorPage(String errorMessage, String redirectKeyword) throws UnsupportedEncodingException {
 		return "redirect:/admin/error?msg=" + URLEncoder.encode(errorMessage, "UTF-8") + ".&redirect="
 				+ redirectKeyword;
 	}
+
+	public String generateRandomId() {
+		Random random = new Random();
+		String prefix = "inst_user_";
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		StringBuilder id = new StringBuilder(prefix);
+
+		for (int i = 0; i < 15; i++) {
+			int index = random.nextInt(chars.length());
+			id.append(chars.charAt(index));
+		}
+
+		return id.toString();
+	}
+
 }
