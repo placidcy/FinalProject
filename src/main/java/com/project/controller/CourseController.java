@@ -35,15 +35,15 @@ public class CourseController {
 
 	@Autowired
 	private CourseMaterialWriteDAO courseMaterialWriteDAO;
-
-	@Autowired
-	private UserRoleService userRoleService;
-
-	@Autowired
-	private CourseSO courseSO;
-	@Autowired
-	private CourseDAO courseDAO;
-
+	
+    @Autowired
+    private UserRoleService userRoleService;
+    
+    @Autowired
+    private CourseSO courseSO;
+    @Autowired
+    private CourseDAO courseDAO;
+    
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");

@@ -19,13 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.model.MemberDO;
 import com.project.model.MemberSO;
-import com.project.model.JWT.JwtUtil;
+//import com.project.model.JWT.JwtUtil;
 import com.project.model.request.LoginRequest;
 import com.project.model.request.SignupRequest;
-import com.project.model.response.ErrorResponse;
+//import com.project.model.response.ErrorResponse;
 import com.project.model.response.LoginResponse;
 
-import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -34,8 +34,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberSO memberSo;
-	@Autowired
-	private JwtUtil jwtUtil;
+//	@Autowired
+//	private JwtUtil jwtUtil;
 	
 	@GetMapping("/login")
 	public String loginHandler() {
@@ -148,6 +148,10 @@ public class MemberController {
 	public String findidHandler() {
 		return "findid";
 	}
+	@GetMapping("/findid2")
+	public String findid2Handler() {
+		return "findid2";
+	}
 	
 	@PostMapping("/findidProcess")
 	public String findProcessHandler(
@@ -159,11 +163,11 @@ public class MemberController {
 		try {
 			if(result != null) {
 				model.addAttribute("result", result);
-				return "findid";
+				return "findid2";
 			}
 			else {
 				model.addAttribute("result", "일치하는 아이디가 없습니다.");
-				return "findid";
+				return "findid2";
 			}
 		}
 		catch (Exception e) {
