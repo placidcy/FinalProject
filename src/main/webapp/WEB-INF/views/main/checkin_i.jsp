@@ -59,11 +59,13 @@
 					<div class="ta cen">
 						<c:if test="${not empty info.qrCode }">
 							<div class="grid c2 cen v h">
+								<!-- 
 								<div class="">
 									<p>QR코드 만료까지 남은 시간</p>
 									<p class="bold" id="timeLimit" data-date="${info.qrRegdate }"
 										data-limit="${info.qrEfftime }"></p>
 								</div>
+								 -->
 								<div>
 									<img class="img s200"
 										src="/api/checkin/getQRImage?id=${info.courseId }" alt="">
