@@ -138,7 +138,7 @@
 	        </ul>
 			
 			
-	        <ul class="menuList" style="visibility: hidden;">
+	        <ul id="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
 	            <li><a href="/checkin">출석 체크</a></li>
 				<li><a href="/mypage">마이 페이지</a></li>

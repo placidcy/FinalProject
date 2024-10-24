@@ -104,7 +104,7 @@
 
         <div id="contentBox">
             <div class="content">
-                <div>
+                <div id="attSummation">
                     <strong>출결 소계</strong>
                     <br />
                     <div id="summationInfoBox">
@@ -149,10 +149,11 @@
             </div>
 
             <div class="content">
-                <div>
+                <div id="attBoxCap">
                 <div><strong>* 출석 요건: 기간내 출석 인정</strong></div>
                 <div id="fontBox"><span id="attFont1">출석-[○]</span>, 지각-[▲], <span id="attFont2">결석-[X]</span></div>
-                <div id="attBox">
+                
+				<div id="attBox">
                     <div id="infoHeader">
                         <div class="infoArea">교육 일자</div>
                         <div class="infoArea">출석 여부</div>
@@ -180,7 +181,6 @@
                         </div>
 						</c:forEach> 
                     </div>
-
                 </div>
 
                 
