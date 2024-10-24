@@ -167,18 +167,18 @@ public class MainSO extends ItemSO {
 	}
 
 	public int getSize() {
-		return this.getSize(noticeItemDAO.getCount(), limit);
+		return this.getSize(noticeItemDAO.getListSize(), limit);
 	}
 
 	public int getSize(String keyword) {
-		return this.getSize(noticeItemDAO.getCount(keyword), limit);
+		return this.getSize(noticeItemDAO.getListSize(keyword), limit);
 	}
 
 	public int getTotalSize() {
-		return this.getSize(noticeItemDAO.getTotalCount(), limit);
+		return this.getSize(noticeItemDAO.getAllSize(), limit);
 	}
 
 	public int getTotalSize(String keyword) {
-		return this.getSize(noticeItemDAO.getTotalCount(keyword), limit);
+		return this.getSize(noticeItemDAO.getAllSize(keyword), limit);
 	}
 }

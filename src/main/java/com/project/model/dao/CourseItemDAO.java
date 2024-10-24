@@ -97,7 +97,8 @@ public class CourseItemDAO extends ItemDAO {
 	}
 
 	public int getCountByDates(int memberId) {
-		this.sql = this.getCount(this.query.get("selectByDates"));
+		this.sql = this.query.get("selectByDates");
+		this.sql = this.getCount(sql);
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
@@ -391,10 +392,6 @@ public class CourseItemDAO extends ItemDAO {
 		return this.getJdbcTemplate().update(sql, Integer.class);
 	}
 
-	public String getCount(String sql) {
-		return "select count(*) from (" + sql + ")";
-	}
-
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
@@ -447,56 +444,6 @@ public class CourseItemDAO extends ItemDAO {
 				where
 					member_id = ?
 					and sysdate between c_sdate-14 and c_edate+14
-				""");
-
-		/*
-		 * 수강 신청 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByDates", """
-				select
-				  count(*) as cnt
-				from
-				  final_course fc
-				  inner join (
-				    select
-				      course_id,
-				      count(*) as c_count
-				    from
-				      final_course_student fcs
-				    group by
-				      course_id
-				  ) fcs on fcs.course_id = fc.course_id
-				where
-				  c_count < c_limits
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
-				""");
-		/*
-		 * 학생으로 로그인했을 때, 수강 중인 강의 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByMemberId", """
-				select
-				  count(*) as cnt
-				from
-				  final_course fc
-				  inner join final_course_student fcs on fc.course_id = fcs.course_id
-				where
-				  member_id = ?
-				  and sysdate between c_sdate-14 and c_edate+14
-				""");
-		/*
-		 * 강사로 로그인하였을 때, 담당 중인 강의 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByInstructorId", """
-				select
-					count(*) as cnt
-				from
-					final_course fc
-					inner join final_course_instructor fci on fc.course_id = fci.course_id
-				where
-				  	member_id = ?
-				  	and sysdate between c_sdate-14 and c_edate+14
 				""");
 
 		/*
