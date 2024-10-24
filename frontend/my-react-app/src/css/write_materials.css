@@ -8,7 +8,6 @@
 body {
 	font-size: 14px;
 	font-family: 'Inter', sans-serif;
-	background-color: #f2f2f2;
 }
 
 /* 컨테이너 */
@@ -26,35 +25,39 @@ hr {
 	margin-top: 20px;
 }
 
-.write-material {
+.wm_header {
+	display: flex;
+}
+
+.wm_write-material {
 	border: 1px solid #d9d9d9;
 	background-color: #fff;
 	padding: 20px;
-	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.course-title {
+.wm_course-title {
 	margin-top: 50px;
 	font-size: 24px;
 }
 
-.coruse-day {
+.wm_coruse-day {
 	margin-top: 20px;
 }
 
-.course-content {
+.wm_course-content {
 	display: flex;
 	width: 100%;
 	margin-top: 20px;
 }
 
-.title {
+.wm_title {
+	font-size: 24px;
 	font-weight: bold;
 	margin-right: 20px;
 }
 
-.course_write {
+.wm_course_write {
 	width: 100%;
 	border: 2px solid #d9d9d9;
 	padding: 10px;
@@ -62,7 +65,7 @@ hr {
 	font-weight: bold;
 }
 
-.times, .days {
+.wm_times, .wm_days {
 	display: inline-block;
 	width: 150px;
 	text-align: center;
@@ -72,11 +75,11 @@ hr {
 	font-weight: bold;
 }
 
-.text {
+.wm_text {
 	margin-left: -8px;
 }
 
-.content {
+.wm_content {
 	margin-top: 20px;
 	font-weight: bold;
 	font-size: 24px;
@@ -87,17 +90,17 @@ hr {
 	resize: none;
 }
 
-.wt_buttons {
+.wm_wt_buttons {
 	display: flex;
 	justify-content: flex-end;
 	margin-top: -40px;
 }
 
-.buttons-mobile {
+.wm_buttons-mobile {
 	display: none; /* 기본적으로 모바일 버튼 숨김 */
 }
 
-.save_button, .cancel_button {
+.wm_save_button, .wm_cancel_button {
 	width: 76px;
 	height: 42px;
 	padding: 7px;
@@ -111,31 +114,68 @@ hr {
 	cursor: pointer;
 }
 
-.save_button {
+.wm_save_button {
 	background: #87C791; /* Green */
 }
 
-.cancel_button {
+.wm_cancel_button {
 	background: #D9D9D9; /* Gray */
 }
 
-.all-day {
+.wm_all-day {
 	display: flex;
 	align-items: center;
 	font-size: 20px;
 	font-weight: bold;
 }
 
-.all-day>span {
+.wm_all-day>span {
 	margin-left: 5px;
 }
 
-.course-title-wt, .file_input {
+.wm_course-title-wt {
+	display: flex;
+	font-size: 24px;
+	font-weight: bold;
+	align-items: center;
+}
+
+.wm_course-title-wt>input {
+	font-size: 24px;
+	padding: 5px;
+	width: 70vh;
+}
+
+.wm_file_input {
+	display: flex;
+	align-items: center;
+}
+
+.wm_file-list {
 	display: flex;
 }
 
-.course-write {
+.wm_file-list>ul {
+	margin-left: 5px;
+}
+
+.wm_course-write {
 	margin-top: 30px;
+}
+
+.select-file {
+  font-weight: bold;
+  font-size: 16px;
+  opacity: 1;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.select-file:hover {
+  background-color: #e0e0e0;
 }
 
 @media ( max-width : 768px) {
@@ -144,10 +184,10 @@ hr {
 		display: inline-block;
 		background-color: #f2f2f2;
 	}
-	.wt_buttons {
+	.wm_wt_buttons {
 		display: none;
 	}
-	.buttons-mobile {
+	.wm_buttons-mobile {
 		display: flex;
 		justify-content: center;
 		margin-top: 20px;
@@ -161,7 +201,7 @@ hr {
 		display: inline-block;
 		background-color: #f2f2f2;
 	}
-	.buttons-mobile {
+	.wm_buttons-mobile {
 		display: none;
 	}
 }

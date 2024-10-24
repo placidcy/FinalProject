@@ -2,6 +2,8 @@
 	font-family: "Pretendard", sans-serif;
 	font-style: normal;
 	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 ul {
@@ -9,64 +11,73 @@ ul {
 	padding: 0;
 }
 
-.sidebar-menu>a>li {
+.sc_sidebar-menu>a>li {
 	padding: 10px;
 	box-sizing: border-box;
 	font-size: 24px;
 	font-weight: bold;
 }
 
-.sidebar-menu>a {
+.sc_sidebar-menu>a {
 	text-decoration: none;
-}
-
-.sidebar-menu-unselected {
 	color: #000;
 }
 
-.sidebar-menu-selected {
+.sc_menu.clicked {
+	color: #87C791;
+}
+
+.sc_course-sidebar-right>.sc_sidebar-logo>h3 {
+	margin-top: 20px;
+}
+
+.sc_sidebar-menu-selected>li {
 	color: #87C791;
 }
 
 @media ( min-width : 769px) {
+	html, body {
+		height: 100%;
+	}
 	#container {
 		box-sizing: border-box;
 		display: flex;
-		width: 1440px;
-		min-height: 1080px;
+		width: 100vw;
+		height: 100vh;
 	}
 	aside {
 		width: 25%;
+		height: 100%;
 		text-align: center;
 		display: flex;
 	}
-	.course-sidebar-left {
-		width: 19%;
+	.sc_course-sidebar-left {
+		width: 20%;
 		background-color: #2F2A2A;
 	}
-	.sidebar-icon {
+	.sc_sidebar-icon {
 		width: 30px;
 		filter: invert();
 		opacity: 0.7;
 	}
-	.course-sidebar-left>.sidebar-menu>li {
+	.sc_course-sidebar-left>.sc_sidebar-menu>li {
 		width: 100%;
 		padding: 30px 0;
 		box-sizing: content-box;
 		border-bottom: 1px solid gray;
 	}
-	.course-sidebar-right {
-		width: 85%;
-		background-color: #fff;
+	.sc_course-sidebar-right {
+		width: 80%;
 	}
-	.sidebar-logo {
+	.sc_sidebar-logo {
 		padding: 50px;
 		padding-bottom: 0;
+		margin-top: -20px;
 	}
-	.sidebar-logo>* {
+	.sc_sidebar-logo>* {
 		margin-block-end: 20px;
 	}
-	.sidebar-logo>a {
+	.sc_sidebar-logo>a {
 		text-decoration: none;
 		box-sizing: border-box;
 		font-size: 24px;
@@ -75,38 +86,28 @@ ul {
 	main {
 		margin-block-end: 30px;
 		width: 75%;
+		height: 100vh;
 		padding: 30px;
 		background-color: #f2f2f2;
+		overflow: auto;
 	}
 	h3 {
 		font-size: 24px;
 	}
-	#mobile-menu {
+	#sc_mobile-menu {
 		display: none;
 	}
-	#menuList {
+	#sc_menuList {
 		display: none;
-	}
-	.button {
-		width: 146px;
-		height: 90px;
-		background: #ffffff;
-		border: 1px solid #d9d9d9;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #97999c;
-		font-weight: bold;
-		font-size: 24px;
 	}
 }
 
 @media ( max-width : 768px) {
-	.course-sidebar-left {
+	.sc_course-sidebar-left {
 		width: 0px !important;
 		display: none !important;
 	}
-	.sidebar-logo {
+	.sc_sidebar-logo {
 		width: 0px !important;
 		display: none !important;
 	}
@@ -115,12 +116,16 @@ ul {
 		width: 100%;
 		height: 100%;
 	}
-	aside, main {
+	aside {
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
 	}
-	#mobile-menu {
+	main {
+		width: 100%;
+		height: 100vh;
+	}
+	#sc_mobile-menu {
 		width: auto;
 		background-color: #2F2A2A;
 		color: white;
@@ -130,30 +135,32 @@ ul {
 		justify-content: center;
 		align-items: center;
 	}
-	#backBtn {
+	#sc_backBtn {
 		position: absolute;
 		display: block !important;
 		left: 30px;
 		color: white;
 		cursor: pointer;
 	}
-	.menuName {
-		width: 26%;
+	.sc_menuName {
+		font-size: 24px;
+		font-weight: bold;
 		text-align: center;
 	}
-	#mobile-menu-icon {
+	#sc_mobile-menu-icon {
 		position: absolute;
 		display: block !important;
 		filter: invert(1);
 		right: 20px;
 	}
-	#mobile-menu-icon:hover {
+	#sc_mobile-menu-icon:hover {
 		cursor: pointer;
 	}
-	.course-sidebar-right {
+	.sc_course-sidebar-right {
 		width: 100%;
 	}
-	.sidebar-menu {
+	.sc_sidebar-menu {
+		position: relative;
 		width: 100%;
 		display: flex;
 		background-color: white;
@@ -162,17 +169,18 @@ ul {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 			rgba(0, 0, 0, 0.19);
 		justify-items: center;
+		z-index: 1;
 	}
-	.sidebar-menu>a {
+	.sc_sidebar-menu>a {
 		text-decoration: none;
 		text-align: center;
 	}
-	.sidebar-menu>a>li {
+	.sc_sidebar-menu>a>li {
 		box-sizing: border-box;
 		font-size: 24px;
 		font-weight: bold;
 	}
-	#menuList {
+	#sc_menuList {
 		position: absolute;
 		width: 100%;
 		top: 65px;
@@ -184,18 +192,18 @@ ul {
 		z-index: 1;
 		padding-bottom: 100px;
 	}
-	#menuList>li>a {
+	#sc_menuList>li>a {
 		text-decoration: none;
 		color: white;
 	}
-	#menuList>li {
+	#sc_menuList>li {
 		height: 50px;
 		padding-top: 7px;
 	}
-	#menuList>li:hover {
+	#sc_menuList>li:hover {
 		background-color: #87C791;
 	}
-	.button {
+	.sc_button {
 		width: 25%;
 		height: 90px;
 		background: #ffffff;
