@@ -120,6 +120,13 @@ public class CourseItemDAO extends ItemDAO {
 				courseItem.setCourseId(rs.getInt("course_id"));
 				courseItem.setCourseName(rs.getString("c_name"));
 				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setDays(0, rs.getInt("d_sun"));
+				courseItem.setDays(1, rs.getInt("d_mon"));
+				courseItem.setDays(2, rs.getInt("d_tue"));
+				courseItem.setDays(3, rs.getInt("d_wed"));
+				courseItem.setDays(4, rs.getInt("d_thu"));
+				courseItem.setDays(5, rs.getInt("d_fri"));
+				courseItem.setDays(6, rs.getInt("d_sat"));
 
 				return courseItem;
 			}
@@ -420,11 +427,20 @@ public class CourseItemDAO extends ItemDAO {
 				select
 				  fcs.course_id,
 				  c_title,
-				  c_name
+				  c_name,
+				  -- 요일 정보 추가
+				NVL(d_sun, 0) as d_sun,
+				NVL(d_mon, 0) as d_mon,
+				NVL(d_tue, 0) as d_tue,
+				NVL(d_wed, 0) as d_wed,
+				NVL(d_thu, 0) as d_thu,
+				NVL(d_fri, 0) as d_fri,
+				NVL(d_sat, 0) as d_sat
 				from
 				  final_course fc
 				  inner join final_course_category fcc on fc.category_id = fcc.category_id
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
+				  inner join final_course_day fd on fc.course_id = fd.course_id
 				where
 				  member_id = ?
 				  and sysdate between c_sdate-14 and c_edate+14
