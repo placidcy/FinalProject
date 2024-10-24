@@ -7,7 +7,7 @@ public class CourseMaterialDO {
     private String title;
     private String regDate;
     private List<String> attachments;
-
+    
     public CourseMaterialDO() {
     }
 

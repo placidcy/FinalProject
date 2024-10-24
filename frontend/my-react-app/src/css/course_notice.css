@@ -47,10 +47,6 @@ body {
 	color: #000;
 }
 
-main>* {
-	margin-block-end: 30px;
-}
-
 main {
 	position: relative;
 	width: 75%;

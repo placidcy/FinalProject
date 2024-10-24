@@ -1,0 +1,151 @@
+/* 기본 설정 */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 14px;
+	font-family: Inter, sans-serif;
+}
+
+/* 컨테이너 */
+.container {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	background: #f2f2f2;
+}
+
+/* 사이드바 */
+#course {
+	width: 25%;
+	background-color: #ffffff;
+	border-right: 1px solid #d9d9d9;
+}
+
+/* 헤더 */
+.cq_header {
+	display: flex;
+}
+
+.cq_button {
+	width: 146px;
+	height: 60px;
+	background: #ffffff;
+	border: 1px solid #d9d9d9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #97999c;
+	font-weight: bold;
+	font-size: 18px;
+	margin-right: 10px;
+}
+
+.cq_button.active {
+	background: #87c689;
+	color: #ffffff;
+}
+
+.cq_write_button {
+	width: 180px;
+	height: 60px;
+	padding: 15px;
+	background: #fff;
+	font-weight: bold;
+	font-size: 24px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: auto;
+	color: #000;
+}
+
+.cq_post {
+	background-color: #ffffff;
+	padding: 20px;
+	border: 1px solid #dddddd;
+}
+
+.cq_title {
+	margin-bottom: 10px;
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.cq_date {
+	margin-bottom: 10px;
+	display: block;
+	font-size: 14px;
+	color: #666666;
+}
+
+.cq_comment {
+	display: block;
+	font-size: 14px;
+	color: #666666;
+}
+
+/* 질문 작성 버튼 */
+.cq_question_write_button_pc {
+	width: 180px;
+	height: 60px;
+	padding: 15px;
+	background: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: auto;
+	margin-bottom: 20px;
+	color: #000;
+}
+
+.cq_question_write_button_mobile {
+	display: none;
+}
+
+.cq_paging_list {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.cq_paging {
+	padding: 10px 15px;
+	font-weight: bold;
+	font-size: 18px;
+	color: #000;
+}
+
+.cq_paging.active {
+	color: #87c689;
+}
+
+@media ( max-width : 768px) {
+	.cq_write_button {
+		display: none;
+	}
+	.cq_question_write_button_mobile {
+		display: block;
+		width: 100%;
+		height: 60px;
+		padding: 15px;
+		background: #fff;
+		font-weight: bold;
+		font-size: 24px;
+		text-align: center;
+		border: 1px solid #d9d9d9;
+		border-radius: 12px;
+		margin-top: 10px;
+		color: #000;
+	}
+	.cq_paging_list {
+		font-size: 24px;
+	}
+}
