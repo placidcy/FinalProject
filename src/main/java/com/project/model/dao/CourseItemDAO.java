@@ -23,7 +23,7 @@ public class CourseItemDAO extends ItemDAO {
 		this.sql = query.get("register");
 		int rowNum = -1;
 
-		rowNum = this.getJdbcTemplate().update(sql, new Object[] { courseId, memberId });
+		rowNum = this.getJdbcTemplate().update(sql, courseId, memberId);
 
 		return rowNum;
 	}

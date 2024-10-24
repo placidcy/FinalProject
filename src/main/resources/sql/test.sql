@@ -40,3 +40,7 @@ VALUES(7070, 1, 1, 1, 1, 1, 1, 1);
 -- 테스트 강사 배정
 INSERT INTO FINAL_COURSE_INSTRUCTOR fci 
 VALUES(7070, 8081, trunc(sysdate + 28), trunc(sysdate+28+7));
+
+-- 승인 과정을 포함하기 위하여 시작일을 변경
+UPDATE final_course SET c_sdate = sysdate + 13 WHERE course_id = 7070;
+UPDATE FINAL_COURSE_SCHEDULE SET S_SDATE = sysdate + 13 WHERE COURSE_ID = 7070;
