@@ -405,17 +405,17 @@ public class CourseItemDAO extends ItemDAO {
 		 * 수강 신청 목록 조횤 쿼리
 		 */
 		this.query.put("selectByDates", """
-				SELECT DISTINCT fcs.course_id, c_title, c_name, c_count, c_limits,
+				SELECT DISTINCT fc.course_id, c_title, c_name, nvl(c_count, 0) c_count, c_limits,
 				                TO_CHAR(c_sdate, 'yyyy.mm.dd') AS c_sdate,
 				                TO_CHAR(c_edate, 'yyyy.mm.dd') AS c_edate
 				FROM final_course fc
 				INNER JOIN final_course_category fcc ON fc.category_id = fcc.category_id
-				INNER JOIN (
+				LEFT OUTER JOIN (
 				    SELECT course_id, COUNT(*) AS c_count
 				    FROM final_course_student
 				    GROUP BY course_id
 				) fcs ON fcs.course_id = fc.course_id
-				WHERE c_count < c_limits
+				WHERE nvl(c_count, 0) < c_limits
 				  AND SYSDATE BETWEEN c_sdate - 28 AND c_sdate - 1
 				  AND fc.COURSE_ID NOT IN (SELECT COURSE_ID FROM FINAL_COURSE_STUDENT fcs WHERE member_id = ?)
 				ORDER BY c_sdate, c_edate
