@@ -523,19 +523,21 @@ public class CourseItemDAO extends ItemDAO {
 		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
-		this.query.put("checkCourseForStudentId", """
-				SELECT student_id
-				FROM (
-					SELECT *
-					FROM FINAL_COURSE_STUDENT fcs
-					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
-					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
-					)
-				WHERE member_id = ?
-				-- 현재일이 강의 시작일 및 종료일 사이에 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate and c_edate
-				""");
+		this.query.put("checkCourseForStudentId",
+				"""
+						SELECT student_id
+						FROM (
+						    SELECT fcs.*, fc.C_NAME, fct.COURSE_ID, fcs2.S_SDATE, fcs2.S_STIME, fcs2.S_EDATE, fcs2.S_ETIME
+						    FROM FINAL_COURSE_STUDENT fcs
+						    INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+						    INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+						    INNER JOIN final_course_schedule fcs2 ON fcs.course_id = fcs2.course_id
+						        AND SYSDATE BETWEEN TO_DATE(TO_CHAR(fcs2.S_SDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_STIME, 'yyyy-mm-dd hh24:mi:ss')
+						                         AND TO_DATE(TO_CHAR(fcs2.S_EDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_ETIME, 'yyyy-mm-dd hh24:mi:ss')
+						                         -- 현재 시간대에 속한 강의를 조회
+						)
+						WHERE member_id = ? and rownum = 1
+						""");
 		/*
 		 * 수업 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리(강사용)
 		 */

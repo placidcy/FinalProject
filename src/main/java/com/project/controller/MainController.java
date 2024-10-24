@@ -76,7 +76,7 @@ public class MainController {
 	}
 
 	@GetMapping("/checkin")
-	public String getCheckin(Model model, HttpSession session) {
+	public String getCheckin(Model model, HttpSession session) throws UnsupportedEncodingException {
 		int memberId, studentId, courseId, memberRole;
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 
@@ -86,37 +86,29 @@ public class MainController {
 
 			if (memberRole == 1) {
 				studentId = mainSO.checkCourseForStudentId(memberId);
-				if (studentId > 0) {
-					model.addAttribute("info", mainSO.getInfoByStudentId(studentId));
-					model.addAttribute("stats", mainSO.getStats(studentId));
-					model.addAttribute("time", mainSO.getTimetable(studentId));
-					viewPath = "main/checkin";
-				}
+				model.addAttribute("info", mainSO.getInfoByStudentId(studentId));
+				model.addAttribute("stats", mainSO.getStats(studentId));
+				model.addAttribute("time", mainSO.getTimetable(studentId));
+				viewPath = "main/checkin";
 			} else {
+				courseId = mainSO.checkCourseForCourseId(memberId);
 				try {
-					courseId = mainSO.checkCourseForCourseId(memberId);
-					if (courseId > 0) {
-						try {
-							model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
-						} catch (Exception e) {
-							System.out.println("정보 오류");
-						}
-						try {
-							model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
-						} catch (Exception e) {
-							System.out.println("통계 오류");
-						}
-						viewPath = "main/checkin_i";
-					}
+					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
 				} catch (Exception e) {
-					return this.redirectErrorPage("금일 해당하는 강의가 없습니다. 관리자에게 문의하세요.", "courseNotFound");
+					System.out.println("정보 오류");
 				}
+				try {
+					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+				} catch (Exception e) {
+					System.out.println("통계 오류");
+				}
+				viewPath = "main/checkin_i";
 			}
 			model.addAttribute("menu", "checkin");
 			return viewPath;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/login";
+			return this.redirectErrorPage("금일 해당하는 강의가 없습니다. 관리자에게 문의하세요", "courseNotFound");
 		}
 	}
 
