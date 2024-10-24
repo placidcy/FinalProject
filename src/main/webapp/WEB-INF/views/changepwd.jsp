@@ -63,7 +63,7 @@
 							<a href="/mypage"><button type="button" id="cancelBtn">취소</button></a>
 						</c:otherwise>
 					</c:choose>
-	                <button type="button" id="submitBtn">변경</button>
+	                <button type="submit" id="submitBtn">변경</button>
 	            </div>
             </form>
         </main>
