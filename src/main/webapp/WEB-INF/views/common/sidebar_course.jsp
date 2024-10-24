@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-
+<!--
 <script>
     function getBaseUrl() {
         const { protocol, host } = window.location;
@@ -13,6 +13,7 @@
         window.location.href = `${baseUrl}/CourseBoard?courseId=${courseId}`;
     }
 </script>
+-->
 
 <!-- 강의 사이드바 -->
 <aside>
@@ -85,7 +86,7 @@
 				style="width:33.3%">
 				<li>홈</li></a>
 				
-	            <a href="#" class="sidebar-menu-unselected" style="width:33.3%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+	            <a href="http://13.238.185.11:3000/CourseBoard?courseId=8080" class="sidebar-menu-unselected" style="width:33.3%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                 	<li>강의 게시판</li>
                 </a>
 				
@@ -114,7 +115,7 @@
 				style="width:25%">
 				<li>홈</li></a>
 
-                <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+                <a href="http://13.238.185.11:3000/CourseBoard?courseId=8080" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                 	<li>강의 게시판</li>
                 </a>
 				
