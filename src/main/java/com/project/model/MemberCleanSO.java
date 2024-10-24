@@ -11,8 +11,8 @@ public class MemberCleanSO {
     @Autowired
     private MemberDAO memberDao;
 
-    @Scheduled(cron = "0 0/5 * * * ?") // 5분마다 작동
-    public void deleteInactiveMembers() {
-        memberDao.deleteMemberInfo();
-    }
+//    @Scheduled(cron = "0 0/5 * * * ?") // 5분마다 작동
+//    public void deleteInactiveMembers() {
+//        memberDao.deleteMemberInfo();
+//    }
 }

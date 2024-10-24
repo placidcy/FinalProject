@@ -48,6 +48,15 @@ a {
 	margin-bottom: 20px;
 }
 
+.cb_board_header {
+	display: flex;
+}
+
+.cb_more {
+	margin-left: auto;
+	color: #333333;
+}
+
 .cb_board-title {
 	display: block;
 	font-size: 24px;

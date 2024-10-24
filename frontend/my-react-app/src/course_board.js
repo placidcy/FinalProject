@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from './side_course';
 import './css/course_board.css';
+
+// 기본 axios 헤더 설정
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 
 const CourseBoard = () => {
 	const location = useLocation();
@@ -25,6 +29,8 @@ const CourseBoard = () => {
 
 		if (id && baseURL) {
 			setCourseId(id);
+			sessionStorage.setItem('courseId', id);
+
 			if (user) {
 				sessionStorage.setItem('userId', user);
 				if (role) {
@@ -45,27 +51,20 @@ const CourseBoard = () => {
 		const apiUrl = `${baseURL}/api/coursesBoard/${id}`;
 
 		try {
-			const response = await fetch(apiUrl, {
+			const response = await axios.get(apiUrl, {
 				headers: {
 					Accept: "application/json",
 				},
-				method: "GET",
 			});
-
-			if (!response.ok) {
-				throw new Error(`response 오류 / status: ${response.status}`);
-			}
-
-			const data = await response.json();
-			setPosts(data);
+			setPosts(response.data);
 		} catch (error) {
 			console.error('Fetch error:', error);
 		}
 	};
 
-	const notices = posts.filter(post => post.typeId === 1);
-	const materials = posts.filter(post => post.typeId === 2);
-	const questions = posts.filter(post => post.typeId === 3);
+	const notices = posts.filter(post => post.typeId === 1).slice(0, 3);
+	const materials = posts.filter(post => post.typeId === 2).slice(0, 3);
+	const questions = posts.filter(post => post.typeId === 3).slice(0, 5);
 
 	return (
 		<>
@@ -74,14 +73,19 @@ const CourseBoard = () => {
 			<main>
 				<div className="cb_header">
 					<a href={`/CourseBoard?courseId=${courseId}`} className="button active">전체 목록</a>
-					<a href={`/notices?courseId=${courseId}`} className="button">공지 사항</a>
+					<a href={`/CourseNotice?courseId=${courseId}`} className="button">공지 사항</a>
 					<a href={`/CourseMaterials?courseId=${courseId}`} className="button">강의 자료</a>
-					<a href={`/questions?courseId=${courseId}`} className="button">질문</a>
+					<a href={`/CourseQuestion?courseId=${courseId}`} className="button">질문</a>
 				</div>
 
 				<div className="cb_course-board-list">
 					<div className="cb_course-notice">
-						<span className="cb_board-title">공지 사항</span>
+						<div className='cb_board_header'>
+							<span className="cb_board-title">공지 사항</span>
+							{notices.length > 0 && (
+								<a href={`/notices?courseId=${courseId}`} className="cb_more">더보기</a>
+							)}
+						</div>
 						<div className="cb_item">
 							{notices.length > 0 ? (
 								notices.map(notice => (
@@ -97,7 +101,12 @@ const CourseBoard = () => {
 					</div>
 
 					<div className="cb_course-materials">
-						<span className="cb_board-title">강의 자료</span>
+						<div className='cb_board_header'>
+							<span className="cb_board-title">강의 자료</span>
+							{materials.length > 0 && (
+								<a href={`/CourseMaterials?courseId=${courseId}`} className="cb_more">더보기</a>
+							)}
+						</div>
 						<div className="cb_item">
 							{materials.length > 0 ? (
 								materials.map((material) => (
@@ -125,7 +134,12 @@ const CourseBoard = () => {
 					</div>
 
 					<div className="cb_course-question">
-						<span className="cb_board-title">질문</span>
+						<div className='cb_board_header'>
+							<span className="cb_board-title">질문</span>
+							{questions.length > 0 && (
+								<a href={`/CourseQuestion?courseId=${courseId}`} className="cb_more">더보기</a>
+							)}
+						</div>
 						<div className="cb_item">
 							{questions.length > 0 ? (
 								questions.map(question => (

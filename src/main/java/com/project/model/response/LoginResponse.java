@@ -10,8 +10,9 @@ public class LoginResponse {
 	private String m_pfp;
 	private String m_dept;
 	private int m_role;
+	private int m_status;
 	
-	public LoginResponse(int member_id, String m_acctid, String m_name, String m_email, String m_tel, String m_pfp, String m_dept, int m_role) {
+	public LoginResponse(int member_id, String m_acctid, String m_name, String m_email, String m_tel, String m_pfp, String m_dept, int m_role, int m_status) {
 		this.member_id = member_id;
 		this.m_acctid = m_acctid;
 		this.m_email = m_email;
@@ -20,6 +21,7 @@ public class LoginResponse {
 		this.m_pfp = m_pfp;
 		this.m_dept = m_dept;
 		this.m_role = m_role;
+		this.setM_status(m_status);
 	}
 
 	public int getMember_id() {
@@ -85,6 +87,14 @@ public class LoginResponse {
 
 	public void setM_role(int m_role) {
 		this.m_role = m_role;
+	}
+
+	public int getM_status() {
+		return m_status;
+	}
+
+	public void setM_status(int m_status) {
+		this.m_status = m_status;
 	}
 	
 	

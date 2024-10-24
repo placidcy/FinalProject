@@ -3,12 +3,14 @@ package com.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,15 +21,19 @@ import com.project.model.CourseDAO;
 import com.project.model.CourseDO;
 import com.project.model.CourseMaterialDO;
 import com.project.model.CourseMaterialWriteDO;
+import com.project.model.CourseQuestionWriteDO;
 import com.project.model.CourseReg;
 import com.project.model.CourseSO;
 import com.project.model.InstructorCalendar;
 import com.project.model.PostDAO;
 import com.project.model.PostDO;
+import com.project.model.QuestionDO;
 import com.project.model.dao.CourseBoardDAO;
 import com.project.model.dao.CourseMaterialWriteDAO;
+import com.project.model.dao.CourseQuestionWriteDAO;
 import com.project.model.response.LoginResponse;
 import com.project.service.CourseBoardService;
+import com.project.service.QuestionBoardService;
 import com.project.service.UserRoleService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,7 +57,11 @@ public class CourseController {
 	@Autowired
 	private CourseBoardDAO courseBoardDAO;
 	@Autowired
-    private PostDAO postDAO;
+	private PostDAO postDAO;
+	@Autowired
+	private QuestionBoardService questionBoardService;
+	@Autowired
+	private CourseQuestionWriteDAO courseQuestionWriteDAO;
 
 	@GetMapping("/home")
 	public String course_homeHandler(HttpSession session, Model model) {
@@ -62,14 +72,14 @@ public class CourseController {
 			model.addAttribute("error", "강의 ID가 존재하지 않습니다.");
 			return "error";
 		}
-		
+
 		List<PostDO> notice = postDAO.getRecentNoticeByCourse_id(course_id);
 		if (notice.size() > 0) {
-            model.addAttribute("notice1", notice.get(0).getP_title());
-        }
-        if (notice.size() > 1) {
-            model.addAttribute("notice2", notice.get(1).getP_title());
-        }
+			model.addAttribute("notice1", notice.get(0).getP_title());
+		}
+		if (notice.size() > 1) {
+			model.addAttribute("notice2", notice.get(1).getP_title());
+		}
 
 		CourseDO course = courseSO.getCourseDetails(course_id);
 
@@ -275,6 +285,30 @@ public class CourseController {
 		}
 
 		return ResponseEntity.ok("자료가 성공적으로 업로드되었습니다.");
+	}
+
+	@GetMapping("/api/questions/{courseId}")
+	@ResponseBody
+	public List<QuestionDO> getQuestions(@PathVariable("courseId") int courseId) {
+		List<QuestionDO> questions = questionBoardService.getQuestions(courseId);
+		return questions;
+	}
+
+	@PostMapping("/api/courseQuestions")
+	public ResponseEntity<String> uploadQuestion(@RequestBody CourseQuestionWriteDO question, HttpSession session) {
+
+	    if (question.getMemberId() == 0) {
+	        LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+	        if (auth != null) {
+	            question.setMemberId(auth.getMember_id());
+	        } else {
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+	        }
+	    }
+
+	    int questionId = courseQuestionWriteDAO.saveQuestion(question);
+
+	    return ResponseEntity.ok("질문이 성공적으로 업로드되었습니다.");
 	}
 
 }
