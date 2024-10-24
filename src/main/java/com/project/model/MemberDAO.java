@@ -183,7 +183,7 @@ public class MemberDAO {
         int offset = (page - 1) * itemsPerPage;
         this.sql = """
             select * from (
-                select rownum as rn, fm.* from final_member fm
+                select rownum as rn, fm.* from (select * from final_member order by member_id) fm
                 where fm.m_role = 2 and rownum <= ?
             ) where rn > ?
         """;

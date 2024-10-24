@@ -200,21 +200,20 @@ public class MainController {
 
 	@ResponseBody
 	@RequestMapping("/api/course/register")
-	public MessageItem register(@RequestParam(name = "courseId") String courseId, HttpSession session) {
+	public MessageItem register(@RequestParam(name = "courseId") int courseId, HttpSession session) {
 		int memberId;
 		MessageItem messageItem = new MessageItem();
-
-		memberId = ((LoginResponse) session.getAttribute("auth")).getMember_id();
-
-		if (mainSO.checkCourseConflicts(memberId, Integer.parseInt(courseId))) {
+		memberId = this.getMemberId(session);
+		if (mainSO.checkCourseConflicts(memberId, courseId)) {
 			messageItem.setRes(false);
 			messageItem.setMsg("동일한 시간대에 수강 중인 강의가 있거나, 이미 수강 중인 강의입니다.");
-		} else if (mainSO.checkAlreadyRegistered(memberId, memberId)) {
+		} else if (mainSO.checkAlreadyRegistered(memberId, courseId)) {
 			messageItem.setRes(false);
 			messageItem.setMsg("이미 수강 신청을 요청한 강의입니다.");
 		} else {
-			messageItem.setRes(mainSO.register(memberId, memberId));
-			if (!messageItem.isRes()) {
+			try {
+				messageItem.setRes(mainSO.register(memberId, courseId));
+			} catch (Exception e) {
 				messageItem.setMsg("수강 신청 요청이 처리되지 않았습니다.");
 			}
 		}
