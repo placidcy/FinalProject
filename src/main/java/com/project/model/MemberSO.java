@@ -64,7 +64,7 @@ public class MemberSO {
 				return null;
 			}
 		}
-		return new LoginResponse(member.getMember_id(), member.getM_name(), member.getM_acctid(), member.getM_email(), member.getM_tel(), member.getM_dept(), member.getM_pfp(), member.getM_role());
+		return new LoginResponse(member.getMember_id(), member.getM_name(), member.getM_acctid(), member.getM_email(), member.getM_tel(), member.getM_dept(), member.getM_pfp(), member.getM_role(), member.getM_status());
 	}
 	// 로그인 시 m_role 불러오기
 	public int checkM_role(int member_id) {
