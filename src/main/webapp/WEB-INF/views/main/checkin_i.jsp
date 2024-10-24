@@ -58,7 +58,7 @@
 				<div class="fig qr">
 					<div class="ta cen">
 						<c:if test="${not empty info.qrCode }">
-							<div class="grid c2 cen v h">
+							<div class="grid cen v h">
 								<!-- 
 								<div class="">
 									<p>QR코드 만료까지 남은 시간</p>
