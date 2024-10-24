@@ -17,9 +17,10 @@ public class CourseItem {
 	private String qrRegdate;
 	private String qrEffdate;
 	private int qrEfftime;
+	private int[] days;
 
 	public CourseItem() {
-
+		days = new int[7];
 	}
 
 	public int getCourseId() {
@@ -131,4 +132,15 @@ public class CourseItem {
 		this.instList = instList;
 	}
 
+	public int[] getDays() {
+		return days;
+	}
+
+	public void setDays(int[] days) {
+		this.days = days;
+	}
+
+	public void setDays(int day, int digit) {
+		this.days[day] = digit;
+	}
 }
