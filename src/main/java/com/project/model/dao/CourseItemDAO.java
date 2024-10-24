@@ -103,10 +103,10 @@ public class CourseItemDAO extends ItemDAO {
 	}
 
 	public int getCountByDates(String keyword, int memberId) {
-		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
+		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name is not null and c_name like ?";
 		this.sql = this.getCount(this.sql);
 
-		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%");
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId, "%" + keyword + "%");
 	}
 
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
