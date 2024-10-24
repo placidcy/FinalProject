@@ -21,7 +21,7 @@
         	<jsp:param name="pageContent" value="비밀번호를 변경할 수 있습니다."/>
  		</jsp:include>
         <main>
-            <form id="findProcess" action="<c:url value='/changepwdProcess' />" method="POST">
+            <form id="findProcess" action="/changepwdProcess" method="POST">
             	<c:choose>
             		<c:when test="${not empty member_id}">
 				        <c:set var="member_id" value="${member_id}" />
@@ -55,7 +55,14 @@
                 </table>
 	            <hr />
 	            <div class="btn">
-	                <button type="button" id="cancelBtn">취소</button>
+					<c:choose>
+						<c:when test="${auth==null}">
+	              		  <button type="button" id="cancelBtn">취소</button>
+						</c:when>
+						<c:otherwise>
+							<a href="/mypage"><button type="button" id="cancelBtn">취소</button></a>
+						</c:otherwise>
+					</c:choose>
 	                <button type="button" id="submitBtn">변경</button>
 	            </div>
             </form>
