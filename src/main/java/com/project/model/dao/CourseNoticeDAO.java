@@ -9,7 +9,9 @@ import java.util.Map;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.project.model.CourseDO;
 import com.project.model.CourseNoticeItem;
+import com.project.model.CourseNoticePostItem;
 
 @Repository
 public class CourseNoticeDAO extends C_N_ItemDAO {
@@ -53,6 +55,57 @@ public class CourseNoticeDAO extends C_N_ItemDAO {
 			}
 		});
 	}
+	
+	public List<CourseNoticePostItem> getAllNoticePosts() {
+		
+		List<CourseNoticePostItem> queryResult = this.getJdbcTemplate().query("select * from final_course_post where type_id = 1", new RowMapper<CourseNoticePostItem>() {
+			@Override
+			public CourseNoticePostItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseNoticePostItem noticeItems = new CourseNoticeItem();
+				
+				noticeItems.setCourseId(rs.getInt("course_id"));
+				noticeItems.setMemberId(rs.getInt("member_id"));
+				noticeItems.setNoticeContents(rs.getString("p_contents"));
+				noticeItems.setNoticeTitle(rs.getString("p_title"));
+				noticeItems.setPostId(rs.getInt("post_id"));
+				noticeItems.setRegDate(rs.getString("p_regdate"));
+				noticeItems.setStatus(rs.getInt("p_status"));
+				noticeItems.setTarget(rs.getInt("p_target"));
+				noticeItems.setTypeId(rs.getInt("type_id"));
+				noticeItems.setAttachment(rs.getString(insertAttachment(rs.getInt("post_id"))));
+				return noticeItems;
+			}});
+
+		
+		return queryResult;
+	}
+	
+	public String insertAttachment(int post_id) {
+		return this.getJdbcTemplate().queryForObject("select p_attm from final_post_attm where post_id = ?", new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String attachmentName = rs.getString("post_id");
+				
+				return attachmentName;
+			}
+			
+		}, post_id);
+	}
+	
+	public CourseDO getCourseId(int userCourseId) {
+		return this.getJdbcTemplate().queryForObject("select course_id from final_course where course_id = ?", new RowMapper<CourseDO>() {
+			@Override
+			public CourseDO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseDO courseId = new CourseDO();
+				courseId.setCourse_id(rs.getInt("course_id"));
+				
+				return courseId;
+			}
+			
+		}, userCourseId);
+	}
+	
+	
 
 //	public List<CourseNoticeItem> selectByKeyword(String keyword, int startNum, int endNum) {
 //		this.sql = "select * from (" + query.get("selectAll") + ") where p_title like ? or p_contents like ?";
