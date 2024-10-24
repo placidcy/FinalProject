@@ -73,6 +73,7 @@
 .content {
 	display: grid;
 	justify-items: start;
+	text-align: start;
 	font-size: 16px;
 	margin-bottom: 10px;
 	white-space: pre-wrap;
@@ -85,6 +86,11 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.attms, .attms li{
+	width: 100%;
+	text-align: start;
 }
 
 .attms li {
