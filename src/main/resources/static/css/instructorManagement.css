@@ -110,7 +110,7 @@
 }
 
 .instructorTable thead tr th {
-	font-size: 23px;
+	font-size: 14px;
 	font-weight: normal;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .instructorTable tr td {
-	font-size: 20px;
+	font-size: 14px;
 	height: 20px;
 }
 
