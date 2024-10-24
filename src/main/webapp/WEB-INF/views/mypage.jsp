@@ -14,6 +14,17 @@
     <link rel="stylesheet" as="style" crossorigin
 		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 	<script src="/resources/js/main/mobile.js"></script>
+	<script>
+	let leaveBtn = document.querySelector('#leave');
+	let leaveform = document.querySelector('#leaveform');
+	
+    leaveBtn.addEventListener('click', (event)=>{
+        event.preventDefault();
+        if(confirm('탈퇴하시겠습니까?')) {
+        	leaveform.submit();
+        }
+    });
+	</script>
 </head>
 
 <body>
@@ -86,7 +97,7 @@
                     <tr>
                         <th>회원 탈퇴</th>
                         <td>
-                            <form action="<c:url value='/leave' />" method="GET">
+                            <form action="<c:url value='/leave' />" method="GET" id="leaveform">
 	                            <button type="submit" id="leave" class="a">회원 탈퇴하기</button>
 	                            <input type="hidden" name="member_id" value="${member_id}" required />
                             </form>

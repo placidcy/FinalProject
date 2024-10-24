@@ -40,7 +40,7 @@
 							</a>
 						</div>
 			        </c:when>
-			        <c:otherwise>
+			        <c:when test="${not empty error}">
 						<div id="middle">
 							${error}
 						</div>
@@ -52,7 +52,7 @@
 							<button id="cancelBtn">아이디/비밀번호 찾기</button>
 							</a>
 						</div>
-			        </c:otherwise>
+			        </c:when>
 			    </c:choose>
 			    
 			</div>
