@@ -88,6 +88,11 @@
   to { opacity: 1; }
 }
 
+.attms, .attms li{
+	width: 100%;
+	text-align: start;
+}
+
 .attms li {
 	list-style-type: none;
 }
