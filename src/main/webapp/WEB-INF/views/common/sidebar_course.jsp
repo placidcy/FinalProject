@@ -68,10 +68,11 @@
             <p class="menuName" >${courseName}</p>
 
             <div id="mobile-menu-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
+				<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30px"
+					height="30px" viewBox="0 0 24 24" fill="none">
+	                <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+	            </svg>
             </div>
         </div>
         <!-- 강사/학생에 따라 인라인 css 적용 -->
@@ -137,7 +138,7 @@
 	        </ul>
 			
 			
-	        <ul id="menuList" style="visibility: hidden;">
+	        <ul class="menuList" style="visibility: hidden;">
 	            <li><a href="/">코스</a></li>
 	            <li><a href="/checkin">출석 체크</a></li>
 				<li><a href="/mypage">마이 페이지</a></li>
