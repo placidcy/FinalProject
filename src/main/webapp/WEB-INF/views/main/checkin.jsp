@@ -81,12 +81,14 @@
 								class="bold">부정 출결 시 제적</span>을 당할 수 있습니다.
 						</p>
 						<c:if test="${not empty info.qrCode }">
-							<div class="grid c2 cen v h">
+							<div class="grid cen v h">
+								<!-- 
 								<div class="">
 									<p>QR코드 만료까지 남은 시간</p>
 									<p class="bold" id="timeLimit" data-date="${info.qrRegdate }"
 										data-limit="${info.qrEfftime }"></p>
 								</div>
+								 -->
 								<div>
 									<img class="img s200"
 										src="/api/checkin/getQRImage?id=${info.courseId }" alt="">
