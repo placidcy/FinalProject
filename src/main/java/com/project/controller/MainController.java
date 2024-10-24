@@ -2,6 +2,11 @@
 package com.project.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +34,8 @@ public class MainController {
 	CourseDAO courseDAO;
 	@Autowired
 	EmailSO emailSO;
+	@Autowired
+	ImageUploadSO uploadSO;
 
 	private String viewPath;
 
@@ -41,21 +48,21 @@ public class MainController {
 	}
 
 	@GetMapping("/")
-	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
+	public String getMain(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") int page,
 			HttpSession session) {
 		int memberId, memberRole;
-		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
-
 		try {
-			memberId = auth.getMember_id();
-			memberRole = auth.getM_role();
+			memberId = this.getMemberId(session);
+			memberRole = this.getMemberRole(session);
 
 			if (memberRole == 1) {
-				model.addAttribute("course", mainSO.selectByMemberId(memberId, Integer.parseInt(page)));
+				// 로그인한 회원이 학생일 때
+				model.addAttribute("course", mainSO.selectByMemberId(memberId, page));
 				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByMemberId(memberId));
 			} else {
-				model.addAttribute("course", mainSO.selectByInstructorId(memberId, Integer.parseInt(page)));
+				// 로그인한 회원이 강사일 때
+				model.addAttribute("course", mainSO.selectByInstructorId(memberId, page));
 				model.addAttribute("notice", mainSO.selectList(1, 3));
 				model.addAttribute("size", mainSO.getSizeByInstructorId(memberId));
 			}
@@ -69,50 +76,45 @@ public class MainController {
 	}
 
 	@GetMapping("/checkin")
-	public String getCheckin(Model model, HttpSession session) {
+	public String getCheckin(Model model, HttpSession session) throws UnsupportedEncodingException {
 		int memberId, studentId, courseId, memberRole;
-		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
-
 		try {
-			memberId = auth.getMember_id();
-			memberRole = auth.getM_role();
-
+			memberId = this.getMemberId(session);
+			memberRole = this.getMemberRole(session);
 			if (memberRole == 1) {
+				// 로그인한 회원이 학생일 때
 				studentId = mainSO.checkCourseForStudentId(memberId);
-				if (studentId > 0) {
-					model.addAttribute("info", mainSO.getInfoByStudentId(studentId));
-					model.addAttribute("stats", mainSO.getStats(studentId));
-					model.addAttribute("time", mainSO.getTimetable(studentId));
-					viewPath = "main/checkin";
-				}
+				model.addAttribute("info", mainSO.getInfoByStudentId(studentId));
+				model.addAttribute("stats", mainSO.getStats(studentId));
+				model.addAttribute("time", mainSO.getTimetable(studentId));
+				viewPath = "main/checkin";
 			} else {
+				// 로그인한 회원이 강사일 때
 				courseId = mainSO.checkCourseForCourseId(memberId);
-				if (courseId > 0) {
-					try {
-						model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
-					} catch (Exception e) {
-						System.out.println("정보 오류");
-					}
-					try {
-						model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
-					} catch (Exception e) {
-						System.out.println("통계 오류");
-					}
-					viewPath = "main/checkin_i";
+				try {
+					model.addAttribute("info", mainSO.getInfoByCourseId(courseId));
+				} catch (Exception e) {
+					System.out.println("정보 오류");
 				}
+				try {
+					model.addAttribute("stats", mainSO.getStatsByCourseId(courseId));
+				} catch (Exception e) {
+					System.out.println("통계 오류");
+				}
+				viewPath = "main/checkin_i";
 			}
 			model.addAttribute("menu", "checkin");
 			return viewPath;
 		} catch (Exception e) {
-			return "redirect:/login";
+			return this.redirectErrorPage("금일 해당하는 강의가 없습니다. 관리자에게 문의하세요", "courseNotFound");
 		}
 	}
 
 	@ResponseBody
 	@GetMapping("/api/checkin/getQRImage")
-	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "id") String id)
+	public ResponseEntity<byte[]> generateQRCodeImage(@RequestParam(name = "id") int courseId)
 			throws WriterException, IOException {
-		CourseItem qrData = mainSO.getQrCode(Integer.parseInt(id), new CourseItem());
+		CourseItem qrData = mainSO.getQrCode(courseId, new CourseItem());
 		return qrSO.generateQRCodeImage(qrData.getQrCode());
 	}
 
@@ -122,11 +124,10 @@ public class MainController {
 		int memberId, courseId;
 		MessageItem response = new MessageItem();
 		try {
-			memberId = ((LoginResponse) session.getAttribute("auth")).getMember_id();
+			memberId = this.getMemberId(session);
 			courseId = mainSO.checkCourseForCourseId(memberId);
 
 			CourseItem courseItem = mainSO.getQrCode(courseId, new CourseItem());
-
 			if (courseItem.getQrCode() == null) {
 				try {
 					String encryptedText = qrSO.getEncryptedText(courseItem.toString());
@@ -156,7 +157,7 @@ public class MainController {
 		MessageItem response = new MessageItem();
 
 		try {
-			memberId = ((LoginResponse) session.getAttribute("auth")).getMember_id();
+			memberId = this.getMemberId(session);
 			studentId = mainSO.checkCourseForStudentId(memberId);
 
 			response.setRes(mainSO.isQRValid(studentId, code));
@@ -178,20 +179,19 @@ public class MainController {
 
 	@GetMapping("/register")
 	public String getCourseRegisteration(Model model,
-			@RequestParam(required = false, defaultValue = "1", name = "page") String page) {
-		model.addAttribute("list", mainSO.selectByDates(Integer.parseInt(page)));
-		model.addAttribute("size", mainSO.getSizeByDates());
+			@RequestParam(required = false, defaultValue = "1", name = "page") int page, HttpSession session) {
+		model.addAttribute("list", mainSO.selectByDates(page, this.getMemberId(session)));
+		model.addAttribute("size", mainSO.getSizeByDates(this.getMemberId(session)));
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "register");
 		return "main/register";
 	}
 
 	@RequestMapping("/register/search")
-	public String searchCourse(Model model,
-			@RequestParam(required = false, defaultValue = "1", name = "page") String page,
-			@RequestParam(required = true, name = "keyword") String keyword) {
-		model.addAttribute("list", mainSO.selectByDates(keyword, Integer.parseInt(page)));
-		model.addAttribute("size", mainSO.getSizeByDates(keyword));
+	public String searchCourse(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") int page,
+			@RequestParam(required = true, name = "keyword") String keyword, HttpSession session) {
+		model.addAttribute("list", mainSO.selectByDates(page, this.getMemberId(session), keyword));
+		model.addAttribute("size", mainSO.getSizeByDates(this.getMemberId(session), keyword));
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "register");
 		model.addAttribute("keyword", keyword);
@@ -222,20 +222,19 @@ public class MainController {
 	}
 
 	@GetMapping("/notice")
-	public String getNotice(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") String page,
+	public String getNotice(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") int page,
 			HttpSession session) {
 		int memberRole;
-		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
-
 		try {
-			memberRole = auth.getM_role();
-
+			memberRole = this.getMemberRole(session);
 			if (memberRole == 1) {
-				model.addAttribute("list", mainSO.selectList(Integer.parseInt(page)));
+				// 학생으로 로그인했을 때
+				model.addAttribute("list", mainSO.selectList(page));
 				model.addAttribute("size", mainSO.getSize());
 				model.addAttribute("page", page);
 			} else {
-				model.addAttribute("list", mainSO.selectAll(Integer.parseInt(page)));
+				// 강사 또는 관리자로 로그인했을 때
+				model.addAttribute("list", mainSO.selectAll(page));
 				model.addAttribute("size", mainSO.getTotalSize());
 				model.addAttribute("page", page);
 			}
@@ -248,10 +247,9 @@ public class MainController {
 	}
 
 	@RequestMapping("/notice/search")
-	public String searchNotice(Model model,
-			@RequestParam(required = false, defaultValue = "1", name = "page") String page,
+	public String searchNotice(Model model, @RequestParam(required = false, defaultValue = "1", name = "page") int page,
 			@RequestParam(required = true, name = "keyword") String keyword) {
-		model.addAttribute("list", mainSO.selectList(Integer.parseInt(page), keyword));
+		model.addAttribute("list", mainSO.selectList(page, keyword));
 		model.addAttribute("size", mainSO.getSize(keyword));
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "notice");
@@ -262,35 +260,45 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/notice/getItem")
 	public NoticeItem getNoticeItem(@RequestParam(name = "noticeId") int noticeId) {
-		return mainSO.selectOne(noticeId);
-	}
-
-	@RequestMapping("/email/testPage")
-	public String testEmail() {
-		return "main/test";
-	}
-
-	@ResponseBody
-	@RequestMapping("/sendEmail")
-	public MessageItem sendEmail(@RequestParam(name = "email", required = true) String email) {
-		MessageItem messageItem = new MessageItem();
-
-		if (emailSO.checkIfEmailExists(email)) {
-			messageItem.setRes(false);
-			messageItem.setMsg("검증 코드가 이미 발송되었습니다. 이메일을 확인하세요.");
-
-			return messageItem;
-		}
-
+		NoticeItem noticeItem = mainSO.selectOne(noticeId);
+		List<FileItem> files;
 		try {
-			emailSO.sendEmail(email);
-			messageItem.setRes(true);
-			messageItem.setMsg("이메일이 발송되었습니다! 메일함을 확인하세요.");
+			files = uploadSO.getFiles(noticeItem.getAttachments());
+			noticeItem.setAttms(files);
+			noticeItem.setAttachments("");
 		} catch (Exception e) {
-			messageItem.setRes(false);
-			messageItem.setMsg("이메일이 발송 과정에서 오류가 발생하였습니다. 다시 시도하세요.");
+			e.printStackTrace();
 		}
+		return noticeItem;
+	}
 
-		return messageItem;
+	@RequestMapping("/main/error")
+	public String getErrorPage(@RequestParam("msg") String msg, @RequestParam("redirect") String redirect,
+			Model model) {
+		model.addAttribute("msg", msg);
+		model.addAttribute("redirect", redirect);
+		return "admin/error";
+	}
+
+	private String redirectErrorPage(String errorMessage, String redirectKeyword) throws UnsupportedEncodingException {
+		return "redirect:/main/error?msg=" + URLEncoder.encode(errorMessage, "UTF-8") + ".&redirect=" + redirectKeyword;
+	}
+
+	private int getMemberId(HttpSession session) {
+		try {
+			LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+			return auth.getMember_id();
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
+	private int getMemberRole(HttpSession session) {
+		try {
+			LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+			return auth.getM_role();
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 }

@@ -11,7 +11,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class MemberDAO {
-
     private JdbcTemplate jdbcTemplate;
     private String sql;
 

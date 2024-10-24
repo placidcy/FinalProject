@@ -14,6 +14,7 @@
     }
 </script>
 
+
 <!-- 강의 사이드바 -->
 <aside>
     <div class="course-sidebar-left">
@@ -68,10 +69,11 @@
             <p class="menuName" >${courseName}</p>
 
             <div id="mobile-menu-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
+				<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30px"
+					height="30px" viewBox="0 0 24 24" fill="none">
+	                <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+	            </svg>
             </div>
         </div>
         <!-- 강사/학생에 따라 인라인 css 적용 -->
@@ -84,7 +86,7 @@
 				style="width:33.3%">
 				<li>홈</li></a>
 				
-	            <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+	            <a class="sidebar-menu-unselected" style="width:33.3%;cursor:pointer" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                 	<li>강의 게시판</li>
                 </a>
 				
@@ -113,7 +115,7 @@
 				style="width:25%">
 				<li>홈</li></a>
 
-                <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+                <a class="sidebar-menu-unselected" style="width:25%;cursor:pointer" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                 	<li>강의 게시판</li>
                 </a>
 				

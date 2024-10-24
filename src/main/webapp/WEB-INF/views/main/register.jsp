@@ -26,6 +26,11 @@
 				<!-- 서치바 영역 -->
 				<jsp:include page="./register_searchbar.jsp"></jsp:include>
 				<table class="tab course" id="register">
+					<c:if test="${empty list}">
+						<tr class="item" data-id="${item.courseId }">
+							<td class="error">현재 수강 가능한 강의가 존재하지 않습니다.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${list }" var="item">
 						<tr class="item" data-id="${item.courseId }">
 							<td class="deco"></td>

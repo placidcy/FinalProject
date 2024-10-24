@@ -39,6 +39,10 @@ public class ItemDAO {
 				""", startNum, endNum);
 	}
 
+	public String getCount(String sql) {
+		return "select count(*) from (" + sql + ")";
+	}
+
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}

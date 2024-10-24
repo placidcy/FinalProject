@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="/resources/css/request.css" />
     <link rel="stylesheet" href="/resources/css/member.css" />
     <link rel="stylesheet" href="/resources/css/requestDialog.css">
+    <style>
+	   	.textarea {
+	   		height: 300px;
+	   	}
+    </style>
     <!-- 자바 스크립트 -->
     <script src="/resources/js/course.js"></script>
     <script src="/resources/js/homeMemo.js"></script>
@@ -38,13 +43,13 @@
                     <tr>
                         <th>공지</th>
                         <a href="">
-                            <td>일정 안내</td>
+                            <td>${notice1}</td>
                         </a>
                     </tr>
                     <tr>
                         <th>공지</th>
                         <a href="">
-                            <td>12일 피드백 사인업</td>
+                            <td>${notice2}</td>
                         </a>
                     </tr>
                 </table>
@@ -58,15 +63,13 @@
                     </div>
 
                     <div id="linkBtnBox">
-                        <div id="memoBtnBox">
-                        <button id="memoBtn">필기하기</button>
-                        </div>
-
                         <div>
-                        <button id="classBtn">입장하기</button>
+                        	<button id="classBtn">입장하기</button>
+                        </div>
+                        <div id="memoBtnBox">
+                        	<button id="memoBtn">필기하기</button>
                         </div>
                     </div>
-
                 </div>
                 
                 <dialog id="modal">

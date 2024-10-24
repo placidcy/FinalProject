@@ -16,10 +16,18 @@ public class SchedulingSO {
 		int insertResult, updateResult;
 		System.out.println("Scheduled task using cron executed at " + System.currentTimeMillis());
 
-		insertResult = dao.insertDailyRecords();
-		System.out.println("Insert: " + (insertResult > 0));
+		try {
+			insertResult = dao.insertDailyRecords();
+			System.out.println("Insert: " + (insertResult > 0));
+		} catch (Exception e) {
+			System.out.println("오류: 출석 데이터 생성 과정에서 오류가 발생하였습니다.");
+		}
 
-		updateResult = dao.updateDailyRecords();
-		System.out.println("Insert: " + (updateResult > 0));
+		try {
+			updateResult = dao.updateDailyRecords();
+			System.out.println("Update: " + (updateResult > 0));
+		} catch (Exception e) {
+			System.out.println("오류: 출석 데이터 갱신 과정에서 오류가 발생하였습니다.");
+		}
 	}
 }

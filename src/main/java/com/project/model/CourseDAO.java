@@ -15,7 +15,7 @@ public class CourseDAO {
 	public CourseDAO(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-
+	
 	public CourseDO getCourseScore(int course_id) {
 		this.sql = "select * from final_course where course_id=?";
 		return this.jdbcTemplate.queryForObject(sql, new CourseRowMapper(), course_id);

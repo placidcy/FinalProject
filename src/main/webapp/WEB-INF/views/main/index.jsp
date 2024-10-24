@@ -35,6 +35,11 @@
 					</a>
 				</div>
 				<table class="tab notice">
+					<c:if test="${empty notice }">
+						<tr class="item">
+							<td class="error">현재 게시된 공지사항이 없습니다.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${notice }" var="item">
 						<tr class="item">
 							<td>${item.noticeTitle }</td>
@@ -46,6 +51,12 @@
 				<h3 class="f24">강의 목록</h3>
 				<p class="c87c791">강의 시작 14일 전, 강의 종료 14일 후까지 표시됩니다.</p>
 				<table class="tab course">
+					<c:if test="${empty course }">
+						<tr class="item">
+							<td class="error" colspan="4">현재 참여 중인 강의가 없습니다. 관리자에게
+								문의하세요.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${course }" var="item">
 						<tr class="item" data-id="${item.courseId }">
 							<td class="deco"></td>

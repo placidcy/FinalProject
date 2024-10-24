@@ -20,7 +20,7 @@
         	<jsp:param name="pageContent" value="이메일을 변경할 수 있습니다."/>
  		</jsp:include>
         <main>
-            <form id="findProcess" action="<c:url value='/changeEmailProcess' />" method="POST">
+            <form id="findProcess" action="/changeEmailProcess" method="POST">
             	<input type="hidden" name="member_id" value="${param.member_id}" required />
                 <table>
                     <tr>
@@ -36,7 +36,7 @@
                 </table>
 	            <hr />
 	            <div class="btn">
-	                <button id="cancelBtn">취소</button>
+	                <a href="/mypage" class="cancel">취소</a>
 	                <button type="submit" id="submitBtn">변경</button>
 	            </div>
             </form>

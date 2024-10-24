@@ -1,27 +1,22 @@
 .bg-f2f2f2 {
-    background-color: #fff !important;
+	background-color: #F2F2F2 !important;
 }
 
 .grayscale {
-    filter: grayscale(1);
+	filter: grayscale(1);
 }
 
 .course-notice.white {
-    background-color: #F2F2F2;
-}
-
-ul.course-notice.white {
-    list-style: disc;
-    padding: 0 100px;
+	background-color: white;
 }
 
 ul.course-notice.white>li {
-    margin-block: 10px;
-	text-align:left;
+	margin-block: 10px;
+	text-align: left;
 }
 
 .mb30 {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 @media ( max-width : 768px) {

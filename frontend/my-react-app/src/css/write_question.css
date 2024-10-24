@@ -1,0 +1,235 @@
+/* 기본 설정 */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 14px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 컨테이너 */
+.container {
+	width: 100%;
+	height: 100vh;
+	background: #f2f2f2;
+}
+
+h1 {
+	margin-top: 20px;
+}
+
+hr {
+	margin-top: 20px;
+}
+
+.wq_header {
+	display: flex;
+}
+
+.wq_write-question {
+	border: 1px solid #d9d9d9;
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wq_course-title {
+	margin-top: 50px;
+	font-size: 24px;
+}
+
+.wq_file-select {
+	margin-top: 20px;
+}
+
+.wq_course-content {
+	display: flex;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.wq_title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-right: 20px;
+	margin-bottom: auto;
+}
+
+.wq_course_write {
+	width: 100%;
+	border: 2px solid #d9d9d9;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.wq_times, .wq_days {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	border: 2px solid #d9d9d9;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.wq_text {
+	margin-left: -8px;
+}
+
+.wq_content {
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 24px;
+	width: 85%;
+	height: 200px;
+	padding: 10px;
+	border: 2px solid #d9d9d9;
+	resize: none;
+}
+
+.wq_wt_buttons {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -40px;
+}
+
+.wq_buttons-mobile {
+	display: none;
+}
+
+.wq_save_button, .wq_cancel_button {
+	width: 76px;
+	height: 42px;
+	padding: 7px;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	color: #fff;
+	border: 1px solid #d9d9d9;
+	border-radius: 12px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.wq_save_button {
+	background: #87C791;
+}
+
+.wq_cancel_button {
+	background: #D9D9D9;
+}
+
+.wq_all-day {
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.wq_all-day>span {
+	margin-left: 5px;
+}
+
+.wq_course-title-wt {
+	display: flex;
+	font-size: 24px;
+	font-weight: bold;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.wq_course-content-wt {
+	display: flex;
+	font-size: 24px;
+	font-weight: bold;
+	align-items: center;
+}
+
+.wq_file_input {
+	display: flex;
+	align-items: center;
+}
+
+.wq_file-list {
+	display: flex;
+}
+
+.wq_file-list>ul {
+	margin-left: 5px;
+}
+
+.wq_course-write {
+	margin-top: 30px;
+}
+
+.wq_course-content-wt>textarea {
+	min-height: 300px;
+	resize: none;
+}
+
+.select-file {
+	font-weight: bold;
+	font-size: 16px;
+	opacity: 1;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.select-file:hover {
+	background-color: #e0e0e0;
+}
+
+@media ( max-width : 768px) {
+	main {
+		width: 100%;
+		display: inline-block;
+		background-color: #f2f2f2;
+	}
+	.wq_wt_buttons {
+		display: none;
+	}
+	.wq_buttons-mobile {
+		display: flex;
+		justify-content: center;
+		margin-top: 20px;
+	}
+	.wq_course-title-wt>input {
+		font-size: 24px;
+		padding: 5px;
+		width: 90%;
+	}
+	.wq_course-content-wt>textarea {
+		font-size: 24px;
+		padding: 5px;
+		width: 90%;
+	}
+}
+
+@media ( min-width : 769px) {
+	main {
+		width: 75%;
+		padding: 25px;
+		display: inline-block;
+		background-color: #f2f2f2;
+	}
+	.wq_buttons-mobile {
+		display: none;
+	}
+	.wq_course-title-wt>input {
+		font-size: 24px;
+		padding: 5px;
+		width: 85%;
+	}
+	.wq_course-content-wt>textarea {
+		font-size: 24px;
+		padding: 5px;
+		width: 85%;
+	}
+}
