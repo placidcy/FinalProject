@@ -73,6 +73,30 @@ public class CourseItemDAO extends ItemDAO {
 		return courseItems;
 	}
 
+	public List<CourseItem> selectByDates(int startNum, int endNum, int memberId) {
+		this.sql = query.get("selectByDates");
+		this.sql = setPaging(sql, startNum, endNum);
+
+		List<CourseItem> courseItems = null;
+		courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
+			@Override
+			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CourseItem courseItem = new CourseItem();
+
+				courseItem.setCourseId(rs.getInt("course_id"));
+				courseItem.setCourseName(rs.getString("c_name"));
+				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setLimits(rs.getInt("c_limits"));
+				courseItem.setCount(rs.getInt("c_count"));
+				courseItem.setStartDate(rs.getString("c_sdate"));
+				courseItem.setEndDate(rs.getString("c_edate"));
+
+				return courseItem;
+			}
+		}, memberId);
+		return courseItems;
+	}
+
 	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum) {
 		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
 //		and sysdate between e_sdate and e_edate""";
@@ -398,33 +422,21 @@ public class CourseItemDAO extends ItemDAO {
 		 * 수강 신청 목록 조횤 쿼리
 		 */
 		this.query.put("selectByDates", """
-				select
-				  fcs.course_id,
-				  c_title,
-				  c_name,
-				  c_count,
-				  c_limits,
-				  to_char(c_sdate, 'yyyy.mm.dd') c_sdate,
-				  to_char(c_edate, 'yyyy.mm.dd') c_edate
-				from
-				  final_course fc
-				  inner join final_course_category fcc on fc.category_id = fcc.category_id
-				  inner join (
-				    select
-				      course_id,
-				      count(*) as c_count
-				    from
-				      final_course_student fcs
-				    group by
-				      course_id
-				  ) fcs on fcs.course_id = fc.course_id
-				where
-				  c_count < c_limits
-				  -- and sysdate between c_sdate-14 and c_edate+14
-				order by
-				  c_sdate,
-				  c_edate desc
-				""");
+				SELECT DISTINCT fcs.course_id, c_title, c_name, c_count, c_limits,
+				                TO_CHAR(c_sdate, 'yyyy.mm.dd') AS c_sdate,
+				                TO_CHAR(c_edate, 'yyyy.mm.dd') AS c_edate
+				FROM final_course fc
+				INNER JOIN final_course_category fcc ON fc.category_id = fcc.category_id
+				INNER JOIN (
+				    SELECT course_id, COUNT(*) AS c_count
+				    FROM final_course_student
+				    GROUP BY course_id
+				) fcs ON fcs.course_id = fc.course_id
+				WHERE c_count < c_limits
+				  AND SYSDATE BETWEEN c_sdate - 28 AND c_sdate - 1
+				  AND fc.COURSE_ID NOT IN (SELECT COURSE_ID FROM FINAL_COURSE_STUDENT fcs WHERE member_id = ?)
+				ORDER BY c_sdate, c_edate
+								""");
 		/*
 		 * 수강 중인 강의 목록 조회 쿼리
 		 */

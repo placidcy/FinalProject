@@ -115,6 +115,7 @@ public class MainController {
 			model.addAttribute("menu", "checkin");
 			return viewPath;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "redirect:/login";
 		}
 	}
@@ -189,8 +190,10 @@ public class MainController {
 
 	@GetMapping("/register")
 	public String getCourseRegisteration(Model model,
-			@RequestParam(required = false, defaultValue = "1", name = "page") String page) {
-		model.addAttribute("list", mainSO.selectByDates(Integer.parseInt(page)));
+			@RequestParam(required = false, defaultValue = "1", name = "page") int page, HttpSession session) {
+		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
+		int memberId = auth.getMember_id();
+		model.addAttribute("list", mainSO.selectByDates(page, memberId));
 		model.addAttribute("size", mainSO.getSizeByDates());
 		model.addAttribute("page", page);
 		model.addAttribute("menu", "register");

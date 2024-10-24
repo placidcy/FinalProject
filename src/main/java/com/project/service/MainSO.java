@@ -45,6 +45,10 @@ public class MainSO extends ItemSO {
 		return courseItemDAO.selectByDates(this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
 
+	public List<CourseItem> selectByDates(int page, int memberId) {
+		return courseItemDAO.selectByDates(this.getStartNum(page, limit), this.getEndNum(page, limit), memberId);
+	}
+
 	public List<CourseItem> selectByDates(String keyword, int page) {
 		return courseItemDAO.selectByDates(keyword, this.getStartNum(page, limit), this.getEndNum(page, limit));
 	}
