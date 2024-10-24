@@ -666,7 +666,7 @@ public class CourseItemDAO extends ItemDAO {
 						              FINAL_STUDENT_ATTEND fsa
 						            WHERE
 						              -- 어제까지의 출석현황을 조회
-						              a_status != 2
+						              a_status not in (0, 2)
 						              and a_date < trunc (sysdate)
 						            GROUP BY
 						              student_id
