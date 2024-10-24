@@ -35,6 +35,11 @@
 					</a>
 				</div>
 				<table class="tab notice">
+					<c:if test="${empty notice }">
+						<tr class="item">
+							<td class="error">현재 게시된 공지사항이 없습니다.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${notice }" var="item">
 						<tr class="item">
 							<td>${item.noticeTitle }</td>
