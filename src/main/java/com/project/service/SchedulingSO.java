@@ -11,7 +11,7 @@ public class SchedulingSO {
 	@Autowired
 	CourseItemDAO dao;
 
-	@Scheduled(cron = "0 0 12 * * ?") // 매일 정오에 실행
+	@Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
 	public void performTaskUsingCron() {
 		int insertResult, updateResult;
 		System.out.println("Scheduled task using cron executed at " + System.currentTimeMillis());
