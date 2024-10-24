@@ -47,32 +47,6 @@ public class CourseItemDAO extends ItemDAO {
 		return rowNum;
 	}
 
-	public List<CourseItem> selectByDates(int startNum, int endNum) {
-		this.sql = query.get("selectByDates");
-//		and sysdate between e_sdate and e_edate""";
-		this.sql = setPaging(sql, startNum, endNum);
-
-		List<CourseItem> courseItems = null;
-		courseItems = this.getJdbcTemplate().query(sql, new RowMapper<CourseItem>() {
-			@Override
-			public CourseItem mapRow(ResultSet rs, int rowNum) throws SQLException {
-				CourseItem courseItem = new CourseItem();
-
-				courseItem.setCourseId(rs.getInt("course_id"));
-				courseItem.setCourseName(rs.getString("c_name"));
-				courseItem.setCategoryName(rs.getString("c_title"));
-				courseItem.setLimits(rs.getInt("c_limits"));
-				courseItem.setCount(rs.getInt("c_count"));
-				courseItem.setStartDate(rs.getString("c_sdate"));
-				courseItem.setEndDate(rs.getString("c_edate"));
-
-				return courseItem;
-			}
-		});
-
-		return courseItems;
-	}
-
 	public List<CourseItem> selectByDates(int startNum, int endNum, int memberId) {
 		this.sql = query.get("selectByDates");
 		this.sql = setPaging(sql, startNum, endNum);
@@ -97,9 +71,8 @@ public class CourseItemDAO extends ItemDAO {
 		return courseItems;
 	}
 
-	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum) {
+	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum, int memberId) {
 		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
-//		and sysdate between e_sdate and e_edate""";
 		this.sql = setPaging(sql, startNum, endNum);
 
 		List<CourseItem> courseItems = null;
@@ -118,19 +91,19 @@ public class CourseItemDAO extends ItemDAO {
 
 				return courseItem;
 			}
-		}, "%" + keyword + "%");
+		}, memberId, "%" + keyword + "%");
 
 		return courseItems;
 	}
 
-	public int getCountByDates() {
-		this.sql = query.get("getCountByDates");
-
-		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
+	public int getCountByDates(int memberId) {
+		this.sql = this.getCount(this.query.get("selectByDates"));
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
-	public int getCountByDates(String keyword) {
-		this.sql = query.get("getCountByDates") + " and c_name like ?";
+	public int getCountByDates(String keyword, int memberId) {
+		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
+		this.sql = this.getCount(this.sql);
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%");
 	}
@@ -174,13 +147,15 @@ public class CourseItemDAO extends ItemDAO {
 	}
 
 	public int getCountByMemberId(int memberId) {
-		this.sql = query.get("getCountByMemberId");
+		this.sql = query.get("selectByMemberId");
+		this.sql = this.getCount(sql);
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
 	public int getCountByInstructorId(int memberId) {
-		this.sql = query.get("getCountByInstructorId");
+		this.sql = query.get("selectByInstructorId");
+		this.sql = this.getCount(sql);
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
@@ -200,10 +175,10 @@ public class CourseItemDAO extends ItemDAO {
 		}, memberId);
 		return studentId;
 	}
+
 	/*
 	 * memberId에 따라 현재 요일에 수업해야하는 강의 목록을 조회하는 쿼리
 	 */
-
 	public int checkCourseForCourseId(int memberId) {
 		int courseId = -1;
 		this.sql = query.get("checkCourseForCourseId");
@@ -416,6 +391,10 @@ public class CourseItemDAO extends ItemDAO {
 		return this.getJdbcTemplate().update(sql, Integer.class);
 	}
 
+	public String getCount(String sql) {
+		return "select count(*) from (" + sql + ")";
+	}
+
 	private void init() {
 		this.query = new HashMap<String, String>();
 		/*
@@ -541,16 +520,20 @@ public class CourseItemDAO extends ItemDAO {
 		/*
 		 * 수업 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리(강사용)
 		 */
-		this.query.put("checkCourseForCourseId", """
-				SELECT course_id
-				FROM (
-					SELECT *
-					FROM FINAL_COURSE_INSTRUCTOR fcs
-					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
-					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
-					)
-				WHERE member_id = ?
-				""");
+		this.query.put("checkCourseForCourseId",
+				"""
+								SELECT course_id
+								FROM (
+								    SELECT fcs.*, fc.C_NAME, fcs2.S_SDATE, fcs2.S_STIME, fcs2.S_EDATE, fcs2.S_ETIME
+								    FROM FINAL_COURSE_INSTRUCTOR fcs
+								    INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+								    INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+								    INNER JOIN final_course_schedule fcs2 ON fcs.course_id = fcs2.course_id
+								    WHERE SYSDATE BETWEEN TO_DATE(TO_CHAR(fcs2.S_SDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_STIME, 'yyyy-mm-dd hh24:mi:ss')
+								                     AND TO_DATE(TO_CHAR(fcs2.S_EDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_ETIME, 'yyyy-mm-dd hh24:mi:ss')
+								)
+								WHERE MEMBER_ID = ? AND ROWNUM = 1
+						""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
 		 */
