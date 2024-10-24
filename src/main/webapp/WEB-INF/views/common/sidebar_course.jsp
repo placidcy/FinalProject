@@ -85,7 +85,7 @@
 				style="width:33.3%">
 				<li>홈</li></a>
 				
-	            <a href="#" class="sidebar-menu-unselected" style="width:25%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
+	            <a href="#" class="sidebar-menu-unselected" style="width:33.3%" onclick="redirectToCourseBoard(${sessionScope.currentId}); return false;">
                 	<li>강의 게시판</li>
                 </a>
 				

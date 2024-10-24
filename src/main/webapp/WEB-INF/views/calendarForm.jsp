@@ -54,8 +54,13 @@
 				
 				<div class="course-content">
                     <span class="title">파일</span>
-                    <a href="${formText.s_attm}" ><input type="file" name="attm" /></a>
+					<input type="file" name="attm" style="width:75px"/>
+					<c:if test="${formText.s_attm != ''}">
+					    <a href="${formText.s_attm}" style="font-size:16px">저장된 파일</a>
+					</c:if>
+
                 </div>
+				
 
 				<c:choose>
 					<c:when test="${formText != null}">
