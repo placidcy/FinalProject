@@ -66,7 +66,7 @@ public class ImageUploadController {
 	}
 
 	@RequestMapping("attendWriteProcess")
-	public String attendWriteProcessHandler(InstructorCalendar insCal, HttpSession session) {
+	public String attendWriteProcessHandler(InstructorCalendar insCal, HttpSession session) throws SdkClientException, IOException {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if (auth.getM_role() == 2) {
 			int course_id = (int) session.getAttribute("currentId");
@@ -74,6 +74,12 @@ public class ImageUploadController {
 			insCal.setSdate(insCal.getSdate().substring(0, 10) + ' ' + insCal.getSdate().substring(11));
 			insCal.setEdate(insCal.getEdate().substring(0, 10) + ' ' + insCal.getEdate().substring(11));
 
+			if (insCal.getAttm().isEmpty()) {
+				insCal.setS_attm("noURL");
+			} else {
+				insCal.setS_attm(uploadSO.uploadFile(insCal.getAttm()).getBody());
+			}
+			
 			courseDAO.insertInsSchedule(insCal, course_id, auth.getMember_id());
 			return "redirect:/courseAttend";
 		}
@@ -82,12 +88,18 @@ public class ImageUploadController {
 	}
 
 	@RequestMapping("attendUpdateProcess")
-	public String attendUpdateProcessHandler(InstructorCalendar insCal, HttpSession session) {
+	public String attendUpdateProcessHandler(InstructorCalendar insCal, HttpSession session) throws SdkClientException, IOException {
 		LoginResponse auth = (LoginResponse) session.getAttribute("auth");
 		if (auth.getM_role() == 2) {
 			insCal.setSdate(insCal.getSdate().substring(0, 10) + ' ' + insCal.getSdate().substring(11));
 			insCal.setEdate(insCal.getEdate().substring(0, 10) + ' ' + insCal.getEdate().substring(11));
-
+	
+			if (insCal.getAttm().isEmpty()) {
+				insCal.setS_attm("noURL");
+			} else {
+				insCal.setS_attm(uploadSO.uploadFile(insCal.getAttm()).getBody());
+			}
+			
 			courseDAO.updateInsSchedule(insCal);
 			return "redirect:/courseAttend";
 		}
