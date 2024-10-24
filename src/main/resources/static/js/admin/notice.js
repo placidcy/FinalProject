@@ -77,6 +77,50 @@ function cancelHandler(event) {
 		widnow.history.back();
 	}
 }
+function createPreview(link) {
+	const previewDiv = document.createElement('div');
+	previewDiv.classList.add('preview');
+	previewDiv.id = 'preview';
+	previewDiv.innerHTML = '';
+
+	link.addEventListener('click', function(event) {
+		event.preventDefault();
+		const url = link.href;
+		const ext = url.split('.').pop().toLowerCase();
+		if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) {
+			const img = document.createElement('img');
+			img.src = url;
+			img.alt = 'Image Preview';
+			img.style.maxWidth = '100%';
+			previewDiv.appendChild(img);
+		} else if (ext === 'pdf') {
+			const embed = document.createElement('embed');
+			embed.src = url;
+			embed.type = 'application/pdf';
+			embed.style.width = '100%';
+			embed.style.height = '600px';
+			previewDiv.appendChild(embed);
+		} else if (ext === 'mp4') {
+			const video = document.createElement('video');
+			video.src = url;
+			video.controls = true;
+			video.style.width = '100%';
+			previewDiv.appendChild(video);
+		} else if (ext === 'txt' || ext === 'html') {
+			fetch(url)
+				.then(response => response.text())
+				.then(text => {
+					const pre = document.createElement('pre');
+					pre.textContent = text;
+					previewDiv.appendChild(pre);
+				});
+		} else {
+			previewDiv.textContent = '해당 유형의 파일은 미리보기를 제공하지 않습니다.';
+		}
+	});
+
+	return previewDiv;
+}
 
 function init() {
 	try {
@@ -99,6 +143,16 @@ function init() {
 		const cancelBtn = document.querySelector('#cancel');
 		cancelBtn.addEventListener('click', cancelHandler);
 	} catch (e) {
+	}
+	try {
+		const attms = document.querySelectorAll('.attms li');
+		for (const attm of attms) {
+			const link = attm.querySelector('.attm');
+			attm.appendChild(createPreview(link));
+		}
+	} catch (e) {
+		console.error(e);
+
 	}
 }
 
