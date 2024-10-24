@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './side_course';
 import './css/write_materials.css';
+import axios from 'axios';
+
+// 기본 axios 헤더 설정
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 
 const WriteMaterials = () => {
 	const location = useLocation();
@@ -59,17 +63,18 @@ const WriteMaterials = () => {
 		});
 
 		try {
-			const response = await fetch(`${baseURL}/api/courseMaterials`, {
-				method: 'POST',
-				body: formData,
+			const response = await axios.post(`${baseURL}/api/courseMaterials`, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
 			});
 
-			if (!response.ok) {
+			if (response.status !== 200) {
 				throw new Error(`Error: ${response.status}`);
 			}
 
 			alert('자료가 성공적으로 업로드되었습니다!');
-			navigate(`/CourseBoard?courseId=${courseId}`);
+			navigate(`/CourseMaterials?courseId=${courseId}`);
 		} catch (error) {
 			console.error('업로드 오류:', error);
 			alert('자료 업로드 중 오류가 발생했습니다.');
@@ -77,8 +82,9 @@ const WriteMaterials = () => {
 	};
 
 	const handleCancel = () => {
-		setTitle('');
-		setAttachments([]);
+		if (window.confirm("취소하시겠습니까?")) {
+			navigate(`/CourseMaterials?courseId=${courseId}`);
+		}
 	};
 
 	const handleFileInputClick = () => {
@@ -86,7 +92,7 @@ const WriteMaterials = () => {
 	};
 
 	return (
-		<div id="container">
+		<>
 			<Sidebar courseId={courseId} />
 
 			<main>
@@ -94,7 +100,7 @@ const WriteMaterials = () => {
 					<a href={`/CourseBoard?courseId=${courseId}`} className="button">전체 목록</a>
 					<a href={`/notices?courseId=${courseId}`} className="button">공지 사항</a>
 					<a href={`/CourseMaterials?courseId=${courseId}`} className="button active">강의 자료</a>
-					<a href={`/questions?courseId=${courseId}`} className="button">질문</a>
+					<a href={`/CourseQuestion?courseId=${courseId}`} className="button">질문</a>
 				</div>
 
 				<div className="wm_write-material">
@@ -123,7 +129,7 @@ const WriteMaterials = () => {
 							/>
 						</div>
 
-						<div className="wm_coruse-day">
+						<div className="wm_file-select">
 							<div className="wm_file_input">
 								<span className="wm_title">파일</span>
 								<span className="wm_title select-file" onClick={handleFileInputClick}>
@@ -160,7 +166,7 @@ const WriteMaterials = () => {
 					</div>
 				</div>
 			</main>
-		</div>
+		</>
 	);
 };
 
