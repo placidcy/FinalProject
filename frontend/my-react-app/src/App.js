@@ -3,10 +3,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CourseBoard from './course_board';
 import CourseMaterials from './course_meterials';
 import WriteMaterials from './write_materials';
+<<<<<<< HEAD
+import CourseNotice from './Course_Notice/CourseNotice_Main';
+=======
 import CourseQuestion from './course_question';
 import WriteQuestion from './write_question';
 import CourseNotice_Main from './Course_Notice/CourseNotice_Main';
 
+>>>>>>> main
 const App = () => {
 	return (
 		<BrowserRouter>
@@ -14,6 +18,7 @@ const App = () => {
 				<Route path="/CourseBoard" element={<CourseBoard />} />
 				<Route path="/CourseMaterials" element={<CourseMaterials />} />
 				<Route path="/WriteMaterials" element={<WriteMaterials />} />
+				<Route path="/notices" element={<CourseNotice />} />
 				<Route path="/CourseQuestion" element={<CourseQuestion />} />
 				<Route path="/WriteQuestion" element={<WriteQuestion />} />
 				<Route path="/CourseNotice" element={<CourseNotice_Main />} />

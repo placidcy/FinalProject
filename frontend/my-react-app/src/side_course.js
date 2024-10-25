@@ -104,9 +104,17 @@ const Sidebar = ({ courseId }) => {
 						<li>강의 게시판</li>
 					</a>
 					{(userRole === 1) && (
+<<<<<<< HEAD
+						<>
+							<a href={`${baseUrl}/goAttendanceCalendar?courseId=${courseId}`} className="sc_sidebar-menu-unselected" style={{ width: '33.333%' }}>
+								<li>출결 확인</li>
+							</a>
+						</>
+=======
 						<a href={`${baseUrl}/goAttendanceCalendar?courseId=${courseId}`} className="sc_sidebar-menu-unselected" style={{ width: '33.333%' }}>
 							<li>출결 확인</li>
 						</a>
+>>>>>>> main
 					)}
 					{(userRole === 0 || userRole === 2) && (
 						<>
