@@ -100,11 +100,11 @@ public class MemberDAO {
     public String generateTemporaryId() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder tempId = new StringBuilder("inst_");
-        for (int i = 0; i < 3; i++) { 
+        for (int i = 0; i < 1; i++) { 
             int index = (int) (Math.random() * characters.length());
             tempId.append(characters.charAt(index));
         }
-        String generatedId = tempId.toString();
+        String generatedId = tempId.toString().substring(0, 13);
         System.out.println("Generated Temporary ID: " + generatedId);
         return generatedId;
     }
@@ -112,9 +112,10 @@ public class MemberDAO {
     public int insertMember(MemberDO member) {
         System.out.println("insertMember called with m_acctid: " + member.getM_acctid());
         if (member.getM_acctid() == null || member.getM_acctid().isEmpty()) {
-            member.setM_acctid(generateTemporaryId());
+            member.setM_acctid(generateTemporaryId().substring(0, 14));
         }
 
+        /*
         if (member.getM_acctpwd() != null && member.getM_acctpwd().length() > 15) {
         	member.setM_acctpwd(member.getM_acctpwd().substring(0, 15));
             System.out.println("Trimmed m_acctpwd to 15 chars: " + member.getM_acctpwd());
@@ -123,6 +124,7 @@ public class MemberDAO {
             member.setM_acctid(member.getM_acctid().substring(0, 15));
             System.out.println("Trimmed m_acctid to 15 chars: " + member.getM_acctid());
         }
+        */
 
         this.sql = "insert into final_member (member_id, m_acctid, m_acctpwd, "
                 + "m_name, m_email, m_tel, m_dept, m_status, m_role) "
