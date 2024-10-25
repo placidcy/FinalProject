@@ -10,33 +10,16 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost
 
 function CourseNotice_Main() {
 	const [noticeList, setNoticeList] = useState([]);
-<<<<<<< HEAD
-
 	const [userInfo, setUserInfo] = useState({});
 	const [courseName, setCourseName] = useState("");
-
-=======
-	const [userInfo, setUserInfo] = useState({});
-	const [courseName, setCourseName] = useState("");
->>>>>>> main
 	const [courseId, setCourseId] = useState(0);
 
 	// useEffect를 사용하여 컴포넌트가 처음 렌더링될 때 데이터 가져오기
 	useEffect(() => {
-<<<<<<< HEAD
-		const storedCourseId = sessionStorage.getItem("courseId");
-			if (storedCourseId) {
-				setCourseId(JSON.parse(storedCourseId));
-			}
-			
-=======
-		// 세션에서 courseId 가져오기
 		const storedCourseId = sessionStorage.getItem("courseId");
 		if (storedCourseId) {
 			setCourseId(JSON.parse(storedCourseId));
 		}
-
->>>>>>> main
 		axios.get('/getCourseNoticePosts', {
 			headers: {
 				"Content-Type": "application/json",
@@ -44,9 +27,6 @@ function CourseNotice_Main() {
 		})
 			.then(response => setNoticeList(Array.from(response.data)))
 			.catch(error => console.log(error));
-
-<<<<<<< HEAD
-
 		axios.get("/getUserInfo",
 			{
 				headers: {
@@ -78,37 +58,8 @@ function CourseNotice_Main() {
 					setCourseId(sessionStorage.getItem("course_id").course_id)
 			})
 			.catch((error) => { console.log(error) });*/
-=======
-		axios.get("/getUserInfo", {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then((response) => { setUserInfo(JSON.parse(response.data)) })
-			.catch((error) => { console.log(error) });
-
-		axios.get("/getCourseName", {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then((response) => { setCourseName(JSON.stringify(response.data)) })
-			.catch((error) => { console.log(error) });
-
-		axios.get("/getCourseId", {
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then((response) => {
-				let responseResult = sessionStorage.setItem("course_id", JSON.parse(response.data))
-				if(responseResult !== null)
-					setCourseId(sessionStorage.getItem("course_id").course_id)
-			})
-			.catch((error) => { console.log(error) });
->>>>>>> main
 	}, []); // 빈 배열을 두 번째 인자로 사용하여 컴포넌트가 처음 렌더링될 때 한 번만 실행
-	
+
 	console.log(courseId);
 
 	return (
@@ -122,30 +73,10 @@ function CourseNotice_Main() {
 					<Link to={`/CourseMaterials?courseId=${courseId}`}><div className="button">강의 자료</div></Link>
 					<Link to={`/questions?courseId=${courseId}`}><div className="button">질문</div></Link>
 				</div>
-<<<<<<< HEAD
-				<Link to="http://localhost:8080/admin/notice/write"><div className="notice_write_button">공지 작성</div></Link>
-=======
-				<Link to=""><div className="notice_write_button">공지 작성</div></Link>
->>>>>>> main
 				<div className="announcement">
 					<div className="item">
 						{
 							noticeList.map((notice, index) => {
-<<<<<<< HEAD
-									return(
-										<div key={index}>
-											<Link to="">
-												<span className="title">{notice.noticeTitle}</span>
-												<span className="date">게시일: {notice.regDate}</span>
-												<span className="content">{notice.noticeContents}</span>
-											</Link>
-											<br />
-	
-											{notice.attachment != null ? <Link to="">첨부파일명</Link> : null}
-										</div>
-									)
-								
-=======
 								return (
 									<div key={index}>
 										<Link to="">
@@ -154,21 +85,17 @@ function CourseNotice_Main() {
 											<span className="content">{notice.noticeContents}</span>
 										</Link>
 										<br />
+
 										{notice.attachment != null ? <Link to="">첨부파일명</Link> : null}
 									</div>
 								)
->>>>>>> main
 							})
 						}
 					</div>
 				</div>
-				
+
 				{
-<<<<<<< HEAD
 					userInfo.m_role == 2 ? <Link to="http://localhost:8080/admin/notice/write"><div className="notice_write_button_mobile">공지 작성</div></Link> : null
-=======
-					userInfo.m_role == 2 ? <Link to=""><div className="notice_write_button_mobile">공지 작성</div></Link> : null
->>>>>>> main
 				}
 			</main>
 		</div>

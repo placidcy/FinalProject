@@ -52,10 +52,7 @@ const CourseBoard = () => {
 			const response = await axios.get(apiUrl, {
 				headers: {
 					Accept: "application/json",
-<<<<<<< HEAD
 					'Access-Control-Allow-Origin': 'http://localhost:3000',
-=======
->>>>>>> main
 				},
 			});
 			setPosts(response.data);

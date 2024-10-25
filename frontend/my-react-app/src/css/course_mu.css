@@ -35,6 +35,15 @@ ul {
 	color: #87C791;
 }
 
+.sc_course-sidebar-right {
+	background: white;
+}
+
+.announcement {
+	position: absolute;
+	top: 100px;
+}
+
 @media ( min-width : 769px) {
 	html, body {
 		height: 100%;
@@ -68,6 +77,7 @@ ul {
 	}
 	.sc_course-sidebar-right {
 		width: 80%;
+		background: white;
 	}
 	.sc_sidebar-logo {
 		padding: 50px;
@@ -135,10 +145,7 @@ ul {
 	}
 	main {
 		width: 100%;
-<<<<<<< HEAD
 		height: 100vh;
-=======
->>>>>>> main
 	}
 	#sc_mobile-menu {
 		width: auto;
