@@ -115,6 +115,7 @@ public class MemberDAO {
             member.setM_acctid(generateTemporaryId());
         }
 
+        /*
         if (member.getM_acctpwd() != null && member.getM_acctpwd().length() > 15) {
         	member.setM_acctpwd(member.getM_acctpwd().substring(0, 15));
             System.out.println("Trimmed m_acctpwd to 15 chars: " + member.getM_acctpwd());
@@ -123,6 +124,7 @@ public class MemberDAO {
             member.setM_acctid(member.getM_acctid().substring(0, 15));
             System.out.println("Trimmed m_acctid to 15 chars: " + member.getM_acctid());
         }
+        */
 
         this.sql = "insert into final_member (member_id, m_acctid, m_acctpwd, "
                 + "m_name, m_email, m_tel, m_dept, m_status, m_role) "
