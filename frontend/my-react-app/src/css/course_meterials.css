@@ -8,7 +8,6 @@
 body {
 	font-size: 14px;
 	font-family: Inter, sans-serif;
-	background-color: #f2f2f2;
 }
 
 /* 컨테이너 */
@@ -21,9 +20,8 @@ body {
 }
 
 /* 헤더 */
-.header {
+.cm_header {
 	display: flex;
-	top: 22px;
 }
 
 a {
@@ -35,13 +33,13 @@ a {
 	color: #ffffff;
 }
 
-.material_write_button {
+.cm_material_write_button {
 	width: 180px;
 	height: 60px;
 	padding: 15px;
 	background: #fff;
 	font-weight: bold;
-	font-size: 24px;
+	font-size: 20px;
 	text-align: center;
 	border: 1px solid #d9d9d9;
 	border-radius: 12px;
@@ -50,76 +48,106 @@ a {
 }
 
 /* 강의노트, 강의 자료 */
-.course-note, .course-materials {
+.cm_course-note, .cm_course-materials {
 	background-color: #ffffff;
 	padding: 20px;
 	border: 1px solid #dddddd;
 }
 
-.post {
+.cm_post {
 	display: grid;
 	grid-template-columns: 1fr 200px;
 	align-items: center;
 	margin-bottom: 20px;
 }
 
-.board-title {
+.cm_board-title {
 	display: block;
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 10px;
 	color: #333333;
 }
 
-.title {
+.cm_title {
 	display: block;
 	font-size: 18px;
 	font-weight: bold;
 	color: #333333;
 }
 
-.date {
+.cm_date {
 	display: block;
 	font-size: 14px;
 	color: #666666;
 }
 
-.file-list {
+.cm_file-list {
 	margin-top: 10px;
 }
 
-.file-info {
+.cm_file-info {
 	display: flex;
 }
 
-.file {
+.cm_file {
 	font-size: 16px;
 	color: #000;
 }
 
-.files {
+.cm_files {
 	padding-left: 20px;
 }
 
-.files a {
+.cm_files a {
 	font-size: 16px;
 	display: block;
 	margin-bottom: 10px;
 	color: #007bff;
 }
 
-.files a:hover {
+.cm_files a:hover {
 	text-decoration: underline;
 }
 
-.noFile {
+.cm_noFile {
 	padding: 20px;
 	margin-bottom: 30px;
 	font-size: 20px;
 }
 
-.material-list {
+.cm_material-list {
 	margin-bottom: 20px;
+}
+
+.button {
+	width: 146px;
+	height: 90px;
+	background: #ffffff;
+	border: 1px solid #d9d9d9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #97999c;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.cm_paging_list {
+	margin-top: 20px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.cm_paging {
+	padding: 10px 15px;
+	font-weight: bold;
+	font-size: 18px;
+	color: #000;
+}
+
+.cm_paging.active {
+	color: #87c689;
 }
 
 #course {
@@ -127,8 +155,11 @@ a {
 }
 
 @media ( min-width : 769px) {
-	.notice_write_button_mobile {
+	.cm_notice_write_button_mobile {
 		display: none;
+	}
+	.cm_header {
+		display: flex;
 	}
 	main {
 		width: 75%;
@@ -136,23 +167,6 @@ a {
 		position: relative;
 		display: inline-block;
 		background-color: #f2f2f2;
-	}
-	.course-board-list {
-		position: absolute;
-		top: 10%;
-		width: 95%;
-	}
-	.button {
-		width: 146px;
-		height: 90px;
-		background: #ffffff;
-		border: 1px solid #d9d9d9;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #97999c;
-		font-weight: bold;
-		font-size: 24px;
 	}
 }
 
@@ -163,13 +177,13 @@ a {
 		display: inline-block;
 		background-color: #f2f2f2;
 	}
-	.material_write_button {
+	.cm_material_write_button {
 		display: none;
 	}
-	.course-board-list {
+	.cm_course-board-list {
 		width: 100%;
 	}
-	.notice_write_button_mobile {
+	.cm_notice_write_button_mobile {
 		width: 97%;
 		height: 60px;
 		padding: 15px;
@@ -180,15 +194,18 @@ a {
 		border: 1px solid #d9d9d9;
 		border-radius: 12px;
 		margin-left: auto;
-		margin-top: -8%;
 		color: #000;
-		margin-top: 7%;
-		position: fixed;
-		bottom: 5px;
+		position: absolute;
 		left: 10px;
 	}
-	.course-board-list {
+	.cm_course-board-list {
 		top: 10%;
 		width: 100%;
+	}
+	.button {
+		width: 25%;
+	}
+	.cm_paging_list {
+		font-size: 24px;
 	}
 }

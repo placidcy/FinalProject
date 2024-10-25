@@ -29,7 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
 				.allowedOrigins("https://www.app-check.shop", "https://app-check.shop", "http://localhost:3000",
-						"https://localhost:3000")
+						"https://localhost:3000", "http://13.238.185.11:3000/", "http://13.238.185.11:8080/")
 				.allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS").allowedHeaders("*")
 				.allowCredentials(true).maxAge(3600);
 	}

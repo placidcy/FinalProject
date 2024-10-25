@@ -175,23 +175,24 @@ public class MemberDAO {
     }
 
     public List<MemberDO> getAllInstructors() {
-        this.sql = "select * from final_member where m_role = 1";
+        this.sql = "select * from final_member where m_role = 2";
         return this.jdbcTemplate.query(sql, new MemberRowMapper());
     }
 
     public List<MemberDO> getPagedInstructors(int page, int itemsPerPage) {
         int offset = (page - 1) * itemsPerPage;
         this.sql = """
-                select * from (
-                    select rownum as rn, fm.* from final_member fm
-                    where fm.m_role = 1 and rownum <= ?
-                ) where rn > ?
-                """;
+            select * from (
+                select rownum as rn, fm.* from (select * from final_member order by member_id) fm
+                where fm.m_role = 2 and rownum <= ?
+            ) where rn > ?
+        """;
         return this.jdbcTemplate.query(sql, new MemberRowMapper(), offset + itemsPerPage, offset);
     }
 
+
     public int getTotalInstructorsCount() {
-        this.sql = "select count(*) from final_member where m_role = 1";
+        this.sql = "select count(*) from final_member where m_role = 2";
         return this.jdbcTemplate.queryForObject(sql, Integer.class);
     }
 

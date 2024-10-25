@@ -145,11 +145,12 @@ function calculateTimer(duration, display) {
 			}
 		}, 1000);
 	});
-
-	timerPromise.then(() => {
-		alert('QR코드 유효기간이 만료되어 페이지를 새로고침 합니다.');
-		window.location.reload();
-	});
+	/*
+		timerPromise.then(() => {
+			alert('QR코드 유효기간이 만료되어 페이지를 새로고침 합니다.');
+			window.location.reload();
+		});
+		*/
 }
 
 function setTimer() {

@@ -67,12 +67,13 @@ public class MemberController {
 	public String loginProcessHandler(LoginRequest req, HttpSession session) {
 		try {
 			LoginResponse auth = memberSo.login(req.getM_acctid(), req.getM_acctpwd());
+			int m_status = auth.getM_status();
 
-			if (auth != null) {
+			if (auth != null && m_status==1) {
 
-				if (memberSo.checkM_status(auth.getMember_id()) == 0) {
-					memberSo.updateMemberStatusToActive(auth.getMember_id());
-				}
+//				if (memberSo.checkM_status(auth.getMember_id()) == 0) {
+//					memberSo.updateMemberStatusToActive(auth.getMember_id());
+//				}
 
 				session.setAttribute("auth", auth);
 
@@ -88,10 +89,14 @@ public class MemberController {
 				}
 			} else {
 				session.setAttribute("loginFailMsg", "로그인에 실패했습니다.");
+				System.out.println("로그인 실패");
 				return "redirect:/login?error=loginFailed";
 			}
 		} catch (EmptyResultDataAccessException e) {
 			session.setAttribute("loginFailMsg", "일치하는 정보가 없습니다.");
+			System.out.println("정보 없음");
+			return "redirect:/login?error=loginFailed";
+		} catch (Exception e) {
 			return "redirect:/login?error=loginFailed";
 		}
 	}
@@ -159,7 +164,7 @@ public class MemberController {
 				model.addAttribute("result", result);
 				return "findid2";
 			} else {
-				model.addAttribute("result", "일치하는 아이디가 없습니다.");
+				model.addAttribute("error", "일치하는 아이디가 없습니다.");
 				return "findid2";
 			}
 		} catch (Exception e) {

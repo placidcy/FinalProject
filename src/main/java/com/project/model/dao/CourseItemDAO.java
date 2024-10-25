@@ -23,7 +23,7 @@ public class CourseItemDAO extends ItemDAO {
 		this.sql = query.get("register");
 		int rowNum = -1;
 
-		rowNum = this.getJdbcTemplate().update(sql, new Object[] { courseId, memberId });
+		rowNum = this.getJdbcTemplate().update(sql, courseId, memberId);
 
 		return rowNum;
 	}
@@ -47,9 +47,8 @@ public class CourseItemDAO extends ItemDAO {
 		return rowNum;
 	}
 
-	public List<CourseItem> selectByDates(int startNum, int endNum) {
+	public List<CourseItem> selectByDates(int startNum, int endNum, int memberId) {
 		this.sql = query.get("selectByDates");
-//		and sysdate between e_sdate and e_edate""";
 		this.sql = setPaging(sql, startNum, endNum);
 
 		List<CourseItem> courseItems = null;
@@ -68,14 +67,12 @@ public class CourseItemDAO extends ItemDAO {
 
 				return courseItem;
 			}
-		});
-
+		}, memberId);
 		return courseItems;
 	}
 
-	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum) {
+	public List<CourseItem> selectByDates(String keyword, int startNum, int endNum, int memberId) {
 		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name like ?";
-//		and sysdate between e_sdate and e_edate""";
 		this.sql = setPaging(sql, startNum, endNum);
 
 		List<CourseItem> courseItems = null;
@@ -94,21 +91,22 @@ public class CourseItemDAO extends ItemDAO {
 
 				return courseItem;
 			}
-		}, "%" + keyword + "%");
+		}, memberId, "%" + keyword + "%");
 
 		return courseItems;
 	}
 
-	public int getCountByDates() {
-		this.sql = query.get("getCountByDates");
-
-		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
+	public int getCountByDates(int memberId) {
+		this.sql = this.query.get("selectByDates");
+		this.sql = this.getCount(sql);
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
-	public int getCountByDates(String keyword) {
-		this.sql = query.get("getCountByDates") + " and c_name like ?";
+	public int getCountByDates(String keyword, int memberId) {
+		this.sql = "select * from (" + query.get("selectByDates") + ") where c_name is not null and c_name like ?";
+		this.sql = this.getCount(this.sql);
 
-		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%");
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId, "%" + keyword + "%");
 	}
 
 	public List<CourseItem> selectByMemberId(int memberId, int startNum, int endNum) {
@@ -122,6 +120,13 @@ public class CourseItemDAO extends ItemDAO {
 				courseItem.setCourseId(rs.getInt("course_id"));
 				courseItem.setCourseName(rs.getString("c_name"));
 				courseItem.setCategoryName(rs.getString("c_title"));
+				courseItem.setDays(0, rs.getInt("d_sun"));
+				courseItem.setDays(1, rs.getInt("d_mon"));
+				courseItem.setDays(2, rs.getInt("d_tue"));
+				courseItem.setDays(3, rs.getInt("d_wed"));
+				courseItem.setDays(4, rs.getInt("d_thu"));
+				courseItem.setDays(5, rs.getInt("d_fri"));
+				courseItem.setDays(6, rs.getInt("d_sat"));
 
 				return courseItem;
 			}
@@ -150,13 +155,15 @@ public class CourseItemDAO extends ItemDAO {
 	}
 
 	public int getCountByMemberId(int memberId) {
-		this.sql = query.get("getCountByMemberId");
+		this.sql = query.get("selectByMemberId");
+		this.sql = this.getCount(sql);
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
 
 	public int getCountByInstructorId(int memberId) {
-		this.sql = query.get("getCountByInstructorId");
+		this.sql = query.get("selectByInstructorId");
+		this.sql = this.getCount(sql);
 
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, memberId);
 	}
@@ -176,10 +183,10 @@ public class CourseItemDAO extends ItemDAO {
 		}, memberId);
 		return studentId;
 	}
+
 	/*
 	 * memberId에 따라 현재 요일에 수업해야하는 강의 목록을 조회하는 쿼리
 	 */
-
 	public int checkCourseForCourseId(int memberId) {
 		int courseId = -1;
 		this.sql = query.get("checkCourseForCourseId");
@@ -398,33 +405,21 @@ public class CourseItemDAO extends ItemDAO {
 		 * 수강 신청 목록 조횤 쿼리
 		 */
 		this.query.put("selectByDates", """
-				select
-				  fcs.course_id,
-				  c_title,
-				  c_name,
-				  c_count,
-				  c_limits,
-				  to_char(c_sdate, 'yyyy.mm.dd') c_sdate,
-				  to_char(c_edate, 'yyyy.mm.dd') c_edate
-				from
-				  final_course fc
-				  inner join final_course_category fcc on fc.category_id = fcc.category_id
-				  inner join (
-				    select
-				      course_id,
-				      count(*) as c_count
-				    from
-				      final_course_student fcs
-				    group by
-				      course_id
-				  ) fcs on fcs.course_id = fc.course_id
-				where
-				  c_count < c_limits
-				  -- and sysdate between c_sdate-14 and c_edate+14
-				order by
-				  c_sdate,
-				  c_edate desc
-				""");
+				SELECT DISTINCT fc.course_id, c_title, c_name, nvl(c_count, 0) c_count, c_limits,
+				                TO_CHAR(c_sdate, 'yyyy.mm.dd') AS c_sdate,
+				                TO_CHAR(c_edate, 'yyyy.mm.dd') AS c_edate
+				FROM final_course fc
+				INNER JOIN final_course_category fcc ON fc.category_id = fcc.category_id
+				LEFT OUTER JOIN (
+				    SELECT course_id, COUNT(*) AS c_count
+				    FROM final_course_student
+				    GROUP BY course_id
+				) fcs ON fcs.course_id = fc.course_id
+				WHERE nvl(c_count, 0) < c_limits
+				  AND SYSDATE BETWEEN c_sdate - 28 AND c_sdate - 1
+				  AND fc.COURSE_ID NOT IN (SELECT COURSE_ID FROM FINAL_COURSE_STUDENT fcs WHERE member_id = ?)
+				ORDER BY c_sdate, c_edate
+								""");
 		/*
 		 * 수강 중인 강의 목록 조회 쿼리
 		 */
@@ -432,11 +427,20 @@ public class CourseItemDAO extends ItemDAO {
 				select
 				  fcs.course_id,
 				  c_title,
-				  c_name
+				  c_name,
+				  -- 요일 정보 추가
+				NVL(d_sun, 0) as d_sun,
+				NVL(d_mon, 0) as d_mon,
+				NVL(d_tue, 0) as d_tue,
+				NVL(d_wed, 0) as d_wed,
+				NVL(d_thu, 0) as d_thu,
+				NVL(d_fri, 0) as d_fri,
+				NVL(d_sat, 0) as d_sat
 				from
 				  final_course fc
 				  inner join final_course_category fcc on fc.category_id = fcc.category_id
 				  inner join final_course_student fcs on fc.course_id = fcs.course_id
+				  inner join final_course_day fd on fc.course_id = fd.course_id
 				where
 				  member_id = ?
 				  and sysdate between c_sdate-14 and c_edate+14
@@ -459,84 +463,40 @@ public class CourseItemDAO extends ItemDAO {
 				""");
 
 		/*
-		 * 수강 신청 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByDates", """
-				select
-				  count(*) as cnt
-				from
-				  final_course fc
-				  inner join (
-				    select
-				      course_id,
-				      count(*) as c_count
-				    from
-				      final_course_student fcs
-				    group by
-				      course_id
-				  ) fcs on fcs.course_id = fc.course_id
-				where
-				  c_count < c_limits
-				-- 현재일이 강의 시작일 및 종료일로 부터 2주 내외로 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate-14 and c_edate+14
-				""");
-		/*
-		 * 학생으로 로그인했을 때, 수강 중인 강의 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByMemberId", """
-				select
-				  count(*) as cnt
-				from
-				  final_course fc
-				  inner join final_course_student fcs on fc.course_id = fcs.course_id
-				where
-				  member_id = ?
-				  and sysdate between c_sdate-14 and c_edate+14
-				""");
-		/*
-		 * 강사로 로그인하였을 때, 담당 중인 강의 목록 총 갯수 반환 쿼리
-		 */
-		this.query.put("getCountByInstructorId", """
-				select
-					count(*) as cnt
-				from
-					final_course fc
-					inner join final_course_instructor fci on fc.course_id = fci.course_id
-				where
-				  	member_id = ?
-				  	and sysdate between c_sdate-14 and c_edate+14
-				""");
-
-		/*
 		 * 수강 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리
 		 */
-		this.query.put("checkCourseForStudentId", """
-				SELECT student_id
-				FROM (
-					SELECT *
-					FROM FINAL_COURSE_STUDENT fcs
-					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
-					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
-					)
-				WHERE member_id = ?
-				-- 현재일이 강의 시작일 및 종료일 사이에 존재하는지 확인하는 구문
-				-- 테스트를 위해 주석 처리
-				-- and sysdate between c_sdate and c_edate
-				""");
+		this.query.put("checkCourseForStudentId",
+				"""
+						SELECT student_id
+						FROM (
+						    SELECT fcs.*, fc.C_NAME, fct.COURSE_ID, fcs2.S_SDATE, fcs2.S_STIME, fcs2.S_EDATE, fcs2.S_ETIME
+						    FROM FINAL_COURSE_STUDENT fcs
+						    INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+						    INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+						    INNER JOIN final_course_schedule fcs2 ON fcs.course_id = fcs2.course_id
+						        AND SYSDATE BETWEEN TO_DATE(TO_CHAR(fcs2.S_SDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_STIME, 'yyyy-mm-dd hh24:mi:ss')
+						                         AND TO_DATE(TO_CHAR(fcs2.S_EDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_ETIME, 'yyyy-mm-dd hh24:mi:ss')
+						                         -- 현재 시간대에 속한 강의를 조회
+						)
+						WHERE member_id = ? and rownum = 1
+						""");
 		/*
 		 * 수업 중인 강의 중 현재 요일에 해당하는 강의가 있는지 확인하는 쿼리(강사용)
 		 */
-		this.query.put("checkCourseForCourseId", """
-				SELECT course_id
-				FROM (
-					SELECT *
-					FROM FINAL_COURSE_INSTRUCTOR fcs
-					INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
-					INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
-					)
-				WHERE member_id = ?
-				""");
+		this.query.put("checkCourseForCourseId",
+				"""
+								SELECT course_id
+								FROM (
+								    SELECT fcs.*, fc.C_NAME, fcs2.S_SDATE, fcs2.S_STIME, fcs2.S_EDATE, fcs2.S_ETIME
+								    FROM FINAL_COURSE_INSTRUCTOR fcs
+								    INNER JOIN FINAL_COURSE_TODAY fct ON fcs.COURSE_ID = fct.COURSE_ID
+								    INNER JOIN FINAL_COURSE fc ON fc.course_id = fcs.course_id
+								    INNER JOIN final_course_schedule fcs2 ON fcs.course_id = fcs2.course_id
+								    WHERE SYSDATE BETWEEN TO_DATE(TO_CHAR(fcs2.S_SDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_STIME, 'yyyy-mm-dd hh24:mi:ss')
+								                     AND TO_DATE(TO_CHAR(fcs2.S_EDATE, 'yyyy-mm-dd') || ' ' || fcs2.S_ETIME, 'yyyy-mm-dd hh24:mi:ss')
+								)
+								WHERE MEMBER_ID = ? AND ROWNUM = 1
+						""");
 		/*
 		 * 현재일의 입실/퇴실/외출/복귀 시간을 조회하는 쿼리
 		 */
@@ -722,7 +682,7 @@ public class CourseItemDAO extends ItemDAO {
 						              FINAL_STUDENT_ATTEND fsa
 						            WHERE
 						              -- 어제까지의 출석현황을 조회
-						              a_status != 2
+						              a_status not in (0, 2)
 						              and a_date < trunc (sysdate)
 						            GROUP BY
 						              student_id

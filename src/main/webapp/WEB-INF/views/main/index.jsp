@@ -35,6 +35,11 @@
 					</a>
 				</div>
 				<table class="tab notice">
+					<c:if test="${empty notice }">
+						<tr class="item">
+							<td class="error">현재 게시된 공지사항이 없습니다.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${notice }" var="item">
 						<tr class="item">
 							<td>${item.noticeTitle }</td>
@@ -57,6 +62,35 @@
 							<td class="deco"></td>
 							<td class="category">${item.categoryName }</td>
 							<td class="name">${item.courseName }</td>
+							<td class="day"><c:forEach begin="0" end="7"
+									varStatus="status">
+									<c:set var="day" value="${status.index}" />
+									<c:if test="${item.days[day] eq 1}">
+										<c:choose>
+											<c:when test="${day eq 0}">
+												<span>일 </span>
+											</c:when>
+											<c:when test="${day eq 1}">
+												<span>월 </span>
+											</c:when>
+											<c:when test="${day eq 2}">
+												<span>화 </span>
+											</c:when>
+											<c:when test="${day eq 3}">
+												<span>수 </span>
+											</c:when>
+											<c:when test="${day eq 4}">
+												<span>목 </span>
+											</c:when>
+											<c:when test="${day eq 5}">
+												<span>금 </span>
+											</c:when>
+											<c:when test="${day eq 6}">
+												<span>토 </span>
+											</c:when>
+										</c:choose>
+									</c:if>
+								</c:forEach></td>
 							<td class="enter"><button>입장하기</button></td>
 						</tr>
 					</c:forEach>

@@ -30,6 +30,10 @@
 						<th>작성일</th>
 						<td>${notice.regdate }</td>
 					</tr>
+					<tr>
+						<th>내용</th>
+						<td><pre>${notice.noticeContents }</pre></td>
+					</tr>
 					<c:if test="${not empty attms }">
 						<tr>
 							<th>첨부파일</th>
@@ -42,10 +46,6 @@
 							</td>
 						</tr>
 					</c:if>
-					<tr>
-						<th>내용</th>
-						<td><pre>${notice.noticeContents }</pre></td>
-					</tr>
 				</table>
 				<div class="buttons">
 					<button class="btn" id="list" data-page="${page }">목록</button>

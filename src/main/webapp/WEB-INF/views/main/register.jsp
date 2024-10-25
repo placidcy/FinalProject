@@ -23,9 +23,15 @@
 		<main class="contents bgf2f2f2">
 			<div class="grid g20">
 				<h3 class="f24">수강 가능 강의 목록</h3>
+				<p class="c87c791">강의 시작 28일전부터 강의 시작 전날까지 표시됩니다.</p>
 				<!-- 서치바 영역 -->
 				<jsp:include page="./register_searchbar.jsp"></jsp:include>
 				<table class="tab course" id="register">
+					<c:if test="${empty list}">
+						<tr class="item" data-id="${item.courseId }">
+							<td class="error">현재 수강 가능한 강의가 존재하지 않습니다.</td>
+						</tr>
+					</c:if>
 					<c:forEach items="${list }" var="item">
 						<tr class="item" data-id="${item.courseId }">
 							<td class="deco"></td>

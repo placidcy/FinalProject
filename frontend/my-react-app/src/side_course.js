@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './css/course_mu.css';
+import axios from 'axios';
+
+// 기본 axios 헤더 설정
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 
 const Sidebar = ({ courseId }) => {
 	const [baseUrl, setBaseUrl] = useState('');
@@ -15,19 +19,18 @@ const Sidebar = ({ courseId }) => {
 		setUserRole(role ? Number(role) : null);
 
 		if (courseId) {
-			fetch(`${baseUrl}/api/courseName/${courseId}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.text();
-				})
-				.then(data => {
-					setMenuName(data);
-				})
-				.catch(error => console.error('Error fetching course name:', error));
+			fetchCourseName(courseId);
 		}
-	}, [courseId, baseUrl]);
+	}, [courseId]);
+
+	const fetchCourseName = async (id) => {
+		try {
+			const response = await axios.get(`${baseUrl}/api/courseName/${id}`);
+			setMenuName(response.data);
+		} catch (error) {
+			console.error('Error fetching course name:', error);
+		}
+	};
 
 	const toggleMenu = () => {
 		setMenuVisible(prev => !prev);
@@ -101,11 +104,17 @@ const Sidebar = ({ courseId }) => {
 						<li>강의 게시판</li>
 					</a>
 					{(userRole === 1) && (
+<<<<<<< HEAD
 						<>
 							<a href={`${baseUrl}/goAttendanceCalendar?courseId=${courseId}`} className="sc_sidebar-menu-unselected" style={{ width: '33.333%' }}>
 								<li>출결 확인</li>
 							</a>
 						</>
+=======
+						<a href={`${baseUrl}/goAttendanceCalendar?courseId=${courseId}`} className="sc_sidebar-menu-unselected" style={{ width: '33.333%' }}>
+							<li>출결 확인</li>
+						</a>
+>>>>>>> main
 					)}
 					{(userRole === 0 || userRole === 2) && (
 						<>

@@ -118,23 +118,27 @@ public class NoticeItemDAO extends ItemDAO {
 		return noticeItems;
 	}
 
-	public int getCount() {
-		this.sql = query.get("getCount");
+	public int getListSize() {
+		this.sql = query.get("selectList");
+		this.sql = super.getCount(sql);
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
-	public int getTotalCount() {
-		this.sql = query.get("getTotalCount");
+	public int getAllSize() {
+		this.sql = query.get("selectAll");
+		this.sql = super.getCount(sql);
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
-	public int getCount(String keyword) {
-		this.sql = query.get("getCount") + "  and p_title like ? or p_contents like ?";
+	public int getListSize(String keyword) {
+		this.sql = "select * from (" + query.get("selectList") + ") where p_title like ? or p_contents like ?";
+		this.sql = super.getCount(sql);
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%", "%" + keyword + "%");
 	}
 
-	public int getTotalCount(String keyword) {
-		this.sql = query.get("getTotalCount") + "  and p_title like ? or p_contents like ?";
+	public int getAllSize(String keyword) {
+		this.sql = "select * from (" + query.get("selectAll") + ") where p_title like ? or p_contents like ?";
+		this.sql = super.getCount(sql);
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class, "%" + keyword + "%", "%" + keyword + "%");
 	}
 
@@ -181,16 +185,6 @@ public class NoticeItemDAO extends ItemDAO {
 
 	private void init() {
 		this.query = new HashMap<String, String>();
-		this.query.put("getCount", """
-				select count(*) as cnt
-				from final_course_post fcp
-				where type_id = 0 and p_target = 0
-				""");
-		this.query.put("getTotalCount", """
-				select count(*) as cnt
-				from final_course_post
-				where type_id = 0
-				""");
 		this.query.put("selectList", """
 				select  to_char(p_regdate, 'YYYY-MM-DD') as p_regdate,
 						p_title, p_contents, post_id, p_target

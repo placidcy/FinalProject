@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from './side_course';
 import './css/course_board.css';
+import './css/course_mu.css';
 
 const CourseBoard = () => {
 	const location = useLocation();
@@ -51,7 +52,10 @@ const CourseBoard = () => {
 			const response = await axios.get(apiUrl, {
 				headers: {
 					Accept: "application/json",
+<<<<<<< HEAD
 					'Access-Control-Allow-Origin': 'http://localhost:3000',
+=======
+>>>>>>> main
 				},
 			});
 			setPosts(response.data);
