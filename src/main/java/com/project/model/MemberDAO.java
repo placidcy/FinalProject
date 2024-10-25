@@ -100,11 +100,11 @@ public class MemberDAO {
     public String generateTemporaryId() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder tempId = new StringBuilder("inst_");
-        for (int i = 0; i < 3; i++) { 
+        for (int i = 0; i < 1; i++) { 
             int index = (int) (Math.random() * characters.length());
             tempId.append(characters.charAt(index));
         }
-        String generatedId = tempId.toString();
+        String generatedId = tempId.toString().substring(0, 13);
         System.out.println("Generated Temporary ID: " + generatedId);
         return generatedId;
     }
@@ -112,7 +112,7 @@ public class MemberDAO {
     public int insertMember(MemberDO member) {
         System.out.println("insertMember called with m_acctid: " + member.getM_acctid());
         if (member.getM_acctid() == null || member.getM_acctid().isEmpty()) {
-            member.setM_acctid(generateTemporaryId());
+            member.setM_acctid(generateTemporaryId().substring(0, 14));
         }
 
         /*

@@ -214,7 +214,7 @@ public class AdminController {
 		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		StringBuilder id = new StringBuilder(prefix);
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 3; i++) {
 			int index = random.nextInt(chars.length());
 			id.append(chars.charAt(index));
 		}
